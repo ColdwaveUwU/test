@@ -11,7 +11,8 @@
         "browser": "chrome",
         "headless": false,
         "puppeteerDelay": 0,
-        "userDelay": 0
+        "userDelay": 0,
+        "executablePath": "C:/Program Files/Google/Chrome/Application/chrome.exe"
     },
     "reportOptions": {
         "ignoreBrowserErrors": ["Failed to load resource: the server responded with a status of 404"],
