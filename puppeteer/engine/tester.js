@@ -43,8 +43,6 @@ class TesterImp {
                 "--window-size=" + ww + "," + hh,
                 "--disk-cache-dir=" + cacheDir,
                 "--lang=en-US",
-                "--no-sandbox",
-                "--disable-gpu",
             ],
             firefox: ["--width", "" + ww, "--height", "" + hh],
         };
