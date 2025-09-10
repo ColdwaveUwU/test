@@ -16,7 +16,6 @@ from script.python.description_parser import DescriptionParser
 from script.python.loading_spinner import LoadingSpinner
 from script.python.config_manager import ConfigManager
 from script.python.install import check_dependencies
-from script.python.build_logger import auto_log_functions
 
 sys.path.append(os.path.abspath(os.path.join(__file__, "../../..")))
 from tools.report_portal.report_portal_launcher import ReportPortalLauncher
@@ -29,7 +28,6 @@ DIR_STRUCTURE = {
     "log/browser_log": ["browser_log.txt"],
     "log/terminallog": [],
     "log/externallog": ["stdout.txt", "error.txt"],
-    "log/build_info": ["build_info.txt"],
     "download": [],
     "reports": [],
     "resource": ["server.js"],
@@ -261,9 +259,6 @@ def run_test(test_map, params_dict, cache_dir, server_port):
     puppeteer = os.path.join(engine_directory, "node_modules", "puppeteer").replace("\\", '/')
     replace_in_file(run_file, "require(\"%%PUPPETEER%%\")", f"require(\"{puppeteer}\")")
 
-    wtf = os.path.join(engine_directory, "node_modules", "wtfnode").replace("\\", '/')
-    replace_in_file(run_file, "require(\"%%wtfnode%%\")", f"require(\"{wtf}\")")
-
     collab = os.path.join(engine_directory, "..", "module", "collab").replace("\\", '/')
     replace_in_file(run_file, "require(\"%%COLLAB%%\")", f"require(\"{collab}\")")
 
@@ -294,7 +289,7 @@ def run_test(test_map, params_dict, cache_dir, server_port):
         "cache_dir": cache_dir,
         "terminal_error": params_dict["terminal_error"],
         "terminal_log": params_dict["terminal_log"],
-        'report_portal_test': report_portal_test,
+        'report_portal_test': report_portal_test
     }
 
     return_code = run_test_in_new_terminal(**terminal_args)
@@ -329,7 +324,7 @@ def run_test(test_map, params_dict, cache_dir, server_port):
         report_portal_test.send_log(message=f"{file_name} report attached.", attachment={"name": os.path.basename(test_report_path),
                                                                                  "data": file.read(),
                                                                                  "mime": "text/html"})
-    
+
     report_portal_manager.finish_test(test_path, 0 if return_code == 5 else return_code)
     return report_object
 

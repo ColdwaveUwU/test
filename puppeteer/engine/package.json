@@ -6,8 +6,5 @@
     "puppeteer": "24.9.0",
     "xpath": "0.0.34"
   },
-  "type": "commonjs",
-  "devDependencies": {
-    "wtfnode": "^0.10.0"
-  }
+  "type": "commonjs"
 }

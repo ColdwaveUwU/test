@@ -3,7 +3,6 @@ const fs = require("fs");
 const path = require("path");
 const url = require("url");
 const { execFile } = require("child_process");
-const wtf = require("%%wtfnode%%");
 const { Collab } = require("%%COLLAB%%");
 const profilePath = "%%PROFILE_PATH%%";
 const cacheDir = "%%CACHEDIR%%";
@@ -43,7 +42,7 @@ class TesterImp {
                 "--window-size=" + ww + "," + hh,
                 "--disk-cache-dir=" + cacheDir,
                 "--lang=en-US",
-                "--no-sandbox"
+                "--no-sandbox",
             ],
             firefox: ["--width", "" + ww, "--height", "" + hh],
         };
@@ -1971,51 +1970,31 @@ class TesterImp {
      * @returns {Promise<void>}
      */
     async close() {
-        const startTotal = Date.now();
-
         try {
-            // 1. Сбрасываем макросы
-            const startMacros = Date.now();
             if (Object.keys(this.macrosArrayObject).length > 0) {
                 await this.frame.evaluate(() => {
                     const editor = Asc.editor;
                     editor.pluginMethod_SetMacros("");
                 });
             }
-            console.log(`Macros reset duration: ${Date.now() - startMacros} ms`);
 
-            // 2. Закрываем коллаборацию
-            const startCollab = Date.now();
             if (this.collab) {
                 await this.collab.close();
             }
-            console.log(`Collab close duration: ${Date.now() - startCollab} ms`);
 
-            // 3. Закрываем страницу
-            const startPage = Date.now();
             await this.closePage();
-            console.log(`Page close duration: ${Date.now() - startPage} ms`);
 
-            // 4. Закрываем браузер
             if (this.browser) {
                 const browserProcess = this.browser.process();
-                const startBrowserTotal = Date.now();
-
-                // 4a. Вызов browser.close()
-                const startBrowserClose = Date.now();
                 try {
-                    debugger
-                    await this.browser.close(); // один раз, ждём корректного завершения
+                    await this.browser.close(); 
                 } catch (error) {
                     console.warn(`browser.close() failed: ${error.message}`);
                 }
-                console.log(`browser.close() duration: ${Date.now() - startBrowserClose} ms`);
 
-                // 4b. Проверка живого процесса и SIGKILL
-                const startProcessKill = Date.now();
                 if (browserProcess && browserProcess.pid) {
                     try {
-                        process.kill(browserProcess.pid, 0); // проверяем, жив ли процесс
+                        process.kill(browserProcess.pid, 0); 
                         console.warn(`Process ${browserProcess.pid} still alive, sending SIGKILL`);
                         process.kill(browserProcess.pid, "SIGKILL");
                     } catch (err) {
@@ -2024,12 +2003,8 @@ class TesterImp {
                         }
                     }
                 }
-                console.log(`Browser process kill duration: ${Date.now() - startProcessKill} ms`);
-
-                console.log(`Total browser close duration: ${Date.now() - startBrowserTotal} ms`);
             }
 
-            console.log(`Total close duration: ${Date.now() - startTotal} ms`);
         } catch (error) {
             console.error("Error during close:", error);
             throw error;
@@ -2363,17 +2338,15 @@ async function run() {
         const timestamp = formatTimestamp(duration);
         const endTime = Math.round(performance.now());
         const executionTime = endTime - globalThis.initialTime;
-        console.log(`${timestamp} [end] [script] ${globalThis.testFileName} Duration ${executionTime}`);
-        // await writeLog(`${timestamp} [end] [script] ${globalThis.testFileName} Duration ${executionTime}`);
+        await writeLog(`${timestamp} [end] [script] ${globalThis.testFileName} Duration ${executionTime}`);
     } catch (error) {
         const duration = Math.round(performance.now() - globalThis.initialTime);
         const timestamp = formatTimestamp(duration);
         const endTime = Math.round(performance.now());
         const executionTime = endTime - globalThis.initialTime;
-        // await writeLog(
-        //     `${timestamp} [error] [script] ${globalThis.testFileName} Duration ${executionTime}.\n Error: ${error.stack}`
-        // );
-        console.error(`${timestamp} [error] [script] ${globalThis.testFileName} Duration ${executionTime}.`);
+        await writeLog(
+            `${timestamp} [error] [script] ${globalThis.testFileName} Duration ${executionTime}.\n Error: ${error.stack}`
+        );
         throw new Error(error.stack);
     }
 }
@@ -2388,12 +2361,10 @@ async function runWithTimeout(timeoutMs = 300000) {
         return await Promise.race([run(), timeoutPromise]);
     } finally {
         clearTimeout(timer);
-        wtf.dump();
     }
 }
 
 runWithTimeout(300000).catch((err) => {
     console.error("Test failed with timeout:", err);
-    wtf.dump();
     process.exit(1);
 });

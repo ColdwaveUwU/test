@@ -192,7 +192,7 @@ function createProxy(instance) {
  * @param {string} message
  */
 function queueLogMessage(message) {
-    loggingQueue = loggingQueue.then(() => console.log(message));
+    loggingQueue = loggingQueue.then(() => writeLog(message)).catch(console.error);
     return loggingQueue;
 }
 
