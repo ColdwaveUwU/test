@@ -43,6 +43,7 @@ class TesterImp {
                 "--window-size=" + ww + "," + hh,
                 "--disk-cache-dir=" + cacheDir,
                 "--lang=en-US",
+                "--no-sandbox"
             ],
             firefox: ["--width", "" + ww, "--height", "" + hh],
         };

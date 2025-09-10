@@ -9,7 +9,7 @@
     },
     "puppeteerOptions": {
         "browser": "chrome",
-        "headless": true,
+        "headless": false,
         "puppeteerDelay": 0,
         "userDelay": 0
     },
