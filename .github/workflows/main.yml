@@ -1,0 +1,58 @@
+name: Puppeteer DocServer test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  puppeteer-docserver:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+    
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      # --- Checkout repo ---
+      - name: Checkout current repository
+        uses: actions/checkout@v4
+
+      # --- Set up Python ---
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      # --- Set up Node for macOS (arm64) ---
+      - name: Set up Node.js on macOS
+        if: runner.os == 'macOS'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'latest'       # укажи нужную версию Node
+
+      # --- Set up Node for Windows/Ubuntu ---
+      - name: Set up Node.js on Windows/Ubuntu
+        if: runner.os != 'macOS'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'latest'
+
+      # --- Configure report portal ---
+      - name: Add reports key to config
+        run: |
+          node -e "
+            const fs = require('fs');
+            const filePath = 'tools/report_portal/config.json';
+            const config = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+            
+            config.project_name = 'coldwaveuwu_personal';
+            config.launch_name = 'Github Action ${{ matrix.os }} Chrome';
+            
+            fs.writeFileSync(filePath, JSON.stringify(config, null, 2));
+          "
+
+      # --- Run tests ---
+      - name: Run tests
+        run: |
+          cd puppeteer/engine
+          python run.py --disable_animation --config_params puppeteerOptions.headless=true
