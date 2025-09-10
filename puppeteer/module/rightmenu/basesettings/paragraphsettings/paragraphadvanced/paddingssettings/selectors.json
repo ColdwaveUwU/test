@@ -1,0 +1,6 @@
+{
+    "TOP_PADDING_INPUT": "#paraadv-number-margin-top",
+    "LEFT_PADDING_INPUT": "#paraadv-number-margin-left",
+    "BOTTOM_PADDING_INPUT": "#paraadv-number-margin-bottom",
+    "RIGHT_PADDING_INPUT": "#paraadv-number-margin-right"
+}

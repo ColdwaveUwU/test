@@ -1,0 +1,7 @@
+{
+    "TEXT_BOX": {
+        "ELEMENT_SELECTOR": "#tlbtn-inserttext",
+        "DEFAULT_BUTTON": "#tlbtn-inserttext button",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#tlbtn-inserttext ul li a"
+    }
+}

@@ -1,0 +1,1765 @@
+{
+    "file": {
+        "type": "activeButton",
+        "documentType": "common",
+        "selector": "#toolbar ul li[data-layout-name=\"toolbar-file\"]",
+        "childElements": [
+            {
+                "createNew": {
+                    "type": "activeButton",
+                    "documentType": [
+                        "word",
+                        "cell",
+                        "slide"
+                    ],
+                    "selector": "#fm-btn-create",
+                    "childElements": [
+                        {
+                            "createNew": {
+                                "type": "textButton",
+                                "documentType": [
+                                    "word",
+                                    "cell",
+                                    "slide"
+                                ],
+                                "selector": [
+                                    {
+                                        "Blank document": {
+                                            "type": "button",
+                                            "documentType": "word",
+                                            "selector": "#panel-createnew .blank-document .title"
+                                        }
+                                    },
+                                    {
+                                        "Blank Spreadsheet": {
+                                            "type": "button",
+                                            "documentType": "cell",
+                                            "selector": "#panel-createnew .blank-document .title"
+                                        }
+                                    },
+                                    {
+                                        "Blank Presentation": {
+                                            "type": "button",
+                                            "documentType": "slide",
+                                            "selector": "#panel-createnew .blank-document .title"
+                                        }
+                                    },
+                                    {
+                                        "Blank": {
+                                            "type": "button",
+                                            "documentType": [
+                                                "word",
+                                                "cell",
+                                                "slide"
+                                            ],
+                                            "selector": "#panel-createnew .thumb-wrap .title"
+                                        }
+                                    },
+                                    {
+                                        "With sample content": {
+                                            "type": "button",
+                                            "documentType": [
+                                                "word",
+                                                "cell",
+                                                "slide"
+                                            ],
+                                            "selector": "#panel-createnew .thumb-wrap .title"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "save": {
+                    "type": "activeButton",
+                    "documentType": "common",
+                    "selector": "#fm-btn-save"
+                }
+            },
+            {
+                "downloadAs": {
+                    "type": "activeButton",
+                    "documentType": "common",
+                    "selector": "#fm-btn-download",
+                    "childElements": [
+                        {
+                            "downloadAs": {
+                                "type": "section",
+                                "documentType": "common",
+                                "selector": "",
+                                "childElements": [
+                                    {
+                                        "docx": {
+                                            "type": "button",
+                                            "documentType": [
+                                                "word",
+                                                "pdf"
+                                            ],
+                                            "selector": "#panel-saveas .svg-format-docx"
+                                        }
+                                    },
+                                    {
+                                        "pdf": {
+                                            "type": "button",
+                                            "documentType": "common",
+                                            "selector": "#panel-saveas .svg-format-pdf"
+                                        }
+                                    },
+                                    {
+                                        "pdfa": {
+                                            "type": "button",
+                                            "documentType": "common",
+                                            "selector": "#panel-saveas .svg-format-pdfa"
+                                        }
+                                    },
+                                    {
+                                        "odt": {
+                                            "type": "button",
+                                            "documentType": [
+                                                "word",
+                                                "pdf"
+                                            ],
+                                            "selector": "#panel-saveas .svg-format-odt"
+                                        }
+                                    },
+                                    {
+                                        "dotx": {
+                                            "type": "button",
+                                            "documentType": [
+                                                "word",
+                                                "pdf"
+                                            ],
+                                            "selector": "#panel-saveas .svg-format-dotx"
+                                        }
+                                    },
+                                    {
+                                        "ott": {
+                                            "type": "button",
+                                            "documentType": [
+                                                "word",
+                                                "pdf"
+                                            ],
+                                            "selector": "#panel-saveas .svg-format-ott"
+                                        }
+                                    },
+                                    {
+                                        "rtf": {
+                                            "type": "modalWindow",
+                                            "documentType": [
+                                                "word",
+                                                "pdf"
+                                            ],
+                                            "selector": [
+                                                "#panel-saveas .svg-format-rtf",
+                                                ".modal.modal-dlg",
+                                                "button[result=\"ok\"]"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "txt": {
+                                            "type": "button",
+                                            "documentType": [
+                                                "word",
+                                                "pdf"
+                                            ],
+                                            "selector": "#panel-saveas .svg-format-txt",
+                                            "childElements": [
+                                                {
+                                                    "encoding": {
+                                                        "type": "modalWindow",
+                                                        "documentType": [
+                                                            "word",
+                                                            "pdf"
+                                                        ],
+                                                        "selector": [
+                                                            "button[result=\"ok\"]",
+                                                            ".modal.modal-dlg",
+                                                            "button[result=\"ok\"]"
+                                                        ],
+                                                        "childElements": [
+                                                            {
+                                                                "encoding": {
+                                                                    "type": "dropdown",
+                                                                    "documentType": [
+                                                                        "word",
+                                                                        "pdf"
+                                                                    ],
+                                                                    "selector": [
+                                                                        "#id-codepages-combo",
+                                                                        "#id-codepages-combo ul li a div"
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "fb2": {
+                                            "type": "button",
+                                            "documentType": [
+                                                "word",
+                                                "pdf"
+                                            ],
+                                            "selector": "#panel-saveas .svg-format-fb2"
+                                        }
+                                    },
+                                    {
+                                        "epub": {
+                                            "type": "button",
+                                            "documentType": [
+                                                "word",
+                                                "pdf"
+                                            ],
+                                            "selector": "#panel-saveas .svg-format-epub"
+                                        }
+                                    },
+                                    {
+                                        "html": {
+                                            "type": "button",
+                                            "documentType": [
+                                                "word",
+                                                "pdf"
+                                            ],
+                                            "selector": "#panel-saveas .svg-format-html"
+                                        }
+                                    },
+                                    {
+                                        "xlsx": {
+                                            "type": "button",
+                                            "documentType": "cell",
+                                            "selector": "#panel-saveas .svg-format-xlsx"
+                                        }
+                                    },
+                                    {
+                                        "ods": {
+                                            "type": "button",
+                                            "documentType": "cell",
+                                            "selector": "#panel-saveas .svg-format-ods"
+                                        }
+                                    },
+                                    {
+                                        "csv": {
+                                            "type": "button",
+                                            "documentType": "cell",
+                                            "selector": "#panel-saveas .svg-format-csv"
+                                        }
+                                    },
+                                    {
+                                        "xltx": {
+                                            "type": "button",
+                                            "documentType": "cell",
+                                            "selector": "#panel-saveas .svg-format-xltx"
+                                        }
+                                    },
+                                    {
+                                        "ots": {
+                                            "type": "button",
+                                            "documentType": "cell",
+                                            "selector": "#panel-saveas .svg-format-ots"
+                                        }
+                                    },
+                                    {
+                                        "xlsb": {
+                                            "type": "button",
+                                            "documentType": "cell",
+                                            "selector": "#panel-saveas .svg-format-xlsb"
+                                        }
+                                    },
+                                    {
+                                        "pptx": {
+                                            "type": "button",
+                                            "documentType": "slide",
+                                            "selector": "#panel-saveas .svg-format-pptx"
+                                        }
+                                    },
+                                    {
+                                        "ppsx": {
+                                            "type": "button",
+                                            "documentType": "slide",
+                                            "selector": "#panel-saveas .svg-format-ppsx"
+                                        }
+                                    },
+                                    {
+                                        "odp": {
+                                            "type": "button",
+                                            "documentType": "slide",
+                                            "selector": "#panel-saveas .svg-format-odp"
+                                        }
+                                    },
+                                    {
+                                        "potx": {
+                                            "type": "button",
+                                            "documentType": "slide",
+                                            "selector": "#panel-saveas .svg-format-potx"
+                                        }
+                                    },
+                                    {
+                                        "otp": {
+                                            "type": "button",
+                                            "documentType": "slide",
+                                            "selector": "#panel-saveas .svg-format-otp"
+                                        }
+                                    },
+                                    {
+                                        "jpg": {
+                                            "type": "button",
+                                            "documentType": "common",
+                                            "selector": "#panel-saveas .svg-format-jpg"
+                                        }
+                                    },
+                                    {
+                                        "png": {
+                                            "type": "button",
+                                            "documentType": "common",
+                                            "selector": "#panel-saveas .svg-format-png"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "saveCopyAs": {
+                    "type": "activeButton",
+                    "selector": "#fm-btn-save-copy",
+                    "childElements": [
+                        {
+                            "saveCopyAs": {
+                                "type": "section",
+                                "selector": "",
+                                "childElements": [
+                                    {
+                                        "docx": {
+                                            "type": "button",
+                                            "documentType": [
+                                                "word",
+                                                "pdf"
+                                            ],
+                                            "selector": "#panel-savecopy .svg-format-docx"
+                                        }
+                                    },
+                                    {
+                                        "pdf": {
+                                            "type": "button",
+                                            "documentType": "common",
+                                            "selector": "#panel-savecopy .svg-format-pdf"
+                                        }
+                                    },
+                                    {
+                                        "pdfa": {
+                                            "type": "button",
+                                            "documentType": "common",
+                                            "selector": "#panel-savecopy .svg-format-pdfa"
+                                        }
+                                    },
+                                    {
+                                        "odt": {
+                                            "type": "button",
+                                            "documentType": [
+                                                "word",
+                                                "pdf"
+                                            ],
+                                            "selector": "#panel-savecopy .svg-format-odt"
+                                        }
+                                    },
+                                    {
+                                        "dotx": {
+                                            "type": "button",
+                                            "documentType": [
+                                                "word",
+                                                "pdf"
+                                            ],
+                                            "selector": "#panel-savecopy .svg-format-dotx"
+                                        }
+                                    },
+                                    {
+                                        "ott": {
+                                            "type": "button",
+                                            "documentType": [
+                                                "word",
+                                                "pdf"
+                                            ],
+                                            "selector": "#panel-savecopy .svg-format-ott"
+                                        }
+                                    },
+                                    {
+                                        "rtf": {
+                                            "type": "modalWindow",
+                                            "documentType": [
+                                                "word",
+                                                "pdf"
+                                            ],
+                                            "selector": [
+                                                "#panel-savecopy .svg-format-rtf",
+                                                ".modal.modal-dlg",
+                                                "button[result=\"ok\"]"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "txt": {
+                                            "type": "button",
+                                            "documentType": [
+                                                "word",
+                                                "pdf"
+                                            ],
+                                            "selector": "#panel-savecopy .svg-format-txt",
+                                            "childElements": [
+                                                {
+                                                    "encoding": {
+                                                        "type": "modalWindow",
+                                                        "documentType": [
+                                                            "word",
+                                                            "pdf"
+                                                        ],
+                                                        "selector": [
+                                                            "button[result=\"ok\"]",
+                                                            ".modal.modal-dlg",
+                                                            "button[result=\"ok\"]"
+                                                        ],
+                                                        "childElements": [
+                                                            {
+                                                                "encoding": {
+                                                                    "type": "dropdown",
+                                                                    "documentType": [
+                                                                        "word",
+                                                                        "pdf"
+                                                                    ],
+                                                                    "selector": [
+                                                                        "#id-codepages-combo",
+                                                                        "#id-codepages-combo ul li a div"
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "fb2": {
+                                            "type": "button",
+                                            "documentType": [
+                                                "word",
+                                                "pdf"
+                                            ],
+                                            "selector": "#panel-savecopy .svg-format-fb2"
+                                        }
+                                    },
+                                    {
+                                        "epub": {
+                                            "type": "button",
+                                            "documentType": [
+                                                "word",
+                                                "pdf"
+                                            ],
+                                            "selector": "#panel-savecopy .svg-format-epub"
+                                        }
+                                    },
+                                    {
+                                        "html": {
+                                            "type": "button",
+                                            "documentType": [
+                                                "word",
+                                                "pdf"
+                                            ],
+                                            "selector": "#panel-savecopy .svg-format-html"
+                                        }
+                                    },
+                                    {
+                                        "xlsx": {
+                                            "type": "button",
+                                            "documentType": "cell",
+                                            "selector": "#panel-savecopy .svg-format-xlsx"
+                                        }
+                                    },
+                                    {
+                                        "ods": {
+                                            "type": "button",
+                                            "documentType": "cell",
+                                            "selector": "#panel-savecopy .svg-format-ods"
+                                        }
+                                    },
+                                    {
+                                        "csv": {
+                                            "type": "button",
+                                            "documentType": "cell",
+                                            "selector": "#panel-savecopy .svg-format-csv"
+                                        }
+                                    },
+                                    {
+                                        "xltx": {
+                                            "type": "button",
+                                            "documentType": "cell",
+                                            "selector": "#panel-savecopy .svg-format-xltx"
+                                        }
+                                    },
+                                    {
+                                        "ots": {
+                                            "type": "button",
+                                            "documentType": "cell",
+                                            "selector": "#panel-savecopy .svg-format-ots"
+                                        }
+                                    },
+                                    {
+                                        "xlsb": {
+                                            "type": "button",
+                                            "documentType": "cell",
+                                            "selector": "#panel-savecopy .svg-format-xlsb"
+                                        }
+                                    },
+                                    {
+                                        "pptx": {
+                                            "type": "button",
+                                            "documentType": "slide",
+                                            "selector": "#panel-savecopy .svg-format-pptx"
+                                        }
+                                    },
+                                    {
+                                        "ppsx": {
+                                            "type": "button",
+                                            "documentType": "slide",
+                                            "selector": "#panel-savecopy .svg-format-ppsx"
+                                        }
+                                    },
+                                    {
+                                        "odp": {
+                                            "type": "button",
+                                            "documentType": "slide",
+                                            "selector": "#panel-savecopy .svg-format-odp"
+                                        }
+                                    },
+                                    {
+                                        "potx": {
+                                            "type": "button",
+                                            "documentType": "slide",
+                                            "selector": "#panel-savecopy .svg-format-potx"
+                                        }
+                                    },
+                                    {
+                                        "otp": {
+                                            "type": "button",
+                                            "documentType": "slide",
+                                            "selector": "#panel-savecopy .svg-format-otp"
+                                        }
+                                    },
+                                    {
+                                        "jpg": {
+                                            "type": "button",
+                                            "documentType": "common",
+                                            "selector": "#panel-savecopy .svg-format-jpg"
+                                        }
+                                    },
+                                    {
+                                        "png": {
+                                            "type": "button",
+                                            "documentType": "common",
+                                            "selector": "#panel-savecopy .svg-format-png"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "rename": {
+                    "type": "activeButton",
+                    "documentType": "common",
+                    "selector": "#fm-btn-rename",
+                    "childElements": [
+                        {
+                            "rename": {
+                                "type": "modalWindow",
+                                "selector": [
+                                    null,
+                                    ".modal.modal-dlg",
+                                    "button[result=\"ok\"]"
+                                ],
+                                "childElements": [
+                                    {
+                                        "rename": {
+                                            "type": "inputForm",
+                                            "selector": "#id-dlg-newname input"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "protect": {
+                    "type": "activeButton",
+                    "documentType": "common",
+                    "selector": "#fm-btn-protect",
+                    "childElements": [
+                        {
+                            "protect": {
+                                "type": "section",
+                                "selector": "",
+                                "childElements": [
+                                    {
+                                        "add": {
+                                            "type": "modalWindow",
+                                            "selector": [
+                                                "#fms-btn-add-pwd > button",
+                                                ".modal.modal-dlg",
+                                                "button[result=\"ok\"]"
+                                            ],
+                                            "childElements": [
+                                                {
+                                                    "password": {
+                                                        "type": "inputForm",
+                                                        "selector": "#id-password-txt input"
+                                                    }
+                                                },
+                                                {
+                                                    "repeatPassword": {
+                                                        "type": "inputForm",
+                                                        "selector": "#id-repeat-txt input"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "change": {
+                                            "type": "modalWindow",
+                                            "selector": [
+                                                "#fms-btn-change-pwd > button",
+                                                ".modal.modal-dlg",
+                                                "button[result=\"ok\"]"
+                                            ],
+                                            "childElements": [
+                                                {
+                                                    "password": {
+                                                        "type": "inputForm",
+                                                        "selector": "#id-password-txt input"
+                                                    }
+                                                },
+                                                {
+                                                    "repeatPassword": {
+                                                        "type": "inputForm",
+                                                        "selector": "#id-repeat-txt input"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "delete": {
+                                            "type": "button",
+                                            "selector": "#fms-btn-delete-pwd > button"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "info": {
+                    "type": "activeButton",
+                    "documentType": "common",
+                    "selector": "#fm-btn-info",
+                    "childElements": [
+                        {
+                            "documentInfo": {
+                                "type": "section",
+                                "documentType": "common",
+                                "selector": "",
+                                "childElements": [
+                                    {
+                                        "common": {
+                                            "type": "section",
+                                            "documentType": "common",
+                                            "selector": "",
+                                            "childElements": [
+                                                {
+                                                    "owner": {
+                                                        "type": "infoElement",
+                                                        "documentType": "common",
+                                                        "selector": "#id-info-owner"
+                                                    }
+                                                },
+                                                {
+                                                    "uploaded": {
+                                                        "type": "infoElement",
+                                                        "documentType": "common",
+                                                        "selector": "#id-info-uploaded"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "statistics": {
+                                            "type": "section",
+                                            "documentType": [
+                                                "word",
+                                                "pdf"
+                                            ],
+                                            "selector": "",
+                                            "childElements": [
+                                                {
+                                                    "pages": {
+                                                        "type": "infoElement",
+                                                        "documentType": [
+                                                            "word",
+                                                            "pdf"
+                                                        ],
+                                                        "selector": "#id-info-pages"
+                                                    }
+                                                },
+                                                {
+                                                    "paragraphs": {
+                                                        "type": "infoElement",
+                                                        "documentType": [
+                                                            "word",
+                                                            "pdf"
+                                                        ],
+                                                        "selector": "#id-info-paragraphs"
+                                                    }
+                                                },
+                                                {
+                                                    "words": {
+                                                        "type": "infoElement",
+                                                        "documentType": [
+                                                            "word",
+                                                            "pdf"
+                                                        ],
+                                                        "selector": "#id-info-words"
+                                                    }
+                                                },
+                                                {
+                                                    "characters": {
+                                                        "type": "infoElement",
+                                                        "documentType": [
+                                                            "word",
+                                                            "pdf"
+                                                        ],
+                                                        "selector": "#id-info-symbols"
+                                                    }
+                                                },
+                                                {
+                                                    "charactersWithSpaces": {
+                                                        "type": "infoElement",
+                                                        "documentType": [
+                                                            "word",
+                                                            "pdf"
+                                                        ],
+                                                        "selector": "#id-info-spaces"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "type": "section",
+                                            "documentType": "common",
+                                            "selector": "",
+                                            "childElements": [
+                                                {
+                                                    "getAuthor": {
+                                                        "type": "infoElement",
+                                                        "documentType": "common",
+                                                        "selector": "#id-info-author input[readonly=\"true\"]"
+                                                    }
+                                                },
+                                                {
+                                                    "getTitle": {
+                                                        "type": "infoElement",
+                                                        "documentType": "common",
+                                                        "selector": "#id-info-title input"
+                                                    }
+                                                },
+                                                {
+                                                    "getTag": {
+                                                        "type": "infoElement",
+                                                        "documentType": "common",
+                                                        "selector": "#id-info-tags input"
+                                                    }
+                                                },
+                                                {
+                                                    "getSubject": {
+                                                        "type": "infoElement",
+                                                        "documentType": "common",
+                                                        "selector": "#id-info-subject input"
+                                                    }
+                                                },
+                                                {
+                                                    "getComment": {
+                                                        "type": "infoElement",
+                                                        "documentType": "common",
+                                                        "selector": "#id-info-comment input"
+                                                    }
+                                                },
+                                                {
+                                                    "getCustomProperty": {
+                                                        "type": "infoElement",
+                                                        "documentType": "common",
+                                                        "selector": ".custom-property-wrapper input"
+                                                    }
+                                                },
+                                                {
+                                                    "author": {
+                                                        "type": "inputForm",
+                                                        "documentType": "common",
+                                                        "selector": "#id-info-add-author input"
+                                                    }
+                                                },
+                                                {
+                                                    "title": {
+                                                        "type": "inputForm",
+                                                        "documentType": "common",
+                                                        "selector": "#id-info-title input"
+                                                    }
+                                                },
+                                                {
+                                                    "tags": {
+                                                        "type": "inputForm",
+                                                        "documentType": "common",
+                                                        "selector": "#id-info-tags input"
+                                                    }
+                                                },
+                                                {
+                                                    "subject": {
+                                                        "type": "inputForm",
+                                                        "documentType": "common",
+                                                        "selector": "#id-info-subject input"
+                                                    }
+                                                },
+                                                {
+                                                    "comment": {
+                                                        "type": "inputForm",
+                                                        "documentType": "common",
+                                                        "selector": "#id-info-comment input"
+                                                    }
+                                                },
+                                                {
+                                                    "addProperty": {
+                                                        "type": "modalWindow",
+                                                        "documentType": "common",
+                                                        "selector": [
+                                                            "#fminfo-btn-add-property",
+                                                            ".modal.modal-dlg",
+                                                            "button[result=\"ok\"]"
+                                                        ],
+                                                        "childElements": [
+                                                            {
+                                                                "title": {
+                                                                    "type": "inputForm",
+                                                                    "documentType": "common",
+                                                                    "selector": "#id-dlg-title input"
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": {
+                                                                    "type": "dropdown",
+                                                                    "documentType": "common",
+                                                                    "selector": [
+                                                                        "#id-dlg-type",
+                                                                        "#id-dlg-type ul li a"
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "value": {
+                                                                    "type": "inputForm",
+                                                                    "documentType": "common",
+                                                                    "selector": "#id-dlg-value-input input"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "versionHistory": {
+                    "type": "activeButton",
+                    "documentType": "common",
+                    "selector": "#fm-btn-history"
+                }
+            },
+            {
+                "advancedSettings": {
+                    "type": "activeButton",
+                    "documentType": "common",
+                    "selector": "#fm-btn-settings",
+                    "childElements": [
+                        {
+                            "editing": {
+                                "type": "section",
+                                "documentType": "common",
+                                "childElements": [
+                                    {
+                                        "autosave": {
+                                            "type": "checkbox",
+                                            "documentType": "common",
+                                            "selector": "#fms-chb-autosave label.checkbox__shape"
+                                        }
+                                    },
+                                    {
+                                        "showPasteOptions": {
+                                            "type": "checkbox",
+                                            "documentType": "common",
+                                            "selector": "#fms-chb-paste-settings label.checkbox__shape"
+                                        }
+                                    },
+                                    {
+                                        "useSmart": {
+                                            "type": "checkbox",
+                                            "documentType": [
+                                                "word",
+                                                "pdf"
+                                            ],
+                                            "selector": "#fms-chb-smart-selection label.checkbox__shape"
+                                        }
+                                    },
+                                    {
+                                        "fileCompatible": {
+                                            "type": "checkbox",
+                                            "documentType": [
+                                                "word",
+                                                "pdf"
+                                            ],
+                                            "selector": "#fms-chb-compatible label.checkbox__shape"
+                                        }
+                                    },
+                                    {
+                                        "showTooltip": {
+                                            "type": "checkbox",
+                                            "documentType": "cell",
+                                            "selector": "#fms-chb-function-tooltip label.checkbox__shape"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "collab": {
+                                "type": "section",
+                                "documentType": "common",
+                                "childElements": [
+                                    {
+                                        "coEditingMode": {
+                                            "type": "textButton",
+                                            "documentType": "common",
+                                            "selector": [
+                                                {
+                                                    "Strict": {
+                                                        "type": "button",
+                                                        "documentType": "common",
+                                                        "selector": "#fms-rb-coauth-mode-strict"
+                                                    }
+                                                },
+                                                {
+                                                    "Fast": {
+                                                        "type": "button",
+                                                        "documentType": "common",
+                                                        "selector": "#fms-rb-coauth-mode-fast"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "showTrack": {
+                                            "type": "textButton",
+                                            "documentType": [
+                                                "word",
+                                                "pdf"
+                                            ],
+                                            "selector": [
+                                                {
+                                                    "Show by click in balloons": {
+                                                        "type": "button",
+                                                        "documentType": [
+                                                            "word",
+                                                            "pdf"
+                                                        ],
+                                                        "selector": "#fms-rb-show-track-ballons"
+                                                    }
+                                                },
+                                                {
+                                                    "Show by hover in tooltips": {
+                                                        "type": "button",
+                                                        "documentType": [
+                                                            "word",
+                                                            "pdf"
+                                                        ],
+                                                        "selector": "#fms-rb-show-track-tooltips"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "realTimeChanges": {
+                                            "type": "textButton",
+                                            "documentType": [
+                                                "word",
+                                                "pdf"
+                                            ],
+                                            "selector": [
+                                                {
+                                                    "View none": {
+                                                        "type": "button",
+                                                        "documentType": [
+                                                            "word",
+                                                            "pdf"
+                                                        ],
+                                                        "selector": "#fms-rb-show-changes-none"
+                                                    }
+                                                },
+                                                {
+                                                    "View all": {
+                                                        "type": "button",
+                                                        "documentType": [
+                                                            "word",
+                                                            "pdf"
+                                                        ],
+                                                        "selector": "#fms-rb-show-changes-all"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "showComments": {
+                                            "type": "checkbox",
+                                            "documentType": [
+                                                "word",
+                                                "pdf",
+                                                "cell"
+                                            ],
+                                            "selector": "#fms-chb-live-comment label.checkbox__shape"
+                                        }
+                                    },
+                                    {
+                                        "showResolved": {
+                                            "type": "checkbox",
+                                            "documentType": [
+                                                "word",
+                                                "pdf",
+                                                "cell"
+                                            ],
+                                            "selector": "#fms-chb-resolved-comment label.checkbox__shape"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "proofing": {
+                                "type": "section",
+                                "documentType": "common",
+                                "childElements": [
+                                    {
+                                        "spellCheck": {
+                                            "type": "checkbox",
+                                            "documentType": [
+                                                "word",
+                                                "pdf",
+                                                "slide"
+                                            ],
+                                            "selector": "#fms-chb-spell-check label.checkbox__shape"
+                                        }
+                                    },
+                                    {
+                                        "ignoreUpper": {
+                                            "type": "checkbox",
+                                            "documentType": "common",
+                                            "selector": "#fms-chb-ignore-uppercase-words label.checkbox__shape"
+                                        }
+                                    },
+                                    {
+                                        "ignoreWithNumber": {
+                                            "type": "checkbox",
+                                            "documentType": "common",
+                                            "selector": "#fms-chb-ignore-numbers-words label.checkbox__shape"
+                                        }
+                                    },
+                                    {
+                                        "dictLang": {
+                                            "type": "dropdown",
+                                            "documentType": "cell",
+                                            "selector": [
+                                                "#fms-cmb-dictionary-language",
+                                                "#fms-cmb-dictionary-language ul li a label"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "autoCorrect": {
+                                            "type": "modalWindow",
+                                            "documentType": "common",
+                                            "selector": [
+                                                "#fms-btn-auto-correct",
+                                                ".advanced-settings-dlg",
+                                                "button[result=\"close\"]"
+                                            ],
+                                            "childElements": [
+                                                {
+                                                    "math": {
+                                                        "type": "activeButton",
+                                                        "documentType": "common",
+                                                        "selector": "#slot-category-id-autocorrect-dialog-settings-math button",
+                                                        "childElements": [
+                                                            {
+                                                                "replaceAsType": {
+                                                                    "type": "checkbox",
+                                                                    "documentType": "common",
+                                                                    "selector": "#auto-correct-chb-replace-type label.checkbox__shape"
+                                                                }
+                                                            },
+                                                            {
+                                                                "correctReplace": {
+                                                                    "type": "inputForm",
+                                                                    "documentType": "common",
+                                                                    "selector": "#auto-correct-replace input"
+                                                                }
+                                                            },
+                                                            {
+                                                                "correctBy": {
+                                                                    "type": "inputForm",
+                                                                    "documentType": "common",
+                                                                    "selector": "#auto-correct-by input"
+                                                                }
+                                                            },
+                                                            {
+                                                                "methodButton": {
+                                                                    "type": "textButton",
+                                                                    "documentType": "common",
+                                                                    "selector": [
+                                                                        {
+                                                                            "Reset to default": {
+                                                                                "type": "button",
+                                                                                "documentType": "common",
+                                                                                "selector": "#auto-correct-btn-reset"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "Add": {
+                                                                                "type": "button",
+                                                                                "documentType": "common",
+                                                                                "selector": "#auto-correct-btn-edit"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "Delete": {
+                                                                                "type": "button",
+                                                                                "documentType": "common",
+                                                                                "selector": "#auto-correct-btn-delete"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "Reset": {
+                                                                                "type": "button",
+                                                                                "documentType": "common",
+                                                                                "selector": "#auto-correct-btn-edit"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "Restore": {
+                                                                                "type": "button",
+                                                                                "documentType": "common",
+                                                                                "selector": "#auto-correct-btn-delete"
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "recognized": {
+                                                        "type": "activeButton",
+                                                        "documentType": "common",
+                                                        "selector": "#slot-category-id-autocorrect-dialog-settings-recognized button",
+                                                        "childElements": [
+                                                            {
+                                                                "recFind": {
+                                                                    "type": "inputForm",
+                                                                    "documentType": "common",
+                                                                    "selector": "#auto-correct-rec-find input"
+                                                                }
+                                                            },
+                                                            {
+                                                                "methodButton": {
+                                                                    "type": "textButton",
+                                                                    "documentType": "common",
+                                                                    "selector": [
+                                                                        {
+                                                                            "Reset to default": {
+                                                                                "type": "button",
+                                                                                "documentType": "common",
+                                                                                "selector": "#auto-correct-btn-rec-reset"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "Add": {
+                                                                                "type": "button",
+                                                                                "documentType": "common",
+                                                                                "selector": "#auto-correct-btn-rec-edit"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "Delete": {
+                                                                                "type": "button",
+                                                                                "documentType": "common",
+                                                                                "selector": "#auto-correct-btn-rec-delete"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "Reset": {
+                                                                                "type": "button",
+                                                                                "documentType": "common",
+                                                                                "selector": "#auto-correct-btn-rec-edit"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "Restore": {
+                                                                                "type": "button",
+                                                                                "documentType": "common",
+                                                                                "selector": "#auto-correct-btn-rec-delete"
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "autoFormat": {
+                                                        "type": "activeButton",
+                                                        "documentType": "cell",
+                                                        "selector": "#slot-category-id-autocorrect-dialog-settings-sse-autoformat button",
+                                                        "childElements": [
+                                                            {
+                                                                "includeNewRows": {
+                                                                    "type": "checkbox",
+                                                                    "documentType": "cell",
+                                                                    "selector": "#id-autocorrect-dialog-chk-new-rows label.checkbox__shape"
+                                                                }
+                                                            },
+                                                            {
+                                                                "hyperlinks": {
+                                                                    "type": "checkbox",
+                                                                    "documentType": "cell",
+                                                                    "selector": "#id-autocorrect-dialog-chk-hyperlink label.checkbox__shape"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "autoFormat": {
+                                                        "type": "activeButton",
+                                                        "documentType": [
+                                                            "word",
+                                                            "pdf",
+                                                            "slide"
+                                                        ],
+                                                        "selector": "#slot-category-id-autocorrect-dialog-settings-de-autoformat button",
+                                                        "childElements": [
+                                                            {
+                                                                "smartQuotes": {
+                                                                    "type": "checkbox",
+                                                                    "documentType": [
+                                                                        "word",
+                                                                        "pdf",
+                                                                        "slide"
+                                                                    ],
+                                                                    "selector": "#id-autocorrect-dialog-chk-quotes label.checkbox__shape"
+                                                                }
+                                                            },
+                                                            {
+                                                                "dash": {
+                                                                    "type": "checkbox",
+                                                                    "documentType": [
+                                                                        "word",
+                                                                        "pdf",
+                                                                        "slide"
+                                                                    ],
+                                                                    "selector": "#id-autocorrect-dialog-chk-hyphens label.checkbox__shape"
+                                                                }
+                                                            },
+                                                            {
+                                                                "hyperlinks": {
+                                                                    "type": "checkbox",
+                                                                    "documentType": [
+                                                                        "word",
+                                                                        "pdf",
+                                                                        "slide"
+                                                                    ],
+                                                                    "selector": "#id-autocorrect-dialog-chk-hyperlink label.checkbox__shape"
+                                                                }
+                                                            },
+                                                            {
+                                                                "doubleSpace": {
+                                                                    "type": "checkbox",
+                                                                    "documentType": [
+                                                                        "word",
+                                                                        "pdf",
+                                                                        "slide"
+                                                                    ],
+                                                                    "selector": "#id-autocorrect-dialog-chk-double-space label.checkbox__shape"
+                                                                }
+                                                            },
+                                                            {
+                                                                "bulletedList": {
+                                                                    "type": "checkbox",
+                                                                    "documentType": [
+                                                                        "word",
+                                                                        "pdf",
+                                                                        "slide"
+                                                                    ],
+                                                                    "selector": "#id-autocorrect-dialog-chk-bulleted label.checkbox__shape"
+                                                                }
+                                                            },
+                                                            {
+                                                                "numberedList": {
+                                                                    "type": "checkbox",
+                                                                    "documentType": [
+                                                                        "word",
+                                                                        "pdf",
+                                                                        "slide"
+                                                                    ],
+                                                                    "selector": "#id-autocorrect-dialog-chk-numbered label.checkbox__shape"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "autoCorrect": {
+                                                        "type": "activeButton",
+                                                        "documentType": [
+                                                            "word",
+                                                            "pdf",
+                                                            "slide"
+                                                        ],
+                                                        "selector": "#slot-category-id-autocorrect-dialog-settings-exceptions button",
+                                                        "childElements": [
+                                                            {
+                                                                "sentences": {
+                                                                    "type": "checkbox",
+                                                                    "documentType": [
+                                                                        "word",
+                                                                        "pdf",
+                                                                        "slide"
+                                                                    ],
+                                                                    "selector": "#auto-correct-exceptions-chk-sentence label.checkbox__shape"
+                                                                }
+                                                            },
+                                                            {
+                                                                "tableCells": {
+                                                                    "type": "checkbox",
+                                                                    "documentType": [
+                                                                        "word",
+                                                                        "pdf",
+                                                                        "slide"
+                                                                    ],
+                                                                    "selector": "#auto-correct-exceptions-chk-cells label.checkbox__shape"
+                                                                }
+                                                            },
+                                                            {
+                                                                "language": {
+                                                                    "type": "dropdown",
+                                                                    "documentType": [
+                                                                        "word",
+                                                                        "pdf",
+                                                                        "slide"
+                                                                    ],
+                                                                    "selector": [
+                                                                        "#auto-correct-exceptions-lang",
+                                                                        "#auto-correct-exceptions-lang ul li a"
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "dontCap": {
+                                                                    "type": "inputForm",
+                                                                    "documentType": [
+                                                                        "word",
+                                                                        "pdf",
+                                                                        "slide"
+                                                                    ],
+                                                                    "selector": "#auto-correct-exceptions-find input"
+                                                                }
+                                                            },
+                                                            {
+                                                                "methodButton": {
+                                                                    "type": "textButton",
+                                                                    "documentType": [
+                                                                        "word",
+                                                                        "pdf",
+                                                                        "slide"
+                                                                    ],
+                                                                    "selector": [
+                                                                        {
+                                                                            "Reset to default": {
+                                                                                "type": "button",
+                                                                                "documentType": [
+                                                                                    "word",
+                                                                                    "pdf",
+                                                                                    "slide"
+                                                                                ],
+                                                                                "selector": "#auto-correct-btn-exceptions-reset"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "Add": {
+                                                                                "type": "button",
+                                                                                "documentType": [
+                                                                                    "word",
+                                                                                    "pdf",
+                                                                                    "slide"
+                                                                                ],
+                                                                                "selector": "#auto-correct-btn-exceptions-edit"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "Delete": {
+                                                                                "type": "button",
+                                                                                "documentType": [
+                                                                                    "word",
+                                                                                    "pdf",
+                                                                                    "slide"
+                                                                                ],
+                                                                                "selector": "#auto-correct-btn-exceptions-delete"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "Reset": {
+                                                                                "type": "button",
+                                                                                "documentType": [
+                                                                                    "word",
+                                                                                    "pdf",
+                                                                                    "slide"
+                                                                                ],
+                                                                                "selector": "#auto-correct-btn-exceptions-edit"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "Restore": {
+                                                                                "type": "button",
+                                                                                "documentType": [
+                                                                                    "word",
+                                                                                    "pdf",
+                                                                                    "slide"
+                                                                                ],
+                                                                                "selector": "#auto-correct-btn-exceptions-delete"
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "appearance": {
+                                "type": "section",
+                                "documentType": "common",
+                                "childElements": [
+                                    {
+                                        "theme": {
+                                            "type": "dropdown",
+                                            "documentType": "common",
+                                            "selector": [
+                                                "#fms-cmb-theme",
+                                                "#fms-cmb-theme ul li a"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "tabStyle": {
+                                            "type": "dropdown",
+                                            "documentType": "common",
+                                            "selector": [
+                                                "#fms-cmb-tab-style",
+                                                "#fms-cmb-tab-style ul li a"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "darkMode": {
+                                            "type": "checkbox",
+                                            "documentType": [
+                                                "word",
+                                                "pdf"
+                                            ],
+                                            "selector": "#fms-chb-dark-mode label.checkbox__shape"
+                                        }
+                                    },
+                                    {
+                                        "useToolbarColor": {
+                                            "type": "checkbox",
+                                            "documentType": "common",
+                                            "selector": "#fms-chb-tab-background label.checkbox__shape"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "workspace": {
+                                "type": "section",
+                                "documentType": "common",
+                                "childElements": [
+                                    {
+                                        "turnOnScreen": {
+                                            "type": "checkbox",
+                                            "documentType": "common",
+                                            "selector": "#fms-chb-scrn-reader label.checkbox__shape"
+                                        }
+                                    },
+                                    {
+                                        "r1c1": {
+                                            "type": "checkbox",
+                                            "documentType": "cell",
+                                            "selector": "#fms-chb-r1c1-style label.checkbox__shape"
+                                        }
+                                    },
+                                    {
+                                        "alignment": {
+                                            "type": "checkbox",
+                                            "documentType": [
+                                                "word",
+                                                "pdf",
+                                                "slide"
+                                            ],
+                                            "selector": "#fms-chb-align-guides label.checkbox__shape"
+                                        }
+                                    },
+                                    {
+                                        "useAlt": {
+                                            "type": "checkbox",
+                                            "documentType": "common",
+                                            "selector": "#fms-chb-use-alt-key label.checkbox__shape"
+                                        }
+                                    },
+                                    {
+                                        "snappedToGrid": {
+                                            "type": "checkbox",
+                                            "documentType": "cell",
+                                            "selector": "#fms-chb-smooth-scroll label.checkbox__shape"
+                                        }
+                                    },
+                                    {
+                                        "quickAccess": {
+                                            "type": "modalWindow",
+                                            "documentType": "common",
+                                            "selector": [
+                                                "#fms-btn-customize-quick-access",
+                                                ".quick-access-dlg",
+                                                "button[result=\"ok\"]"
+                                            ],
+                                            "childElements": [
+                                                {
+                                                    "save": {
+                                                        "type": "checkbox",
+                                                        "documentType": "common",
+                                                        "selector": "#quick-access-chb-save label.checkbox__shape"
+                                                    }
+                                                },
+                                                {
+                                                    "print": {
+                                                        "type": "checkbox",
+                                                        "documentType": "common",
+                                                        "selector": "#quick-access-chb-print label.checkbox__shape"
+                                                    }
+                                                },
+                                                {
+                                                    "undo": {
+                                                        "type": "checkbox",
+                                                        "documentType": "common",
+                                                        "selector": "#quick-access-chb-undo label.checkbox__shape"
+                                                    }
+                                                },
+                                                {
+                                                    "redo": {
+                                                        "type": "checkbox",
+                                                        "documentType": "common",
+                                                        "selector": "#quick-access-chb-redo label.checkbox__shape"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "unit": {
+                                            "type": "dropdown",
+                                            "documentType": "common",
+                                            "selector": [
+                                                "#fms-cmb-unit",
+                                                "#fms-cmb-unit ul li a"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "zoomValue": {
+                                            "type": "dropdown",
+                                            "documentType": "common",
+                                            "selector": [
+                                                "#fms-cmb-zoom",
+                                                "#fms-cmb-zoom ul li a"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "fontHinting": {
+                                            "type": "dropdown",
+                                            "documentType": "common",
+                                            "selector": [
+                                                "#fms-cmb-font-render",
+                                                "#fms-cmb-font-render ul li a"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "macrosSettings": {
+                                            "type": "dropdown",
+                                            "documentType": "common",
+                                            "selector": [
+                                                "#fms-cmb-macros",
+                                                "#fms-cmb-macros ul li a label"
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "regionalSettings": {
+                                "type": "section",
+                                "documentType": "cell",
+                                "selector": "",
+                                "childElements": [
+                                    {
+                                        "formulaLang": {
+                                            "type": "dropdown",
+                                            "documentType": "cell",
+                                            "selector": [
+                                                "#fms-cmb-func-locale",
+                                                "#fms-cmb-func-locale ul li a"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "region": {
+                                            "type": "dropdown",
+                                            "documentType": "cell",
+                                            "selector": [
+                                                "#fms-cmb-reg-settings",
+                                                "#fms-cmb-reg-settings ul li a label"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "useSep": {
+                                            "type": "checkbox",
+                                            "documentType": "cell",
+                                            "selector": "#fms-chb-separator-settings label.checkbox__shape"
+                                        }
+                                    },
+                                    {
+                                        "decimalSep": {
+                                            "type": "inputForm",
+                                            "documentType": "cell",
+                                            "selector": "#fms-decimal-separator input"
+                                        }
+                                    },
+                                    {
+                                        "thousandSep": {
+                                            "type": "inputForm",
+                                            "documentType": "cell",
+                                            "selector": "#fms-thousands-separator input"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "calculating": {
+                                "type": "section",
+                                "documentType": "cell",
+                                "selector": "",
+                                "childElements": [
+                                    {
+                                        "useDateSystem": {
+                                            "type": "checkbox",
+                                            "documentType": "cell",
+                                            "selector": "#fms-chb-date-1904 label.checkbox__shape"
+                                        }
+                                    },
+                                    {
+                                        "enableIter": {
+                                            "type": "checkbox",
+                                            "documentType": "cell",
+                                            "selector": "#fms-chb-iterative-calc label.checkbox__shape"
+                                        }
+                                    },
+                                    {
+                                        "maxIter": {
+                                            "type": "inputForm",
+                                            "documentType": "cell",
+                                            "selector": "#fms-max-iterations input"
+                                        }
+                                    },
+                                    {
+                                        "maxChange": {
+                                            "type": "inputForm",
+                                            "documentType": "cell",
+                                            "selector": "#fms-max-change input"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "apply": {
+                                "type": "button",
+                                "documentType": "common",
+                                "selector": "#panel-settings .fms-flex-apply button"
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

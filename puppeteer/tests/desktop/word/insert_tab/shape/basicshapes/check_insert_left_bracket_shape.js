@@ -1,0 +1,29 @@
+const { FileMenu, Verification, Shape } = require("lib");
+
+Tester.createFile("docx");
+
+// Select basic shape - Left bracket type
+Shape.clickBasicShape(38);
+Shape.drawShape();
+FileMenu.downloadAs("docx");
+Verification.openFile();
+
+Verification.check(
+    "word/document.xml",
+    "//mc:AlternateContent[1]/mc:Choice[1]/w:drawing[1]/wp:anchor[1]/a:graphic[1]/a:graphicData[1]/wps:wsp[1]/wps:spPr[1]/a:prstGeom[1]/@prst",
+    "leftBracket"
+);
+
+Verification.check(
+    "word/document.xml",
+    "boolean(//mc:AlternateContent[1]/mc:Fallback[1]/w:pict[1]/v:shape[1]/@fillcolor)",
+    false
+);
+
+console.log(Verification.isSuccess());
+
+if (!Verification.isSuccess()) {
+    throw new Error("verification error");
+}
+
+Tester.close();

@@ -1,0 +1,8 @@
+{
+    "reportOptions": {
+        "ignoreBrowserErrors": [
+            "Failed to load resource: the server responded with a status of 404 ()",
+            "Potential permissions policy violation: autoplay is not allowed in this document."
+        ]
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "BORDER_SIZE_MENU": {
+        "MENU_SELECTOR": "#paragraphadv-combo-border-size",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#paragraphadv-combo-border-size ul li"
+    },
+    "BORDER_COLOR_BUTTON": "#paragraphadv-border-color-btn",
+    "TOP_BORDER_BUTTON": "#paragraphadv-button-border-top",
+    "INNER_BORDER_BUTTON": "#paragraphadv-button-border-inner-hor",
+    "BOTTOM_BORDER_BUTTON": "#paragraphadv-button-border-bottom",
+    "OUTER_BORDER_BUTTON": "#paragraphadv-button-border-outer",
+    "LEFT_BORDER_BUTTON": "#paragraphadv-button-border-left",
+    "ALL_BORDER_BUTTON": "#paragraphadv-button-border-all",
+    "RIGHT_BORDER_BUTTON": "#paragraphadv-button-border-right",
+    "NO_BORDER_BUTTON": "#paragraphadv-button-border-none",
+    "BACKGROUND_COLOR_BUTTON": "#paragraphadv-back-color-btn"
+}

@@ -1,0 +1,21 @@
+{
+    "COMMENT_TAB": {
+        "ACTIVE_BUTTON": "#toolbar .ribtab.active a[data-tab=\"comment\"]",
+        "BUTTON": "#toolbar .ribtab a[data-tab=\"comment\"]"
+    },
+    "ADD_COMMENT": {
+        "BUTTON": "#tlbtn-addcomment",
+        "INPUT_COMMENT": "#id-comments-popover textarea",
+        "ADD_BUTTON": "#id-comments-change-popover",
+        "CLOSE_BUTTON": ".btn-inner-close"
+    },
+    "SHOW_COMMENTS": "#slot-chk-showcomment .checkbox__shape",
+    "TEXT_COMMENT": {
+        "DEFAULT_BUTTON": "#tlbtn-textcomment",
+        "COMMENT_TYPE_DROPDOWN": "#slot-btn-text-comment",
+        "COMMENT_TYPE": {
+            "ITEM": "#slot-btn-text-comment ul li a",
+            "TEXT_VALUE": "span"
+        }
+    }
+}

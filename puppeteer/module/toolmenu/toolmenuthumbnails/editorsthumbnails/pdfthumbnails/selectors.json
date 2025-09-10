@@ -1,0 +1,16 @@
+{
+    "LEFT_MENU": {
+        "THUMB_BUTTON": "#left-btn-thumbnails"
+    },
+    "THUMB_MENU": {
+        "OPTIONS": {
+            "THUMB_BUTTON_SETTINGS": "#thumbnails-btn-settings",
+            "SETTINGS_MENU": ".dropdown-menu",
+            "SIZE": "#sld-thumbnails-size .track",
+            "HIGHLIGHT": "#thumbnails-btn-settings .menu-item.checkable"
+        },
+        "MENU": {
+            "THUNB_LIST": "#thumbnails-list"
+        }
+    }
+}

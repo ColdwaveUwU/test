@@ -1,0 +1,12 @@
+{
+    "ADD_SLIDE": {
+        "DEFAULT_BUTTON": ".btn-addslide",
+        "OPEN_DROPDOWN_BUTTON": "#id-toolbar-btn-add-slide button:nth-of-type(2)",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#id-toolbar-menu-addslide .item",
+        "DUPLICATE_SLIDE": "#id-toolbar-btn-add-slide .menu-item"
+    },
+    "CHANGE_SLIDE_LAYOUT": {
+        "OPEN_DROPDOWN_BUTTON": "#slot-changeslide",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#id-toolbar-menu-changeslide .item"
+    }
+}

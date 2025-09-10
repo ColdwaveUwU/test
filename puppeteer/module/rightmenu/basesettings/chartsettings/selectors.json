@@ -1,0 +1,48 @@
+{
+    "RIGHT_MENU_CHART": "#id-right-menu-chart",
+    "RIGHT_MENU_CHART_ADVANCED": "#chart-advanced-link",
+    "RIGHT_MENU_PANEL": "#chart-panel-3d-rotate",
+    "WRAPPING": {
+        "DROPDOWN": "#chart-combo-wrap button",
+        "LIST_ITEM": ".item[aria-label='prop']"
+    },
+    "CHART_TYPE": {
+        "DROPDOWN": "#chart-button-type button",
+        "LIST": "#id-chart-menu-type .grouped-data",
+        "ITEM": ".item",
+        "DESCRIPTION": ".group-description span"
+    },
+    "CHART_STYLE": {
+        "DROPDOWN": "#chart-combo-style button",
+        "LIST": ".menu-picker-container .dataview",
+        "LIST_ITEM": ".item",
+        "ITEM_LABLE": ".menu-picker-container .dataview .item[aria-label='Style number']"
+    },
+    "ROTATION": {
+        "X": {
+            "LEFT": "#chart-btn-x-left button",
+            "RIGHT": "#chart-btn-x-right button",
+            "INPUT": "#chart-spin-x input"
+        },
+        "Y": {
+            "UP": "#chart-btn-y-up button",
+            "DOWN": "#chart-btn-y-down button",
+            "INPUT": "#chart-spin-y input"
+        },
+        "PERSPECTIVE": {
+            "NARROW": "#chart-btn-narrow button",
+            "WIDE": "#chart-btn-widen button",
+            "INPUT": "#chart-spin-persp input"
+        },
+        "CHECKBOX": {
+            "RIGHT_ANGLE": "#chart-checkbox-right-angle label label",
+            "AUTOSCALE": "#chart-checkbox-autoscale label label"
+        },
+        "DEPTH": "#chart-spin-3d-depth input",
+        "HEIGHT": "#chart-spin-3d-height",
+        "DEFAULT_ROTATION": "#chart-def-rotate-link",
+        "INCREMENT_BTN": "#chart-spin-{prop} .spinner-up",
+        "DECREMENT_BTN": "#chart-spin-{prop} .spinner-down"
+    },
+    "EDIT_DATA_BTN": "#chart-button-edit-data"
+}

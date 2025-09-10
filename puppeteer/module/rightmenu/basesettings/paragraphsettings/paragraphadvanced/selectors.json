@@ -1,0 +1,8 @@
+{
+    "INDENTS_TAB": "#slot-category-id-adv-paragraph-indents > button",
+    "LINE_TAB": "#slot-category-id-adv-paragraph-line > button",
+    "BORDERS_TAB": "#slot-category-id-adv-paragraph-borders > button",
+    "FONT_TAB": "#slot-category-id-adv-paragraph-font > button",
+    "TABS_TAB": "#slot-category-id-adv-paragraph-tabs > button",
+    "PADDINGS_TAB": "#slot-category-id-adv-paragraph-margins > button"
+}

@@ -1,0 +1,6 @@
+{
+  "TOOLMENU_FIXED_TEXTFIELD_BTN": "#slot-btn-form-field",
+  "TOOLMENU_INLINE_TEXTFIELD_BTN": "#slot-btn-form-field button.dropdown-toggle",
+  "TOOLMENU_TEXTFIELD_DROPDOWN_LIST": "#slot-btn-form-field ul li a > div",
+  "POPUP_MODAL": ".asc-synchronizetip .btn-div"
+}

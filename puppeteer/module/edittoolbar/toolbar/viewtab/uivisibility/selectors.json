@@ -1,0 +1,12 @@
+{
+    "TOOLBAR": "#slot-chk-toolbar > label > label",
+    "STATUSBAR": "#slot-chk-statusbar > label > label",
+    "LEFTPANEL": "#slot-chk-leftmenu > label > label",
+    "RIGHTPANEL": "#slot-chk-rightmenu > label > label",
+    "RULERS": "#slot-chk-rulers > label > label",
+    "FORMULABAR": "#slot-chk-formula > label > label",
+    "HEADING": "#slot-chk-heading > label > label",
+    "GRIDLINES": "#slot-chk-gridlines > label > label",
+    "ZEROS": "#slot-chk-zeros > label > label",
+    "NOTES": "#slot-chk-notes > label > label"
+}

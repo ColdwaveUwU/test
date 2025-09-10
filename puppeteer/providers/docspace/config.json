@@ -1,0 +1,11 @@
+{
+    "testOptions": {
+        "url": "https://docspace-test.qa-onlyoffice.net",
+        "userName": "teamlab.ruby@gmail.com",
+        "password": "12345678",
+        "testFolder": "puppeteer-tests"
+    },
+    "reportOptions": {
+        "ignoreBrowserErrors": ["ignoreAll"]
+    }
+}

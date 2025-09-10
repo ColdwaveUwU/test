@@ -1,0 +1,29 @@
+{
+    "ALIGNMENT_MENU": {
+        "MENU_SELECTOR": "#paragraphadv-spin-text-alignment",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#paragraphadv-spin-text-alignment ul li"
+    },
+    "OUTLINE_LEVEL_MENU": {
+        "MENU_SELECTOR": "#paragraphadv-spin-outline-level",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#paragraphadv-spin-outline-level ul li"
+    },
+    "LEFT_INDENT_INPUT": "#paragraphadv-spin-indent-left",
+    "RIGHT_INDENT_INPUT": "#paragraphadv-spin-indent-right",
+    "SPECIAL_INDENT_MENU": {
+        "MENU_SELECTOR": "#paragraphadv-spin-special",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#paragraphadv-spin-special ul li"
+    },
+    "SPECIAL_INDENT_INPUT": "#paragraphadv-spin-special-by",
+    "BEFORE_SPACING_INPUT": "#paragraphadv-spin-spacing-before",
+    "AFTER_SPACING_INPUT": "#paragraphadv-spin-spacing-after",
+    "LINE_SPACING_MENU": {
+        "MENU_SELECTOR": "#paragraphadv-spin-line-rule",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#paragraphadv-spin-line-rule ul li"
+    },
+    "LINE_SPACING_INPUT": "#paragraphadv-spin-line-height",
+    "ADD_INTERVAL_CHECKBOX": "#paragraphadv-checkbox-add-interval label.checkbox__shape",
+    "TEXT_DIRECTION": {
+        "LEFT_TO_RIGHT": "#paragraphadv-dir-ltr .radiobox",
+        "RIGHT_TO_LEFT": "#paragraphadv-dir-rtl .radiobox"
+    }
+}

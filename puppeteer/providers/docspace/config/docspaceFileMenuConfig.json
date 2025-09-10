@@ -1,0 +1,18 @@
+{
+    "file": {
+        "type": "activeButton",
+        "documentType": "common",
+        "selector": "#toolbar ul li[data-layout-name=\"toolbar-file\"]",
+        "childElements": [
+            {
+                "saveHere": {
+                    "key": "choose",
+                    "type": "button",
+                    "context": "page",
+                    "selector": "#select-file-modal-submit",
+                    "childElements": []
+                }
+            }
+        ]
+    }
+}

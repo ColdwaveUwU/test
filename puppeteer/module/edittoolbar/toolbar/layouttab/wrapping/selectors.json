@@ -1,0 +1,6 @@
+{
+    "WRAPPING_MENU": {
+        "MENU_SELECTOR": "#slot-img-wrapping",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#slot-img-wrapping ul li a"
+    }
+}

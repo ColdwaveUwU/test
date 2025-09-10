@@ -1,0 +1,19 @@
+{
+    "DEFAULT_TAB_INPUT": "#paraadv-spin-default-tab",
+    "TAB_POSITION_INPUT": "#paraadv-spin-tab",
+    "ALIGNMENT_MENU": {
+        "MENU_SELECTOR": "#paraadv-cmb-align",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#paraadv-cmb-align ul li"
+    },
+    "LEADER_MENU": {
+        "MENU_SELECTOR": "#paraadv-cmb-leader",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#paraadv-cmb-leader ul li"
+    },
+    "SPECIFY_TAB_BUTTON": "#paraadv-button-add-tab",
+    "SPECIFIED_TABS_LIST": {
+        "TABS_LIST": "#paraadv-list-tabs .list-item",
+        "LIST_ITEM": "div"
+    },
+    "REMOVE_BUTTON": "#paraadv-button-remove-tab",
+    "REMOVE_ALL_BUTTON": "#paraadv-button-remove-all"
+}

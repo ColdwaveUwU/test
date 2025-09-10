@@ -1,0 +1,22 @@
+{
+    "EDIT_PDF": {
+        "BUTTON": "#slot-btn-tb-edit-mode > button",
+        "ACTIVE_BUTTON": "#slot-btn-tb-edit-mode > button.active"
+    },
+    "INSERT_PAGE": {
+        "ELEMENT_SELECTOR": "#tlbtn-insertpage-0",
+        "DEFAULT_BUTTON": "#tlbtn-insertpage-0 ul li a",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#tlbtn-insertpage-0 ul li a"
+    },
+    "RORATE_PAGE": {
+        "ELEMENT_SELECTOR": "#tlbtn-rotate",
+        "DEFAULT_BUTTON": "#tlbtn-rotate > button",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#tlbtn-rotate ul li a"
+    },
+    "EDIT_TEXT": {
+        "BUTTON": "#slot-btn-edittext > button"
+    },
+    "DELETE_PAGE": {
+        "BUTTON": "#id-toolbar-btn-delpage"
+    }
+}

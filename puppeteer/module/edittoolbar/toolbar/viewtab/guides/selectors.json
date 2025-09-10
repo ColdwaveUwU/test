@@ -1,0 +1,7 @@
+{
+    "GUIDES": {
+        "ELEMENT_SELECTOR": "#slot-btn-guides",
+        "DEFAULT_BUTTON": "#slot-btn-guides button",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#slot-btn-guides ul li a"
+    }
+}

@@ -1,0 +1,10 @@
+const { FileMenu } = require("lib");
+Tester.createFile("docx");
+FileMenu.downloadAs("docx");
+FileMenu.downloadAs("dotx");
+FileMenu.downloadAs("epub");
+FileMenu.downloadAs("fb2");
+FileMenu.downloadAs("html");
+FileMenu.downloadAs("jpg");
+FileMenu.downloadAs("txt");
+Tester.close();

@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "@xmldom/xmldom": "0.9.8",
+    "jszip": "3.10.1",
+    "pdfjs-dist": "4.3.136",
+    "puppeteer": "24.9.0",
+    "xpath": "0.0.34"
+  },
+  "type": "commonjs",
+  "devDependencies": {
+    "wtfnode": "^0.10.0"
+  }
+}

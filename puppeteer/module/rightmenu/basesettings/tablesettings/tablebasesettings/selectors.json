@@ -1,0 +1,99 @@
+{
+  "ROWS_CHECKBOXES": {
+    "HEADER": "#table-checkbox-header label label",
+    "TOTAL": "#table-checkbox-total label label",
+    "BANDED": "#table-checkbox-banded label label"
+  },
+  "COLUMNS_CHECKBOXES": {
+    "FIRST": "#table-checkbox-first label label",
+    "LAST": "#table-checkbox-last label label",
+    "BANDED": "#table-checkbox-col-banded label label"
+  },
+  "TAMPLATE_DROPDOWN": {
+    "selector": "#table-btn-template",
+    "elementsSelector": "#id-table-menu-template .item.canfocused",
+    "idSelector": ".item",
+    "descriptionSelector": "[aria-label]",
+    "elementsValue": []
+  },
+  "BORDERS_BUTTONS": {
+    "ALL": "#table-button-border-all",
+    "NONE": "#table-button-border-none",
+    "INNER": "#table-button-border-inner",
+    "OUTER": "#table-button-border-outer",
+    "LEFT": "#table-button-border-left",
+    "RIGHT": "#table-button-border-right",
+    "TOP": "#table-button-border-top",
+    "BOTTOM": "#table-button-border-bottom",
+    "INNER_VERTICAL": "#table-button-border-inner-vert",
+    "INNER_HORIZONTAL": "#table-button-border-inner-hor"
+  },
+  "BORDERS_STYLE_DROPDOWN": {
+    "selector": "#table-combo-border-size",
+    "elementsSelector": "#table-combo-border-size ul li",
+    "descriptionSelector": "a",
+    "elementsValue": []
+  },
+  "BORDERS_COLOR_BUTTON": "#table-border-color-btn",
+  "BACKGROUND_COLOR_BUTTON": "#table-back-color-btn",
+  "ROWS_AND_COLUMNS_DROPDOWN": {
+    "selector": "#table-btn-edit",
+    "elementsSelector": "#table-btn-edit ul li",
+    "idSelector": "a",
+    "descriptionSelector": "a",
+    "elementsValue": []
+  },
+  "ROWS_AND_COLUMNS_SIZE": {
+    "HEIGHT_INPUT": "#table-spin-cell-height",
+    "WIDTH_INPUT": "#table-spin-cell-width",
+    "DISTRIBUTE_ROWS_BUTTON": "#table-btn-distrub-rows",
+    "DISTRIBUTE_COLUMNS_BUTTON": "#table-btn-distrub-cols",
+    "AUTO_FIT_CHECKBOX": "#table-checkbox-autofit label label"
+  },
+  "ADD_FORMULA_BUTTON": "#table-btn-add-formula",
+  "REPEAT_AS_HEADER_CHECKBOX": "#table-checkbox-repeat-row label label",
+  "CONVERT_TO_TEXT_BUTTON": "#table-btn-convert-to-text",
+  "MODAL_WINDOWS": {
+    "SPLIT_CELL": {
+      "WINDOW": "#window-insert-table",
+      "OK_BUTTON": "#window-insert-table .footer.center button[result='ok']",
+      "NUMBER_OF_COLUMNS_INPUT": "#window-insert-table .input-row .columns-val",
+      "NUMBER_OF_ROWS_INPUT": "#window-insert-table .input-row .rows-val"
+    },
+    "ADD_FORMULA": {
+      "WINDOW": ".asc-window.modal.notransform",
+      "OK_BUTTON": ".asc-window.modal.notransform .footer.center button[result='ok']",
+      "FORMULA_INPUT": "#id-dlg-formula-formula",
+      "NUMBER_FORMAT_DROPDOWN": {
+        "selector": "#id-dlg-formula-format",
+        "elementsSelector": "#id-dlg-formula-format ul li",
+        "descriptionSelector": "a",
+        "elementsValue": []
+      },
+      "PASTE_FUNCTION_DROPDOWN": {
+        "selector": "#id-dlg-formula-function",
+        "elementsSelector": "#id-dlg-formula-function ul li",
+        "descriptionSelector": "a",
+        "elementsValue": []
+      },
+      "BOOKMARK_DROPDOWN": {
+        "selector": "#id-dlg-formula-bookmark",
+        "elementsSelector": "#id-dlg-formula-bookmark ul li",
+        "descriptionSelector": "a",
+        "elementsValue": []
+      }
+    },
+    "CONVERT_TABLE_TO_TEXT": {
+      "WINDOW": ".asc-window.modal.notransform",
+      "OK_BUTTON": ".asc-window.modal.notransform .footer.center button[result='ok']",
+      "CHECKBOX_NESTED": "#id-table-text-check-nested label label",
+      "SEPARATE_TYPES": {
+        "PARA": "#id-table-text-radio-para",
+        "TABS": "#id-table-text-radio-tabs",
+        "SEMI": "#id-table-text-radio-semi",
+        "OTHER": "#id-table-text-radio-other"
+      },
+      "INPUT_OTHER": "#id-table-text-txt-other"
+    }
+  }
+}

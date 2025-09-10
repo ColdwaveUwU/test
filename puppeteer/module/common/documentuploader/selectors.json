@@ -1,0 +1,14 @@
+{
+    "URL_MODAL": {
+        "MODAL_WINDOW": ".asc-window.modal.modal-dlg",
+        "INPUT_FIELD": "#id-dlg-label-custom-input input.form-control",
+        "OK_BUTTON": "button[result=\"ok\"]",
+        "CANCEL_BUTTON": "button[result=\"cancel\"]",
+        "ERROR_ELEMENT": ".input-field.error"
+    },
+    "WARNING_MODAL": {
+        "MODAL_WINDOW": ".asc-window.modal.alert",
+        "OK_BUTTON": "button[result=\"yes\"]",
+        "CANCEL_BUTTON": "button[result=\"no\"]"
+    }
+}

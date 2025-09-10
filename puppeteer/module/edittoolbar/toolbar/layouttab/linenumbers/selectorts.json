@@ -1,0 +1,20 @@
+{
+    "DROPDOWN_MENU": {
+        "DEFAULT_MENU": "#tlbtn-line-numbers",
+        "DROPDOWN_ITEMS": "#tlbtn-line-numbers ul.dropdown-menu.ppm-toolbar li > a"
+    },
+    "MODAL_WINDOW": "#window-line-numbers",
+    "CHECKBOX_ADD_LINE_NUMBERING": "#line-numbers-add-line-numbering label label[role='checkbox']",
+    "START_AT": "#line-numbers-start-at",
+    "FROM_TEXT": "#line-numbers-from-text",
+    "COUNT_BY": "#line-numbers-count-by",
+    "NUMBERING_OPTIONS": {
+        "RESTART_PAGE": "#line-numbers-restart-each-page",
+        "RESTART_SECTION": "#line-numbers-restart-each-section",
+        "CONTINUOUS": "#line-numbers-continuous"
+    },
+    "APPLY_TO": {
+        "DROPDOWN": "#line-numbers-combo-apply",
+        "OPTIONS": "#line-numbers-combo-apply ul li a"
+    }
+}

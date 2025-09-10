@@ -1,0 +1,28 @@
+{
+    "testOptions": {
+        "url": "https://kim.teamlab.info/example",
+        "urlParam": ["action={\"debug\":true}"],
+        "messageType": ["error", "log"],
+        "cacheEnabled": true,
+        "disableTooltips": true,
+        "logEvents": false
+    },
+    "puppeteerOptions": {
+        "browser": "chrome",
+        "headless": false,
+        "puppeteerDelay": 0,
+        "userDelay": 0
+    },
+    "reportOptions": {
+        "ignoreBrowserErrors": ["Failed to load resource: the server responded with a status of 404"],
+        "ignoreExternalScriptsErrors": ["Checking file for encryption is not supported on Windows"]
+    },
+    "runOptions": {
+        "disableAnimation": false
+    },
+    "resourceServer": {
+        "port": 3000,
+        "resourcePath": "resources"
+    },
+    "provider": ""
+}

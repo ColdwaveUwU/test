@@ -1,0 +1,62 @@
+{
+	"ROLES": {
+		"ROLES": "#form-combo-roles",
+		"ROLES_ITEMS": {
+			"ELEMENTS": "#form-combo-roles ul li",
+			"DESCRIPTION": "div"
+		}
+	},
+	"FIELDS": {
+		"KEY": {
+			"SELECTOR": "#form-combo-key",
+			"TARGET": "input"
+		},
+		"PLACEHOLDER": {
+			"SELECTOR": "#form-txt-pholder",
+			"TARGET": "input"
+		},
+		"TAG": {
+			"SELECTOR": "#form-txt-tag",
+			"TARGET": "input"
+		},
+		"TIP": {
+			"SELECTOR": "#form-txt-help",
+			"TARGET": "textarea"
+		},
+		"DEF_VALUE": {
+			"SELECTOR": "#form-txt-def-value",
+			"TARGET": "input"
+		}
+	},
+	"VALUE_OPT": {
+		"CREATED_VALUES": {
+			"LIST": "#form-list-list div.list-item",
+			"ITEM": "div",
+			"DESCRIPTION": "div"
+		},
+		"DEFAULT_VALUE_DROPDOWN": {
+			"SELECTOR": "#form-combo-def-value",
+			"ELEMENTS": "#form-combo-def-value ul li"
+		},
+		"VALUE_INPUT": "#form-txt-new-value",
+		"VALUE_ADD_BUTTON": "#form-list-add button",
+		"UP_BUTTON": "#form-list-up button",
+		"DOWN_BUTTON": "#form-list-down button",
+		"DELETE_BUTTON": "#form-list-delete button",
+		"FIXED_SIZE_CHECKBOX": "#form-chb-fixed label.checkbox__shape"
+	},
+	"COLOR": {
+		"BORDER": {
+			"BORDER_COLOR": "#form-color-btn",
+			"NO_BORDER": "#form-color-btn div.palette-inner a[idx=\"0\"]",
+			"BORDER_COLOR_LIST": "#form-color-btn"
+		},
+		"BACKGROUND": {
+			"BACKGROUND_COLOR": "#form-background-color-btn",
+			"BACKGROUND_COLOR_LIST": "#form-background-color-btn"
+		}
+	},
+	"REQUIRED_CHECKBOX": "#form-chb-required label.checkbox__shape",
+	"DELETE_BUTTON": "#form-btn-delete > button",
+	"LOCK_BUTTON": "#form-btn-lock > button"
+}

@@ -1,0 +1,21 @@
+{
+    "PARAGHRAPH_TAB": "#id-right-menu-text",
+    "LINE_SPACING_MENU": {
+        "MENU_SELECTOR": "#paragraph-combo-line-rule",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#paragraph-combo-line-rule ul li"
+    },
+    "LINE_SPACING_INPUT": "#paragraph-spin-line-height",
+    "SPACING_BEFORE_INPUT": "#paragraph-spin-spacing-before",
+    "SPACING_AFTER_INPUT": "#paragraph-spin-spacing-after",
+    "ADD_INTERVAL_CHECKBOX": "#paragraph-checkbox-add-interval",
+    "LEFT_INDENT_INPUT": "#paragraph-spin-indent-left",
+    "RIGHT_INDENT_INPUT": "#paragraph-spin-indent-right",
+    "SPECIAL_INDENT_MENU": {
+        "MENU_SELECTOR": "#paragraph-combo-special",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#paragraph-combo-special ul li"
+    },
+    "SPECIAL_INDENT_INPUT": "#paragraph-spin-special-by",
+    "BACKGROUND_COLOR_BUTTON": "#paragraph-color-btn",
+    "SHOW_ADVANCED_SETTINGS": "#paragraph-advanced-link",
+    "OK_BUTTON": "button[result='ok']"
+}

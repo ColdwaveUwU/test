@@ -1,0 +1,8 @@
+{
+    "testOptions": {
+        "urlParam": [
+            "type=mobile"
+        ]
+    },
+    "provider": ""
+}

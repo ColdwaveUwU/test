@@ -1,0 +1,9 @@
+{
+    "browser": "firefox",
+    "url": "https://kim.teamlab.info/example",
+    "config": {
+        "headless": false,
+        "slowMo": 50,
+        "executablePath": "C:/Program Files/Mozilla Firefox/firefox.exe"
+    }
+}

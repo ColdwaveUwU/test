@@ -1,0 +1,10 @@
+//https://bugzilla.onlyoffice.com/show_bug.cgi?id=75252
+Tester.openFile("pptx/Contoso_PPT_IW_Final.pptx");
+Tester.keyPress("ArrowDown");
+Tester.keyPress("ArrowDown");
+Tester.keyPress("Tab");
+Tester.keyDown("ControlLeft");
+Tester.keyPress("A");
+Tester.keyPress("C");
+Tester.keyUp("ControlLeft");
+Tester.close();

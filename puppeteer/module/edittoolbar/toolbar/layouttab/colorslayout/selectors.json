@@ -1,0 +1,7 @@
+{
+    "COLORS_MENU": {
+        "MENU_SELECTOR": "#id-toolbar-btn-colorschemas",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#id-toolbar-btn-colorschemas ul li a",
+        "DESCRIPTION_SELECTOR": "a > span.text"
+    }
+}

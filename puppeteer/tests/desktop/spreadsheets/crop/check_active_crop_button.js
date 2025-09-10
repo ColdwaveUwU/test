@@ -1,0 +1,19 @@
+const { Image } = require("lib");
+Tester.createFile("xlsx");
+
+Image.fromUrl("https://static.onlyoffice.com/assets/docs/samples/img/onlyoffice_logo.png");
+Image.crop();
+const isActive = Tester.checkSelector("#image-button-crop .btn-group.active");
+if (!isActive) {
+    throw new Error("The 'active' class is missing");
+}
+
+Image.cropRecentlyShape(3);
+Image.clickResetCrop();
+
+const isNotActive = Tester.checkSelector("#image-button-crop .btn-group.active");
+if (isNotActive) {
+    throw new Error("The 'active' class is present");
+}
+
+Tester.close();

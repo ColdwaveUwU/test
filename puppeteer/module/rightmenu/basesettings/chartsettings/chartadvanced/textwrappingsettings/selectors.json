@@ -1,0 +1,13 @@
+{
+    "STYLE": "#image-advanced-button-wrap-{style} button",
+    "DISTANCE": {
+        "TOP": "#image-advanced-distance-top input",
+        "BOTTOM": "#image-advanced-distance-bottom input",
+        "LEFT": "#image-advanced-distance-left input",
+        "RIGHT": "#image-advanced-distance-right input"
+    },
+    "FILD_CONTAINER": "#id-adv-image-wrap",
+    "INCREMENT_BTN": "#image-advanced-distance-{prop} .spinner-up",
+    "DECREMENT_BTN": "#image-advanced-distance-{prop} .spinner-down",
+    "ACTIVE_STYLE": "#id-adv-image-wrap button.active"
+}

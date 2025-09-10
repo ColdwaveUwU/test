@@ -1,0 +1,7 @@
+{
+    "GO_TO_PAGE": {
+        "GO_TO_PAGE_DROPDOWN": "#statusbar .statusbar > .status-group.dropup",
+        "GO_TO_PAGE_DROPDOWN_MENU": ".dropdown-menu",
+        "GO_TO_PAGE_INPUT_FORM": "#status-goto-page"
+    }
+}

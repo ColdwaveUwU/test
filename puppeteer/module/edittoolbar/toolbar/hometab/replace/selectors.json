@@ -1,0 +1,6 @@
+{
+    "TOOLBAR": {
+        "SELECT_ALL_BUTTON": "#slot-btn-select-all",
+        "REPLACE_BUTTON": "#slot-btn-replace"
+    }
+}

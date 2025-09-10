@@ -1,0 +1,5 @@
+{
+    "ELEMENT_SELECTOR": "#slot-btn-coauthmode > div",
+    "DEFAULT_BUTTON": "#slot-btn-coauthmode > div button",
+    "DROPDOWN_ELEMENTS_SELECTOR": "#slot-btn-coauthmode > div ul li a"
+}

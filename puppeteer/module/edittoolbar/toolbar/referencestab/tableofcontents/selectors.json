@@ -1,0 +1,59 @@
+{
+    "TOOLBAR": {
+        "TABLE_OF_CONTENTS_BUTTON": {
+            "ELEMENT_SELECTOR": "#toolbar > div > section > section.box-panels > section.panel.active > div:nth-child(1) > span > div",
+            "DEFAULT_BUTTON": "#toolbar > div > section > section.box-panels > section.panel.active > div:nth-child(1) > span > div button",
+            "DROPDOWN_ELEMENTS_SELECTOR": "#toolbar > div > section > section.box-panels > section.panel.active > div:nth-child(1) > span > div ul li a"
+        },
+        "ADD_TEXT_BUTTON": {
+            "ELEMENT_SELECTOR": "#slot-btn-add-text > div",
+            "DEFAULT_BUTTON": "#slot-btn-add-text > div button",
+            "DROPDOWN_ELEMENTS_SELECTOR": "#slot-btn-add-text > div ul li a"
+        },
+        "UPDATE_TABLE_BUTTON": {
+            "ELEMENT_SELECTOR": "#slot-btn-contents-update > div",
+            "DEFAULT_BUTTON": "#slot-btn-contents-update > div button",
+            "DROPDOWN_ELEMENTS_SELECTOR": "#slot-btn-contents-update > div ul li a"
+        }
+    },
+    "MODAL_WINDOW": {
+        "TABLE_OF_CONTENTS_WINDOW": "#window-table-contents",
+        "SHOW_PAGE_NUMBERS_CHECKBOX": {
+            "ELEMENT_SELECTOR": "#tableofcontents-chb-pages .checkbox__shape"
+        },
+        "RIGHT_ALIGN_PAGE_NUMBERS_CHECKBOX": {
+            "ELEMENT_SELECTOR": "#tableofcontents-chb-align .checkbox__shape"
+        },
+        "LEADER_MENU": {
+            "MENU_SELECTOR": "#tableofcontents-combo-leader",
+            "DROPDOWN_ELEMENTS_SELECTOR": "#tableofcontents-combo-leader ul li",
+            "DESCRIPTION_SELECTOR": "a"
+        },
+        "FORMAT_AS_LINKS_CHECKBOX": {
+            "ELEMENT_SELECTOR": "#tableofcontents-chb-links .checkbox__shape"
+        },
+        "BUILD_FROM_LEVELS_RADIO": {
+            "ELEMENT_SELECTOR": "#tableofcontents-radio-levels .radiobox"
+        },
+        "BUILD_FROM_STYLES_RADIO": {
+            "ELEMENT_SELECTOR": "#tableofcontents-radio-styles .radiobox"
+        },
+        "LEVELS_SPINNER": {
+            "ELEMENT_SELECTOR": "#tableofcontents-spin-levels"
+        },
+        "STYLES_LIST": {
+            "ELEMENT_SELECTOR": "#tableofcontents-styles-list .listview.inner .item .list-item"
+        },
+        "STYLES_MENU": {
+            "MENU_SELECTOR": "#tableofcontents-combo-styles",
+            "DROPDOWN_ELEMENTS_SELECTOR": "#tableofcontents-combo-styles ul li",
+            "DESCRIPTION_SELECTOR": "a"
+        },
+        "OK_BUTTON": {
+            "ELEMENT_SELECTOR": "#window-table-contents .footer.center button[result=ok]"
+        },
+        "CANCEL_BUTTON": {
+            "ELEMENT_SELECTOR": "#window-table-contents .footer.center button[result=cancel]"
+        }
+    }
+}

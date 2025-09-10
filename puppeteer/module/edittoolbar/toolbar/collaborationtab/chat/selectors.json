@@ -1,0 +1,6 @@
+{
+    "ELEMENT_SELECTOR": "#slot-btn-chat button",
+    "CHAT_INPUT_SELECTOR": "#chat-msg-text",
+    "CHAT_SEND_BUTTON_SELECTOR": "#chat-msg-btn-add",
+    "CHAT_CLOSE_BUTTON_SELECTOR": "#chat-btn-close"
+}
