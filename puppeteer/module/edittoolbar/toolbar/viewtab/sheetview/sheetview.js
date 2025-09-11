@@ -5,7 +5,7 @@ const { Button, Dropdown, Input, ModalButton } = require("../../../../elements")
 class SheetView extends ViewTab {
     constructor(tester) {
         super(tester);
-        this.modalAlertButton = new ModalButton(this.tester, "", SheetView.SELECTORS.MODAL_ALERT.WINDOW_SELECTOR);
+        this.modalAlertButton = null;
         this.viewManagerModalButton = null;
     }
 
@@ -53,7 +53,7 @@ class SheetView extends ViewTab {
             const element = viewDropdownElemets.find((element) => {
                 return element.description === "View manager";
             });
-            
+
             if (!element) {
                 throw new Error('Element "View manager" not found in the dropdown items.');
             }
@@ -107,7 +107,7 @@ class SheetView extends ViewTab {
             await this.viewManager();
             await this.tester.click(renameViewSelectors.ELEMENT_SELECTOR);
             const input = new Input(this.tester, renameViewSelectors.INPUT_SELECTOR);
-            await input.set(new_name, 100);
+            await input.set(new_name);
             await this.closeViewManager();
         } catch (error) {
             this.#handleError("renameView", error);
@@ -140,11 +140,14 @@ class SheetView extends ViewTab {
         try {
             await this.selectView(name);
             await this.viewManager();
-            await Promise.all([
-                this.tester.click(deleteViewSelectors.ELEMENT_SELECTOR),
-                this.modalAlertButton.isModalOpen(),
-            ]);
-            this.tester.click(SheetView.SELECTORS.MODAL_ALERT.YES_BUTTON_SELECTOR);
+            await this.tester.click(deleteViewSelectors.ELEMENT_SELECTOR);
+            this.modalAlertButton = new ModalButton(
+                this.tester,
+                deleteViewSelectors.ELEMENT_SELECTOR,
+                SheetView.SELECTORS.MODAL_ALERT.WINDOW_SELECTOR
+            );
+            await this.modalAlertButton.openModal();
+            await this.tester.click(SheetView.SELECTORS.MODAL_ALERT.YES_BUTTON_SELECTOR);
             await this.closeViewManager();
         } catch (error) {
             this.#handleError("deleteView", error);

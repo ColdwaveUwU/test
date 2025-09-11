@@ -99,7 +99,7 @@ class TestRunner:
 
         command = ["node", "--no-warnings", run_path, server_url]
         if debug_flag:
-            self._send_log("Debug mode enabled.", level="INFO")
+            self.report_portal_launcher.send_log("Debug mode enabled...", level="DEBUG", print_output=False)
             command.insert(1, "--inspect-brk")
 
         process = subprocess.Popen(
@@ -140,6 +140,17 @@ class TestRunner:
         return exit_code
 
     def _read_process_output(self, process, stdout_dest, stderr_dest) -> bool:
+        """
+        Reads process output streams and watches for verification failure.
+
+        Args:
+            process (subprocess.Popen): The running process.
+            stdout_dest (IO): Destination for stdout.
+            stderr_dest (IO): Destination for stderr.
+
+        Returns:
+            bool: True if verification failed was detected, False otherwise.
+        """
         verification_failed = False
 
         def read_output(pipe, dest):

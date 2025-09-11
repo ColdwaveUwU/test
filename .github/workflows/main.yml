@@ -55,4 +55,4 @@ jobs:
       - name: Run tests
         run: |
           cd puppeteer/engine
-          python run.py --disable_animation
+          python run.py --disable_animation --config_params puppeteerOptions.headless=true
