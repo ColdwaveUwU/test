@@ -1,7 +1,13 @@
 const selectors = require("./selectors.json");
+const { Dropdown, Input, ModalButton } = require("../../elements");
 class NumberFormat {
     constructor(tester) {
         this.tester = tester;
+        this.modalButton = new ModalButton(this.tester,
+            NumberFormat.NumberFormatSelectors.MODAL_WINDOW,
+            NumberFormat.NumberFormatSelectors.MODAL_WINDOW,
+            NumberFormat.NumberFormatSelectors.OK_BUTTON
+        );
     }
 
     /**
@@ -61,13 +67,18 @@ class NumberFormat {
      */
     async #handleCategory(category) {
         const { type } = category;
-
+        const { CATEGORY, CATEGORY_ITEM } = NumberFormat.NumberFormatSelectors;
         if (!NumberFormat.NumberFormatType.CATEGORIES.includes(type)) {
             console.error(`Category ${type} unknown`);
             return;
-        }
+        } 
+        
+        await new Dropdown(this.tester, {
+            selector: CATEGORY,
+            elementsValue: NumberFormat.NumberFormatType.CATEGORIES,
+            elementsSelector: CATEGORY_ITEM,
+        }).selectDropdownItem(type);
 
-        await this.tester.setOption(NumberFormat.NumberFormatSelectors.CATEGORY, type);
         await this.#changeCategorySettings(category);
     }
 
@@ -113,11 +124,16 @@ class NumberFormat {
      * @param {Category} category
      */
     async #handleAccounting({ decimal, symbols, formatIndex }) {
-        await this.#handleDecimal({ decimal });
         if (symbols) {
-            await this.tester.setOption(NumberFormat.NumberFormatSelectors.SYMBOLS, symbols);
+            const { SELECTOR, ITEM, DESCRIPTION } = NumberFormat.NumberFormatSelectors.SYMBOLS;
+            await new Dropdown(this.tester, {
+                selector: SELECTOR,
+                elementsSelector: ITEM,
+                descriptionSelector: DESCRIPTION
+            }).selectDropdownItem(symbols);
         }
         await this.#handleFormatIndex({ formatIndex });
+        await this.#handleDecimal({ decimal });
     }
 
     /**
@@ -125,16 +141,20 @@ class NumberFormat {
      * @param {Category} category
      */
     async #handleCustom({ format }) {
-        await this.tester.inputToForm(format, NumberFormat.NumberFormatSelectors.CUSTOM.FORMAT_INPUT);
+        const { FORMAT_INPUT } = NumberFormat.NumberFormatSelectors.CUSTOM;
+        if (format) {           
+            await new Input(this.tester, FORMAT_INPUT).set(format);
+        }
     }
 
     /**
      * Handles setting decimal values
      * @param {string | number} decimal
      */
-    async #handleDecimal(decimal) {
+    async #handleDecimal({ decimal }) {
+        const { DECIMAL } = NumberFormat.NumberFormatSelectors.NUMBER;
         if (decimal) {
-            await this.tester.inputToForm(decimal, NumberFormat.NumberFormatSelectors.NUMBER.DECIMAL);
+            await new Input(this.tester, DECIMAL).set(decimal);
         }
     }
 
@@ -143,14 +163,19 @@ class NumberFormat {
      * @param {Object} options
      */
     async #handleFormatIndex({ formatIndex }) {
-        if (formatIndex !== undefined) {
-            await this.tester.click(NumberFormat.NumberFormatSelectors.FORMAT);
-            const formats = await this.tester.parseItems(
-                `${NumberFormat.NumberFormatSelectors.FORMAT} ul li`,
-                "a",
-                "a"
-            );
-            await this.tester.click(formats[formatIndex].id);
+        try {
+            if (formatIndex !== undefined) {
+                const { SELECTOR, ITEM, DESCRIPTION } = NumberFormat.NumberFormatSelectors.FORMAT;
+                const dropdown = new Dropdown(this.tester, {
+                    selector: SELECTOR,
+                    elementsSelector: ITEM,
+                    descriptionSelector: DESCRIPTION,
+                });
+                await dropdown.selectDropdownItemByIndex(formatIndex);
+            }
+        }
+        catch(error){
+            throw new Error(`handleFormatIndex: Invalid index:  ${formatIndex}. ${error.message}`, { cause: error });
         }
     }
 
@@ -159,8 +184,9 @@ class NumberFormat {
      * @param {Object} options
      */
     async #handleFormatOption({ format }) {
+        const { FORMAT_TYPE } = NumberFormat.NumberFormatSelectors;
         if (format) {
-            await this.tester.setOption(NumberFormat.NumberFormatSelectors.FORMAT_TYPE, format);
+          await this.tester.selectByText(format,FORMAT_TYPE);
         }
     }
 
@@ -168,12 +194,9 @@ class NumberFormat {
      * Clicks OK button to apply the changes
      */
     async #clickOkButton() {
-        const targetWindowId = await this.tester.frame.evaluate((modalWindowSelector) => {
-            const modals = document.querySelectorAll(modalWindowSelector);
-            const lastModal = modals[modals.length - 1];
-            return `#${lastModal?.id}`;
-        }, NumberFormat.NumberFormatSelectors.MODAL_WINDOW);
-        await this.tester.click(`${targetWindowId} ${NumberFormat.NumberFormatSelectors.OK_BUTTON}`);
+        if (await this.modalButton.isModalOpen()){
+            await this.modalButton.closeModal();
+        }
     }
 }
 

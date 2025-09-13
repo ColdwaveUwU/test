@@ -95,11 +95,7 @@ class Font extends HomeTab {
         const fontNameSelectors = Font.FONT_SELECTORS.FONT_NAME;
         const input = new Input(this.tester, fontNameSelectors.selector, true);
         try {
-            await this.tester.frame.evaluate(
-                (selector) => document.querySelector(`${selector} input`).select(),
-                fontNameSelectors.selector
-            );
-            await input.set(fontName, 100, false);
+            await input.set(fontName);
         } catch (error) {
             this.#handleError("selectFont", error);
         }
@@ -236,9 +232,35 @@ class Font extends HomeTab {
         const element = new elementClass(this.tester, selector, ...constructorParams);
         try {
             await element[action](...actionParams);
+            if (action === "click") {
+                // Wait for the state to be applied after clicking formatting buttons
+                await this.#waitForStateChange(selector);
+            }
         } catch (error) {
             this.#handleError(methodName, error);
         }
+    }
+
+    /**
+     * Waits for the state of a formatting button to be applied
+     * @param {string} selector - The selector of the button
+     * @returns {Promise<void>}
+     */
+    async #waitForStateChange(selector) {
+        await this.tester.frame.waitForFunction(
+            (sel) => {
+                const button = document.querySelector(sel);
+                if (!button) return false;
+
+                // Check if the button state has been updated in the DOM
+                return (
+                    button.classList.contains("active") ||
+                    button.getAttribute("aria-pressed") === "true"
+                );
+            },
+            { timeout: 5000, polling: 100 },
+            selector
+        );
     }
 
     /**

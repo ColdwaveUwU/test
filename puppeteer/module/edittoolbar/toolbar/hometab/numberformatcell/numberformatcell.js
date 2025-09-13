@@ -1,5 +1,6 @@
 const HomeTab = require("../hometab");
 const { NumberFormat } = require("../../../../common");
+const { Dropdown } = require("../../../../elements");
 const selectors = require("./selectors.json");
 class NumberFormatCell extends HomeTab {
     constructor(tester) {
@@ -11,8 +12,7 @@ class NumberFormatCell extends HomeTab {
      * @enum
      */
     static NumberFormatCellType = {
-        FORMATS: {
-            BASIC: [
+        FORMATS:[
                 "General",
                 "Number",
                 "Scientific",
@@ -24,13 +24,9 @@ class NumberFormatCell extends HomeTab {
                 "Percentage",
                 "Fraction",
                 "Text",
+                "More formats"
             ],
-            ADVANCED: ["More formats"],
-        },
-        ACCOUNTING_STYLES: {
-            BASIC: ["$ Dollar", "€ Euro", "£ Pound", "₽ Rouble", "¥ Yen"],
-            ADVANCED: ["More formats"],
-        },
+        ACCOUNTING_STYLES:["Dollar", "Euro", "Pound", "Rouble", "Yen","More formats"]
     };
 
     /**
@@ -44,18 +40,29 @@ class NumberFormatCell extends HomeTab {
      * @return {Promise<void>}
      */
     async setFormat(format, moreFormatOptions) {
-        const { BASIC, ADVANCED } = NumberFormatCell.NumberFormatCellType.FORMATS;
-        const { FORMATS_LIST, BASIC_FORMATS_DESCRIPTION } = NumberFormatCell.NumberFormatCellSelectors;
+        const FORMATS = NumberFormatCell.NumberFormatCellType.FORMATS;
+        const { FORMATS_LIST, FORMATS_ITEM } = NumberFormatCell.NumberFormatCellSelectors;
+        const { TOOLBAR_ACTIVE, TOOLBAR_BUTTON } = NumberFormatCell.NumberFormatCellSelectors;
 
-        if (![...BASIC, ...ADVANCED].includes(format)) {
+        if (!FORMATS.includes(format)) {
             throw new Error(`Error in setFormat: Category ${format} unknown`);
         }
 
-        const description = BASIC.includes(format) ? BASIC_FORMATS_DESCRIPTION : undefined;
+        const isToolbarOpen = await this.tester.checkSelector(TOOLBAR_ACTIVE);
 
-        await this.tester.setOption(FORMATS_LIST, format, description);
+        if(!isToolbarOpen){
+            await this.tester.click(TOOLBAR_BUTTON);
+        }
 
-        if (ADVANCED.includes(format)) {
+        if(FORMATS.includes(format)){
+            await new Dropdown(this.tester, {
+                selector: FORMATS_LIST,
+                elementsValue: FORMATS,
+                elementsSelector: FORMATS_ITEM,
+            }).selectDropdownItem(format === "More formats" ? "More formats" : format);
+        }
+        
+        if (moreFormatOptions) {
             await this.NumberFormat.setSettings(moreFormatOptions);
         }
     }
@@ -74,34 +81,31 @@ class NumberFormatCell extends HomeTab {
      * @return {Promise<void>}
      */
     async setAccountingStyle(style, moreFormatOptions) {
-        const { BASIC, ADVANCED } = NumberFormatCell.NumberFormatCellType.ACCOUNTING_STYLES;
+        const ACCOUNTING_STYLES = NumberFormatCell.NumberFormatCellType.ACCOUNTING_STYLES;
+        const { TOOLBAR_ACTIVE, TOOLBAR_BUTTON } = NumberFormatCell.NumberFormatCellSelectors;
+        const { ACCOUNTING_STYLES_OPENER, ACCOUNTING_STYLES_ITEM } = NumberFormatCell.NumberFormatCellSelectors;
 
-        if (![...BASIC, ...ADVANCED].includes(style)) {
+        if (!ACCOUNTING_STYLES.includes(style)) {
             throw new Error(`Error in setAccountingStyle: Category ${style} unknown`);
         }
 
-        const isBasicStyle = BASIC.includes(style);
-        const isAdvancedStyle = ADVANCED.includes(style);
+        const isToolbarActive = await this.tester.checkSelector(TOOLBAR_ACTIVE);
 
-        await this.tester.selectDropdown(NumberFormatCell.NumberFormatCellSelectors.ACCOUNTING_STYLES_OPENER);
-        const styles = await this.tester.parseItems(
-            `${NumberFormatCell.NumberFormatCellSelectors.ACCOUNTING_STYLES_LIST} ul li`,
-            "a",
-            "a"
-        );
-
-        const targetStyle = styles.find((item) => item.description === style);
-
-        if (isBasicStyle && targetStyle) {
-            await this.tester.click(
-                `${NumberFormatCell.NumberFormatCellSelectors.ACCOUNTING_STYLES_LIST} ul li:nth-child(${targetStyle.index})`
-            );
-        } else if (isAdvancedStyle) {
-            await this.tester.click(
-                `${NumberFormatCell.NumberFormatCellSelectors.ACCOUNTING_STYLES_LIST} ul li:nth-child(${targetStyle.index})`
-            );
-            await this.NumberFormat.setSettings(moreFormatOptions);
+        if(!isToolbarActive){
+            await this.tester.click(TOOLBAR_BUTTON);
         }
+
+        if (ACCOUNTING_STYLES.includes(style) || style === "More formats") {
+            await new Dropdown(this.tester, {
+                selector: ACCOUNTING_STYLES_OPENER,
+                elementsValue: ACCOUNTING_STYLES,
+                elementsSelector: ACCOUNTING_STYLES_ITEM,
+            }).selectDropdownItem(style === "More formats" ? "More formats" : style);
+        }
+
+       if(moreFormatOptions){
+          await this.NumberFormat.setSettings(moreFormatOptions);
+       }
     }
 
     /**

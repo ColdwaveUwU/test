@@ -63,7 +63,7 @@
                                                 "cell",
                                                 "slide"
                                             ],
-                                            "selector": "#panel-createnew .thumb-wrap .title"
+                                            "selector": "#panel-createnew .thumb-wrap[template*=\"sample=true\"] .title"
                                         }
                                     }
                                 ]

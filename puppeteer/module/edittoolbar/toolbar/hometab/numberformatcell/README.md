@@ -101,8 +101,8 @@ NumberFormatCell.clickAccountingStyle();
 Tester.input("123");
 Tester.keyPress("Tab");
 // Set € Euro accounting style
-NumberFormatCell.setAccountingStyle("€ Euro");
-// Number input with € Euro accounting style
+NumberFormatCell.setAccountingStyle("Euro");
+// Number input with Euro accounting style
 Tester.input("123");
 Tester.keyPress("Tab");
 // Set Percent style

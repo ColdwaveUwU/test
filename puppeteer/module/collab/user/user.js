@@ -11,6 +11,7 @@
  */
 
 const { Draw, Color, Pdf, FileMenu, TestData, Connector, AppTitle } = require("../../common");
+const { Verification } = require("../../common/scripts");
 const Toolbar = require("../../edittoolbar");
 const RighMenu = require("../../rightmenu");
 const {
@@ -131,6 +132,8 @@ class User {
         this.CrossReference = new CrossReference(this.Tester);
         this.Footnote = new Footnote(this.Tester);
         this.TableOfContents = new TableOfContents(this.Tester);
+
+        this.Verification = new Verification(this.Tester);
 
         this.userDetails = userDetails;
         this.resolveWait = [];

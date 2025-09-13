@@ -2,16 +2,25 @@
     "MODAL_WINDOW": "div.asc-window.modal.advanced-settings-dlg",
     "ACTIVE_PANEL_SELECTOR": "div.settings-panel.active #format-settings-combo-format",
     "CATEGORY": "#format-settings-combo-format",
+    "CATEGORY_ITEM": "#format-settings-combo-format li",
     "NUMBER": {
-        "DECIMAL": "#format-settings-spin-decimal input",
+        "DECIMAL": "#format-settings-spin-decimal",
         "SEPARATOR": "#format-settings-checkbox-separator label.checkbox__shape"
     },
     "CUSTOM": {
-        "FORMAT_INPUT": "#format-settings-txt-code input"
+        "FORMAT_INPUT": "#format-settings-txt-code"
     },
-    "FORMAT": "#format-settings-combo-negative",
-    "FORMAT_TYPE": "#format-settings-combo-type",
-    "SYMBOLS": "#format-settings-combo-symbols",
+    "FORMAT":{
+        "SELECTOR": "#format-settings-combo-negative",
+        "ITEM": "#format-settings-combo-negative li",
+        "DESCRIPTION": "a"
+    },
+    "FORMAT_TYPE": "#format-settings-list-type div[id]",
+    "SYMBOLS":{
+        "SELECTOR": "#format-settings-combo-symbols",
+        "ITEM": "#format-settings-combo-symbols li",
+        "DESCRIPTION": "a"
+    },
     "LINKED_TO_SOURCE": "#format-settings-chk-linked label.checkbox__shape",
     "OK_BUTTON": "div.footer.center button[result=\"ok\"]"
 }

@@ -8,7 +8,7 @@ Tester.keyPress("Tab");
 
 Tester.input("123");
 Tester.keyPress("ArrowUp");
-NumberFormatCell.setAccountingStyle("€ Euro");
+NumberFormatCell.setAccountingStyle("Euro");
 Tester.keyPress("Tab");
 
 FileMenu.downloadAs("xlsx");
