@@ -183,7 +183,7 @@ class Color {
      * @param {string} hex - The hexadecimal color value.
      */
     async #inputHexColor(hex) {
-        await this.#setInput(hex, ColorSettingID.Hex);
+        await this.#setInput(hex, ColorSettingID.Hex.SELECTOR, ColorSettingID.Hex.TARGET_SELECTOR);
     }
 
     /**
@@ -238,8 +238,8 @@ class Color {
      * @param {string} value - The value to set in the input field.
      * @param {string} selector - The CSS selector to locate the input field.
      */
-    async #setInput(value, selector) {
-        const input = new Input(this.tester, selector, false);
+    async #setInput(value, selector, target) {
+        const input = new Input(this.tester, selector, false, target);
         await input.set(value);
     }
 
