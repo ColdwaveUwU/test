@@ -1,0 +1,29 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run JS test",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/engine/run.py",
+            "args": [
+                "${file}",
+                "--terminal_error"
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Debug JS test",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/engine/run.py",
+            "args": [
+                "${file}",
+                "--debug",
+                "--terminal_error"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ]
+}

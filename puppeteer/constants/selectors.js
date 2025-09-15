@@ -22,7 +22,7 @@ const ImageSettingButtonID = {
  * @enum {string}
  */
 const ColorSettingID = {
-    Hex: "#extended-text-color",
+    Hex: { SELECTOR: "div > ", TARGET_SELECTOR: "#extended-text-color" },
     Red: "#extended-spin-r",
     Green: "#extended-spin-g",
     Blue: "#extended-spin-b",
