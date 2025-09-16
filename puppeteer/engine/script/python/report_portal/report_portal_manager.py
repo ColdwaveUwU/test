@@ -2,7 +2,7 @@ import threading
 import sys
 import os
 from typing import List
-
+from typing import Any
 from puppeteer.engine.script.python.report_portal.test_hierarchy_manager.test_hierarchy_manager import TestHierarchyManager
 
 sys.path.append(os.path.abspath(os.path.join(__file__, "../../../..")))
@@ -53,7 +53,7 @@ class ReportPortalManager:
 
             return test
 
-    def finish_test(self, test_path: str, return_code: int):
+    def finish_test(self, test_path: str, return_code: int, **kwargs: Any):
         """
         Finish a test and automatically finish its parent suites if all their child tests are done.
         :param test_path: Path to the test file to finish.
@@ -66,7 +66,7 @@ class ReportPortalManager:
 
             test = node.pop("test", None)
             if test:
-                test.finish_test(return_code)
+                test.finish_test(return_code, **kwargs)
 
             self.hierarchy.finish_test_and_parents(node, return_code)
 

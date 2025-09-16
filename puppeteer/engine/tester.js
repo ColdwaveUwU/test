@@ -527,6 +527,17 @@ class TesterImp {
                 return;
             }
 
+            const client = await page.target().createCDPSession();
+            await client.send("Network.enable");
+
+            client.on("Network.webSocketCreated", ({ url }) => {
+                const match = url.match(/\/doc\/([^/]+)/);
+                if (match) {
+                    const documentId = match[1];
+                    console.log("[document_id]:", documentId);
+                }
+            });
+
             await page.evaluateOnNewDocument(() => {
                 window.AscUserTest = window.AscUserTest || {};
                 window.AscUserTest.logEvents = window.AscUserTest.logEvents ?? true;
@@ -876,6 +887,36 @@ class TesterImp {
     }
 
     /**
+     * Get the editor version.
+     * @returns {Promise<{version: string, build: string}>}
+     */
+    async getEditorVersion() {
+        const versionInfo = await this.page.evaluate(() => {
+            const scriptElement = document.querySelector("script[src*=api]");
+            if (!scriptElement?.src) return null;
+
+            return fetch(scriptElement.src)
+                .then((res) => res.text())
+                .then((text) => {
+                    const match = text.match(/Version:\s*([\d.]+)\s*\(build:(\d+)\)/);
+                    if (match) {
+                        return { version: match[1], build: match[2] };
+                    }
+                    return null;
+                })
+                .catch((e) => {
+                    console.error("Cannot fetch", scriptElement.src, e);
+                    return null;
+                });
+        });
+
+        if (!versionInfo) {
+            throw new Error("Failed to get version from the script");
+        }
+        return versionInfo;
+    }
+
+    /**
      * Editor loading wait function.
      * @param {string} frameName
      * @param {Frame} [frame]
@@ -926,6 +967,10 @@ class TesterImp {
             this.fileExtension = fileExtension;
             const documentType = this.getEditorTypeByExtension(fileExtension);
             this.setEditorType(documentType);
+
+            const editorVersion = await this.getEditorVersion();
+            console.log(`[attribute] version: ${editorVersion.version}`);
+            console.log(`[attribute] build: ${editorVersion.build}`);
         } catch (error) {
             throw new Error(`Error waitEditor: ${error.message}`);
         }
@@ -1987,14 +2032,14 @@ class TesterImp {
             if (this.browser) {
                 const browserProcess = this.browser.process();
                 try {
-                    await this.browser.close(); 
+                    await this.browser.close();
                 } catch (error) {
                     console.warn(`browser.close() failed: ${error.message}`);
                 }
 
                 if (browserProcess && browserProcess.pid) {
                     try {
-                        process.kill(browserProcess.pid, 0); 
+                        process.kill(browserProcess.pid, 0);
                         console.warn(`Process ${browserProcess.pid} still alive, sending SIGKILL`);
                         process.kill(browserProcess.pid, "SIGKILL");
                     } catch (err) {
@@ -2004,7 +2049,6 @@ class TesterImp {
                     }
                 }
             }
-
         } catch (error) {
             console.error("Error during close:", error);
             throw error;

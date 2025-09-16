@@ -112,7 +112,7 @@ class TestRunner:
             errors='replace'
         )
 
-        verification_failed = self._read_process_output(process, stdout_dest, stderr_dest)
+        verification_failed, outputs = self._read_process_output(process, stdout_dest, stderr_dest)
         exit_code = process.returncode
         if verification_failed:
             exit_code = 3
@@ -137,7 +137,7 @@ class TestRunner:
             print(f'\r{message}')
             sys.stdout.flush()
 
-        return exit_code
+        return exit_code, outputs
 
     def _read_process_output(self, process, stdout_dest, stderr_dest) -> bool:
         """
@@ -152,10 +152,11 @@ class TestRunner:
             bool: True if verification failed was detected, False otherwise.
         """
         verification_failed = False
-
+        outputs = [] 
         def read_output(pipe, dest):
             nonlocal verification_failed
             for line in iter(pipe.readline, ''):
+                outputs.append(line.strip())
                 if "[ver] Verification failed." in line:
                     verification_failed = True
                 if dest:
@@ -171,7 +172,7 @@ class TestRunner:
         stdout_thread.join()
         stderr_thread.join()
 
-        return verification_failed
+        return verification_failed, outputs
 
     def run(self, file_path, test_path, report_path, debug_flag, server_port, server_script_path, test_resource_dir, terminal_log, terminal_error):
         """
