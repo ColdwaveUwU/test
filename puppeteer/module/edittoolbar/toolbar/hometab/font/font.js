@@ -23,16 +23,6 @@ class Font extends HomeTab {
 
     static FONT_SELECTORS = selectors;
 
-    // List of buttons that have active states
-    static BUTTONS_WITH_ACTIVE_STATES = [
-        Font.FONT_SELECTORS.BOLD_BUTTON,
-        Font.FONT_SELECTORS.ITALIC_BUTTON,
-        Font.FONT_SELECTORS.UNDERLINE_BUTTON,
-        Font.FONT_SELECTORS.STRIKEOUT_BUTTON,
-        Font.FONT_SELECTORS.SUPERSCRIPT_BUTTON,
-        Font.FONT_SELECTORS.SUBSCRIPT_BUTTON,
-    ];
-
     /**
      * Click the bold button
      * @return {Promise<void>}
@@ -242,38 +232,9 @@ class Font extends HomeTab {
         const element = new elementClass(this.tester, selector, ...constructorParams);
         try {
             await element[action](...actionParams);
-            if (
-                action === "click" &&
-                Font.BUTTONS_WITH_ACTIVE_STATES.includes(selector)
-            ) {
-                // Wait for the state to be applied only for buttons that have active states
-                await this.#waitForStateChange(selector);
-            }
         } catch (error) {
             this.#handleError(methodName, error);
         }
-    }
-
-    /**
-     * Waits for the state of a formatting button to be applied
-     * @param {string} selector - The selector of the button
-     * @returns {Promise<void>}
-     */
-    async #waitForStateChange(selector) {
-        await this.tester.frame.waitForFunction(
-            (sel) => {
-                const button = document.querySelector(sel);
-                if (!button) return false;
-
-                // Check if the button state has been updated in the DOM
-                return (
-                    button.classList.contains("active") ||
-                    button.getAttribute("aria-pressed") === "true"
-                );
-            },
-            { timeout: 5000, polling: 100 },
-            selector
-        );
     }
 
     /**

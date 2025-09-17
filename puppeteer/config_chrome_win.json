@@ -3,6 +3,7 @@
         "url": "https://kim.teamlab.info/example",
         "urlParam": ["action={\"debug\":true}"],
         "messageType": ["error", "log"],
+        "userDelay": 0,
         "cacheEnabled": true,
         "disableTooltips": true,
         "logEvents": false
@@ -10,8 +11,12 @@
     "puppeteerOptions": {
         "browser": "chrome",
         "headless": false,
-        "puppeteerDelay": 0,
-        "userDelay": 0
+        "slowMo": 0,
+        "defaultViewport": {
+            "height": 600,
+            "width": 1000,
+            "deviceScaleFactor": 0
+        }
     },
     "reportOptions": {
         "ignoreBrowserErrors": ["Failed to load resource: the server responded with a status of 404"],

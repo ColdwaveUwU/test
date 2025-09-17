@@ -33,29 +33,32 @@ class TesterImp {
      * @param {JSON} config
      */
     constructor(config, providerAddonClass, isCollab = false) {
-        const ww = 1000;
-        const hh = 600;
-
         const options = {
             chrome: [
                 "--disable-infobars",
-                "--window-size=" + ww + "," + hh,
+                "--window-size=" +
+                    config.puppeteerOptions.defaultViewport.width +
+                    "," +
+                    config.puppeteerOptions.defaultViewport.height,
                 "--disk-cache-dir=" + cacheDir,
                 "--lang=en-US",
                 "--no-sandbox",
             ],
-            firefox: ["--width", "" + ww, "--height", "" + hh],
+            firefox: [
+                "--width",
+                "" + config.puppeteerOptions.defaultViewport.width,
+                "--height",
+                "" + config.puppeteerOptions.defaultViewport.height,
+            ],
         };
+        const args = options[config.puppeteerOptions.browser] ?? [];
 
-        this.userDelay = config.puppeteerOptions.userDelay * 10;
+        this.userDelay = config.testOptions.userDelay * 10;
         this.browserOptions = {
-            headless: config.puppeteerOptions.headless,
-            slowMo: this.userDelay ? 0 : config.puppeteerOptions.puppeteerDelay,
-            args: options[config.puppeteerOptions.browser],
-            defaultViewport: { width: ww, height: hh, deviceScaleFactor: 1 },
+            args,
             timeout: 0,
+            ...config.puppeteerOptions,
         };
-
         if (config.puppeteerOptions.browser === "firefox") {
             this.browserOptions.userDataDir = profilePath;
         }
@@ -891,29 +894,27 @@ class TesterImp {
      * @returns {Promise<{version: string, build: string}>}
      */
     async getEditorVersion() {
-        const versionInfo = await this.page.evaluate(() => {
-            const scriptElement = document.querySelector("script[src*=api]");
-            if (!scriptElement?.src) return null;
+        try {
+            const scriptSrc = await this.page.$eval("script[src*=api]", (el) => el.src);
+            if (!scriptSrc) {
+                throw new Error("Script with 'api' in src not found");
+            }
 
-            return fetch(scriptElement.src)
-                .then((res) => res.text())
-                .then((text) => {
-                    const match = text.match(/Version:\s*([\d.]+)\s*\(build:(\d+)\)/);
-                    if (match) {
-                        return { version: match[1], build: match[2] };
-                    }
-                    return null;
-                })
-                .catch((e) => {
-                    console.error("Cannot fetch", scriptElement.src, e);
-                    return null;
-                });
-        });
+            const res = await fetch(scriptSrc);
+            if (!res.ok) {
+                throw new Error(`Fetch failed: ${res.status} ${res.statusText}`);
+            }
 
-        if (!versionInfo) {
-            throw new Error("Failed to get version from the script");
+            const text = await res.text();
+            const match = text.match(/Version:\s*([\d.]+)\s*\(build:(\d+)\)/);
+            if (!match) {
+                throw new Error("Cannot parse version/build from the script");
+            }
+
+            return { version: match[1], build: match[2] };
+        } catch (err) {
+            throw new Error(`Failed to get editor version: ${err.message}`);
         }
-        return versionInfo;
     }
 
     /**
@@ -2370,12 +2371,12 @@ async function run() {
         const { CustomProviderAddonClass, providerConfig } = provider ? await loadProviderAddon(provider) : {};
 
         const mergedConfig = providerConfig ? { ...TEST_CONFIG, ...providerConfig } : TEST_CONFIG;
-        console.log("Contents of the JSON file:", mergedConfig);
         const regularTester = new TesterImp(mergedConfig, CustomProviderAddonClass);
         const proxyTester = createProxy(regularTester);
         globalThis.Tester = proxyTester;
         globalThis.RegularTester = regularTester;
         globalThis.TesterImp = TesterImp;
+        console.log("Tester config:", Tester.config);
         await Tester.launch();
         await code.run(Tester);
         const duration = Math.round(performance.now() - globalThis.initialTime);

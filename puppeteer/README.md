@@ -207,21 +207,25 @@ A config is a JSON file with the following structure:
 {
     "testOptions": {
         "url": "https://kim.teamlab.info/example",
-        "urlParam": "action={\"debug\":true}",
+        "urlParam": ["action={\"debug\":true}"],
         "messageType": ["error", "log"],
+        "userDelay": 0,
         "cacheEnabled": true,
         "disableTooltips": true,
-        "logEvents": true
+        "logEvents": false
     },
     "puppeteerOptions": {
         "browser": "chrome",
         "headless": false,
-        "puppeteerDelay": 0,
-        "userDelay": 0,
-        "executablePath": "C:/Program Files/Google/Chrome/Application/chrome.exe"
+        "slowMo": 0,
+        "defaultViewport": {
+            "height": 600,
+            "width": 1000,
+            "deviceScaleFactor": 1
+        }
     },
     "reportOptions": {
-        "ignoreBrowserErrors": [],
+        "ignoreBrowserErrors": ["Failed to load resource: the server responded with a status of 404"],
         "ignoreExternalScriptsErrors": ["Checking file for encryption is not supported on Windows"]
     },
     "runOptions": {
@@ -244,14 +248,8 @@ Let's break it down:
     -   `messageType`: the type of messages that will be read from the browser console.
     -   `cacheEnabled`: parameter to use browser cache.
     -   `disableTooltips`: disables tooltips in the editor UI.
--   `puppeteerOptions` - puppeteer settings.
-    -   `browser`: the browser in which testing will take place.
-    -   `headless`: browser launch mode.
-        -   `true` - launching the browser in headless mode.
-        -   `false` - launching the browser with a graphical interface.
-    -   `puppeteerDelay`: delay in puppeteer accessing the browser (if `userDelay` is specified, it is not used).
     -   `userDelay`: user action delay (ms).
-    -   `executablePath`: the path to the browser on the system.
+-   `puppeteerOptions` - [puppeteer settings](https://pptr.dev/api/puppeteer.launchoptions).
 -   `reportOptions`: configuring the generation of the completed test report.
     -   `ignoreBrowserErrors`: ignoring certain errors in the browser console.
     -   `ignoreExternalScriptsErrors`: ignores errors caused by an external script connected to the Tester.
