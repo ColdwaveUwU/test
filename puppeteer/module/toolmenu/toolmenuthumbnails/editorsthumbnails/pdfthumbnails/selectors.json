@@ -7,7 +7,7 @@
             "THUMB_BUTTON_SETTINGS": "#thumbnails-btn-settings",
             "SETTINGS_MENU": ".dropdown-menu",
             "SIZE": "#sld-thumbnails-size .track",
-            "HIGHLIGHT": "#thumbnails-btn-settings .menu-item.checkable"
+            "HIGHLIGHT": "#thumbnails-btn-settings"
         },
         "MENU": {
             "THUNB_LIST": "#thumbnails-list"

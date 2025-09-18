@@ -26,7 +26,7 @@
     "DECREASE_FONT_BUTTON": "#id-toolbar-btn-decfont",
     "CHANGE_CASE_BUTTON": "#id-toolbar-btn-case",
     "HIGHLIGHT_BUTTON": "#id-toolbar-btn-highlight",
-    "NO_FILL_CHECKBOX": "#id-toolbar-btn-highlight .menu-item.checkable",
+    "NO_FILL_CHECKBOX": "#id-toolbar-btn-highlight",
     "CLEAR_STYLE_BUTTON": "#id-toolbar-btn-clearstyle",
     "FONT_COLOR_BUTTON": "#id-toolbar-btn-fontcolor",
     "FILL_COLOR_BUTTON": "#id-toolbar-btn-fillparag"

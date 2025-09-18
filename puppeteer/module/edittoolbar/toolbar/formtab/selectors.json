@@ -40,7 +40,7 @@
 
   "BORDER_COLOR_DROPDOWN": "#form-color-btn",
 
-  "BORDER_NO_BORDER": ".color-menu .menu-item.checkable",
+  "BORDER_NO_BORDER": ".color-menu",
   "BORDER_CUSTOM_COLOR": "#form-color-btn ul li:last-child a",
 
   "BACKGROUND_COLOR_DROPDOWN": "#form-background-color-btn",

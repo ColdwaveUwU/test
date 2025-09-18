@@ -1,4 +1,5 @@
 {
     "CHECKBOX_TARGET": "label.checkbox__shape",
-    "RADIO_TARGET": "div.radiobox"
+    "RADIO_TARGET": "div.radiobox",
+    "CHECKABLE_TARGET": ".menu-item.checkable"
 }
