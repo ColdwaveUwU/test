@@ -35,8 +35,8 @@
             "INPUT": "#chart-spin-persp input"
         },
         "CHECKBOX": {
-            "RIGHT_ANGLE": "#chart-checkbox-right-angle label label",
-            "AUTOSCALE": "#chart-checkbox-autoscale label label"
+            "RIGHT_ANGLE": "#chart-checkbox-right-angle",
+            "AUTOSCALE": "#chart-checkbox-autoscale"
         },
         "DEPTH": "#chart-spin-3d-depth input",
         "HEIGHT": "#chart-spin-3d-height",

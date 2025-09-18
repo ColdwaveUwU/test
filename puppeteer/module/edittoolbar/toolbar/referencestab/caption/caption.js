@@ -1,6 +1,6 @@
 const ReferencesTab = require("../referencestab");
 const selectors = require("./selectors.json");
-const { Input, ModalButton } = require("../../../../elements");
+const { Input, ModalButton, Checkbox } = require("../../../../elements");
 
 /**
  * @typedef {Object} CaptionSettings
@@ -179,7 +179,8 @@ class Caption extends ReferencesTab {
     async setExcludeLabelFromCaption(condition) {
         try {
             const selector = Caption.SELECTORS.MODAL_WINDOW.EXCLUDE_CHECKBOX.ELEMENT_SELECTOR;
-            await this.tester.clickCheckbox({ selector, condition });
+            const checkbox = new Checkbox(this.tester, selector);
+            await checkbox.set(condition);
         } catch (error) {
             throw new Error(
                 `Caption.setExcludeLabelFromCaption: Failed to set exclude label from caption to '${condition}'. ${error.message}`,
@@ -195,7 +196,8 @@ class Caption extends ReferencesTab {
     async setIncludeChapterNumber(condition) {
         try {
             const selector = Caption.SELECTORS.MODAL_WINDOW.CHAPTER_CHECKBOX.ELEMENT_SELECTOR;
-            await this.tester.clickCheckbox({ selector, condition });
+            const checkbox = new Checkbox(this.tester, selector);
+            await checkbox.set(condition);
         } catch (error) {
             throw new Error(
                 `Caption.setIncludeChapterNumber: Failed to set include chapter number to '${condition}'. ${error.message}`,

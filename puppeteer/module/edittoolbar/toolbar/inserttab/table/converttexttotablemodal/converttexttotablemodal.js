@@ -1,4 +1,4 @@
-const { Input } = require("../../../../../elements");
+const { Input, Checkbox } = require("../../../../../elements");
 const selectors = require("./selectors.json");
 
 /**
@@ -51,7 +51,8 @@ class ConvertTextToTableModal {
             return;
         }
 
-        await this.tester.clickCheckbox({ selector: setting.selector, condition: true });
+        const checkbox = new Checkbox(this.tester, setting.selector);
+        await checkbox.set(true);
 
         if (setting.value !== undefined && inputSelector) {
             const input = new Input(this.tester, inputSelector, false);

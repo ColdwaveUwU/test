@@ -1,7 +1,7 @@
 const ViewTab = require("../viewtab");
 const Plugin = require("../../../../plugins/plugin");
 const selectors = require("./selectors.json");
-const { Input, OptionsButton, ModalButton } = require("../../../../elements");
+const { Input, OptionsButton, ModalButton, Checkbox } = require("../../../../elements");
 const { MoreButtons } = require("../../../../common");
 
 class Macros extends ViewTab {
@@ -104,7 +104,8 @@ class Macros extends ViewTab {
         const selector = Macros.SELECTORS.MACROS_DIALOG.MACROS_AUTOSTART_CHECKBOX;
 
         try {
-            await this.tester.clickCheckbox({ selector, condition });
+            const checkbox = new Checkbox(this.tester, selector);
+            await checkbox.set(condition);
         } catch (error) {
             this.#handleError("setMacrosAutostart", error);
         }

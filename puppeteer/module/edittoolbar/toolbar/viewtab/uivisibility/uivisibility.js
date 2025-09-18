@@ -1,7 +1,7 @@
 const ViewTab = require("../viewtab");
 const selectors = require("./selectors.json");
 const { MoreButtons } = require("../../../../common");
-
+const { Checkbox } = require("../../../../elements");
 class UIVisibility extends ViewTab {
     constructor(tester) {
         super(tester);
@@ -22,7 +22,8 @@ class UIVisibility extends ViewTab {
         await moreButtons.open();
 
         const selector = UIVisibility.SELECTORS[selectorKey];
-        await this.tester.clickCheckbox({ selector, condition });
+        const checkbox = new Checkbox(this.tester, selector);
+        await checkbox.set(condition);
     }
 
     /**

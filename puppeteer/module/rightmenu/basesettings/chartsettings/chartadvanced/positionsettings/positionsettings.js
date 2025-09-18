@@ -1,6 +1,6 @@
 const BaseSettings = require("../../../basesettings");
 const selectors = require("./selectors.json");
-
+const { Checkbox } = require("../../../../../elements");
 /**
  * @typedef {Object} HorizontalAlignmentSettings
  * @property {"Left" | "Center" | "Right"} [align]- The alignment for the horizontal position
@@ -72,10 +72,8 @@ class PositionSettings extends BaseSettings {
             const { align, relativeTo } = settings;
             const selector = PositionSettings.POSITION_SELECTORS.HORIZONTAL.ALIGMENT;
 
-            await this.tester.clickCheckbox({
-                selector: selector.CHECKBOX,
-                condition: true,
-            });
+            const checkbox = new Checkbox(this.tester, selector.CHECKBOX);
+            await checkbox.set(true);
 
             if (align) {
                 await this.tester.click(selector.DROPDOWN);
@@ -101,10 +99,8 @@ class PositionSettings extends BaseSettings {
             const { value, toTheRightOf, increment, decrement } = settings;
             const selector = PositionSettings.POSITION_SELECTORS.HORIZONTAL.POSTION;
 
-            await this.tester.clickCheckbox({
-                selector: selector.CHECKBOX,
-                condition: true,
-            });
+            const checkbox = new Checkbox(this.tester, selector.CHECKBOX);
+            await checkbox.set(true);
 
             if (value) {
                 await this.tester.inputToForm(value, selector.FIELD);
@@ -132,10 +128,8 @@ class PositionSettings extends BaseSettings {
             const { value, relativeTo, increment, decrement } = settings;
             const selector = PositionSettings.POSITION_SELECTORS.HORIZONTAL.RELATIVE;
 
-            await this.tester.clickCheckbox({
-                selector: selector.CHECKBOX,
-                condition: true,
-            });
+            const checkbox = new Checkbox(this.tester, selector.CHECKBOX);
+            await checkbox.set(true);
 
             if (value) {
                 await this.tester.inputToForm(value, selector.FIELD);
@@ -163,10 +157,8 @@ class PositionSettings extends BaseSettings {
             const { align, relativeTo } = settings;
             const selector = PositionSettings.POSITION_SELECTORS.VERTICAL.ALIGMENT;
 
-            await this.tester.clickCheckbox({
-                selector: selector.CHECKBOX,
-                condition: true,
-            });
+            const checkbox = new Checkbox(this.tester, selector.CHECKBOX);
+            await checkbox.set(true);
 
             if (align) {
                 await this.tester.click(selector.DROPDOWN);
@@ -192,10 +184,8 @@ class PositionSettings extends BaseSettings {
             const { value, below, increment, decrement } = settings;
             const selector = PositionSettings.POSITION_SELECTORS.VERTICAL.POSTION;
 
-            await this.tester.clickCheckbox({
-                selector: selector.CHECKBOX,
-                condition: true,
-            });
+            const checkbox = new Checkbox(this.tester, selector.CHECKBOX);
+            await checkbox.set(true);
 
             if (value) {
                 await this.tester.inputToForm(value, selector.FIELD);
@@ -223,10 +213,9 @@ class PositionSettings extends BaseSettings {
             const { value, relativeTo, increment, decrement } = settings;
             const selector = PositionSettings.POSITION_SELECTORS.VERTICAL.RELATIVE;
 
-            await this.tester.clickCheckbox({
-                selector: selector.CHECKBOX,
-                condition: true,
-            });
+            const checkbox = new Checkbox(this.tester, selector.CHECKBOX);
+            await checkbox.set(true);
+
             if (value) {
                 await this.tester.inputToForm(value, selector.FIELD);
             }
@@ -258,17 +247,12 @@ class PositionSettings extends BaseSettings {
                 if (!isEnabled) {
                     throw new Error("Move object with text is not supported for this position type");
                 }
-
-                await this.tester.clickCheckbox({
-                    selector: selector.MOVE_OBJ,
-                    condition: true,
-                });
+                const checkbox = new Checkbox(this.tester, selector.MOVE_OBJ);
+                await checkbox.set(true);
             }
             if (allowOverlap) {
-                await this.tester.clickCheckbox({
-                    selector: selector.ALLOW_OVERLAP,
-                    condition: true,
-                });
+                const checkbox = new Checkbox(this.tester, selector.ALLOW_OVERLAP);
+                await checkbox.set(true);
             }
         } catch (error) {
             throw new Error(`setOptions: Failed to set options. ${error.message}`, { cause: error });

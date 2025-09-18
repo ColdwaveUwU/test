@@ -1,5 +1,5 @@
 const BaseSettings = require("../../../basesettings");
-const { Dropdown, Input } = require("../../../../../elements");
+const { Dropdown, Input, Checkbox } = require("../../../../../elements");
 const selectors = require("./selectors.json");
 
 class FontSettings extends BaseSettings {
@@ -42,7 +42,8 @@ class FontSettings extends BaseSettings {
      */
     async setStrikethrough(condition) {
         const strikethroughSelector = FontSettings.FONT_SELECTORS.STRIKETHROUGH_CHECKBOX;
-        await this.tester.clickCheckbox({ selector: strikethroughSelector, condition: condition });
+        const checkbox = new Checkbox(this.tester, strikethroughSelector);
+        await checkbox.set(condition);
     }
 
     /**
@@ -51,7 +52,8 @@ class FontSettings extends BaseSettings {
      */
     async setDoubleStrikethrough(condition) {
         const doubleStrikethroughSelector = FontSettings.FONT_SELECTORS.DOUBLE_STRIKETHROUGH_CHECKBOX;
-        await this.tester.clickCheckbox({ selector: doubleStrikethroughSelector, condition: condition });
+        const checkbox = new Checkbox(this.tester, doubleStrikethroughSelector);
+        await checkbox.set(condition);
     }
 
     /**
@@ -60,7 +62,8 @@ class FontSettings extends BaseSettings {
      */
     async setSuperscript(condition) {
         const superscriptSelector = FontSettings.FONT_SELECTORS.SUPERSCRIPT_CHECKBOX;
-        await this.tester.clickCheckbox({ selector: superscriptSelector, condition: condition });
+        const checkbox = new Checkbox(this.tester, superscriptSelector);
+        await checkbox.set(condition);
     }
 
     /**
@@ -69,7 +72,8 @@ class FontSettings extends BaseSettings {
      */
     async setSubscript(condition) {
         const subscriptSelector = FontSettings.FONT_SELECTORS.SUBSCRIPT_CHECKBOX;
-        await this.tester.clickCheckbox({ selector: subscriptSelector, condition: condition });
+        const checkbox = new Checkbox(this.tester, subscriptSelector);
+        await checkbox.set(condition);
     }
 
     /**
@@ -78,7 +82,8 @@ class FontSettings extends BaseSettings {
      */
     async setSmallCaps(condition) {
         const smallCapsSelector = FontSettings.FONT_SELECTORS.SMALL_CAPS_CHECKBOX;
-        await this.tester.clickCheckbox({ selector: smallCapsSelector, condition: condition });
+        const checkbox = new Checkbox(this.tester, smallCapsSelector);
+        await checkbox.set(condition);
     }
 
     /**
@@ -87,7 +92,8 @@ class FontSettings extends BaseSettings {
      */
     async setAllCaps(condition) {
         const allCapsSelector = FontSettings.FONT_SELECTORS.ALL_CAPS_CHECKBOX;
-        await this.tester.clickCheckbox({ selector: allCapsSelector, condition: condition });
+        const checkbox = new Checkbox(this.tester, allCapsSelector);
+        await checkbox.set(condition);
     }
 
     /**

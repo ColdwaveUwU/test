@@ -1,5 +1,5 @@
 const HomeTab = require("../hometab");
-const { Dropdown, Button, Input } = require("../../../../elements");
+const { Dropdown, Button, Input, Checkbox } = require("../../../../elements");
 const selectors = require("./selectors.json");
 /**
  * Object with color settings.
@@ -168,11 +168,9 @@ class Font extends HomeTab {
             }
 
             if (noFill) {
+                const noFillCheckbox = new Checkbox(this.tester, Font.FONT_SELECTORS.NO_FILL_CHECKBOX);
                 await highlightDropdown.selectDropdown();
-                await this.tester.clickCheckbox({
-                    selector: Font.FONT_SELECTORS.NO_FILL_CHECKBOX,
-                    condition: noFill,
-                });
+                await noFillCheckbox.set(noFill);
             }
         } catch (error) {
             this.#handleError("clickHightlight", error);

@@ -48,14 +48,14 @@
                                         "autosave": {
                                             "type": "checkbox",
                                             "documentType": "common",
-                                            "selector": "#fms-chb-autosave label label"
+                                            "selector": "#fms-chb-autosave"
                                         }
                                     },
                                     {
                                         "showPasteOptions": {
                                             "type": "checkbox",
                                             "documentType": "common",
-                                            "selector": "#fms-chb-paste-settings label label"
+                                            "selector": "#fms-chb-paste-settings"
                                         }
                                     },
                                     {
@@ -65,7 +65,7 @@
                                                 "word",
                                                 "pdf"
                                             ],
-                                            "selector": "#fms-chb-smart-selection label label"
+                                            "selector": "#fms-chb-smart-selection"
                                         }
                                     },
                                     {
@@ -75,7 +75,7 @@
                                                 "word",
                                                 "pdf"
                                             ],
-                                            "selector": "#fms-chb-compatible label label"
+                                            "selector": "#fms-chb-compatible"
                                         }
                                     }
                                 ]
@@ -178,7 +178,7 @@
                                                 "pdf",
                                                 "cell"
                                             ],
-                                            "selector": "#fms-chb-live-comment label label"
+                                            "selector": "#fms-chb-live-comment"
                                         }
                                     },
                                     {
@@ -189,7 +189,7 @@
                                                 "pdf",
                                                 "cell"
                                             ],
-                                            "selector": "#fms-chb-resolved-comment label label"
+                                            "selector": "#fms-chb-resolved-comment"
                                         }
                                     }
                                 ]
@@ -208,21 +208,21 @@
                                                 "pdf",
                                                 "slide"
                                             ],
-                                            "selector": "#fms-chb-spell-check label label"
+                                            "selector": "#fms-chb-spell-check"
                                         }
                                     },
                                     {
                                         "ignoreUpper": {
                                             "type": "checkbox",
                                             "documentType": "common",
-                                            "selector": "#fms-chb-ignore-uppercase-words label label"
+                                            "selector": "#fms-chb-ignore-uppercase-words"
                                         }
                                     },
                                     {
                                         "ignoreWithNumber": {
                                             "type": "checkbox",
                                             "documentType": "common",
-                                            "selector": "#fms-chb-ignore-numbers-words label label"
+                                            "selector": "#fms-chb-ignore-numbers-words"
                                         }
                                     },
                                     {
@@ -245,7 +245,7 @@
                                                                 "replaceAsType": {
                                                                     "type": "checkbox",
                                                                     "documentType": "common",
-                                                                    "selector": "#auto-correct-chb-replace-type label label"
+                                                                    "selector": "#auto-correct-chb-replace-type"
                                                                 }
                                                             },
                                                             {
@@ -385,7 +385,7 @@
                                                                         "pdf",
                                                                         "slide"
                                                                     ],
-                                                                    "selector": "#id-autocorrect-dialog-chk-quotes label label"
+                                                                    "selector": "#id-autocorrect-dialog-chk-quotes"
                                                                 }
                                                             },
                                                             {
@@ -396,7 +396,7 @@
                                                                         "pdf",
                                                                         "slide"
                                                                     ],
-                                                                    "selector": "#id-autocorrect-dialog-chk-hyphens label label"
+                                                                    "selector": "#id-autocorrect-dialog-chk-hyphens"
                                                                 }
                                                             },
                                                             {
@@ -407,7 +407,7 @@
                                                                         "pdf",
                                                                         "slide"
                                                                     ],
-                                                                    "selector": "#id-autocorrect-dialog-chk-hyperlink label label"
+                                                                    "selector": "#id-autocorrect-dialog-chk-hyperlink"
                                                                 }
                                                             },
                                                             {
@@ -418,7 +418,7 @@
                                                                         "pdf",
                                                                         "slide"
                                                                     ],
-                                                                    "selector": "#id-autocorrect-dialog-chk-double-space label label"
+                                                                    "selector": "#id-autocorrect-dialog-chk-double-space"
                                                                 }
                                                             },
                                                             {
@@ -429,7 +429,7 @@
                                                                         "pdf",
                                                                         "slide"
                                                                     ],
-                                                                    "selector": "#id-autocorrect-dialog-chk-bulleted label label"
+                                                                    "selector": "#id-autocorrect-dialog-chk-bulleted"
                                                                 }
                                                             },
                                                             {
@@ -440,7 +440,7 @@
                                                                         "pdf",
                                                                         "slide"
                                                                     ],
-                                                                    "selector": "#id-autocorrect-dialog-chk-numbered label label"
+                                                                    "selector": "#id-autocorrect-dialog-chk-numbered"
                                                                 }
                                                             }
                                                         ]
@@ -464,7 +464,7 @@
                                                                         "pdf",
                                                                         "slide"
                                                                     ],
-                                                                    "selector": "#auto-correct-exceptions-chk-sentence label label"
+                                                                    "selector": "#auto-correct-exceptions-chk-sentence"
                                                                 }
                                                             },
                                                             {
@@ -475,7 +475,7 @@
                                                                         "pdf",
                                                                         "slide"
                                                                     ],
-                                                                    "selector": "#auto-correct-exceptions-chk-cells label label"
+                                                                    "selector": "#auto-correct-exceptions-chk-cells"
                                                                 }
                                                             },
                                                             {
@@ -611,14 +611,14 @@
                                                 "word",
                                                 "pdf"
                                             ],
-                                            "selector": "#fms-chb-dark-mode label label"
+                                            "selector": "#fms-chb-dark-mode"
                                         }
                                     },
                                     {
                                         "useToolbarColor": {
                                             "type": "checkbox",
                                             "documentType": "common",
-                                            "selector": "#fms-chb-tab-background label label"
+                                            "selector": "#fms-chb-tab-background"
                                         }
                                     }
                                 ]
@@ -633,7 +633,7 @@
                                         "turnOnScreen": {
                                             "type": "checkbox",
                                             "documentType": "common",
-                                            "selector": "#fms-chb-scrn-reader label label"
+                                            "selector": "#fms-chb-scrn-reader"
                                         }
                                     },
                                     {
@@ -644,14 +644,14 @@
                                                 "pdf",
                                                 "slide"
                                             ],
-                                            "selector": "#fms-chb-align-guides label label"
+                                            "selector": "#fms-chb-align-guides"
                                         }
                                     },
                                     {
                                         "useAlt": {
                                             "type": "checkbox",
                                             "documentType": "common",
-                                            "selector": "#fms-chb-use-alt-key label label"
+                                            "selector": "#fms-chb-use-alt-key"
                                         }
                                     },
                                     {

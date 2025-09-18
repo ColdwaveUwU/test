@@ -1,6 +1,6 @@
 const BaseSettings = require("../../../basesettings");
 const selectors = require("./selectors.json");
-const { Input, Dropdown } = require("../../../../../elements");
+const { Input, Dropdown, Checkbox } = require("../../../../../elements");
 
 /**
  * @typedef {Object} TableSettingsObject
@@ -32,12 +32,14 @@ class TableSettings extends BaseSettings {
 
         const handlers = {
             width: async (value) => {
-                await this.tester.clickCheckbox({ selector: tableSizeSelectors.SIZE.CHECKBOX, condition: true });
+                const checkbox = new Checkbox(this.tester, tableSizeSelectors.SIZE.CHECKBOX);
+                await checkbox.set(true);
                 const input = new Input(this.tester, tableSizeSelectors.SIZE.WIDTH, false);
                 await input.setInputSettings(value);
             },
             measure: async (value) => {
-                await this.tester.clickCheckbox({ selector: tableSizeSelectors.SIZE.CHECKBOX, condition: true });
+                const checkbox = new Checkbox(this.tester, tableSizeSelectors.SIZE.CHECKBOX);
+                await checkbox.set(true);
                 const dropdown = new Dropdown(this.tester, {
                     selector: tableSizeSelectors.SIZE.MEASURE.SELECTOR,
                     elementsSelector: tableSizeSelectors.SIZE.MEASURE.ELEMENTS_SELECTORS,
@@ -45,7 +47,8 @@ class TableSettings extends BaseSettings {
                 await dropdown.selectDropdownItem(value);
             },
             autoResize: async (value) => {
-                await this.tester.clickCheckbox({ selector: tableSizeSelectors.AUTO_RESIZE, condition: value });
+                const checkbox = new Checkbox(this.tester, tableSizeSelectors.AUTO_RESIZE);
+                await checkbox.set(value);
             },
         };
 
@@ -101,7 +104,8 @@ class TableSettings extends BaseSettings {
 
         const handlers = {
             inputSpacing: async (value) => {
-                await this.tester.clickCheckbox({ selector: tableOptionsSelectors.CHECKBOX, condition: true });
+                const checkbox = new Checkbox(this.tester, tableOptionsSelectors.CHECKBOX);
+                await checkbox.set(true);
                 const input = new Input(this.tester, tableOptionsSelectors.INPUT_SPACING, false);
                 await input.setInputSettings(value);
             },

@@ -5,7 +5,7 @@
     "CATEGORY_ITEM": "#format-settings-combo-format li",
     "NUMBER": {
         "DECIMAL": "#format-settings-spin-decimal",
-        "SEPARATOR": "#format-settings-checkbox-separator label.checkbox__shape"
+        "SEPARATOR": "#format-settings-checkbox-separator"
     },
     "CUSTOM": {
         "FORMAT_INPUT": "#format-settings-txt-code"
@@ -21,6 +21,6 @@
         "ITEM": "#format-settings-combo-symbols li",
         "DESCRIPTION": "a"
     },
-    "LINKED_TO_SOURCE": "#format-settings-chk-linked label.checkbox__shape",
+    "LINKED_TO_SOURCE": "#format-settings-chk-linked",
     "OK_BUTTON": "div.footer.center button[result=\"ok\"]"
 }

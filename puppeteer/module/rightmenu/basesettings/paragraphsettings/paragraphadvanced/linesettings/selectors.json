@@ -1,7 +1,7 @@
 {
-    "PAGE_BREAK_BEFORE_CHECKBOX": "#paragraphadv-checkbox-break-before label.checkbox__shape",
-    "ORPHAN_CONTROL_CHECKBOX": "#paragraphadv-checkbox-orphan label.checkbox__shape",
-    "SUPPRESS_LINE_NUMBERS_CHECKBOX": "#paragraphadv-checkbox-suppress-line-numbers label.checkbox__shape",
-    "KEEP_LINES_TOGETHER_CHECKBOX": "#paragraphadv-checkbox-keep-lines label.checkbox__shape",
-    "KEEP_WITH_NEXT_CHECKBOX": "#paragraphadv-checkbox-keep-next label.checkbox__shape"
+    "PAGE_BREAK_BEFORE_CHECKBOX": "#paragraphadv-checkbox-break-before",
+    "ORPHAN_CONTROL_CHECKBOX": "#paragraphadv-checkbox-orphan",
+    "SUPPRESS_LINE_NUMBERS_CHECKBOX": "#paragraphadv-checkbox-suppress-line-numbers",
+    "KEEP_LINES_TOGETHER_CHECKBOX": "#paragraphadv-checkbox-keep-lines",
+    "KEEP_WITH_NEXT_CHECKBOX": "#paragraphadv-checkbox-keep-next"
 }

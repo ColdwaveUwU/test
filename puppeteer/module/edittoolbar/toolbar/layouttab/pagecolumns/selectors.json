@@ -9,8 +9,8 @@
         "NUMBER_OF_COLUMNS_INPUT": "#custom-columns-spin-num",
         "COLUMN_WIDTH_INPUT": "#custom-columns-list-item-spin-width-",
         "COLUMN_SPACING_INPUT": "#custom-columns-list-item-spin-spacing-",
-        "EQUAL_COLUMN_WIDTH_CHECKBOX": "#custom-columns-equal-width label.checkbox__shape",
-        "COLUMN_DIVIDER_CHECKBOX": "#custom-columns-separator label.checkbox__shape",
+        "EQUAL_COLUMN_WIDTH_CHECKBOX": "#custom-columns-equal-width",
+        "COLUMN_DIVIDER_CHECKBOX": "#custom-columns-separator",
         "OK_BUTTON": "button[result='ok']"
     }
 }

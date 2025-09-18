@@ -1,6 +1,6 @@
 const HomeTab = require("../hometab");
 const selectors = require("./selectors.json");
-const { ModalButton, Input, DropdownInput, Dropdown } = require("../../../../elements");
+const { ModalButton, Input, DropdownInput, Dropdown, Checkbox } = require("../../../../elements");
 
 /**
  * @typedef {Object} LineOption
@@ -512,8 +512,9 @@ class TextForm extends HomeTab {
      */
     async setListSettingsRestartList(condition) {
         const selector = TextForm.SELECTORS.LIST_SETTINGS_MODAL_WINDOW.RESTART_LIST_CHECKBOX;
+        const restartListCheckbox = new Checkbox(this.tester, selector);
         try {
-            await this.tester.clickCheckbox({ selector, condition });
+            await restartListCheckbox.set(condition);
         } catch (error) {
             this.#handleError("setListSettingsRestartList", error);
         }
@@ -656,11 +657,12 @@ class TextForm extends HomeTab {
     async addTabStopAt(value = null) {
         const inputSelector = TextForm.SELECTORS.LIST_SETTINGS_MODAL_WINDOW.TAB_STOP_AT_INPUT;
         const checkboxSelector = TextForm.SELECTORS.LIST_SETTINGS_MODAL_WINDOW.TAB_STOP_AT_CHECKBOX;
+        const addStopAtCheckbox = new Checkbox(this.tester, checkboxSelector);
         try {
-            await this.tester.clickCheckbox({ selector: checkboxSelector, condition: true });
+            await addStopAtCheckbox.set(true);
             if (value) {
                 const input = new Input(this.tester, inputSelector, false);
-                await input.set(value, 100);
+                await input.set(value);
             }
         } catch (error) {
             this.#handleError("addTabStopAt", error);
@@ -705,8 +707,9 @@ class TextForm extends HomeTab {
      */
     async setListSettingsBold(condition) {
         const selector = TextForm.SELECTORS.LIST_SETTINGS_MODAL_WINDOW.FORMATTING_BUTTONS.BOLD;
+        const listSettingsCheckbox = new Checkbox(this.tester, selector);
         try {
-            await this.tester.clickCheckbox({ selector, condition });
+            await listSettingsCheckbox.set(condition);
         } catch (error) {
             this.#handleError("setListSettingsBold", error);
         }
@@ -718,8 +721,9 @@ class TextForm extends HomeTab {
      */
     async setListSettingsItalic(condition) {
         const selector = TextForm.SELECTORS.LIST_SETTINGS_MODAL_WINDOW.FORMATTING_BUTTONS.ITALIC;
+        const listSettingsCheckbox = new Checkbox(this.tester, selector);
         try {
-            await this.tester.clickCheckbox({ selector, condition });
+            await listSettingsCheckbox.set(condition);
         } catch (error) {
             this.#handleError("setListSettingsItalic", error);
         }

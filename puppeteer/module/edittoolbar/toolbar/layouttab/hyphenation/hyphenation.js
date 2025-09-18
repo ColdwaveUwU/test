@@ -1,5 +1,5 @@
 const LayoutTab = require("../layouttab");
-const { Dropdown, Input } = require("../../../../elements");
+const { Dropdown, Input, Checkbox } = require("../../../../elements");
 const selectors = require("./selectors.json");
 
 class Hyphenation extends LayoutTab {
@@ -61,8 +61,10 @@ class Hyphenation extends LayoutTab {
     async setAutomaticallyHyphenate(condition) {
         const automaticallyHyphenateSelector =
             Hyphenation.HYPHENATION_SELECTORS.HYPHENATION_WINDOW.AUTOMATICALLY_HYPHENATE_CHECKBOX;
+
         try {
-            await this.tester.clickCheckbox({ selector: automaticallyHyphenateSelector, condition: condition });
+            const checkbox = new Checkbox(this.tester, automaticallyHyphenateSelector);
+            await checkbox.set(condition);
         } catch (error) {
             throw new Error(`setAutomaticallyHyphenate: Failed to set hyphenate". \n${error.message}`, {
                 cause: error,
@@ -78,7 +80,8 @@ class Hyphenation extends LayoutTab {
         const hyphenateWordsInCapsSelector =
             Hyphenation.HYPHENATION_SELECTORS.HYPHENATION_WINDOW.HYPHENATE_IN_CAPS_CHECKBOX;
         try {
-            await this.tester.clickCheckbox({ selector: hyphenateWordsInCapsSelector, condition: condition });
+            const checkbox = new Checkbox(this.tester, hyphenateWordsInCapsSelector);
+            await checkbox.set(condition);
         } catch (error) {
             throw new Error(`setHyphenateWordsInCaps: Failed to set checkbox". \n${error.message}`, {
                 cause: error,

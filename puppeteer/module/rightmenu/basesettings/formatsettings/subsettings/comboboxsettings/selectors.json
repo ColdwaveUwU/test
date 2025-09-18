@@ -39,7 +39,7 @@
         "UP_BUTTON": "#form-list-up button",
         "DOWN_BUTTON": "#form-list-down button",
         "DELETE_BUTTON": "#form-list-delete button",
-        "FIXED_SIZE_CHECKBOX": "#form-chb-fixed label.checkbox__shape"
+        "FIXED_SIZE_CHECKBOX": "#form-chb-fixed"
     },
     "COLOR": {
         "BORDER": {
@@ -52,7 +52,7 @@
             "BACKGROUND_COLOR_LIST": "#form-background-color-btn ul"
         }
     },
-    "REQUIRED_CHECKBOX": "#form-chb-required label.checkbox__shape",
+    "REQUIRED_CHECKBOX": "#form-chb-required",
     "DELETE_BUTTON": "#form-btn-delete > button",
     "LOCK_BUTTON": "#form-btn-lock > button"
 }

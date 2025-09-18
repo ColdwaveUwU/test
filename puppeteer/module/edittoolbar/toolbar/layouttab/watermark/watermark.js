@@ -1,6 +1,6 @@
 const path = require("path");
 const LayoutTab = require("../layouttab");
-const { Button, Dropdown, DropdownInput, Input } = require("../../../../elements");
+const { Button, Dropdown, DropdownInput, Input, Checkbox } = require("../../../../elements");
 const { Color, DocumentUploader } = require("../../../../common");
 const selectors = require("./selectors.json");
 const textPresets = require("./textpresets.json");
@@ -294,7 +294,8 @@ class Watermark extends LayoutTab {
             Watermark.WATERMARK_SELECTORS.WATERMARK_SETTINGS_WINDOW.SEMITRANSPARENT_CHECKBOX;
 
         try {
-            await this.tester.clickCheckbox({ selector: semitransparentSelector, condition: condition });
+            const checkbox = new Checkbox(this.tester, semitransparentSelector);
+            await checkbox.set(condition);
         } catch (error) {
             throw new Error(`setSemitransparent: Failed to set semitransparent ${error.message}`, {
                 cause: error,

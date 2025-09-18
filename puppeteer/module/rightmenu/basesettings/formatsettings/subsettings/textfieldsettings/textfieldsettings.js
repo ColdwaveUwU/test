@@ -3,7 +3,7 @@ const RightMenu = require("../../../../rightmenu");
 const { Color } = require("../../../../../common");
 const selectors = require("./selectors.json");
 const Input = require("../../../../../elements/input");
-const { Dropdown } = require("../../../../../elements");
+const { Dropdown, Checkbox } = require("../../../../../elements");
 /**
  * Class representing the settings for a text field in RightMenu.
  * Extends FormatSettings to provide specific interactions.
@@ -115,10 +115,8 @@ class TextFieldSettings extends FormatSettings {
      */
     async setFixedSize(isRequired = true) {
         const FIXED_SIZE_CHECKBOX = TextFieldSettings.TEXTFIELD_SELECTORS.FORMAT_OPT.FIXED_SIZE_CHECKBOX;
-        await this.tester.clickCheckbox({
-            selector: FIXED_SIZE_CHECKBOX,
-            condition: isRequired,
-        });
+        const checkbox = new Checkbox(this.tester, FIXED_SIZE_CHECKBOX);
+        await checkbox.set(isRequired);
     }
 
     /**
@@ -127,10 +125,8 @@ class TextFieldSettings extends FormatSettings {
      */
     async setAutoFit(isAutoFit = true) {
         const AUTO_FIT_CHECKBOX = TextFieldSettings.TEXTFIELD_SELECTORS.FORMAT_OPT.AUTO_FIT_CHECKBOX;
-        await this.tester.clickCheckbox({
-            selector: AUTO_FIT_CHECKBOX,
-            condition: isAutoFit,
-        });
+        const checkbox = new Checkbox(this.tester, AUTO_FIT_CHECKBOX);
+        await checkbox.set(isAutoFit);
     }
 
     /**
@@ -139,10 +135,8 @@ class TextFieldSettings extends FormatSettings {
      */
     async setMultiline(isMultiline = false) {
         const MULTILINE_CHECKBOX = TextFieldSettings.TEXTFIELD_SELECTORS.FORMAT_OPT.MULTILINE_CHECKBOX;
-        await this.tester.clickCheckbox({
-            selector: MULTILINE_CHECKBOX,
-            condition: isMultiline,
-        });
+        const checkbox = new Checkbox(this.tester, MULTILINE_CHECKBOX);
+        await checkbox.set(isMultiline);
     }
 
     /**
@@ -151,10 +145,8 @@ class TextFieldSettings extends FormatSettings {
      */
     async setCharLimit(isCharLimit = false) {
         const CHAR_LIMIT_CHECKBOX = TextFieldSettings.TEXTFIELD_SELECTORS.CELL_OPT.CHAR_LIMIT_CHECKBOX;
-        await this.tester.clickCheckbox({
-            selector: CHAR_LIMIT_CHECKBOX,
-            condition: isCharLimit,
-        });
+        const checkbox = new Checkbox(this.tester, CHAR_LIMIT_CHECKBOX);
+        await checkbox.set(isCharLimit);
     }
 
     /**
@@ -163,10 +155,8 @@ class TextFieldSettings extends FormatSettings {
      */
     async setComboChars(isComboChars = false) {
         const COMBO_CHARS_CHECKBOX = TextFieldSettings.TEXTFIELD_SELECTORS.CELL_OPT.COMBO_CHARS_CHECKBOX;
-        await this.tester.clickCheckbox({
-            selector: COMBO_CHARS_CHECKBOX,
-            condition: isComboChars,
-        });
+        const checkbox = new Checkbox(this.tester, COMBO_CHARS_CHECKBOX);
+        await checkbox.set(isComboChars);
     }
 
     /**
@@ -175,18 +165,15 @@ class TextFieldSettings extends FormatSettings {
      */
     async setRequired(isRequired = true) {
         const REQUIRED_CHECKBOX = TextFieldSettings.TEXTFIELD_SELECTORS.REQUIRED_CHECKBOX;
-        await this.tester.clickCheckbox({
-            selector: REQUIRED_CHECKBOX,
-            condition: isRequired,
-        });
+        const checkbox = new Checkbox(this.tester, REQUIRED_CHECKBOX);
+        await checkbox.set(isRequired);
     }
 
     async setCharLimitValue(value) {
         const { CHAR_LIMIT_CHECKBOX, CHAR_LIMIT_INPUT } = TextFieldSettings.TEXTFIELD_SELECTORS.CELL_OPT;
-        await this.tester.clickCheckbox({
-            selector: CHAR_LIMIT_CHECKBOX,
-            condition: true,
-        });
+        const checkbox = new Checkbox(this.tester, CHAR_LIMIT_CHECKBOX);
+        await checkbox.set(true);
+
         const inputForm = new Input(this.tester, CHAR_LIMIT_INPUT);
         await inputForm.setInputSettings(value);
     }
@@ -203,19 +190,16 @@ class TextFieldSettings extends FormatSettings {
             elementsSelector: cellOptSelectors.CELL_WIDTH_DROPDOWN.ELEMENTS,
         });
 
-        await this.tester.clickCheckbox({
-            selector: FIXED_SIZE_CHECKBOX,
-            condition: false,
-        });
+        const checkbox = new Checkbox(this.tester, FIXED_SIZE_CHECKBOX);
+        await checkbox.set(false);
         await cellWidthOptionDropdown.selectDropdownItem(option);
     }
 
     async setCellWidthValue(value) {
         const { COMBO_CHARS_CHECKBOX, CELL_WIDTH_INPUT } = TextFieldSettings.TEXTFIELD_SELECTORS.CELL_OPT;
-        await this.tester.clickCheckbox({
-            selector: COMBO_CHARS_CHECKBOX,
-            condition: true,
-        });
+        const checkbox = new Checkbox(this.tester, COMBO_CHARS_CHECKBOX);
+        await checkbox.set(true);
+
         const inputForm = new Input(this.tester, CELL_WIDTH_INPUT);
         await inputForm.setInputSettings(value);
     }

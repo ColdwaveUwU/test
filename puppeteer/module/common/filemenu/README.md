@@ -61,8 +61,10 @@ FileMenu.save();
 
 ```javascript
 /**
- * Downloads the current file in a specified format.
- * @param {string} extension - file extension
+ * Downloads the document in the specified format.
+ * @param {string} settings
+ * @param {string} encode
+ * @returns {{name: string, extension: string}}
  */
 FileMenu.downloadAs(extension);
 ```

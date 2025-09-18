@@ -2,7 +2,7 @@ const FormatSettings = require("../../formatsettings");
 const RightMenu = require("../../../../rightmenu");
 const { Color } = require("../../../../../common");
 const selectors = require("./selectors.json");
-const { Dropdown, Input } = require("../../../../../elements");
+const { Dropdown, Input, Checkbox } = require("../../../../../elements");
 /**
  * Class representing the settings for a text field in RightMenu.
  * Extends FormatSettings to provide specific interactions.
@@ -101,10 +101,8 @@ class DropdownSettings extends FormatSettings {
         }
 
         if (fixedSize) {
-            await this.tester.clickCheckbox({
-                selector: VALUES_SELECTORS.FIXED_SIZE_CHECKBOX,
-                condition: fixedSize,
-            });
+            const checkbox = new Checkbox(this.tester, VALUES_SELECTORS.FIXED_SIZE_CHECKBOX);
+            await checkbox.set(fixedSize);
         }
 
         if (defaultValue && value) {
@@ -153,10 +151,8 @@ class DropdownSettings extends FormatSettings {
      */
     async setRequired(isRequired = true) {
         const REQUIRED_CHECKBOX = DropdownSettings.DROPDOWN_SELECTORS.REQUIRED_CHECKBOX;
-        await this.tester.clickCheckbox({
-            selector: REQUIRED_CHECKBOX,
-            condition: isRequired,
-        });
+        const checkbox = new Checkbox(this.tester, REQUIRED_CHECKBOX);
+        await checkbox.set(isRequired);
     }
 
     /**

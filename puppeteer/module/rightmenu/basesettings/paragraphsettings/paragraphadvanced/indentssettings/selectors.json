@@ -21,7 +21,7 @@
         "DROPDOWN_ELEMENTS_SELECTOR": "#paragraphadv-spin-line-rule ul li"
     },
     "LINE_SPACING_INPUT": "#paragraphadv-spin-line-height",
-    "ADD_INTERVAL_CHECKBOX": "#paragraphadv-checkbox-add-interval label.checkbox__shape",
+    "ADD_INTERVAL_CHECKBOX": "#paragraphadv-checkbox-add-interval",
     "TEXT_DIRECTION": {
         "LEFT_TO_RIGHT": "#paragraphadv-dir-ltr .radiobox",
         "RIGHT_TO_LEFT": "#paragraphadv-dir-rtl .radiobox"

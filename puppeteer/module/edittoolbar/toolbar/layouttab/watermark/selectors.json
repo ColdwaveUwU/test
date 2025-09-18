@@ -31,7 +31,7 @@
         "ITALIC": "#watermark-italic",
         "UNDERLINE": "#watermark-underline",
         "STRIKETHROUGH": "#watermark-strikeout",
-        "SEMITRANSPARENT_CHECKBOX": "#watermark-chb-transparency label.checkbox__shape",
+        "SEMITRANSPARENT_CHECKBOX": "#watermark-chb-transparency",
         "LAYOUT": {
             "DIAGONAL": "#watermark-radio-diag",
             "HORIZONTAL": "#watermark-radio-hor"

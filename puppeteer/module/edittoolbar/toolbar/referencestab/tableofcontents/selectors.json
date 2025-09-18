@@ -19,10 +19,10 @@
     "MODAL_WINDOW": {
         "TABLE_OF_CONTENTS_WINDOW": "#window-table-contents",
         "SHOW_PAGE_NUMBERS_CHECKBOX": {
-            "ELEMENT_SELECTOR": "#tableofcontents-chb-pages .checkbox__shape"
+            "ELEMENT_SELECTOR": "#tableofcontents-chb-pages"
         },
         "RIGHT_ALIGN_PAGE_NUMBERS_CHECKBOX": {
-            "ELEMENT_SELECTOR": "#tableofcontents-chb-align .checkbox__shape"
+            "ELEMENT_SELECTOR": "#tableofcontents-chb-align"
         },
         "LEADER_MENU": {
             "MENU_SELECTOR": "#tableofcontents-combo-leader",
@@ -30,7 +30,7 @@
             "DESCRIPTION_SELECTOR": "a"
         },
         "FORMAT_AS_LINKS_CHECKBOX": {
-            "ELEMENT_SELECTOR": "#tableofcontents-chb-links .checkbox__shape"
+            "ELEMENT_SELECTOR": "#tableofcontents-chb-links"
         },
         "BUILD_FROM_LEVELS_RADIO": {
             "ELEMENT_SELECTOR": "#tableofcontents-radio-levels .radiobox"

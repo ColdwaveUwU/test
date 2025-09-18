@@ -1,6 +1,6 @@
 const BaseSettings = require("../../../basesettings");
 const selectors = require("./selectors.json");
-
+const { Checkbox } = require("../../../../../elements");
 class LineSettings extends BaseSettings {
     constructor(tester) {
         super(tester);
@@ -17,7 +17,8 @@ class LineSettings extends BaseSettings {
      */
     async setPageBreakBefore(condition) {
         const pageBreakBeforeSelector = LineSettings.LINE_SELECTORS.PAGE_BREAK_BEFORE_CHECKBOX;
-        await this.tester.clickCheckbox({ selector: pageBreakBeforeSelector, condition: condition });
+        const checkbox = new Checkbox(this.tester, pageBreakBeforeSelector);
+        await checkbox.set(condition);
     }
 
     /**
@@ -26,7 +27,8 @@ class LineSettings extends BaseSettings {
      */
     async setOrphanControl(condition) {
         const orphanControlSelector = LineSettings.LINE_SELECTORS.ORPHAN_CONTROL_CHECKBOX;
-        await this.tester.clickCheckbox({ selector: orphanControlSelector, condition: condition });
+        const checkbox = new Checkbox(this.tester, orphanControlSelector);
+        await checkbox.set(condition);
     }
 
     /**
@@ -35,7 +37,8 @@ class LineSettings extends BaseSettings {
      */
     async setSuppressLineNumbers(condition) {
         const suppressLineNumbersSelector = LineSettings.LINE_SELECTORS.SUPPRESS_LINE_NUMBERS_CHECKBOX;
-        await this.tester.clickCheckbox({ selector: suppressLineNumbersSelector, condition: condition });
+        const checkbox = new Checkbox(this.tester, suppressLineNumbersSelector);
+        await checkbox.set(condition);
     }
 
     /**
@@ -44,7 +47,8 @@ class LineSettings extends BaseSettings {
      */
     async setKeepLinesTogether(condition) {
         const keepLinesTogetherSelector = LineSettings.LINE_SELECTORS.KEEP_LINES_TOGETHER_CHECKBOX;
-        await this.tester.clickCheckbox({ selector: keepLinesTogetherSelector, condition: condition });
+        const checkbox = new Checkbox(this.tester, keepLinesTogetherSelector);
+        await checkbox.set(condition);
     }
 
     /**
@@ -53,7 +57,8 @@ class LineSettings extends BaseSettings {
      */
     async setKeepWithNext(condition) {
         const keepWithNextSelector = LineSettings.LINE_SELECTORS.KEEP_WITH_NEXT_CHECKBOX;
-        await this.tester.clickCheckbox({ selector: keepWithNextSelector, condition: condition });
+        const checkbox = new Checkbox(this.tester, keepWithNextSelector);
+        await checkbox.set(condition);
     }
 
     async applySettings(lineSettings) {

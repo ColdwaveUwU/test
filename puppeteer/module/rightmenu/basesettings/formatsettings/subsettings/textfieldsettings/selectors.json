@@ -39,13 +39,13 @@
 		},
 		"ALLOWED_SYM_INPUT": "#form-txt-format-symbols",
 		"REGEX_INPUT": "#form-txt-regexp",
-		"FIXED_SIZE_CHECKBOX": "#form-chb-fixed label.checkbox__shape",
-		"AUTO_FIT_CHECKBOX": "#form-chb-autofit label.checkbox__shape",
-		"MULTILINE_CHECKBOX": "#form-chb-multiline label.checkbox__shape"
+		"FIXED_SIZE_CHECKBOX": "#form-chb-fixed",
+		"AUTO_FIT_CHECKBOX": "#form-chb-autofit",
+		"MULTILINE_CHECKBOX": "#form-chb-multiline"
 	},
 	"CELL_OPT": {
-		"CHAR_LIMIT_CHECKBOX": "#form-chb-max-chars label.checkbox__shape",
-		"COMBO_CHARS_CHECKBOX": "#form-chb-comb label.checkbox__shape",
+		"CHAR_LIMIT_CHECKBOX": "#form-chb-max-chars",
+		"COMBO_CHARS_CHECKBOX": "#form-chb-comb",
 		"CHAR_LIMIT_INPUT": "#form-spin-max-chars",
 		"CELL_WIDTH_DROPDOWN": {
 			"SELECTOR": "#form-combo-width-rule",
@@ -64,7 +64,7 @@
 			"BACKGROUND_COLOR_LIST": "#form-background-color-btn"
 		}
 	},
-	"REQUIRED_CHECKBOX": "#form-chb-required label.checkbox__shape",
+	"REQUIRED_CHECKBOX": "#form-chb-required",
 	"DELETE_BUTTON": "#form-btn-delete > button",
 	"LOCK_BUTTON": "#form-btn-lock > button"
 }

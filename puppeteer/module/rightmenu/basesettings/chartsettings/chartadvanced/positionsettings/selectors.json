@@ -42,9 +42,9 @@
         }
     },
     "OPTIONS": {
-        "MOVE_OBJ": "#image-checkbox-move label label",
+        "MOVE_OBJ": "#image-checkbox-move",
         "MOVE_IS_DISABLED": "#image-checkbox-move input",
-        "ALLOW_OVERLAP": "#image-checkbox-overlap label label"
+        "ALLOW_OVERLAP": "#image-checkbox-overlap"
     },
     "INCREMENT_BTN": " .spinner-up",
     "DECREMENT_BTN": " .spinner-down"

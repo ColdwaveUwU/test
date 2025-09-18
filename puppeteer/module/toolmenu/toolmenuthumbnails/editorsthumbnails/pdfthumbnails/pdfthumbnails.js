@@ -1,5 +1,5 @@
 const selectors = require("./selectors.json");
-const { Dropdown } = require("../../../../elements");
+const { Dropdown, Checkbox } = require("../../../../elements");
 class PDFThumbnails {
     constructor(tester) {
         this.tester = tester;
@@ -29,8 +29,10 @@ class PDFThumbnails {
 
         const actions = {
             size: async () => await this.tester.mouseClickInsideElement(SIZE, options.size, 0),
-            highlight: async () =>
-                await this.tester.clickCheckbox({ selector: HIGHLIGHT, condition: options.highlight }),
+            highlight: async () => {
+                const checkbox = new Checkbox(this.tester, HIGHLIGHT);
+                await checkbox.set(options.highlight);
+            },
         };
 
         for (const key of Object.keys(options)) {

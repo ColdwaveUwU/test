@@ -1,0 +1,4 @@
+{
+    "CHECKBOX_TARGET": "label.checkbox__shape",
+    "RADIO_TARGET": "div.radiobox"
+}

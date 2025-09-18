@@ -9,7 +9,7 @@
         "ADD_BUTTON": "#id-comments-change-popover",
         "CLOSE_BUTTON": ".btn-inner-close"
     },
-    "SHOW_COMMENTS": "#slot-chk-showcomment .checkbox__shape",
+    "SHOW_COMMENTS": "#slot-chk-showcomment",
     "TEXT_COMMENT": {
         "DEFAULT_BUTTON": "#tlbtn-textcomment",
         "COMMENT_TYPE_DROPDOWN": "#slot-btn-text-comment",

@@ -15,8 +15,8 @@ class ToolMenuSearch extends ToolMenu {
         EDITOR_CELL: "#search-results .search-table .search-items .item .value",
         EDITOR_SLIDE: "#search-results .item b",
         EDITOR_PDF: "#search-results .item b",
-        CHECKBOX_SENSITIVE: "#search-adv-case-sensitive label label",
-        CHECKBOX_WORDS: "#search-adv-match-word label label",
+        CHECKBOX_SENSITIVE: "#search-adv-case-sensitive",
+        CHECKBOX_WORDS: "#search-adv-match-word",
     };
 
     /**

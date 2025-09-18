@@ -1,13 +1,13 @@
 {
   "ROWS_CHECKBOXES": {
-    "HEADER": "#table-checkbox-header label label",
-    "TOTAL": "#table-checkbox-total label label",
-    "BANDED": "#table-checkbox-banded label label"
+    "HEADER": "#table-checkbox-header",
+    "TOTAL": "#table-checkbox-total",
+    "BANDED": "#table-checkbox-banded"
   },
   "COLUMNS_CHECKBOXES": {
-    "FIRST": "#table-checkbox-first label label",
-    "LAST": "#table-checkbox-last label label",
-    "BANDED": "#table-checkbox-col-banded label label"
+    "FIRST": "#table-checkbox-first",
+    "LAST": "#table-checkbox-last",
+    "BANDED": "#table-checkbox-col-banded"
   },
   "TAMPLATE_DROPDOWN": {
     "selector": "#table-btn-template",
@@ -48,10 +48,10 @@
     "WIDTH_INPUT": "#table-spin-cell-width",
     "DISTRIBUTE_ROWS_BUTTON": "#table-btn-distrub-rows",
     "DISTRIBUTE_COLUMNS_BUTTON": "#table-btn-distrub-cols",
-    "AUTO_FIT_CHECKBOX": "#table-checkbox-autofit label label"
+    "AUTO_FIT_CHECKBOX": "#table-checkbox-autofit"
   },
   "ADD_FORMULA_BUTTON": "#table-btn-add-formula",
-  "REPEAT_AS_HEADER_CHECKBOX": "#table-checkbox-repeat-row label label",
+  "REPEAT_AS_HEADER_CHECKBOX": "#table-checkbox-repeat-row",
   "CONVERT_TO_TEXT_BUTTON": "#table-btn-convert-to-text",
   "MODAL_WINDOWS": {
     "SPLIT_CELL": {
@@ -86,7 +86,7 @@
     "CONVERT_TABLE_TO_TEXT": {
       "WINDOW": ".asc-window.modal.notransform",
       "OK_BUTTON": ".asc-window.modal.notransform .footer.center button[result='ok']",
-      "CHECKBOX_NESTED": "#id-table-text-check-nested label label",
+      "CHECKBOX_NESTED": "#id-table-text-check-nested",
       "SEPARATE_TYPES": {
         "PARA": "#id-table-text-radio-para",
         "TABS": "#id-table-text-radio-tabs",

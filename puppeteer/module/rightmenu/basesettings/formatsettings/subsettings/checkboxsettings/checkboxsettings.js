@@ -1,7 +1,7 @@
 const FormatSettings = require("../../formatsettings");
 const RightMenu = require("../../../../rightmenu");
 const { Color } = require("../../../../../common");
-const { Dropdown, Input } = require("../../../../../elements");
+const { Dropdown, Input, Checkbox } = require("../../../../../elements");
 const selectors = require("./selectors.json");
 
 /**
@@ -67,10 +67,8 @@ class CheckboxSettings extends FormatSettings {
      */
     async setDefaultCheckbox(isDefault = true) {
         const DEFAULT_CHECKBOX = CheckboxSettings.CHECKBOX_SELECTORS.DEFAULT_CHECKBOX;
-        await this.tester.clickCheckbox({
-            selector: DEFAULT_CHECKBOX,
-            condition: isDefault,
-        });
+        const checkbox = new Checkbox(this.tester, DEFAULT_CHECKBOX);
+        await checkbox.set(isDefault);
     }
 
     /**
@@ -79,10 +77,8 @@ class CheckboxSettings extends FormatSettings {
      */
     async setFixedSize(isFixed = true) {
         const FIXED_SIZE_CHECKBOX = CheckboxSettings.CHECKBOX_SELECTORS.FIXED_SIZE_CHECKBOX;
-        await this.tester.clickCheckbox({
-            selector: FIXED_SIZE_CHECKBOX,
-            condition: isFixed,
-        });
+        const checkbox = new Checkbox(this.tester, FIXED_SIZE_CHECKBOX);
+        await checkbox.set(isFixed);
     }
 
     /**
@@ -98,7 +94,7 @@ class CheckboxSettings extends FormatSettings {
             const { colorIndex, noBorder } = border;
             const borderDropdown = new Dropdown(this.tester, { selector: COLOR_SELECTORS.BORDER.BORDER_COLOR });
             await borderDropdown.selectDropdown();
-            
+
             if (noBorder) {
                 await this.tester.click(COLOR_SELECTORS.BORDER.NO_BORDER);
             } else {
@@ -123,10 +119,8 @@ class CheckboxSettings extends FormatSettings {
      */
     async setRequired(isRequired = true) {
         const REQUIRED_CHECKBOX = CheckboxSettings.CHECKBOX_SELECTORS.REQUIRED_CHECKBOX;
-        await this.tester.clickCheckbox({
-            selector: REQUIRED_CHECKBOX,
-            condition: isRequired,
-        });
+        const checkbox = new Checkbox(this.tester, REQUIRED_CHECKBOX);
+        await checkbox.set(isRequired);
     }
 
     /**

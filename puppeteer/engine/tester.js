@@ -4,6 +4,7 @@ const path = require("path");
 const url = require("url");
 const { execFile } = require("child_process");
 const { Collab } = require("%%COLLAB%%");
+const { Checkbox } = require("%%ELEMENTS%%");
 const profilePath = "%%PROFILE_PATH%%";
 const cacheDir = "%%CACHEDIR%%";
 const code = require("./code");
@@ -736,24 +737,6 @@ class TesterImp {
     }
 
     /**
-     * Checks if the test file name is correct
-     * @returns {Promise<boolean>}
-     */
-    checkFileName() {
-        const containsNumbersInsideBrackets = /\((\d+)\)/.test(this.fileName);
-        return containsNumbersInsideBrackets;
-    }
-
-    changeFileName(fileName) {
-        this.fileName = fileName
-            ? fileName
-            : this.fileName
-                  .replace(/\(\d+\)/g, "")
-                  .split(" ")
-                  .join("");
-    }
-
-    /**
      * Sets up event listeners to handle file downloads and renaming.
      * @throws {Error} Logs any errors that occur during event handling.
      */
@@ -796,11 +779,6 @@ class TesterImp {
                 try {
                     fileGuid = event.guid;
                     this.fileName = event.suggestedFilename;
-
-                    if (this.checkFileName()) {
-                        this.changeFileName();
-                    }
-
                     this.browserClient.on(downloadProgressEvent, onDownloadProgress);
                 } catch (error) {
                     reject(new Error(`Error in ${downloadWillBeginEvent} handler: ${error.message}`));
@@ -1485,42 +1463,6 @@ class TesterImp {
         } catch (error) {
             throw new Error(`Error inputToForm: ${error.message}`);
         }
-    }
-
-    /**
-     * Clicks on the selected checkbox
-     * @param {{selector: string, condition: boolean}} checkbox
-     */
-    async clickCheckbox({ selector, condition }) {
-        if (typeof selector !== "string") {
-            throw new TypeError(`Invalid type for selector: expected string, got ${typeof selector}`);
-        }
-        if (typeof condition !== "boolean") {
-            throw new TypeError(`Invalid type for condition: expected boolean, got ${typeof condition}`);
-        }
-
-        const checkboxElement = await this.frame.$(selector);
-
-        if (!checkboxElement) {
-            throw new Error(`Checkbox with selector "${selector}" not found`);
-        }
-
-        await this.frame.waitForFunction(
-            (el, expected) => {
-                const state =
-                    el.getAttribute("aria-checked") === "true" ||
-                    el.classList.contains("checked") ||
-                    el.getAttribute("aria-pressed") === "true";
-
-                if (state !== expected) {
-                    el.click();
-                }
-                return state == expected;
-            },
-            { timeout: 5000 },
-            checkboxElement,
-            condition
-        );
     }
 
     /**
@@ -2227,7 +2169,8 @@ class TesterImp {
                 await Promise.all([this.checkSelector(modalWindowSelector), this.click(openButtonSelector)]);
                 break;
             case "checkbox":
-                await this.clickCheckbox({ selector: elem.selector, condition: elem.value });
+                const checkBox = new Checkbox(this, elem.selector);
+                await checkBox.set(elem.value);
                 break;
             case "activeButton":
                 const buttonIsActive = await this.checkSelector(`${elem.selector}.active`);

@@ -1,4 +1,5 @@
 const { ChartSelectors, ChartType } = require("../../../../../../../../constants");
+const { Checkbox } = require("../../../../../../../elements");
 const InsertTab = require("../../../../inserttab");
 class LayoutSettings extends InsertTab {
     constructor(tester) {
@@ -42,7 +43,12 @@ class LayoutSettings extends InsertTab {
                             { selector: ChartSelectors.EDIT_CHART.LAYOUT_SETTINGS.VALUE, condition: value },
                         ];
 
-                        await Promise.all(checkboxes.map((checkbox) => this.tester.clickCheckbox(checkbox)));
+                        await Promise.all(
+                            checkboxes.map((checkbox) => {
+                                const cb = new Checkbox(this.tester, checkbox.selector);
+                                return cb.set(checkbox.condition);
+                            })
+                        );
                     }
                 }
             }

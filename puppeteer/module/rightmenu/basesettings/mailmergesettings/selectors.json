@@ -6,8 +6,8 @@
         "DROPDOWN_ELEMENTS_SELECTOR": "#mmerge-combo-merge-to ul li a"
     },
     "CHECKBOXES": {
-        "HIGHLIGHT": "#mmerge-switcher-highlight label.checkbox__shape",
-        "PREVIEW": "#mmerge-switcher-preview label.checkbox__shape",
+        "HIGHLIGHT": "#mmerge-switcher-highlight",
+        "PREVIEW": "#mmerge-switcher-preview",
         "ALL": "#mmerge-radio-all > div.radiobox",
         "CURRENT": "#mmerge-radio-current > div.radiobox",
         "FROM": "#mmerge-radio-from-to > div.radiobox"

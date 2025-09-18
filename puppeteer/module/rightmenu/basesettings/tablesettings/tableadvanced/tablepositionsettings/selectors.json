@@ -42,7 +42,7 @@
         }
     },
     "OPTIONS": {
-        "MOVE_OBJECT_CHECKBOX": "#tableadv-checkbox-move .checkbox__shape",
-        "OVERLAP_CHECKBOX": "#tableadv-checkbox-overlap .checkbox__shape"
+        "MOVE_OBJECT_CHECKBOX": "#tableadv-checkbox-move",
+        "OVERLAP_CHECKBOX": "#tableadv-checkbox-overlap"
     }
 }

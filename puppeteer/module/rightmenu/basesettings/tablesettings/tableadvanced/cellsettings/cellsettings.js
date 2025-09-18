@@ -1,6 +1,6 @@
 const BaseSettings = require("../../../basesettings");
 const selectors = require("./selectors.json");
-const { Input, Dropdown } = require("../../../../../elements");
+const { Input, Dropdown, Checkbox } = require("../../../../../elements");
 
 /**
  * @typedef {Object} CellSettingsObject
@@ -31,12 +31,15 @@ class CellSettings extends BaseSettings {
 
         const handlers = {
             preffer: async (value) => {
-                await this.tester.clickCheckbox({ selector: cellSizeSelectors.CHECKBOX, condition: true });
+                const checkbox = new Checkbox(this.tester, cellSizeSelectors.CHECKBOX);
+                await checkbox.set(true);
+
                 const input = new Input(this.tester, cellSizeSelectors.PREFER_INPUR, false);
                 await input.setInputSettings(value);
             },
             measure: async (value) => {
-                await this.tester.clickCheckbox({ selector: cellSizeSelectors.CHECKBOX, condition: true });
+                const checkbox = new Checkbox(this.tester, cellSizeSelectors.CHECKBOX);
+                await checkbox.set(true);
                 const dropdown = new Dropdown(this.tester, {
                     selector: cellSizeSelectors.MEASURE.SELECTOR,
                     elementsSelector: cellSizeSelectors.MEASURE.ELEMENTS_SELECTORS,
@@ -65,22 +68,26 @@ class CellSettings extends BaseSettings {
         const handlers = {
             top: async (value) => {
                 const input = new Input(this.tester, cellMarginsSelectors.TOP, false);
-                await this.tester.clickCheckbox({ selector: cellMarginsSelectors.CHECKBOX, condition: false });
+                const checkbox = new Checkbox(this.tester, cellMarginsSelectors.CHECKBOX);
+                await checkbox.set(false);
                 await input.setInputSettings(value);
             },
             left: async (value) => {
                 const input = new Input(this.tester, cellMarginsSelectors.LEFT, false);
-                await this.tester.clickCheckbox({ selector: cellMarginsSelectors.CHECKBOX, condition: false });
+                const checkbox = new Checkbox(this.tester, cellMarginsSelectors.CHECKBOX);
+                await checkbox.set(false);
                 await input.setInputSettings(value);
             },
             right: async (value) => {
                 const input = new Input(this.tester, cellMarginsSelectors.RIGHT, false);
-                await this.tester.clickCheckbox({ selector: cellMarginsSelectors.CHECKBOX, condition: false });
+                const checkbox = new Checkbox(this.tester, cellMarginsSelectors.CHECKBOX);
+                await checkbox.set(false);
                 await input.setInputSettings(value);
             },
             bottom: async (value) => {
                 const input = new Input(this.tester, cellMarginsSelectors.BOTTOM, false);
-                await this.tester.clickCheckbox({ selector: cellMarginsSelectors.CHECKBOX, condition: false });
+                const checkbox = new Checkbox(this.tester, cellMarginsSelectors.CHECKBOX);
+                await checkbox.set(false);
                 await input.setInputSettings(value);
             },
         };
@@ -101,7 +108,8 @@ class CellSettings extends BaseSettings {
 
         const handlers = {
             wrapText: async (value) => {
-                await this.tester.clickCheckbox({ selector: cellOptionsSelectors.CHECKBOX, condition: value });
+                const checkbox = new Checkbox(this.tester, cellOptionsSelectors.CHECKBOX);
+                await checkbox.set(value);
             },
         };
 

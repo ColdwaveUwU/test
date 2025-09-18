@@ -1,5 +1,5 @@
 const ReferencesTab = require("../referencestab");
-const { OptionsButton, Input, ModalButton } = require("../../../../elements");
+const { OptionsButton, Input, ModalButton, Checkbox } = require("../../../../elements");
 const selectors = require("./selectors.json");
 
 /**
@@ -188,7 +188,8 @@ class TableOfContents extends ReferencesTab {
     async setShowPageNumbers(condition) {
         try {
             const selector = TableOfContents.SELECTORS.MODAL_WINDOW.SHOW_PAGE_NUMBERS_CHECKBOX.ELEMENT_SELECTOR;
-            await this.tester.clickCheckbox({ selector, condition });
+            const checkbox = new Checkbox(this.tester, selector);
+            await checkbox.set(condition);
         } catch (error) {
             throw new Error(
                 `TableOfContents.setShowPageNumbers: Failed to set show page numbers to '${condition}'. ${error.message}`,
@@ -204,7 +205,8 @@ class TableOfContents extends ReferencesTab {
     async setRightAlignPageNumbers(condition) {
         try {
             const selector = TableOfContents.SELECTORS.MODAL_WINDOW.RIGHT_ALIGN_PAGE_NUMBERS_CHECKBOX.ELEMENT_SELECTOR;
-            await this.tester.clickCheckbox({ selector, condition });
+            const checkbox = new Checkbox(this.tester, selector);
+            await checkbox.set(condition);
         } catch (error) {
             throw new Error(
                 `TableOfContents.setRightAlignPageNumbers: Failed to set right align page numbers to '${condition}'. ${error.message}`,
@@ -234,7 +236,8 @@ class TableOfContents extends ReferencesTab {
     async setFormatAsLinks(condition) {
         try {
             const selector = TableOfContents.SELECTORS.MODAL_WINDOW.FORMAT_AS_LINKS_CHECKBOX.ELEMENT_SELECTOR;
-            await this.tester.clickCheckbox({ selector, condition });
+            const checkbox = new Checkbox(this.tester, selector);
+            await checkbox.set(condition);
         } catch (error) {
             throw new Error(
                 `TableOfContents.setFormatAsLinks: Failed to set format as links to '${condition}'. ${error.message}`,

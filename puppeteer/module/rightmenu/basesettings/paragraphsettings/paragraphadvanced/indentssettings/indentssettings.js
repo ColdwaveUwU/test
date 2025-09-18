@@ -1,5 +1,5 @@
 const BaseSettings = require("../../../basesettings");
-const { Dropdown, Input } = require("../../../../../elements");
+const { Dropdown, Input, Checkbox } = require("../../../../../elements");
 const selectors = require("./selectors.json");
 
 class IndentsSettings extends BaseSettings {
@@ -161,7 +161,8 @@ class IndentsSettings extends BaseSettings {
      */
     async setDontAddInterval(condition) {
         const addIntervalCheckboxSelector = IndentsSettings.INDENTS_SELECTORS.ADD_INTERVAL_CHECKBOX;
-        await this.tester.clickCheckbox({ selector: addIntervalCheckboxSelector, condition: condition });
+        const checkbox = new Checkbox(this.tester, addIntervalCheckboxSelector);
+        await checkbox.set(condition);
     }
 
     /**

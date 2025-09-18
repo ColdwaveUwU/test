@@ -2,7 +2,7 @@ const { Draw } = require("../../common");
 const { Color } = require("../../common");
 const ViewToolbarStatic = require("../viewtoolbarstatic/viewtoolbarstatic");
 const selectors = require("./selectors.json");
-
+const { Checkbox } = require("../../elements");
 class ViewToolbarComment {
     constructor(tester) {
         if (tester) {
@@ -160,10 +160,8 @@ class ViewToolbarComment {
      */
     async clickShowComments(checkboxStatus = true) {
         await this.clickComment();
-        await this.tester.clickCheckbox({
-            selector: ViewToolbarComment.VIEW_TOOLBAR_COMMENT_SELECTORS.SHOW_COMMENTS,
-            condition: checkboxStatus,
-        });
+        const checkbox = new Checkbox(this.tester, ViewToolbarComment.VIEW_TOOLBAR_COMMENT_SELECTORS.SHOW_COMMENTS);
+        await checkbox.set(checkboxStatus);
     }
 
     /**

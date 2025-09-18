@@ -2,7 +2,7 @@ const RightMenu = require("../../rightmenu");
 const BaseSettings = require("../basesettings");
 const selectors = require("./selectors.json");
 const ChartAdvanced = require("./chartadvanced");
-
+const { Checkbox } = require("../../../elements");
 /**
  * @typedef {Object} Rotation
  * @property {{left: number, right: number, input: number}} [x]
@@ -298,10 +298,8 @@ class ChartSettings extends BaseSettings {
             angle: ChartSettings.CHART_TAB_SELECTORS.ROTATION.CHECKBOX.RIGHT_ANGLE,
             auto: ChartSettings.CHART_TAB_SELECTORS.ROTATION.CHECKBOX.AUTOSCALE,
         };
-        await this.tester.clickCheckbox({
-            selector: selectors[name],
-            condition,
-        });
+        const checkbox = new Checkbox(this.tester, selectors[name]);
+        await checkbox.set(condition);
     }
 
     /**

@@ -1,6 +1,6 @@
 const ReferencesTab = require("../referencestab");
 const selectors = require("./selectors.json");
-const { Input, ModalButton, OptionsButton, Dropdown } = require("../../../../elements");
+const { Input, ModalButton, OptionsButton, Dropdown, Checkbox } = require("../../../../elements");
 
 /**
  * @typedef {Object} NotesSettings
@@ -144,8 +144,8 @@ class Footnote extends ReferencesTab {
             await Promise.all([deleteNotesModal.isModalOpen(), this.#footnoteDropdown("Delete all notes")]);
 
             await Promise.all([
-                this.tester.clickCheckbox({ selector: checkboxSelectors.FOOTNOTE_CHECKBOX, condition: footnotes }),
-                this.tester.clickCheckbox({ selector: checkboxSelectors.ENDNOTE_CHECKBOX, condition: endnotes }),
+                new Checkbox(this.tester, checkboxSelectors.FOOTNOTE_CHECKBOX).set(footnotes),
+                new Checkbox(this.tester, checkboxSelectors.ENDNOTE_CHECKBOX).set(endnotes),
             ]);
             await deleteNotesModal.closeModal();
         } catch (error) {

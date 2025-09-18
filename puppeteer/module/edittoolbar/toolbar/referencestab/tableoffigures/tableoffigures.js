@@ -1,6 +1,6 @@
 const ReferencesTab = require("../referencestab");
 const selectors = require("./selectors.json");
-const { ModalButton } = require("../../../../elements");
+const { ModalButton, Checkbox } = require("../../../../elements");
 
 /**
  * TableOfFigures module for interacting with the Table of figures dialog
@@ -94,7 +94,8 @@ class TableOfFigures extends ReferencesTab {
     async setShowPageNumbers(condition) {
         try {
             const selector = TableOfFigures.SELECTORS.MODAL_WINDOW.SHOW_PAGE_NUMBERS_CHECKBOX.ELEMENT_SELECTOR;
-            await this.tester.clickCheckbox({ selector, condition });
+            const checkbox = new Checkbox(this.tester, selector);
+            await checkbox.set(condition);
         } catch (error) {
             throw new Error(
                 `TableOfFigures.setShowPageNumbers: Failed to set show page numbers to '${condition}'. ${error.message}`,
@@ -110,7 +111,8 @@ class TableOfFigures extends ReferencesTab {
     async setRightAlignPageNumbers(condition) {
         try {
             const selector = TableOfFigures.SELECTORS.MODAL_WINDOW.RIGHT_ALIGN_PAGE_NUMBERS_CHECKBOX.ELEMENT_SELECTOR;
-            await this.tester.clickCheckbox({ selector, condition });
+            const checkbox = new Checkbox(this.tester, selector);
+            await checkbox.set(condition);
         } catch (error) {
             throw new Error(
                 `TableOfFigures.setRightAlignPageNumbers: Failed to set right align page numbers to '${condition}'. ${error.message}`,
@@ -140,7 +142,8 @@ class TableOfFigures extends ReferencesTab {
     async setFormatAsLinks(condition) {
         try {
             const selector = TableOfFigures.SELECTORS.MODAL_WINDOW.FORMAT_AS_LINKS_CHECKBOX.ELEMENT_SELECTOR;
-            await this.tester.clickCheckbox({ selector, condition });
+            const checkbox = new Checkbox(this.tester, selector);
+            await checkbox.set(condition);
         } catch (error) {
             throw new Error(
                 `TableOfFigures.setFormatAsLinks: Failed to set format as links to '${condition}'. ${error.message}`,
@@ -230,7 +233,8 @@ class TableOfFigures extends ReferencesTab {
     async setIncludeLabelAndNumber(condition) {
         try {
             const selector = TableOfFigures.SELECTORS.MODAL_WINDOW.INCLUDE_LABEL_AND_NUMBER_CHECKBOX.ELEMENT_SELECTOR;
-            await this.tester.clickCheckbox({ selector, condition });
+            const checkbox = new Checkbox(this.tester, selector);
+            await checkbox.set(condition);
         } catch (error) {
             throw new Error(
                 `TableOfFigures.setIncludeLabelAndNumber: Failed to set include label and number to '${condition}'. ${error.message}`,

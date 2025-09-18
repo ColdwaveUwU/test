@@ -919,14 +919,14 @@
                                         "autosave": {
                                             "type": "checkbox",
                                             "documentType": "common",
-                                            "selector": "#fms-chb-autosave label.checkbox__shape"
+                                            "selector": "#fms-chb-autosave"
                                         }
                                     },
                                     {
                                         "showPasteOptions": {
                                             "type": "checkbox",
                                             "documentType": "common",
-                                            "selector": "#fms-chb-paste-settings label.checkbox__shape"
+                                            "selector": "#fms-chb-paste-settings"
                                         }
                                     },
                                     {
@@ -936,7 +936,7 @@
                                                 "word",
                                                 "pdf"
                                             ],
-                                            "selector": "#fms-chb-smart-selection label.checkbox__shape"
+                                            "selector": "#fms-chb-smart-selection"
                                         }
                                     },
                                     {
@@ -946,14 +946,14 @@
                                                 "word",
                                                 "pdf"
                                             ],
-                                            "selector": "#fms-chb-compatible label.checkbox__shape"
+                                            "selector": "#fms-chb-compatible"
                                         }
                                     },
                                     {
                                         "showTooltip": {
                                             "type": "checkbox",
                                             "documentType": "cell",
-                                            "selector": "#fms-chb-function-tooltip label.checkbox__shape"
+                                            "selector": "#fms-chb-function-tooltip"
                                         }
                                     }
                                 ]
@@ -1056,7 +1056,7 @@
                                                 "pdf",
                                                 "cell"
                                             ],
-                                            "selector": "#fms-chb-live-comment label.checkbox__shape"
+                                            "selector": "#fms-chb-live-comment"
                                         }
                                     },
                                     {
@@ -1067,7 +1067,7 @@
                                                 "pdf",
                                                 "cell"
                                             ],
-                                            "selector": "#fms-chb-resolved-comment label.checkbox__shape"
+                                            "selector": "#fms-chb-resolved-comment"
                                         }
                                     }
                                 ]
@@ -1086,21 +1086,21 @@
                                                 "pdf",
                                                 "slide"
                                             ],
-                                            "selector": "#fms-chb-spell-check label.checkbox__shape"
+                                            "selector": "#fms-chb-spell-check"
                                         }
                                     },
                                     {
                                         "ignoreUpper": {
                                             "type": "checkbox",
                                             "documentType": "common",
-                                            "selector": "#fms-chb-ignore-uppercase-words label.checkbox__shape"
+                                            "selector": "#fms-chb-ignore-uppercase-words"
                                         }
                                     },
                                     {
                                         "ignoreWithNumber": {
                                             "type": "checkbox",
                                             "documentType": "common",
-                                            "selector": "#fms-chb-ignore-numbers-words label.checkbox__shape"
+                                            "selector": "#fms-chb-ignore-numbers-words"
                                         }
                                     },
                                     {
@@ -1133,7 +1133,7 @@
                                                                 "replaceAsType": {
                                                                     "type": "checkbox",
                                                                     "documentType": "common",
-                                                                    "selector": "#auto-correct-chb-replace-type label.checkbox__shape"
+                                                                    "selector": "#auto-correct-chb-replace-type"
                                                                 }
                                                             },
                                                             {
@@ -1265,14 +1265,14 @@
                                                                 "includeNewRows": {
                                                                     "type": "checkbox",
                                                                     "documentType": "cell",
-                                                                    "selector": "#id-autocorrect-dialog-chk-new-rows label.checkbox__shape"
+                                                                    "selector": "#id-autocorrect-dialog-chk-new-rows"
                                                                 }
                                                             },
                                                             {
                                                                 "hyperlinks": {
                                                                     "type": "checkbox",
                                                                     "documentType": "cell",
-                                                                    "selector": "#id-autocorrect-dialog-chk-hyperlink label.checkbox__shape"
+                                                                    "selector": "#id-autocorrect-dialog-chk-hyperlink"
                                                                 }
                                                             }
                                                         ]
@@ -1296,7 +1296,7 @@
                                                                         "pdf",
                                                                         "slide"
                                                                     ],
-                                                                    "selector": "#id-autocorrect-dialog-chk-quotes label.checkbox__shape"
+                                                                    "selector": "#id-autocorrect-dialog-chk-quotes"
                                                                 }
                                                             },
                                                             {
@@ -1307,7 +1307,7 @@
                                                                         "pdf",
                                                                         "slide"
                                                                     ],
-                                                                    "selector": "#id-autocorrect-dialog-chk-hyphens label.checkbox__shape"
+                                                                    "selector": "#id-autocorrect-dialog-chk-hyphens"
                                                                 }
                                                             },
                                                             {
@@ -1318,7 +1318,7 @@
                                                                         "pdf",
                                                                         "slide"
                                                                     ],
-                                                                    "selector": "#id-autocorrect-dialog-chk-hyperlink label.checkbox__shape"
+                                                                    "selector": "#id-autocorrect-dialog-chk-hyperlink"
                                                                 }
                                                             },
                                                             {
@@ -1329,7 +1329,7 @@
                                                                         "pdf",
                                                                         "slide"
                                                                     ],
-                                                                    "selector": "#id-autocorrect-dialog-chk-double-space label.checkbox__shape"
+                                                                    "selector": "#id-autocorrect-dialog-chk-double-space"
                                                                 }
                                                             },
                                                             {
@@ -1340,7 +1340,7 @@
                                                                         "pdf",
                                                                         "slide"
                                                                     ],
-                                                                    "selector": "#id-autocorrect-dialog-chk-bulleted label.checkbox__shape"
+                                                                    "selector": "#id-autocorrect-dialog-chk-bulleted"
                                                                 }
                                                             },
                                                             {
@@ -1351,7 +1351,7 @@
                                                                         "pdf",
                                                                         "slide"
                                                                     ],
-                                                                    "selector": "#id-autocorrect-dialog-chk-numbered label.checkbox__shape"
+                                                                    "selector": "#id-autocorrect-dialog-chk-numbered"
                                                                 }
                                                             }
                                                         ]
@@ -1375,7 +1375,7 @@
                                                                         "pdf",
                                                                         "slide"
                                                                     ],
-                                                                    "selector": "#auto-correct-exceptions-chk-sentence label.checkbox__shape"
+                                                                    "selector": "#auto-correct-exceptions-chk-sentence"
                                                                 }
                                                             },
                                                             {
@@ -1386,7 +1386,7 @@
                                                                         "pdf",
                                                                         "slide"
                                                                     ],
-                                                                    "selector": "#auto-correct-exceptions-chk-cells label.checkbox__shape"
+                                                                    "selector": "#auto-correct-exceptions-chk-cells"
                                                                 }
                                                             },
                                                             {
@@ -1522,14 +1522,14 @@
                                                 "word",
                                                 "pdf"
                                             ],
-                                            "selector": "#fms-chb-dark-mode label.checkbox__shape"
+                                            "selector": "#fms-chb-dark-mode"
                                         }
                                     },
                                     {
                                         "useToolbarColor": {
                                             "type": "checkbox",
                                             "documentType": "common",
-                                            "selector": "#fms-chb-tab-background label.checkbox__shape"
+                                            "selector": "#fms-chb-tab-background"
                                         }
                                     }
                                 ]
@@ -1544,14 +1544,14 @@
                                         "turnOnScreen": {
                                             "type": "checkbox",
                                             "documentType": "common",
-                                            "selector": "#fms-chb-scrn-reader label.checkbox__shape"
+                                            "selector": "#fms-chb-scrn-reader"
                                         }
                                     },
                                     {
                                         "r1c1": {
                                             "type": "checkbox",
                                             "documentType": "cell",
-                                            "selector": "#fms-chb-r1c1-style label.checkbox__shape"
+                                            "selector": "#fms-chb-r1c1-style"
                                         }
                                     },
                                     {
@@ -1562,21 +1562,21 @@
                                                 "pdf",
                                                 "slide"
                                             ],
-                                            "selector": "#fms-chb-align-guides label.checkbox__shape"
+                                            "selector": "#fms-chb-align-guides"
                                         }
                                     },
                                     {
                                         "useAlt": {
                                             "type": "checkbox",
                                             "documentType": "common",
-                                            "selector": "#fms-chb-use-alt-key label.checkbox__shape"
+                                            "selector": "#fms-chb-use-alt-key"
                                         }
                                     },
                                     {
                                         "snappedToGrid": {
                                             "type": "checkbox",
                                             "documentType": "cell",
-                                            "selector": "#fms-chb-smooth-scroll label.checkbox__shape"
+                                            "selector": "#fms-chb-smooth-scroll"
                                         }
                                     },
                                     {
@@ -1593,28 +1593,28 @@
                                                     "save": {
                                                         "type": "checkbox",
                                                         "documentType": "common",
-                                                        "selector": "#quick-access-chb-save label.checkbox__shape"
+                                                        "selector": "#quick-access-chb-save"
                                                     }
                                                 },
                                                 {
                                                     "print": {
                                                         "type": "checkbox",
                                                         "documentType": "common",
-                                                        "selector": "#quick-access-chb-print label.checkbox__shape"
+                                                        "selector": "#quick-access-chb-print"
                                                     }
                                                 },
                                                 {
                                                     "undo": {
                                                         "type": "checkbox",
                                                         "documentType": "common",
-                                                        "selector": "#quick-access-chb-undo label.checkbox__shape"
+                                                        "selector": "#quick-access-chb-undo"
                                                     }
                                                 },
                                                 {
                                                     "redo": {
                                                         "type": "checkbox",
                                                         "documentType": "common",
-                                                        "selector": "#quick-access-chb-redo label.checkbox__shape"
+                                                        "selector": "#quick-access-chb-redo"
                                                     }
                                                 }
                                             ]
@@ -1693,7 +1693,7 @@
                                         "useSep": {
                                             "type": "checkbox",
                                             "documentType": "cell",
-                                            "selector": "#fms-chb-separator-settings label.checkbox__shape"
+                                            "selector": "#fms-chb-separator-settings"
                                         }
                                     },
                                     {
@@ -1723,14 +1723,14 @@
                                         "useDateSystem": {
                                             "type": "checkbox",
                                             "documentType": "cell",
-                                            "selector": "#fms-chb-date-1904 label.checkbox__shape"
+                                            "selector": "#fms-chb-date-1904"
                                         }
                                     },
                                     {
                                         "enableIter": {
                                             "type": "checkbox",
                                             "documentType": "cell",
-                                            "selector": "#fms-chb-iterative-calc label.checkbox__shape"
+                                            "selector": "#fms-chb-iterative-calc"
                                         }
                                     },
                                     {

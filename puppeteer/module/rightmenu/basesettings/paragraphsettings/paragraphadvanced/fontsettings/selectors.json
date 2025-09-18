@@ -1,10 +1,10 @@
 {
-    "STRIKETHROUGH_CHECKBOX": "#paragraphadv-checkbox-strike label.checkbox__shape",
-    "DOUBLE_STRIKETHROUGH_CHECKBOX": "#paragraphadv-checkbox-double-strike label.checkbox__shape",
-    "SUPERSCRIPT_CHECKBOX": "#paragraphadv-checkbox-superscript label.checkbox__shape",
-    "SUBSCRIPT_CHECKBOX": "#paragraphadv-checkbox-subscript label.checkbox__shape",
-    "SMALL_CAPS_CHECKBOX": "#paragraphadv-checkbox-small-caps label.checkbox__shape",
-    "ALL_CAPS_CHECKBOX": "#paragraphadv-checkbox-all-caps label.checkbox__shape",
+    "STRIKETHROUGH_CHECKBOX": "#paragraphadv-checkbox-strike",
+    "DOUBLE_STRIKETHROUGH_CHECKBOX": "#paragraphadv-checkbox-double-strike",
+    "SUPERSCRIPT_CHECKBOX": "#paragraphadv-checkbox-superscript",
+    "SUBSCRIPT_CHECKBOX": "#paragraphadv-checkbox-subscript",
+    "SMALL_CAPS_CHECKBOX": "#paragraphadv-checkbox-small-caps",
+    "ALL_CAPS_CHECKBOX": "#paragraphadv-checkbox-all-caps",
     "SPACING_INPUT": "#paragraphadv-spin-spacing",
     "POSITION_INPUT": "#paragraphadv-spin-position",
     "LIGATURES_MENU": {

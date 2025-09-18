@@ -1,6 +1,6 @@
 const BaseSettings = require("../../../basesettings");
 const selectors = require("./selectors.json");
-const { Dropdown, Input } = require("../../../../../elements");
+const { Dropdown, Input, Checkbox } = require("../../../../../elements");
 
 /**
  * @typedef {Object} TablePositionSettingsObject
@@ -31,7 +31,8 @@ class TablePositionSettings extends BaseSettings {
 
         const handlers = {
             alignment: async (alignmentSettings) => {
-                await this.tester.clickCheckbox({ selector: horizontalSelectors.ALIGNMENT.CHECKBOX, condition: true });
+                const checkbox = new Checkbox(this.tester, horizontalSelectors.ALIGNMENT.CHECKBOX);
+                await checkbox.set(true);
 
                 if (alignmentSettings.type) {
                     const dropdown = new Dropdown(this.tester, {
@@ -50,7 +51,8 @@ class TablePositionSettings extends BaseSettings {
                 }
             },
             position: async (positionSettings) => {
-                await this.tester.clickCheckbox({ selector: horizontalSelectors.POSITION.CHECKBOX, condition: true });
+                const checkbox = new Checkbox(this.tester, horizontalSelectors.POSITION.CHECKBOX);
+                await checkbox.set(true);
 
                 if (positionSettings.value) {
                     const input = new Input(this.tester, horizontalSelectors.POSITION.POSITION_INPUT, false);
@@ -84,7 +86,8 @@ class TablePositionSettings extends BaseSettings {
 
         const handlers = {
             alignment: async (alignmentSettings) => {
-                await this.tester.clickCheckbox({ selector: s.ALIGNMENT.CHECKBOX, condition: true });
+                const checkbox = new Checkbox(this.tester, s.ALIGNMENT.CHECKBOX);
+                await checkbox.set(true);
 
                 if (alignmentSettings.type) {
                     const dropdown = new Dropdown(this.tester, {
@@ -103,7 +106,8 @@ class TablePositionSettings extends BaseSettings {
                 }
             },
             position: async (positionSettings) => {
-                await this.tester.clickCheckbox({ selector: s.POSITION.CHECKBOX, condition: true });
+                const checkbox = new Checkbox(this.tester, s.POSITION.CHECKBOX);
+                await checkbox.set(true);
 
                 if (positionSettings.value) {
                     const input = new Input(this.tester, s.POSITION.POSITION_INPUT, false);
@@ -137,10 +141,12 @@ class TablePositionSettings extends BaseSettings {
 
         const handlers = {
             moveObject: async (value) => {
-                await this.tester.clickCheckbox({ selector: s.MOVE_OBJECT_CHECKBOX, condition: value });
+                const checkbox = new Checkbox(this.tester, s.MOVE_OBJECT_CHECKBOX);
+                await checkbox.set(value);
             },
             overlap: async (value) => {
-                await this.tester.clickCheckbox({ selector: s.OVERLAP_CHECKBOX, condition: value });
+                const checkbox = new Checkbox(this.tester, s.OVERLAP_CHECKBOX);
+                await checkbox.set(value);
             },
         };
 

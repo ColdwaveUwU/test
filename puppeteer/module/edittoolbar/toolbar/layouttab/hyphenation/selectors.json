@@ -5,8 +5,8 @@
     },
     "HYPHENATION_WINDOW": {
         "WINDOW": "#window-hyphenation-dlg",
-        "AUTOMATICALLY_HYPHENATE_CHECKBOX": "#hyphenation-chk-auto label.checkbox__shape",
-        "HYPHENATE_IN_CAPS_CHECKBOX": "#hyphenation-chk-caps label.checkbox__shape",
+        "AUTOMATICALLY_HYPHENATE_CHECKBOX": "#hyphenation-chk-auto",
+        "HYPHENATE_IN_CAPS_CHECKBOX": "#hyphenation-chk-caps",
         "HYPHENATION_ZONE_INPUT": "#hyphenation-num-zone",
         "LIMIT_HYPHENS_INPUT": "#hyphenation-num-limit",
         "OK_BUTTON": "button[result='ok']"

@@ -1,5 +1,5 @@
 const LayoutTab = require("../layouttab");
-const { Dropdown, Input } = require("../../../../elements");
+const { Dropdown, Input, Checkbox } = require("../../../../elements");
 const selectors = require("./selectors.json");
 
 class PageColumns extends LayoutTab {
@@ -99,7 +99,8 @@ class PageColumns extends LayoutTab {
     async setEqualColumnWidth(condition) {
         const equalColumnWidthSelector = PageColumns.PAGE_COLUMNS_SELECTORS.CUSTOM_COLUMNS.EQUAL_COLUMN_WIDTH_CHECKBOX;
         try {
-            await this.tester.clickCheckbox({ selector: equalColumnWidthSelector, condition: condition });
+            const checkbox = new Checkbox(this.tester, equalColumnWidthSelector);
+            await checkbox.set(condition);
         } catch (error) {
             throw new Error(
                 `setEqualColumnWidth: Failed to set equal column width ${equalColumnWidthSelector} with settings ${condition}. ${error.message}`,
@@ -117,7 +118,8 @@ class PageColumns extends LayoutTab {
     async setColumnDivider(condition) {
         const columnDividerSelector = PageColumns.PAGE_COLUMNS_SELECTORS.CUSTOM_COLUMNS.COLUMN_DIVIDER_CHECKBOX;
         try {
-            await this.tester.clickCheckbox({ selector: columnDividerSelector, condition: condition });
+            const checkbox = new Checkbox(this.tester, columnDividerSelector);
+            await checkbox.set(condition);
         } catch (error) {
             throw new Error(
                 `setColumnDivider: Failed to set column divider ${columnDividerSelector} with settings ${condition}. ${error.message}`,

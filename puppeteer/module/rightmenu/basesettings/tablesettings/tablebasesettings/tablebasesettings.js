@@ -1,6 +1,6 @@
 const BaseSettings = require("../../basesettings");
 const selectors = require("./selectors.json");
-const { Input, Dropdown, Button, ModalButton } = require("../../../../elements");
+const { Input, Dropdown, Button, ModalButton, Checkbox } = require("../../../../elements");
 const { Color } = require("../../../../common");
 const { createErrorHandler } = require("../../../../../engine/script/js/utils");
 
@@ -593,6 +593,7 @@ class TableBaseSettings extends BaseSettings {
      */
     async setAutoFit(condition) {
         const selector = TableBaseSettings.SELECTORS.ROWS_AND_COLUMNS_SIZE.AUTO_FIT_CHECKBOX;
+
         await this.#clickCheckbox(selector, condition, "setAutoFit");
     }
 
@@ -786,10 +787,8 @@ class TableBaseSettings extends BaseSettings {
      */
     async #clickCheckbox(selector, condition, methodName) {
         try {
-            await this.tester.clickCheckbox({
-                selector,
-                condition,
-            });
+            const checkbox = new Checkbox(this.tester, selector);
+            await checkbox.set(condition);
         } catch (error) {
             this.handleError(methodName, error);
         }

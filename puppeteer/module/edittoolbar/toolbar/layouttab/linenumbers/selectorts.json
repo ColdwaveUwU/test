@@ -4,7 +4,7 @@
         "DROPDOWN_ITEMS": "#tlbtn-line-numbers ul.dropdown-menu.ppm-toolbar li > a"
     },
     "MODAL_WINDOW": "#window-line-numbers",
-    "CHECKBOX_ADD_LINE_NUMBERING": "#line-numbers-add-line-numbering label label[role='checkbox']",
+    "CHECKBOX_ADD_LINE_NUMBERING": "#line-numbers-add-line-numbering",
     "START_AT": "#line-numbers-start-at",
     "FROM_TEXT": "#line-numbers-from-text",
     "COUNT_BY": "#line-numbers-count-by",

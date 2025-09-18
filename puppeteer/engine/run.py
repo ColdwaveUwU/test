@@ -289,6 +289,9 @@ def run_test(test_map, params_dict, cache_dir, server_port):
     collab = os.path.join(engine_directory, "..", "module", "collab").replace("\\", '/')
     replace_in_file(run_file, "require(\"%%COLLAB%%\")", f"require(\"{collab}\")")
 
+    elements = os.path.join(engine_directory, "..", "module", "elements").replace("\\", '/')
+    replace_in_file(run_file, "require(\"%%ELEMENTS%%\")", f"require(\"{elements}\")")
+    
     replace_in_file(run_file, "\"%%TESTER_PARAMS%%\"", f"{params_dict['params']}")
 
     replace_in_file(run_file, "\"%%FILE_NAME%%\"", f"\"{file_name}\"")

@@ -1,6 +1,6 @@
 const BaseSettings = require("../basesettings");
 const selectors = require("./selectors.json");
-
+const { Checkbox } = require("../../../elements");
 class MailMergeSettings extends BaseSettings {
     constructor(tester = RegularTester) {
         super(tester, selectors.RIGHT_MENU);
@@ -21,11 +21,8 @@ class MailMergeSettings extends BaseSettings {
             if (!checkboxSelector) {
                 throw new Error(`Checkbox with name "${name}" not found`);
             }
-
-            await this.tester.clickCheckbox({
-                selector: checkboxSelector,
-                condition: isChecked,
-            });
+            const checkbox = new Checkbox(this.tester, checkboxSelector);
+            await checkbox.set(isChecked);
         } catch (error) {
             throw new Error(`setCheckbox: Failed to set checkbox: "${name}". ${error.message}`, { cause: error });
         }

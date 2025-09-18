@@ -1,6 +1,6 @@
 const LayoutTab = require("../layouttab");
 const selectors = require("./selectorts.json");
-const { Input } = require("../../../../elements");
+const { Input, Checkbox } = require("../../../../elements");
 class LineNumbers extends LayoutTab {
     constructor(tester) {
         super(tester, "span#slot-btn-line-numbers div button");
@@ -61,14 +61,13 @@ class LineNumbers extends LayoutTab {
                 {},
                 LineNumbers.SELECTORS.MODAL_WINDOW
             );
-            // Check the current state of the checkbox
-            const isEnabled = await this.tester.frame.evaluate(
-                (selector) => document.querySelector(selector).getAttribute("aria-checked") === "true",
-                LineNumbers.SELECTORS.CHECKBOX_ADD_LINE_NUMBERING
-            );
 
-            if (isEnabled !== EnableNumbering) {
-                await this.tester.click(LineNumbers.SELECTORS.CHECKBOX_ADD_LINE_NUMBERING);
+            if (EnableNumbering) {
+                const enableNumberingCheckbox = new Checkbox(
+                    this.tester,
+                    LineNumbers.SELECTORS.CHECKBOX_ADD_LINE_NUMBERING
+                );
+                await enableNumberingCheckbox.set(EnableNumbering);
             }
 
             if (EnableNumbering && CustomValues) {

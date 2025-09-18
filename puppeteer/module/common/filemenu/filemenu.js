@@ -1,4 +1,5 @@
 const FileMenuConfigurator = require("./filemenu_configurator");
+const path = require("path");
 
 class FileMenu {
     constructor(tester = RegularTester) {
@@ -98,12 +99,24 @@ class FileMenu {
         }
     }
 
+    /**
+     * Downloads the document in the specified format.
+     * @param {string} settings
+     * @param {string} encode
+     * @returns {Promise<{name: string, extension: string}>
+     */
     async downloadAs(settings, encode = "Unicode (UTF-8)") {
         try {
             const downloadCompleted = this.tester.handleFileDownload();
             const settingsQueue = await this.configurator.downloadAs(settings, encode);
             await this.#startAction(settingsQueue);
-            await downloadCompleted;
+            const filePath = await downloadCompleted;
+
+            const fileInfo = {
+                name: path.basename(filePath),
+                extension: path.extname(filePath).substring(1),
+            };
+            return fileInfo;
         } catch (error) {
             throw new Error(`downloadAs: Failed to download the document as ${settings}. ${error.message}`, {
                 cause: error,

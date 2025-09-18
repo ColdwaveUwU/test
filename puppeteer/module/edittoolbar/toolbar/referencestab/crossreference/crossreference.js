@@ -1,6 +1,6 @@
 const ReferencesTab = require("../referencestab");
 const selectors = require("./selectors.json");
-const { Input, ModalButton } = require("../../../../elements");
+const { Input, ModalButton, Checkbox } = require("../../../../elements");
 
 /**
  * CrossReference module for interacting with the Cross-reference dialog
@@ -110,7 +110,8 @@ class CrossReference extends ReferencesTab {
     async setInsertAsHyperlink(condition) {
         try {
             const selector = CrossReference.SELECTORS.MODAL_WINDOW.INSERT_AS_HYPERLINK_CHECKBOX.ELEMENT_SELECTOR;
-            await this.tester.clickCheckbox({ selector, condition });
+            const checkbox = new Checkbox(this.tester, selector);
+            await checkbox.set(condition);
         } catch (error) {
             throw new Error(
                 `CrossReference.setInsertAsHyperlink: Failed to set insert as hyperlink to '${condition}'. ${error.message}`,
@@ -126,7 +127,8 @@ class CrossReference extends ReferencesTab {
     async setIncludeAboveBelow(condition) {
         try {
             const selector = CrossReference.SELECTORS.MODAL_WINDOW.INCLUDE_ABOVE_BELOW_CHECKBOX.ELEMENT_SELECTOR;
-            await this.tester.clickCheckbox({ selector, condition });
+            const checkbox = new Checkbox(this.tester, selector);
+            await checkbox.set(condition);
         } catch (error) {
             throw new Error(
                 `CrossReference.setIncludeAboveBelow: Failed to set include above/below to '${condition}'. ${error.message}`,
@@ -144,7 +146,9 @@ class CrossReference extends ReferencesTab {
             const inputSelector = CrossReference.SELECTORS.MODAL_WINDOW.SEPARATOR_INPUT.ELEMENT_SELECTOR;
             const checkboxSelector =
                 CrossReference.SELECTORS.MODAL_WINDOW.SEPARATE_NUMBERS_WITH_CHECKBOX.ELEMENT_SELECTOR;
-            await this.tester.clickCheckbox({ selector: checkboxSelector, condition: true });
+                
+            const checkbox = new Checkbox(this.tester, checkboxSelector);
+            await checkbox.set(true);
             const inputSeparator = new Input(this.tester, inputSelector, false);
             await inputSeparator.set(separator, 100);
         } catch (error) {

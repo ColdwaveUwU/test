@@ -1,6 +1,6 @@
 const InsertTab = require("../../../../inserttab");
 const { NumberFormat } = require("../../../../../../../common");
-
+const { Checkbox } = require("../../../../../../../elements");
 class AxisSettings extends InsertTab {
     constructor(tester, selectors, types) {
         super(tester);
@@ -10,7 +10,8 @@ class AxisSettings extends InsertTab {
 
     async #toggleCheckbox(selector, condition) {
         if (condition !== undefined) {
-            await this.tester.clickCheckbox({ selector, condition });
+            const checkbox = new Checkbox(this.tester, selector);
+            await checkbox.set(condition);
         }
     }
 
