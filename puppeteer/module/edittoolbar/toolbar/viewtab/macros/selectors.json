@@ -22,7 +22,7 @@
         "MACROS_LIST": "#macros-list .list-item",
         "CUSTOM_FUNCTION_LIST": "#functions-list .list-item",
         "RENAME_MACRO_INPUT": "#id-dlg-label-custom-input",
-        "MACROS_AUTOSTART_CHECKBOX": "#ch-macros-autostart > label > label",
+        "MACROS_AUTOSTART_CHECKBOX": "#ch-macros-autostart",
         "CREATE_BUTTON": "#macros-ai-dialog .footer button[result=ok]",
         "AI_BUTTON": {
             "ELEMENT_SELECTOR": "#btn-ai-macros-add > div",

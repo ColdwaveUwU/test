@@ -17,13 +17,13 @@
             "DESCRIPTION_SELECTOR": "a"
         },
         "INSERT_AS_HYPERLINK_CHECKBOX": {
-            "ELEMENT_SELECTOR": "#id-dlg-cross-insert-as > label > label"
+            "ELEMENT_SELECTOR": "#id-dlg-cross-insert-as"
         },
         "INCLUDE_ABOVE_BELOW_CHECKBOX": {
-            "ELEMENT_SELECTOR": "#id-dlg-cross-below-above > label > label"
+            "ELEMENT_SELECTOR": "#id-dlg-cross-below-above"
         },
         "SEPARATE_NUMBERS_WITH_CHECKBOX": {
-            "ELEMENT_SELECTOR": "#id-dlg-cross-separate > label > label"
+            "ELEMENT_SELECTOR": "#id-dlg-cross-separate"
         },
         "SEPARATOR_INPUT": {
             "ELEMENT_SELECTOR": "#id-dlg-cross-separator"

@@ -28,10 +28,10 @@
             "ELEMENT_SELECTOR": "#caption-btn-delete"
         },
         "EXCLUDE_CHECKBOX": {
-            "ELEMENT_SELECTOR": "#caption-checkbox-exclude > label > label"
+            "ELEMENT_SELECTOR": "#caption-checkbox-exclude"
         },
         "CHAPTER_CHECKBOX": {
-            "ELEMENT_SELECTOR": "#caption-checkbox-chapter > label > label"
+            "ELEMENT_SELECTOR": "#caption-checkbox-chapter"
         },
         "CHAPTER_STYLE_MENU": {
             "MENU_SELECTOR": "#caption-combo-chapter",

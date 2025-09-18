@@ -61,8 +61,8 @@
         },
         "DELETE_ALL_NOTES": {
             "WINDOW": ".asc-window.modal-dlg.notransform",
-            "FOOTNOTE_CHECKBOX": "#notes-remove-chk-foot > label > label",
-            "ENDNOTE_CHECKBOX": "#notes-remove-chk-end > label > label",
+            "FOOTNOTE_CHECKBOX": "#notes-remove-chk-foot",
+            "ENDNOTE_CHECKBOX": "#notes-remove-chk-end",
             "OK_BUTTON": ".footer.center button[result=ok]",
             "CANCEL_BUTTON": ".footer.center button[result=cancel]"
         }
