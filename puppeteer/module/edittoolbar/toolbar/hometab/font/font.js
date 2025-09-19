@@ -1,5 +1,5 @@
 const HomeTab = require("../hometab");
-const { Dropdown, Button, Input, Checkbox } = require("../../../../elements");
+const { Dropdown, Button, Input, Checkbox, StateButton } = require("../../../../elements");
 const selectors = require("./selectors.json");
 /**
  * Object with color settings.
@@ -28,7 +28,7 @@ class Font extends HomeTab {
      * @return {Promise<void>}
      */
     async clickBold() {
-        await this.#executeAction(Button, Font.FONT_SELECTORS.BOLD_BUTTON, "click", "clickBold");
+        await this.#executeAction(StateButton, Font.FONT_SELECTORS.BOLD_BUTTON, "click", "clickBold");
     }
 
     /**
@@ -36,7 +36,7 @@ class Font extends HomeTab {
      * @return {Promise<void>}
      */
     async clickItalic() {
-        await this.#executeAction(Button, Font.FONT_SELECTORS.ITALIC_BUTTON, "click", "clickItalic");
+        await this.#executeAction(StateButton, Font.FONT_SELECTORS.ITALIC_BUTTON, "click", "clickItalic");
     }
 
     /**
@@ -44,7 +44,7 @@ class Font extends HomeTab {
      * @return {Promise<void>}
      */
     async clickUnderline() {
-        await this.#executeAction(Button, Font.FONT_SELECTORS.UNDERLINE_BUTTON, "click", "clickUnderline");
+        await this.#executeAction(StateButton, Font.FONT_SELECTORS.UNDERLINE_BUTTON, "click", "clickUnderline");
     }
 
     /**
@@ -52,7 +52,7 @@ class Font extends HomeTab {
      * @return {Promise<void>}
      */
     async clickStrikeout() {
-        await this.#executeAction(Button, Font.FONT_SELECTORS.STRIKEOUT_BUTTON, "click", "clickStrikeout");
+        await this.#executeAction(StateButton, Font.FONT_SELECTORS.STRIKEOUT_BUTTON, "click", "clickStrikeout");
     }
 
     /**
@@ -60,7 +60,7 @@ class Font extends HomeTab {
      * @return {Promise<void>}
      */
     async clickSuperscript() {
-        await this.#executeAction(Button, Font.FONT_SELECTORS.SUPERSCRIPT_BUTTON, "click", "clickSuperscript");
+        await this.#executeAction(StateButton, Font.FONT_SELECTORS.SUPERSCRIPT_BUTTON, "click", "clickSuperscript");
     }
 
     /**
@@ -68,7 +68,7 @@ class Font extends HomeTab {
      * @return {Promise<void>}
      */
     async clickSubscript() {
-        await this.#executeAction(Button, Font.FONT_SELECTORS.SUBSCRIPT_BUTTON, "click", "clickSubscript");
+        await this.#executeAction(StateButton, Font.FONT_SELECTORS.SUBSCRIPT_BUTTON, "click", "clickSubscript");
     }
 
     /**

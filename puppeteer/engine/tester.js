@@ -1231,6 +1231,21 @@ class TesterImp {
     }
 
     /**
+     * Hover over an element specified by a CSS selector.
+     * @param {string} selector 
+     * @param {string} [target] 
+     * @param {number} delay 
+     */
+    async hoverElement(selector, target = "frame", delay = 0) {
+        try {
+            const context = target === "none" || target === "page" ? this.page : this.frame;
+            await this.useDelay(context.locator(selector).hover.bind(context.locator(selector)), delay);
+        } catch (error) {
+            throw new Error(`Error in hoverElement for selector ${selector}: ${error.message}`);
+        }
+    }
+
+    /**
      * Text input function.
      * @param {string} text - input text
      * @param {boolean} pressEscBefore - keypress Escape button after input

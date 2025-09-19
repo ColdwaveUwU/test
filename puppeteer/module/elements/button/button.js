@@ -9,8 +9,8 @@ class Button extends UIElement {
      * @param {Tester} tester - The tester object responsible for browser automation.
      * @param {string} selector - The CSS selector for the button element.
      */
-    constructor(tester, selector) {
-        super(tester, selector);
+    constructor(tester, selector, target) {
+        super(tester, selector, target);
     }
 }
 

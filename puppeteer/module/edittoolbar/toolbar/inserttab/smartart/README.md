@@ -11,15 +11,15 @@ Library for interacting with SmartArt in the Insert section.
 -   [**Methods**](#methods)
     -   [SmartArt.openSmartArtList()](#smartartopensmartartlist)
     -   [SmartArt.getSmartArts()](#smartartgetsmartarts)
-    -   [SmartArt.clickListArt(id)](#smartartclicklistartid)
-    -   [SmartArt.clickProcessArt(id)](#smartartclickprocessartid)
-    -   [SmartArt.clickCycleArt(id)](#smartartclickcycleartid)
-    -   [SmartArt.clickHierarchyArt(id)](#smartartclickhierarchyartid)
-    -   [SmartArt.clickRelationshipArt(id)](#smartartclickrelationshipartid)
-    -   [SmartArt.clickMatrixArt(id)](#smartartclickmatrixartid)
-    -   [SmartArt.clickPyramidArt(id)](#smartartclickpyramidartid)
-    -   [SmartArt.clickPictureArt(id)](#smartartclickpictureartid)
-    -   [SmartArt.clickOtherArt(id)](#smartartclickotherartid)
+    -   [SmartArt.clickListArt(index)](#smartartclicklistartindex)
+    -   [SmartArt.clickProcessArt(index)](#smartartclickprocessartindex)
+    -   [SmartArt.clickCycleArt(index)](#smartartclickcycleartindex)
+    -   [SmartArt.clickHierarchyArt(index)](#smartartclickhierarchyartindex)
+    -   [SmartArt.clickRelationshipArt(index)](#smartartclickrelationshipartindex)
+    -   [SmartArt.clickMatrixArt(index)](#smartartclickmatrixartindex)
+    -   [SmartArt.clickPyramidArt(index)](#smartartclickpyramidartindex)
+    -   [SmartArt.clickPictureArt(index)](#smartartclickpictureartindex)
+    -   [SmartArt.clickOtherArt(index)](#smartartclickotherartindex)
 -   [**Example**](#example)
 
 ## How to include
@@ -64,94 +64,94 @@ SmartArt.getSmartArts();
 
 This method returns an array of [SmartArtObject](#smartart-object) objects.
 
-### `SmartArt.clickListArt(id)`
+### `SmartArt.clickListArt(index)`
 
 ```javascript
 /**
- * Click on the desired ListArt layout id
- * @param {string | number} id - nth-child index
+ * Click on the desired ListArt layout index
+ * @param {string | number} index - nth-child index
  */
-SmartArt.clickListArt(id);
+SmartArt.clickListArt(index);
 ```
 
-### `SmartArt.clickProcessArt(id)`
+### `SmartArt.clickProcessArt(index)`
 
 ```javascript
 /**
- * Click on the desired ProcessArt layout id
- * @param {string | number} id - nth-child index
+ * Click on the desired ProcessArt layout index
+ * @param {string | number} index - nth-child index
  */
-SmartArt.clickProcessArt(id);
+SmartArt.clickProcessArt(index);
 ```
 
-### `SmartArt.clickCycleArt(id)`
+### `SmartArt.clickCycleArt(index)`
 
 ```javascript
 /**
- * Click on the desired CycleArt layout id
- * @param {string | number} id - nth-child index
+ * Click on the desired CycleArt layout index
+ * @param {string | number} index - nth-child index
  */
-SmartArt.clickCycleArt(id);
+SmartArt.clickCycleArt(index);
 ```
 
-### `SmartArt.clickHierarchyArt(id)`
+### `SmartArt.clickHierarchyArt(index)`
 
 ```javascript
 /**
- * Click on the desired HierarchyArt layout id
- * @param {string | number} id - nth-child index
+ * Click on the desired HierarchyArt layout index
+ * @param {string | number} index - nth-child index
  */
-SmartArt.clickHierarchyArt(id);
+SmartArt.clickHierarchyArt(index);
 ```
 
-### `SmartArt.clickRelationshipArt(id)`
+### `SmartArt.clickRelationshipArt(index)`
 
 ```javascript
 /**
- * Click on the desired RelationshipArt layout id
- * @param {string | number} id - nth-child index
+ * Click on the desired RelationshipArt layout index
+ * @param {string | number} index - nth-child index
  */
-SmartArt.clickRelationshipArt(id);
+SmartArt.clickRelationshipArt(index);
 ```
 
-### `SmartArt.clickMatrixArt(id)`
+### `SmartArt.clickMatrixArt(index)`
 
 ```javascript
 /**
- * Click on the desired MatrixArt layout id
- * @param {string | number} id - nth-child index
+ * Click on the desired MatrixArt layout index
+ * @param {string | number} index - nth-child index
  */
-SmartArt.clickMatrixArt(id);
+SmartArt.clickMatrixArt(index);
 ```
 
-### `SmartArt.clickPyramidArt(id)`
+### `SmartArt.clickPyramidArt(index)`
 
 ```javascript
 /**
- * Click on the desired PyramidArt layout id
- * @param {string | number} id - nth-child index
+ * Click on the desired PyramidArt layout index
+ * @param {string | number} index - nth-child index
  */
-SmartArt.clickPyramidArt(id);
+SmartArt.clickPyramidArt(index);
 ```
 
-### `SmartArt.clickPictureArt(id)`
+### `SmartArt.clickPictureArt(index)`
 
 ```javascript
 /**
- * Click on the desired PictureArt layout id
- * @param {string | number} id - nth-child index
+ * Click on the desired PictureArt layout index
+ * @param {string | number} index - nth-child index
  */
-SmartArt.clickPictureArt(id);
+SmartArt.clickPictureArt(index);
 ```
 
-### `SmartArt.clickOtherArt(id)`
+### `SmartArt.clickOtherArt(index)`
 
 ```javascript
 /**
- * Click on the desired OtherArt layout id
- * @param {string | number} id - nth-child index
+ * Click on the desired OtherArt layout index
+ * @param {string | number} index - nth-child index
  */
-SmartArt.clickOtherArt(id);
+SmartArt.clickOtherArt(index);
 ```
 
 ## Example

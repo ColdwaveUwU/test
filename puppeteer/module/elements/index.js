@@ -7,6 +7,7 @@ const ModalButton = require("./modalbutton");
 const OptionsButton = require("./optionsbutton");
 const UIElement = require("./uielement");
 const CanvasElements = require("./canvas");
+const StateButton = require("./statebutton");
 
 module.exports = {
     Dropdown,
@@ -17,5 +18,6 @@ module.exports = {
     Input,
     DropdownInput,
     ModalButton,
+    StateButton,
     ...CanvasElements,
 };

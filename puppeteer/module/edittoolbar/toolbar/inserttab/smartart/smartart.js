@@ -1,5 +1,7 @@
+const { Dropdown } = require("../../../../elements");
 const InsertTab = require("../inserttab");
 
+const selectors = require("./selectors.json");
 /**
  * @typedef {Object} SmartArtObject
  * @property {string} description
@@ -8,7 +10,18 @@ const InsertTab = require("../inserttab");
  */
 class SmartArt extends InsertTab {
     constructor(tester) {
-        super(tester, "#slot-btn-inssmartart", true);
+        super(tester, "#slot-btn-inssmartart");
+    }
+
+    static SELECTORS = selectors;
+
+    get smartArtDropdown() {
+        const smartArtDropdownSelectors = SmartArt.SELECTORS.SMART_ART_DROPDOWN;
+        return new Dropdown(this.tester, {
+            selector: smartArtDropdownSelectors.SELECTOR,
+            elementsSelector: smartArtDropdownSelectors.ELEMENTS_SELECTOR,
+            descriptionSelector: smartArtDropdownSelectors.DESCRIPTION_SELECTOR,
+        });
     }
 
     /**
@@ -17,7 +30,7 @@ class SmartArt extends InsertTab {
      */
     async openSmartArtList() {
         try {
-            await this.clickTargetButton();
+            await this.smartArtDropdown.selectDropdown();
         } catch (error) {
             throw new Error(`Error in openSmartArtList: ${error.message}`, { cause: error });
         }
@@ -30,10 +43,7 @@ class SmartArt extends InsertTab {
      */
     async getSmartArts() {
         try {
-            const listSelector = "#tlbtn-insertsmartart li.dropdown-submenu";
-            const itemSelector = ".item";
-            const descriptionSelector = "a";
-            const smartArts = await this.tester.parseItems(listSelector, itemSelector, descriptionSelector);
+            const smartArts = await this.smartArtDropdown.getDropdownItems();
             return smartArts;
         } catch (error) {
             throw new Error(`Error in getSmartArts: ${error.message}`, { cause: error });
@@ -43,29 +53,31 @@ class SmartArt extends InsertTab {
     /**
      * Click on the desired smart art layout
      * @param {string} description
-     * @param {string | number} id - nth-child index
+     * @param {string | number} index - nth-child index
      * @throws {Error}
      */
-    async #clickSmartArt(description, id) {
+    async #clickSmartArt(description, index) {
+        const loadedSelector = SmartArt.SELECTORS.SMART_ART_DROPDOWN.ELEMENTS_LOADED_SELECTOR;
+        const dropdownSelector = SmartArt.SELECTORS.SMART_ART_DROPDOWN.SELECTOR;
+
         try {
-            const waitOpenSmartArtList = this.tester.frame.waitForSelector("#tlbtn-insertsmartart ul.shifted-right", {
-                visible: true,
-            });
-            await this.openSmartArtList();
-            await waitOpenSmartArtList;
-            const listSelector = "#tlbtn-insertsmartart li.dropdown-submenu";
-            const itemSelector = ".item";
-            const descriptionSelector = "a";
-            await this.tester.clickItem(
-                description,
-                id,
-                listSelector,
-                itemSelector,
-                descriptionSelector,
-                this.isDropdown
-            );
+            const waitListLoaded = this.tester.checkSelector(loadedSelector);
+            const dropdownItems = await this.smartArtDropdown.getDropdownItems();
+
+            const target = dropdownItems.find((item) => item.description === description);
+            if (!target) {
+                throw new Error(`Element with description "${description}" not found`);
+            }
+
+            const baseSelector = `${dropdownSelector} ${target.className}`;
+
+            await Promise.all([this.tester.hoverElement(baseSelector), waitListLoaded]);
+
+            const nthChildIndex = index + 1;
+            const finalSelector = `${baseSelector} .item:nth-child(${nthChildIndex})`;
+            await this.tester.click(finalSelector);
         } catch (error) {
-            throw new Error(`Error in #clickSmartArt [${description}, ${id}]: ${error.message}`, { cause: error });
+            throw new Error(`Error in #clickSmartArt [${description}, ${index}]: ${error.message}`, { cause: error });
         }
     }
 
