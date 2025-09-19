@@ -1,7 +1,7 @@
 {
     "HORIZONTAL": {
         "ALIGNMENT": {
-            "CHECKBOX": "#tableadv-radio-halign .radiobox",
+            "CHECKBOX": "#tableadv-radio-halign",
             "TYPE_DROPDOWN": {
                 "SELECTOR": "#tableadv-combo-halign",
                 "ELEMENTS_SELECTOR": "#tableadv-combo-halign ul li"
@@ -12,7 +12,7 @@
             }
         },
         "POSITION": {
-            "CHECKBOX": "#tableadv-radio-hposition .radiobox",
+            "CHECKBOX": "#tableadv-radio-hposition",
             "POSITION_INPUT": "#tableadv-spin-x",
             "RIGHT_OF_DROPDOWN": {
                 "SELECTOR": "#tableadv-combo-hposition",
@@ -22,7 +22,7 @@
     },
     "VERTICAL": {
         "ALIGNMENT": {
-            "CHECKBOX": "#tableadv-radio-valign .radiobox",
+            "CHECKBOX": "#tableadv-radio-valign",
             "TYPE_DROPDOWN": {
                 "SELECTOR": "#tableadv-combo-valign",
                 "ELEMENTS_SELECTOR": "#tableadv-combo-valign ul li"
@@ -33,7 +33,7 @@
             }
         },
         "POSITION": {
-            "CHECKBOX": "#tableadv-radio-vposition .radiobox",
+            "CHECKBOX": "#tableadv-radio-vposition",
             "POSITION_INPUT": "#tableadv-spin-y",
             "BELOW_DROPDOWN": {
                 "SELECTOR": "#tableadv-combo-vposition",
