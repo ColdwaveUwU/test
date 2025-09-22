@@ -1,5 +1,5 @@
 const { createProxy } = require("../engine/script/js");
-const { Draw, Color, Pdf, TestData, Connector, FileMenu, MoreButtons, AppTitle } = require("../module/common");
+const { Draw, Color, Pdf, TestData, Connector, FileMenu, MoreButton, AppTitle } = require("../module/common");
 const Toolbar = require("../module/edittoolbar");
 const { Review } = require("../module/review");
 const Toolmenu = require("../module/toolmenu");
@@ -14,7 +14,7 @@ const colorInstance = createProxy(new Color());
 const pdfInstance = createProxy(new Pdf());
 const connectorInstance = createProxy(new Connector());
 const testDataInstance = createProxy(new TestData());
-const moreButtonsInstance = createProxy(new MoreButtons());
+const moreButtonInstance = createProxy(new MoreButton());
 
 const fontInstance = createProxy(new Toolbar.HomeTab.Font());
 const numberFormatCellInstance = createProxy(new Toolbar.HomeTab.NumberFormatCell());
@@ -130,7 +130,7 @@ module.exports = {
     Color: colorInstance,
     Pdf: pdfInstance,
     TestData: testDataInstance,
-    MoreButtons: moreButtonsInstance,
+    MoreButton: moreButtonInstance,
     Font: fontInstance,
     NumberFormatCell: numberFormatCellInstance,
     SlideShowManager: slideShowManagerInstance,

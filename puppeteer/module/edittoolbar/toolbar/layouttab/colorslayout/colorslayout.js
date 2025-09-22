@@ -23,8 +23,6 @@ class ColorsLayout extends LayoutTab {
      * @param {string} [colorTheme]
      */
     async setColorTheme(colorTheme) {
-        await this.clickMoreButton();
-
         const colorsMenuSelectors = ColorsLayout.COLORS_SELECTORS.COLORS_MENU;
         try {
             const colorsDropdown = new Dropdown(this.tester, {

@@ -17,8 +17,6 @@ class PageColor extends LayoutTab {
      * @param {Color} [pageColor]
      */
     async setPageColor(pageColor) {
-        await this.clickMoreButton();
-
         const pageColorSelector = PageColor.PAGE_COLOR_SELECTORS.PAGE_COLOR;
         const colorLib = new Color(this.tester);
 

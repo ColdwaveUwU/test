@@ -1,0 +1,4 @@
+{
+    "MORE_BUTTON": "#toolbar section.panel.active div.more-box",
+    "MORE_BUTTON_ELEMENT": "#toolbar section.panel.active div.more-box .btn-slot button"
+}
