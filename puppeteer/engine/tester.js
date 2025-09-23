@@ -1366,32 +1366,27 @@ class TesterImp {
     }
 
     /**
-     * Checks if an element matching the specified selector exists in either frame or page context.
-     * This method waits for the element to appear and returns its existence status.
+     * Checks if an element matching the specified selector exists in the given context.
+     * This method evaluates in the browser context and returns a boolean.
      *
-     * @param {string} selector - CSS selector to find the element
-     * @param {string} [context='frame'] - Context to search in, either 'frame' or 'page'
-     * @returns {Promise<boolean>} Returns true if the element is found within timeout, false otherwise
-     *
-     * @example
-     * // Check element in frame context (default)
-     * const exists = await checkSelector('#myElement');
-     *
-     * // Check element in page context
-     * const exists = await checkSelector('#myElement', 'page');
-     *
-     * @throws {Error} If the context is invalid
+     * @param {string} selector - CSS selector to find the element.
+     * @param {("frame"|"page")} [context="frame"] - Context to search in: "frame" (default) or "page".
+     * @returns {Promise<boolean>} Resolves with true if the element exists, false otherwise.
+     * @throws {Error} If the context is invalid or evaluation fails.
      */
     async checkSelector(selector, context = "frame") {
-        const target = context === "page" ? this.page : this.frame;
-
         try {
-            await target.evaluate((sel) => {
-                return document.querySelector(sel);
+            const target = context === "page" ? this.page : context === "frame" ? this.frame : null;
+
+            if (!target) {
+                throw new Error(`Invalid context: "${context}". Allowed values are "frame" or "page".`);
+            }
+
+            return await target.evaluate((sel) => {
+                return document.querySelector(sel) !== null;
             }, selector);
-            return true;
-        } catch {
-            return false;
+        } catch (error) {
+            throw new Error(`Failed to check selector "${selector}" in context "${context}": ${error.message}`);
         }
     }
 

@@ -24,18 +24,6 @@ class LayoutTab extends Toolbar {
     }
 
     /**
-     * Cancels modal window settings by clicking the Cancel button
-     */
-    async cancelModalSettings() {
-        try {
-            await this.tester.selectByText("Cancel", LayoutTab.MODAL_SELECTORS.MODAL_FOOTER_BUTTON);
-            await this.tester.checkModalWindow();
-        } catch (error) {
-            throw new Error(`Error canceling modal settings: ${error}`);
-        }
-    }
-
-    /**
      * Click More button if it is present on toolbar
      */
     async clickMoreButton() {

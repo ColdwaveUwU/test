@@ -52,7 +52,7 @@ class Toolbar {
      */
     async openTargetTab() {
         let tabSelector = `#toolbar .box-tabs li.active a[data-title=${this.tabTarget}]`;
-
+        debugger
         if (
             !(await this.checkActive(tabSelector)) &&
             (await this.tester.findFrameByName()) === this.tester.getFrame()
