@@ -5,19 +5,18 @@ class StateButton extends Button {
         super(tester, selector, target);
     }
 
-    async #isActive() {
-        return this.context.evaluate((sel) => {
-            const btn = document.querySelector(sel);
-            return btn ? btn.classList.contains("active") || btn.getAttribute("aria-pressed") === "true" : false;
-        }, this.selector);
-    }
-
     /**
      * Click the button and wait for its state to change.
      * @returns {Promise<void>}
      */
     async click() {
-        const prevState = await this.#isActive();
+        const prevState = await this.context.evaluate((sel) => {
+            const btn = document.querySelector(sel);
+            if (!btn) {
+                return null;
+            }
+            return btn.classList.contains("active") || btn.getAttribute("aria-pressed") === "true";
+        }, this.selector);
 
         await super.click(this.selector);
 
@@ -33,36 +32,6 @@ class StateButton extends Button {
             this.selector,
             prevState
         );
-    }
-
-    /**
-     * Set the button to active state if it is not already active.
-     */
-    async setActive() {
-        if (!(await this.#isActive())) {
-            await this.click();
-        }
-    }
-
-    /**
-     * Set the button to inactive state if it is currently active.
-     */
-    async setInactive() {
-        if (await this.#isActive()) {
-            await this.click();
-        }
-    }
-
-    /**
-     * Set the button to the desired state (true = active, false = inactive).
-     * @param {boolean} desiredState - Target state for the button.
-     * @returns {Promise<void>}
-     */
-    async setState(desiredState) {
-        const isActive = await this.#isActive();
-        if (desiredState !== isActive) {
-            await this.click();
-        }
     }
 }
 

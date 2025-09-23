@@ -12,21 +12,21 @@ class NumberFormatCell extends HomeTab {
      * @enum
      */
     static NumberFormatCellType = {
-        FORMATS: [
-            "General",
-            "Number",
-            "Scientific",
-            "Accounting",
-            "Currency",
-            "Short Date",
-            "Long Date",
-            "Time",
-            "Percentage",
-            "Fraction",
-            "Text",
-            "More formats",
-        ],
-        ACCOUNTING_STYLES: ["Dollar", "Euro", "Pound", "Rouble", "Yen", "More formats"],
+        FORMATS:[
+                "General",
+                "Number",
+                "Scientific",
+                "Accounting",
+                "Currency",
+                "Short Date",
+                "Long Date",
+                "Time",
+                "Percentage",
+                "Fraction",
+                "Text",
+                "More formats"
+            ],
+        ACCOUNTING_STYLES:["Dollar", "Euro", "Pound", "Rouble", "Yen","More formats"]
     };
 
     /**
@@ -50,18 +50,18 @@ class NumberFormatCell extends HomeTab {
 
         const isToolbarOpen = await this.tester.checkSelector(TOOLBAR_ACTIVE);
 
-        if (!isToolbarOpen) {
+        if(!isToolbarOpen){
             await this.tester.click(TOOLBAR_BUTTON);
         }
 
-        if (FORMATS.includes(format)) {
+        if(FORMATS.includes(format)){
             await new Dropdown(this.tester, {
                 selector: FORMATS_LIST,
                 elementsValue: FORMATS,
                 elementsSelector: FORMATS_ITEM,
             }).selectDropdownItem(format === "More formats" ? "More formats" : format);
         }
-
+        
         if (moreFormatOptions) {
             await this.NumberFormat.setSettings(moreFormatOptions);
         }
@@ -91,7 +91,7 @@ class NumberFormatCell extends HomeTab {
 
         const isToolbarActive = await this.tester.checkSelector(TOOLBAR_ACTIVE);
 
-        if (!isToolbarActive) {
+        if(!isToolbarActive){
             await this.tester.click(TOOLBAR_BUTTON);
         }
 
@@ -103,9 +103,9 @@ class NumberFormatCell extends HomeTab {
             }).selectDropdownItem(style === "More formats" ? "More formats" : style);
         }
 
-        if (moreFormatOptions) {
-            await this.NumberFormat.setSettings(moreFormatOptions);
-        }
+       if(moreFormatOptions){
+          await this.NumberFormat.setSettings(moreFormatOptions);
+       }
     }
 
     /**

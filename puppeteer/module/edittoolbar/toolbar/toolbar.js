@@ -1,5 +1,5 @@
 const { Color } = require("../../common");
-const { MoreButton } = require("../../common");
+
 /**
  * Wraps the given Toolbar class to automatically invoke `openTargetTab`
  * before each method call in the class.
@@ -24,7 +24,6 @@ function wrapToolbarClass(Toolbar) {
         wrapMethods(originalMethod) {
             return async (...args) => {
                 await this.openTargetTab();
-                await this.openMoreButton();
                 return originalMethod.apply(this, args);
             };
         }
@@ -91,13 +90,6 @@ class Toolbar {
             }
         } catch (e) {
             throw new Error(`Error in clickTargetButton: ${e}`);
-        }
-    }
-
-    async openMoreButton() {
-        const moreToolbarButton = new MoreButton(this.tester);
-        if (await moreToolbarButton.isDisplayed()) {
-            await moreToolbarButton.open();
         }
     }
 }

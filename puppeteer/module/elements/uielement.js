@@ -20,25 +20,6 @@ class UIElement {
     async click() {
         await this.tester.click(this.selector, this.context);
     }
-
-    /**
-     * Checks if the UI element is present on the page or frame.
-     * @returns {Promise<boolean>} - Returns `true` if the element is found, `false` otherwise.
-     */
-    async checkSelector() {
-        try {
-            await this.context.waitForFunction(
-                (selector) => {
-                    return document.querySelector(selector);
-                },
-                { timeout: 5000, polling: 100 },
-                this.selector
-            );
-            return true;
-        } catch {
-            return false;
-        }
-    }
 }
 
 module.exports = UIElement;

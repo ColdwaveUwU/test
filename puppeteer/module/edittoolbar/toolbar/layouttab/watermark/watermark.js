@@ -47,6 +47,7 @@ class Watermark extends LayoutTab {
      */
     async setWatermark(optionValue) {
         try {
+            await this.clickMoreButton();
             const watermarkMenuSelectors = Watermark.WATERMARK_SELECTORS.WATERMARK_MENU;
             const watermarkDropdown = new Dropdown(this.tester, {
                 selector: watermarkMenuSelectors.MENU_SELECTOR,

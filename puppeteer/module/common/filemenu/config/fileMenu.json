@@ -1272,7 +1272,7 @@
                                                                 "hyperlinks": {
                                                                     "type": "checkbox",
                                                                     "documentType": "cell",
-                                                                    "selector": "#id-autocorrect-dialog-chk-hyperlink"
+                                                                    "selector": "#id-autocorrect-dialog-settings-sse-autoformat #id-autocorrect-dialog-chk-hyperlink"
                                                                 }
                                                             }
                                                         ]
@@ -1318,7 +1318,7 @@
                                                                         "pdf",
                                                                         "slide"
                                                                     ],
-                                                                    "selector": "#id-autocorrect-dialog-chk-hyperlink"
+                                                                    "selector": "#id-autocorrect-dialog-settings-sse-autoformat #id-autocorrect-dialog-chk-hyperlink"
                                                                 }
                                                             },
                                                             {

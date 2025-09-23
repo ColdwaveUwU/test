@@ -6,7 +6,7 @@ module.exports = {
     FileMenu: require("./filemenu"),
     Connector: require("./connector"),
     NumberFormat: require("./numberformat"),
-    MoreButton: require("./morebutton"),
+    MoreButtons: require("./morebuttons"),
     AppTitle: require("./apptitle"),
     DocumentUploader: require("./documentuploader"),
 };

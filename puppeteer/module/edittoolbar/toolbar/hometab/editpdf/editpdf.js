@@ -1,10 +1,12 @@
 const HomeTab = require("../hometab");
 const { Button, OptionsButton } = require("../../../../elements");
+const { MoreButtons } = require("../../../../common");
 const selectors = require("./selectors.json");
 
 class EditPdf extends HomeTab {
     constructor(tester) {
         super(tester);
+        this.moreButtons = new MoreButtons(this.tester);
     }
 
     /**
@@ -106,9 +108,26 @@ class EditPdf extends HomeTab {
     async #executeAction(element, action, methodName, actionParams = []) {
         try {
             await this.clickEditPdf(true);
+            await this.#openMoreButtons();
             return await element[action](...actionParams);
         } catch (error) {
             this.#handleError(methodName, error);
+        }
+    }
+
+    /**
+     * Recovery logic for retrying failed actions
+     * @return {boolean} Returns true if the more buttons were opened, false otherwise
+     */
+    async #openMoreButtons() {
+        try {
+            if (!(await this.moreButtons.isDisplayed())) {
+                await this.moreButtons.waitForDisplayed();
+            }
+            await this.moreButtons.open();
+            return true;
+        } catch (error) {
+            return false;
         }
     }
 

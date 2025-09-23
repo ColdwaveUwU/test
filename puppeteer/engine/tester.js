@@ -308,31 +308,6 @@ class TesterImp {
     }
 
     /**
-     * Gets asc-generated elements id
-     * @param {string} selector
-     * @param {boolean} [inFrame=true]
-     * @returns {string}
-     */
-    async getDynamicItemId(selector, inFrame = true) {
-        const context = inFrame ? this.frame : this.page;
-
-        try {
-            const targetAscId = await context.waitForFunction(
-                (selector) => {
-                    const targetElement = document.querySelector(selector);
-                    return `#${targetElement?.id}`;
-                },
-                { timeout: 30000, polling: 100 },
-                selector
-            );
-
-            return targetAscId;
-        } catch (error) {
-            throw new Error(`Failed getDynamicItemId: ${error.message}`);
-        }
-    }
-
-    /**
      * Function for pasting messages from the clipboard.
      * @param {string} selector
      * @param {string | undefined} input - if not defined your clipboard will be used
@@ -1232,9 +1207,9 @@ class TesterImp {
 
     /**
      * Hover over an element specified by a CSS selector.
-     * @param {string} selector 
-     * @param {string} [target] 
-     * @param {number} delay 
+     * @param {string} selector
+     * @param {string} [target]
+     * @param {number} delay
      */
     async hoverElement(selector, target = "frame", delay = 0) {
         try {
@@ -1406,14 +1381,12 @@ class TesterImp {
      * const exists = await checkSelector('#myElement', 'page');
      *
      * @throws {Error} If the context is invalid
-     * @timeout 5000ms
-     * @polling 100ms
      */
-    async checkSelector(selector, context = "frame", timeout = 5000) {
+    async checkSelector(selector, context = "frame") {
         const target = context === "page" ? this.page : this.frame;
 
         try {
-            await target.waitForFunction(
+            await target.evaluate(
                 (sel) => {
                     return document.querySelector(sel);
                 },
