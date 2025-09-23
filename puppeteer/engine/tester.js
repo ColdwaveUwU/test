@@ -1386,13 +1386,9 @@ class TesterImp {
         const target = context === "page" ? this.page : this.frame;
 
         try {
-            await target.evaluate(
-                (sel) => {
-                    return document.querySelector(sel);
-                },
-                { timeout: timeout, polling: 100 },
-                selector
-            );
+            await target.evaluate((sel) => {
+                return document.querySelector(sel);
+            }, selector);
             return true;
         } catch {
             return false;

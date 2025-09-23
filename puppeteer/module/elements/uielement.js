@@ -15,6 +15,14 @@ class UIElement {
     }
 
     /**
+     * Checks if the UI element is present on the page or frame.
+     * @returns {Promise<boolean>} - Returns `true` if the element is found, `false` otherwise.
+     */
+    async checkSelector() {
+        return await this.tester.checkSelector(this.selector);
+    }
+
+    /**
      * Clicks the UI element.
      */
     async click() {
