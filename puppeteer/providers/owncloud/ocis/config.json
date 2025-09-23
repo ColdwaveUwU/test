@@ -1,0 +1,17 @@
+{
+    "testOptions": {
+        "url": "https://oo-ocis.qa-onlyoffice.net",
+        "userName": "admin",
+        "password": "HjKI56gT",
+        "testFolder": "puppeteer-tests"
+    },
+    "reportOptions": {
+        "ignoreBrowserErrors": [
+            "Failed to load resource: the server responded with a status of 404",
+            "cancel",
+            "Blocked autofocusing on a <input> element in a cross-origin subframe.",
+            "Error while trying to use the following icon from the Manifest",
+            "Failed to load theme"
+        ]
+    }
+}

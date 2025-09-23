@@ -1,0 +1,20 @@
+{
+    "CELL_SIZE": {
+        "PREFER_INPUR": "#tableadv-number-prefwidth",
+        "MEASURE": {
+            "SELECTOR": "#tableadv-combo-prefwidth-unit",
+            "ELEMENTS_SELECTORS": "#tableadv-combo-prefwidth-unit ul li"
+        },
+        "CHECKBOX": "#tableadv-checkbox-prefwidth"
+    },
+    "CELL_MARGINS": {
+        "CHECKBOX": "#tableadv-checkbox-margins",
+        "TOP": "#tableadv-number-margin-top",
+        "LEFT": "#tableadv-number-margin-left",
+        "RIGHT": "#tableadv-number-margin-right",
+        "BOTTOM": "#tableadv-number-margin-bottom"
+    },
+    "OPTIONS": {
+        "CHECKBOX": "#tableadv-checkbox-wrap"
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "NEW_NAME": {
+        "INPUT_FORM": "#id-dlg-label-custom-input",
+        "OK_BUTTON": "button[result=ok]"
+    }
+}

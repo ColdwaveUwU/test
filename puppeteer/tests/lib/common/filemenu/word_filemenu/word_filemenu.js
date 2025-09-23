@@ -16,105 +16,94 @@ FileMenu.saveCopyAs("docx");
 FileMenu.rename("test2");
 
 // Create a new document with the specified template
-FileMenu.createNew("Blank");
+FileMenu.createNew("blank");
 
 // Protect the document with password settings
-FileMenu.protect({
-    addPassword: { password: "123", repeatPassword: "123" }, // Add a password
-    changePassword: { password: "321", repeatPassword: "321" }, // Change the password
-    deletePassword: true, // Delete the existing password
-});
+FileMenu.protect("ADD", { password: "123", repeatPassword: "123" }); // Add a password);
 
 // Add or modify properties of the document
-FileMenu.addProperties({
-    addProperty: { title: "test", type: "Number", value: "123" }, // Add a custom property
-    author: "test1", // Set the author
-    title: "test1", // Set the title
-    tags: "test1", // Set tags
-    subject: "test2", // Set the subject
-    comment: "test2", // Add a comment
-});
+FileMenu.addProperties({ staticElement: { value: "test", title: "Author" } });
 
 // Retrieve and display document information
 const document_info = FileMenu.getDocumentInfo();
-console.log(document_info);
 
 // Set advanced settings for the document
 FileMenu.setAdvancedSettings({
     editing: {
-        autosave: false, // Disable autosave
-        showPasteOptions: false, // Hide paste options
-        useSmart: false, // Disable smart suggestions
+        autosave: true, // Disable autosave
+        showPasteOptions: true, // Hide paste options
+        useSmart: true, // Disable smart suggestions,
+        makeComp: true,
     },
     collab: {
-        coEditingMode: "Strict", // Set co-editing mode to strict
-        showTrack: "Show by hover in tooltips", // Show track changes by hovering
-        realTimeChanges: "View none", // Disable real-time change view
-        showComments: true, // show comments
+        coEditing: "strict", // Set co-editing mode to strict
+        showChanges: "tooltips", // Show track changes by hovering
+        realTime: "all", // Disable real-time change view
+        showComments: true, // Hide comments
         showResolved: true, // Show resolved comments
     },
     proofing: {
-        spellCheck: true, // Enable spell checking
-        ignoreUpper: false, // Do not ignore uppercase words
-        ignoreWithNumber: false, // Do not ignore words with numbers
+        spellCheck: true,
+        ignoreUpper: true,
+        ignoreNumbers: true,
         autoCorrect: {
             math: {
-                replaceAsType: true, // Replace as you type
-                correctReplace: "!", // Correct and replace specific input
-                correctBy: "@", // Correct input based on another rule
-                methodButton: "Add", // Specify the action for the method button
+                asType: true,
+                replace: "!!",
+                by: "22",
+                action: "add",
             },
             recognized: {
-                recFind: "test", // Recognize specific terms
-                methodButton: "Add", // Specify the action for the method button
+                value: "test",
+                action: "add",
             },
             autoFormat: {
-                smartQuotes: false, // Disable smart quotes
-                dash: false, // Disable hyphen-to-dash replacement
-                hyperlinks: false, // Disable automatic hyperlinks
-                doubleSpace: true, // Add period after double-space
-                bulletedList: false, // Disable automatic bulleted lists
-                numberedList: false, // Disable automatic numbered lists
+                replace: {
+                    quotes: true,
+                    hyphens: true,
+                    hyperlinks: true,
+                    addPeriod: true,
+                },
+                applyType: { bullet: true, numbered: true },
             },
             autoCorrect: {
-                sentences: false, // Do not capitalize the first letter of sentences
-                tableCells: false, // Do not capitalize the first letter of table cells
-                language: "Русский (Россия)", // Set language for auto-correct
-                dontCap: "b.", // Exclude specific terms from capitalization
-                methodButton: "Add", // Specify the action for the method button
+                sentences: true,
+                cells: true,
+                exceptions: "Svenska (Sverige)",
+                dontCapitalize: {
+                    value: "test",
+                    action: "add",
+                },
             },
         },
     },
+    docContent: {
+        numeral: "Hindi",
+    },
     appearance: {
-        theme: "Dark", // Set the interface theme to dark
-        tabStyle: "Line", // Use line-style tabs
-        darkMode: true, // Enable dark mode
-        useToolbarColor: true, // Use toolbar color for tabs background
+        theme: {
+            value: "Dark",
+            darkMode: true,
+        },
+        tabStyle: "Fill",
+        background: true,
     },
     workspace: {
-        turnOnScreen: true, // Enable screen reader support
-        alignment: false, // Disable alignment guides
-        useAlt: false, // Disable Alt key navigation
-        quickAccess: {
-            save: false, // Hide save button in quick access
-            print: false, // Hide print button in quick access
-            undo: false, // Hide undo button in quick access
-            redo: false, // Hide redo button in quick access
+        turnOnScreen: false,
+        aligment: false,
+        useAlt: false,
+        customQuickAcces: {
+            save: false,
+            print: false,
+            undo: false,
+            redo: false,
         },
-        unit: "Inch", // Set unit of measurement to inches
-        zoomValue: "300%", // Set default zoom value
-        fontHinting: "as OS X", // Set font hinting style
-        macrosSettings: "Enable all", // Enable all macros
+        unit: "Centimeter",
+        zoomValue: "120%",
+        fontHint: "Native",
+        macrosSettings: "Enable all",
     },
 });
-
-Tester.input("[STAND CONFIG] example: some text for correct saving");
-
-// click on the File button
-FileMenu.clickFileMenu();
-
-// Save after autosave disabled
-FileMenu.save();
 
 // Close the document
 Tester.close();

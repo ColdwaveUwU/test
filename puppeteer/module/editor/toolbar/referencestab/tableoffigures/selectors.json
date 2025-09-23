@@ -1,0 +1,59 @@
+{
+    "TOOLBAR": {
+        "TABLE_OF_FIGURES_BUTTON": {
+            "ELEMENT_SELECTOR": "#slot-btn-tof > button"
+        },
+        "UPDATE_BUTTON": {
+            "ELEMENT_SELECTOR": "#slot-btn-tof-update"
+        }
+    },
+    "MODAL_WINDOW": {
+        "TABLE_OF_FIGURES_WINDOW": {
+            "ELEMENT_SELECTOR": "#window-table-contents"
+        },
+        "SHOW_PAGE_NUMBERS_CHECKBOX": {
+            "ELEMENT_SELECTOR": "#tableofcontents-chb-pages"
+        },
+        "RIGHT_ALIGN_PAGE_NUMBERS_CHECKBOX": {
+            "ELEMENT_SELECTOR": "#tableofcontents-chb-align"
+        },
+        "LEADER_MENU": {
+            "MENU_SELECTOR": "#tableofcontents-combo-leader",
+            "DROPDOWN_ELEMENTS_SELECTOR": "#tableofcontents-combo-leader ul li",
+            "DESCRIPTION_SELECTOR": "a"
+        },
+        "FORMAT_AS_LINKS_CHECKBOX": {
+            "ELEMENT_SELECTOR": "#tableofcontents-chb-links"
+        },
+        "BUILD_FROM_CAPTION_RADIO": {
+            "ELEMENT_SELECTOR": "#tableofcontents-radio-caption .radiobox"
+        },
+        "BUILD_FROM_STYLE_RADIO": {
+            "ELEMENT_SELECTOR": "#tableofcontents-radio-style .radiobox"
+        },
+        "BUILD_FROM_CAPTIONS_MENU": {
+            "MENU_SELECTOR": "#tableofcontents-combo-captions",
+            "DROPDOWN_ELEMENTS_SELECTOR": "#tableofcontents-combo-captions ul li",
+            "DESCRIPTION_SELECTOR": "a"
+        },
+        "BUILD_FROM_STYLE_MENU": {
+            "MENU_SELECTOR": "#tableofcontents-tof-from-style",
+            "DROPDOWN_ELEMENTS_SELECTOR": "#tableofcontents-tof-from-style ul li",
+            "DESCRIPTION_SELECTOR": "a"
+        },
+        "STYLES_MENU": {
+            "MENU_SELECTOR": "#tableofcontents-combo-styles",
+            "DROPDOWN_ELEMENTS_SELECTOR": "#tableofcontents-combo-styles ul li",
+            "DESCRIPTION_SELECTOR": "a"
+        },
+        "INCLUDE_LABEL_AND_NUMBER_CHECKBOX": {
+            "ELEMENT_SELECTOR": "#tableofcontents-chb-full-caption"
+        },
+        "OK_BUTTON": {
+            "ELEMENT_SELECTOR": "#window-table-contents .footer button[result=ok]"
+        },
+        "CANCEL_BUTTON": {
+            "ELEMENT_SELECTOR": "#window-table-contents .footer button[result=cancel]"
+        }
+    }
+}

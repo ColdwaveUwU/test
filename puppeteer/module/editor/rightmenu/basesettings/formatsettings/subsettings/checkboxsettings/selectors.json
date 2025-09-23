@@ -1,0 +1,39 @@
+{
+	"ROLES": {
+		"ROLES": "#form-combo-roles",
+		"ROLES_ITEMS": {
+			"ELEMENTS": "#form-combo-roles ul li",
+			"DESCRIPTION": "div"
+		}
+	},
+	"FIELDS": {
+		"KEY": {
+			"SELECTOR": "#form-combo-key",
+			"TARGET": "input"
+		},
+		"TAG": {
+			"SELECTOR": "#form-txt-tag",
+			"TARGET": "input"
+		},
+		"TIP": {
+			"SELECTOR": "#form-txt-help",
+			"TARGET": "textarea"
+		}
+	},
+	"DEFAULT_CHECKBOX": "#form-chb-def-value",
+	"FIXED_SIZE_CHECKBOX": "#form-chb-fixed",
+	"COLOR": {
+		"BORDER": {
+			"BORDER_COLOR": "#form-color-btn",
+			"NO_BORDER": "#form-color-btn div.palette-inner a[idx=\"0\"]",
+			"BORDER_COLOR_LIST": "#form-color-btn ul"
+		},
+		"BACKGROUND": {
+			"BACKGROUND_COLOR": "#form-background-color-btn",
+			"BACKGROUND_COLOR_LIST": "#form-background-color-btn ul"
+		}
+	},
+	"REQUIRED_CHECKBOX": "#form-chb-required",
+	"DELETE_BUTTON": "#form-btn-delete > button",
+	"LOCK_BUTTON": "#form-btn-lock > button"
+}

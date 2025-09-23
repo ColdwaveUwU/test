@@ -1,0 +1,60 @@
+{
+    "TOOLBAR": {
+        "SELECT_DATA": "#id-toolbar-rtn-edit-chart-data"
+    },
+    "MODAL_WINDOWS": {
+        "CHART_EDITOR": {
+            "WINDOW": "#window-chart-data",
+            "BASE_BUTTONS": {
+                "OK_BUTTON": "#window-chart-data .footer.center button[result='ok']",
+                "CANCEL_BUTTON": "#window-chart-data .footer.center button[result='cancel']",
+                "CLOSE_BUTTON": "#window-chart-data .header .tool.close"
+            },
+            "DATA_RANGE_INPUT": "#chart-dlg-txt-range",
+            "LEGEND_ENTRIES": {
+                "SERIES_LIST_ITEMS": {
+                    "selector": "#chart-dlg-series-list div[role='list'] .item",
+                    "elementsSelector": ".item",
+                    "idSelector": ".list-item",
+                    "descriptionSelector": ".list-item",
+                    "elementsValue": []
+                },
+                "ADD_BUTTON": "#chart-dlg-btn-add",
+                "EDIT_BUTTON": "#chart-dlg-btn-edit",
+                "REMOVE_BUTTON": "#chart-dlg-btn-delete",
+                "DOWN_BUTTON": "#chart-dlg-btn-down",
+                "UP_BUTTON": "#chart-dlg-btn-up"
+            },
+            "SWITCH_ROWS_COLUMNS_BUTTON": "#chart-dlg-btn-switch",
+            "HORISONTAL_AXIS": {
+                "CATEGORY_LIST_ITEMS": {
+                    "selector": "#chart-dlg-category-list div[role='list'] .item",
+                    "elementsSelector": ".item",
+                    "idSelector": ".list-item",
+                    "descriptionSelector": ".list-item",
+                    "elementsValue": []
+                },
+                "EDIT_BUTTON": "#chart-dlg-btn-category-edit"
+            }
+        },
+        "EDIT_SERIES": {
+            "WINDOW": ".asc-window.modal.notransform",
+            "NAME_INPUT": "#id-dlg-chart-range-range1",
+            "VALUES_INPUT": "#id-dlg-chart-range-range2",
+            "SELECT_NAME_RANGE_BUTTON": "#id-dlg-chart-range-range1 .select-button button",
+            "SELECT_VALUES_RANGE_BUTTON": "#id-dlg-chart-range-range2 .select-button button",
+            "OK_BUTTON": ".footer.center button[result='ok']"
+        },
+        "AXIS_LABELS": {
+            "WINDOW": ".asc-window.modal.notransform",
+            "LABEL_RANGE": "#id-dlg-chart-range-range1",
+            "SELECT_LABEL_RANGE_BUTTON": "#id-dlg-chart-range-range1 .select-button button",
+            "OK_BUTTON": ".asc-window.modal.notransform .footer.center button[result='ok']"
+        },
+        "SELECT_DATA": {
+            "WINDOW": ".asc-window.modal.notransform",
+            "INPUT": "#id-dlg-cell-range",
+            "OK_BUTTON": ".asc-window.modal.notransform .footer.center button[result='ok']"
+        }
+    }
+}

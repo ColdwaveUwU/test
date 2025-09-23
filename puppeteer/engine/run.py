@@ -16,7 +16,6 @@ from script.python.description_parser import DescriptionParser
 from script.python.loading_spinner import LoadingSpinner
 from script.python.config_manager import ConfigManager
 from script.python.install import check_dependencies
-from typing import List, Dict, Optional
 
 sys.path.append(os.path.abspath(os.path.join(__file__, "../../..")))
 from tools.report_portal.report_portal_launcher import ReportPortalLauncher
@@ -96,32 +95,6 @@ def replace_in_file(file_path, old_text, new_text):
     with open(file_path, "w", encoding="utf-8") as file:
         file.write(content)
 
-def get_tests_attributes(test_log: List[str], attr_tags: Optional[List[str]] = None) -> List[Dict[str, str]]:
-    """
-    Parse attributes from a test log.
-
-    Expected line format:
-        [attribute] <attribute_name>: <attribute_value>
-
-    Example:
-        [attribute] document_id: 52.29.85.62new__2_.pptx1757945184268
-
-    :param test_log: A list of log lines.
-    :param attr_tags: Optional list of attribute names to filter (if None, all are included).
-    :return: A list of dictionaries with keys "key" and "value".
-    """
-    attributes: List[Dict[str, str]] = []
-    pattern = re.compile(r'^\[attribute\]\s*(\w+):\s*(.+)$')
-
-    for line in test_log:
-        match = pattern.match(line.strip())
-        if match:
-            key, value = match.groups()
-            if attr_tags is None or key in attr_tags:
-                attributes.append({"key": key, "value": value})
-
-    return attributes
-
 def run_test_in_new_terminal(**kwargs):
     test_file = kwargs.get('test_file')
     code_file = kwargs.get('code_file')
@@ -137,13 +110,13 @@ def run_test_in_new_terminal(**kwargs):
     try:
         resource_server_path = os.path.join(test_resource_dir, "server.js")
         test_runner = TestRunner(report_portal_launcher, report_portal_test)
-        result_code, outputs = test_runner.run(test_file, test_path, out_directory_path, debug_flag, server_port, resource_server_path, test_resource_dir, terminal_log, terminal_error)
+        result_code = test_runner.run(test_file, test_path, out_directory_path, debug_flag, server_port, resource_server_path, test_resource_dir, terminal_log, terminal_error)
         
         if not debug_flag:
             [os.remove(file) for file in (test_file, code_file) if os.path.exists(file)]
 
         shutil.rmtree(test_resource_dir)
-        return result_code, outputs
+        return result_code
     except Exception as e:
         report_portal_launcher.send_log(f"Error opening a new terminal: {str(e)}", "ERROR")
         raise e
@@ -244,7 +217,7 @@ def create_out_directory(test_path, params, current_datetime):
     
     new_test_directory = resolve_test_directory()
     out_directory_path = os.path.join(work_directory, out_directory) if "puppeteer" in test_path else os.path.join(os.path.dirname(target_path), out_directory)
-    
+    out_directory = os.path.normpath(out_directory_path)
     create_dir(new_test_directory)
     
     for rel_path, files in DIR_STRUCTURE.items():
@@ -259,7 +232,7 @@ def create_out_directory(test_path, params, current_datetime):
 def run_test(test_map, params_dict, cache_dir, server_port):
     test_path = test_map["script"]
     file_name = os.path.basename(test_path)
-    report_portal_test = report_portal_manager.start_test(test_path)
+    report_portal_test = report_portal_manager.start_test(test_path, params_dict['run_mode'])
     report_portal_test.send_log("Start test")
     current_datetime = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     test_directory, out_directory_path, test_resource_dir = create_out_directory(test_path, params_dict, current_datetime)
@@ -274,6 +247,12 @@ def run_test(test_map, params_dict, cache_dir, server_port):
 
     cache_dir = cache_dir.replace("\\", '/')
     replace_in_file(run_file, "%%CACHEDIR%%", str(cache_dir).replace("\\", "/"))
+
+    config = config_manager.get_main_config()
+    run_mode = params_dict.get('run_mode', 'example')
+    config['provider'] = "" if run_mode == "example" else run_mode
+    config_manager.set_main_config(config)
+
     if "config" in test_map:
         sub_config_path = test_map["config"]
         test_config = config_manager.merge_with_config(sub_config_path)
@@ -291,7 +270,7 @@ def run_test(test_map, params_dict, cache_dir, server_port):
 
     elements = os.path.join(engine_directory, "..", "module", "elements").replace("\\", '/')
     replace_in_file(run_file, "require(\"%%ELEMENTS%%\")", f"require(\"{elements}\")")
-    
+
     replace_in_file(run_file, "\"%%TESTER_PARAMS%%\"", f"{params_dict['params']}")
 
     replace_in_file(run_file, "\"%%FILE_NAME%%\"", f"\"{file_name}\"")
@@ -322,12 +301,12 @@ def run_test(test_map, params_dict, cache_dir, server_port):
         'report_portal_test': report_portal_test
     }
 
-    return_code, outputs = run_test_in_new_terminal(**terminal_args)
+    return_code = run_test_in_new_terminal(**terminal_args)
     end_time = int(time.time() * 1000)
     execution_time = end_time - start_time
     formatted_time = "[{:02}:{:02}.{:03}]".format(execution_time // 60000, (execution_time // 1000) % 60, execution_time % 1000)
     append_file(log_file, f"{formatted_time} [end] [test] {file_name} Duration {execution_time}")
-
+    
     report_object = {
         'test_path': test_path,
         'file_name': file_name,
@@ -341,7 +320,8 @@ def run_test(test_map, params_dict, cache_dir, server_port):
         'start_test_time': start_test_time,
         'return_code': return_code
     }
-    test_report_info = report_generator.generate_test_report(report_object=report_object)
+
+    test_report_info = report_generator.generate_test_report(report_object=report_object, run_mode=params_dict['run_mode'])
     action_content = test_report_info['time_log_content']
 
     for line in action_content.split("\n"):
@@ -353,12 +333,8 @@ def run_test(test_map, params_dict, cache_dir, server_port):
         report_portal_test.send_log(message=f"{file_name} report attached.", attachment={"name": os.path.basename(test_report_path),
                                                                                  "data": file.read(),
                                                                                  "mime": "text/html"})
-    
-    report_portal_manager.finish_test(test_path, 
-                                      0 if return_code == 5 else return_code)
-    
-    attributes = get_tests_attributes(outputs)
-    report_object["attributes"] = attributes
+
+    report_portal_manager.finish_test(test_path, 0 if return_code == 5 else return_code, params_dict['run_mode'])
     return report_object
 
 def run_test_with_retries(test_map, params_dict):
@@ -437,8 +413,7 @@ def update_description_json(module_paths, tester_path):
                 json.dump(modules_descriptions, methods_json, ensure_ascii=False, indent=4)
 
             return [{"return_code": 0}] 
-        except Exception as e:
-            
+        except Exception as e:   
             print(f"Error while saving descriptions: {e}")
             return [{"return_code": 1}] 
 
@@ -461,52 +436,6 @@ def update_description_json(module_paths, tester_path):
             future = executor.submit(parse_and_save, module_paths, tester_path, description_file_path)
             spinner = LoadingSpinner(future, "Updating method descriptions...")  
             spinner.start()
-
-def get_unique_attributes(result_objects, default_build=None, default_version=None):
-    """
-    Collects unique 'attributes' from the results of all tests.
-    Flattens nested lists so that the result is a flat list of unique attributes.
-    Ensures 'build' and 'version' keys are always present in each test's attributes.
-
-    Parameters:
-        result_objects (list[list[object or dict]]): 
-            A list of test results, where each element corresponds to the results 
-            of a single test retried multiple times. Each inner list contains 
-            either objects with an 'attributes' attribute or dictionaries 
-            with an 'attributes' key.
-        default_build (str, optional): Default value for 'build' if missing in test attributes.
-        default_version (str, optional): Default value for 'version' if missing in test attributes.
-
-    Returns:
-        list: A flat list of unique attribute values collected from all test results.
-    """
-    seen = set()
-    unique_attributes = []
-
-    for retry_results in result_objects:
-        for attempt in retry_results:
-            attr = getattr(attempt, "attributes", None) if not isinstance(attempt, dict) else attempt.get("attributes")
-            if attr is None:
-                attr = []
-
-            items = attr if isinstance(attr, (list, tuple)) else [attr]
-
-            new_items = []
-            for item in items:
-                if isinstance(item, dict):
-                    if "build" not in item and default_build is not None:
-                        item["build"] = default_build
-                    if "version" not in item and default_version is not None:
-                        item["version"] = default_version
-                new_items.append(item)
-
-            for item in new_items:
-                key = item if isinstance(item, (int, float, str, tuple)) else id(item)
-                if key not in seen:
-                    seen.add(key)
-                    unique_attributes.append(item)
-
-    return unique_attributes
 
 if __name__ == "__main__":
     check_dependencies(engine_directory)
@@ -555,6 +484,7 @@ if __name__ == "__main__":
     parser.add_argument('--terminal_log', action='store_true', help='Run in debug mode')
     parser.add_argument('--connect_portal', action="store_true", help='Use Report Portal')
     parser.add_argument('--disable_animation', action="store_true", help= 'Print program output')
+    parser.add_argument('--providers', nargs='*', help='List of providers to run tests with (e.g. docspace owncloud wopi)')
     args = parser.parse_args()
 
     config = args.config
@@ -572,6 +502,16 @@ if __name__ == "__main__":
     
     config_manager = ConfigManager(config_path, config_params)
     config = config_manager.get_main_config()
+
+    if args.providers:
+        run_modes = list(set(args.providers))
+    elif 'provider' in config and config['provider']:
+        if isinstance(config['provider'], list):
+            run_modes = list(set(config['provider']))
+        else:
+            run_modes = [config['provider']]
+    else:
+        run_modes = ['example']
 
     os.environ["PUPPETEER_SKIP_CHROMIUM_DOWNLOAD"] = "true"
     if "browser" in config["puppeteerOptions"]:
@@ -596,16 +536,16 @@ if __name__ == "__main__":
         test_file_config_map.extend(get_matching_paths(target_path))
     
     common_attributes = [{"key": "platform", "value": system_name}, 
-                         {"key": "browser", "value": config["puppeteerOptions"]["browser"]}]
-    
+                        {"key": "browser", "value": config["puppeteerOptions"]["browser"]}]
     try: 
+        global report_portal_launcher
         report_portal_launcher = ReportPortalLauncher()
         create_connection = connect_portal or report_portal_launcher.need_connection
         if create_connection:
             report_portal_launcher.start_launch()
             report_portal_launcher.send_log(f"Starting tests in {target_path}...")
 
-            report_portal_manager = ReportPortalManager(report_portal_launcher, test_file_config_map, work_directory)
+            report_portal_manager = ReportPortalManager(report_portal_launcher, test_file_config_map, work_directory, run_modes)
         else: 
             report_portal_launcher = NullReportPortalLauncher()
             report_portal_manager = NullReportPortalManager()
@@ -630,54 +570,59 @@ if __name__ == "__main__":
         if not os.path.isabs(resource_path):
             resource_path = os.path.join(work_directory, resource_path)
 
-        params_dict = {
-            'test_path': test_path,
-            'num_retries': num_retries,
-            'config_path': config_path,
-            'out_directory': out_directory,
-            'target_path': target_path,
-            'params': params,
-            'exceptionErrors': config["reportOptions"],
-            'resource_path': resource_path,
-            'debug': debug,
-            'terminal_error': args.terminal_error,
-            'terminal_log': args.terminal_log,
-        }
-        
-        if num_threads == -1:
-            num_threads = int(min(32, (os.cpu_count() or 1) + 4) * 1/3)
-        if not prcache:
-            num_threads = min(num_threads, len(test_file_config_map))
-            for i in range(num_threads):
-                cache_dir = os.path.join(browser_cache_dir, f"cache{i}")
-                server_port = config["resourceServer"]["port"] + i
-                server_queue.put(server_port)
-                cache_queue.put(cache_dir)
+        result_objects = {}
+        for run_mode in run_modes:
+                start_launch_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                report_portal_launcher.send_log(f"=== Running tests with run mode: {run_mode} ===")
+                params_dict = {
+                    'test_path': test_path,
+                    'num_retries': num_retries,
+                    'config_path': config_path,
+                    'out_directory': f"{out_directory}/{run_mode}",
+                    'target_path': target_path,
+                    'params': params,
+                    'exceptionErrors': config["reportOptions"],
+                    'resource_path': resource_path,
+                    'debug': debug,
+                    'terminal_error': args.terminal_error,
+                    'terminal_log': args.terminal_log,
+                    'run_mode': run_mode,
+                }
                 
-            with ThreadPoolExecutor(max_workers=num_threads) as poolExecutor:
-                futures = [poolExecutor.submit(run_test_with_retries, test_map, params_dict) for test_map in test_file_config_map]
-                spinner = LoadingSpinner(futures, message, disable_animation or config.get('runOptions', {}).get("disableAnimation", False))
-                spinner.start()
-                end_time = int(time.time() * 1000)
-                execution_time = end_time - start_time
-                report_generator.generate_launch_html_report(execution_time)
-
-                result_objects = []
-                for f in futures:
-                    result_objects.append(f.result())
-
-            test_attributes = get_unique_attributes(result_objects)
-            common_attributes = common_attributes + test_attributes
-        else:
-            init_cache_script = os.path.join(engine_directory, "script", "js", "scripts", "prepareCache.js")
-            command = f"node {init_cache_script} {config_path} {num_threads}"
-            subprocess.run(command, shell=True)
+                if num_threads == -1:
+                    num_threads = int(min(32, (os.cpu_count() or 1) + 4) * 1/3)
+                if not prcache:
+                    num_threads = min(num_threads, len(test_file_config_map))
+                    for i in range(num_threads):
+                        cache_dir = os.path.join(browser_cache_dir, f"cache{i}")
+                        server_port = config["resourceServer"]["port"] + i
+                        server_queue.put(server_port)
+                        cache_queue.put(cache_dir)
+                        
+                    with ThreadPoolExecutor(max_workers=num_threads) as poolExecutor:
+                        futures = [poolExecutor.submit(run_test_with_retries, test_map, params_dict) for test_map in test_file_config_map]
+                        spinner = LoadingSpinner(futures, message, disable_animation or config.get('runOptions', {}).get("disableAnimation", False), report_portal_launcher)
+                        success, duration = spinner.start() 
+                        result_objects[run_mode] = {
+                            "success": success,
+                            "duration": duration,
+                            "start_launch_time": start_launch_time,
+                        }
+                        report_portal_launcher.send_log(f"Run mode {run_mode} completed with success: {success}, duration: {duration} ms")
+                else:
+                    init_cache_script = os.path.join(engine_directory, "script", "js", "scripts", "prepareCache.js")
+                    command = f"node {init_cache_script} {config_path} {num_threads}"
+                    subprocess.run(command, shell=True)
+        end_time = int(time.time() * 1000)
+        execution_time = end_time - start_time
+        result_objects['execution_time'] = execution_time
+        report_generator.generate_launch_html_report(result_objects)
+        report_portal_launcher.finish_launch()
     finally:
         if isinstance(report_portal_launcher, ReportPortalLauncher) and report_portal_launcher.launch_is_started is not False:
             try:
                 report_portal_launcher.finish_launch(
-                    status="FAILED" if sys.exc_info()[0] is not None else "PASSED",
-                    attributes  = common_attributes
+                    status="FAILED" if sys.exc_info()[0] is not None else "PASSED"
                 )
             except Exception as e:
                 print(f"Error finishing ReportPortal launch: {e}")

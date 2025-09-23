@@ -1,0 +1,81 @@
+{
+    "TAB_BUTTON": "#slot-category-id-adv-image-position button",
+    "HORIZONTAL": {
+        "ALIGMENT": {
+            "CHECKBOX": "#image-radio-halign",
+            "DROPDOWN": {
+                    "selector": "#image-combo-halign",
+                    "elementsSelector": "#image-combo-halign ul li",
+                    "descriptionSelector": "a",
+                    "elementsValue": []
+            },
+            "RELATIVE_DROPDOWN": {
+                "selector": "#image-combo-hrelative",
+                "elementsSelector": "#image-combo-hrelative ul li",
+                "descriptionSelector": "a",
+                "elementsValue": []
+            }
+        },
+        "POSTION": {
+            "CHECKBOX": "#image-radio-hposition",
+            "TO_THE_RIGHT_OF_DROPDOWN": {
+                "selector": "#image-combo-hposition",
+                "elementsSelector": "#image-combo-hposition ul li",
+                "descriptionSelector": "a",
+                "elementsValue": []
+            },
+            "INPUT_FIELD": "#image-spin-x"
+        },
+        "RELATIVE": {
+            "CHECKBOX": "#image-radio-hpositionpc",
+            "RELATIVE_TO_DROPDOWN": {
+                "selector": "#image-combo-hpositionpc",
+                "elementsSelector": "#image-combo-hpositionpc ul li",
+                "descriptionSelector": "a",
+                "elementsValue": []
+            },
+            "INPUT_FIELD": "#image-spin-xpc"
+        }
+    },
+    "VERTICAL": {
+        "ALIGMENT": {
+            "CHECKBOX": "#image-radio-valign",
+            "DROPDOWN": {
+                "selector": "#image-combo-valign",
+                "elementsSelector": "#image-combo-valign ul li",
+                "descriptionSelector": "a",
+                "elementsValue": []
+            },
+            "RELATIVE_DROPDOWN": {
+                "selector": "#image-combo-vrelative",
+                "elementsSelector": "#image-combo-vrelative ul li",
+                "descriptionSelector": "a",
+                "elementsValue": []
+            }
+        },
+        "POSTION": {
+            "CHECKBOX": "#image-radio-vposition",
+            "DROPDOWN": {
+                "selector": "#image-combo-vposition",
+                "elementsSelector": "#image-combo-vposition ul li",
+                "descriptionSelector": "a",
+                "elementsValue": []
+            },
+            "INPUT_FIELD": "#image-spin-y"
+        },
+        "RELATIVE": {
+            "CHECKBOX": "#image-radio-vpositionpc",
+            "RELATIVE_TO_DROPDOWN": {
+                "selector": "#image-combo-vpositionpc",
+                "elementsSelector": "#image-combo-vpositionpc ul li",
+                "descriptionSelector": "a",
+                "elementsValue": []
+            },
+            "INPUT_FIELD": "#image-spin-ypc"
+        }
+    },
+    "OPTIONS": {
+        "MOVE_OBJECT_WITH_TEXT": "#image-checkbox-move",
+        "ALLOW_OVERLAP": "#image-checkbox-overlap"
+    }
+}

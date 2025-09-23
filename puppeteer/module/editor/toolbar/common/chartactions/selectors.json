@@ -1,0 +1,13 @@
+{
+    "CHART_GROUP_DROPDOWN": {
+        "elementsSelector": "${buttonSelector} .grouped-data",
+        "descriptionSelector": ".group-description span",
+        "elementsValue": []
+    },
+    "CHART_ITEMS_DROPDOWN": {
+        "elementsSelector": "${buttonSelector} ${groupId} .item.canfocused",
+        "idSelector": ".item-chartlist",
+        "descriptionSelector": "[aria-label]",
+        "elementsValue": []
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "TOOLMENU_COMBO_BOX_BTN": "#slot-btn-form-combobox > button",
+    "VALUE_OPTION_INPUT": "#form-txt-new-value .input-field .form-control",
+    "LIST_SELECTOR": "#form-list-list .listview .item .list-item",
+    "ITEM_SELECTOR": "div",
+    "DESCRIPTION_ITEM": "div > div",
+    "ADD_VALUE_BTN": "#form-list-add",
+    "UP_BTN": "#form-list-up",
+    "DOWN_BTN": "#form-list-down",
+    "DELETE_LIST_ITEM_BTN": "#form-list-delete"
+}

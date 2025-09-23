@@ -1,0 +1,10 @@
+{
+    "WINDOW_SELECTOR": ".quick-access-dlg.notransform",
+    "CHECKBOXES": {
+        "SAVE": "#quick-access-chb-save",
+        "PRINT": "#quick-access-chb-print",
+        "UNDO": "#quick-access-chb-undo",
+        "REDO": "#quick-access-chb-redo"
+    },
+    "OK_BUTTON": "button[result=ok]"
+}

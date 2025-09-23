@@ -1,0 +1,33 @@
+{
+    "TOOLBAR": {
+        "MACROS_BUTTON": "#slot-btn-macros"
+    },
+    "MACROS_DIALOG": {
+        "MACROS_WINDOW": "#macros-dialog",
+        "MACROS_AI_DIALOG": "#macros-ai-dialog.notransform",
+        "MACROS_SCRIPT_INPUT": ".inputarea.monaco-mouse-cursor-text",
+        "MACROS_SCRIPT_INPUT_VBA": ".view-lines.monaco-mouse-cursor-text",
+        "AI_CREATE_FROM_DESCRIPTION_DIALOG_INPUT": "#macros-ai-dialog-textarea .textarea-field textarea",
+        "ADD_MACRO_BUTTON": "#btn-macros-add",
+        "ADD_CUSTOM_FUNCTION_BUTTON": "#btn-function-add",
+        "RUN_MACRO_BUTTON": "#btn-macros-run",
+        "DELETE_MACRO_BUTTON": "#btn-macros-delete",
+        "CANCEL_MACROS_BUTTON": "#macros-dialog .footer.center button[result=cancel]",
+        "OK_MACROS_BUTTON": "#macros-dialog .footer.center button[result=ok]",
+        "UNDO_BUTTON": "#btn-macros-undo",
+        "REDO_BUTTON": "#btn-macros-redo",
+        "DEBUG_BUTTON": "#btn-macros-debug",
+        "COPY_BUTTON": "#btn-macros-copy",
+        "RENAME_BUTTON": "#btn-macros-rename",
+        "MACROS_LIST": "#macros-list .list-item",
+        "CUSTOM_FUNCTION_LIST": "#functions-list .list-item",
+        "RENAME_MACRO_INPUT": "#id-dlg-label-custom-input",
+        "MACROS_AUTOSTART_CHECKBOX": "#ch-macros-autostart",
+        "CREATE_BUTTON": "#macros-ai-dialog .footer button[result=ok]",
+        "AI_BUTTON": {
+            "ELEMENT_SELECTOR": "#btn-ai-macros-add > div",
+            "DEFAULT_BUTTON": "#btn-ai-macros-add > div button",
+            "DROPDOWN_ELEMENTS_SELECTOR": "#btn-ai-macros-add > div ul li a"
+        }
+    }
+}

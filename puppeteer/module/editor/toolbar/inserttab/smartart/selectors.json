@@ -1,0 +1,7 @@
+{
+    "SMART_ART_DROPDOWN": {
+        "SELECTOR": "#tlbtn-insertsmartart",
+        "ELEMENTS_SELECTOR": "#tlbtn-insertsmartart li.dropdown-submenu",
+        "ELEMENTS_LOADED_SELECTOR": "#tlbtn-insertsmartart li.dropdown-submenu[data-preview-loaded=true]"
+    }
+}

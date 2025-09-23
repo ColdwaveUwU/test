@@ -1,0 +1,12 @@
+{
+    "TOOLBAR": {
+        "DECREASE_DECIMAL_BUTTON": "#id-toolbar-btn-decdecimal",
+        "INCREASE_DECIMAL_BUTTON": "#id-toolbar-btn-incdecimal",
+        "NUMBER_FORMAT_DROPDOWN": {
+            "selector": "#slot-btn-format",
+            "elementsSelector": "#slot-btn-format ul li",
+            "descriptionSelector": "a .display-value",
+            "elementsValue": []
+        }
+    }
+}

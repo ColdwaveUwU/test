@@ -1,0 +1,23 @@
+{
+    "AUTHORIZATION": {
+        "MAIN_CONTENT": "#web-content-main",
+        "USERNAME": "#oc-login-username",
+        "PASSWORD": "#oc-login-password",
+        "LOGIN_BUTTON": ".MuiButton-label"
+    },
+    "CREATE_FILE": {
+        "NEW_FILE_BUTTON": "#new-file-menu-btn",
+        "FILE_EXTENSION": ".create-list-file-item-extension",
+        "CREATE_FILE": ".oc-modal-body-actions-confirm",
+        "FILE_NAME_INPUT": ".oc-position-relative > input"
+    },
+    "UPLOAD": {
+        "INPUT_FORM": "#files-file-upload-input",
+        "UPLOAD_MENU_BUTTON": "#upload-menu-btn",
+        "DOWNLOAD_SUCCESS": ".upload-info-success"
+    },
+    "FOLDER": {
+        "NEW_FOLDER_BUTTON": "#new-folder-menu-btn",
+        "FOLDER_NAME_SELECTOR": ".oc-resource-basename"
+    }
+}

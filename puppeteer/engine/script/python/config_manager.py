@@ -98,6 +98,9 @@ class ConfigManager:
 
     def get_main_config(self) -> Dict[str, Any]:
         return self.main_config
+    
+    def set_main_config(self, config: Dict[str, Any]) -> None:
+        self.main_config = config
 
     def to_js_config(self, config: Dict[str, Any]) -> str:
         return json.dumps(config, indent=4)

@@ -1,0 +1,24 @@
+{
+    "TRACK_CHANGES": {
+        "ELEMENT_SELECTOR": "#btn-review-on > div",
+        "DEFAULT_BUTTON": "#btn-review-on > div button",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#btn-review-on > div ul li a"
+    },
+    "ENABLE_MESSAGE": {
+        "ENABLE_WINDOW": "div.asc-window.modal",
+        "ENABLE_BUTTON": "button[result=\"enable\"]",
+        "CANCEL_BUTTON": "button[result=\"cancel\"]"
+    },
+    "PREVIOUS": "#btn-change-prev > button",
+    "NEXT": "#btn-change-next > button",
+    "ACCEPT": {
+        "ELEMENT_SELECTOR": "#btn-change-accept > div",
+        "DEFAULT_BUTTON": "#btn-change-accept > div button",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#btn-change-accept > div ul li a"
+    },
+    "REJECT": {
+        "ELEMENT_SELECTOR": "#btn-change-reject > div",
+        "DEFAULT_BUTTON": "#btn-change-reject > div button",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#btn-change-reject > div ul li a"
+    }
+}

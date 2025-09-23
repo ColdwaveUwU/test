@@ -3,7 +3,6 @@ const { TableOfContents, FileMenu, Verification } = require("lib");
 
 // Create a new DOCX file for testing
 Tester.createFile("docx");
-debugger;
 // Add text for Level 1 heading
 TableOfContents.addText("Level 1");
 // Input test data for Level 1

@@ -1,0 +1,36 @@
+{
+    "SHEET_VIEW": {
+        "ELEMENT_SELECTOR": "#slot-btn-sheet-view",
+        "DEFAULT_BUTTON": "#slot-btn-sheet-view button",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#slot-btn-sheet-view ul li a"
+    },
+    "CREATE_VIEW": {
+        "ELEMENT_SELECTOR": "#slot-createview"
+    },
+    "CLOSE_VIEW": {
+        "ELEMENT_SELECTOR": "#slot-closeview"
+    },
+    "VIEW_WARNING": {
+        "ELEMENT_SELECTOR": ".tip-text",
+        "CLOSE_BUTTON_SELECTOR": ".synch-tip-root .close",
+        "TEXT_CONTENT": "You are in Sheet View mode"
+    },
+    "RENAME_VIEW": {
+        "ELEMENT_SELECTOR": "#view-manager-btn-rename",
+        "INPUT_SELECTOR": "#id-dlg-label-custom-input > div"
+    },
+    "DUPLICATE_VIEW": {
+        "ELEMENT_SELECTOR": "#view-manager-btn-duplicate"
+    },
+    "DELETE_VIEW": {
+        "ELEMENT_SELECTOR": "#view-manager-btn-delete"
+    },
+    "VIEW_MANAGER": {
+        "ELEMENT_SELECTOR": ".asc-window.modal.advanced-settings-dlg",
+        "CLOSE_BUTTON_SELECTOR": ".asc-window.modal.advanced-settings-dlg .footer.center button[result='close']"
+    },
+    "MODAL_ALERT": {
+        "WINDOW_SELECTOR": ".asc-window.modal.alert",
+        "YES_BUTTON_SELECTOR": ".asc-window.modal.alert .footer.center button[result='yes']"
+    }
+}

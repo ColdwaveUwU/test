@@ -14,7 +14,7 @@ class ReportPortalManager:
     """
     Manages the execution and reporting of tests to ReportPortal with support for hierarchical test structures.
     """
-    def __init__(self, launcher: 'ReportPortalLauncher', test_files_map: List[dict], work_directory: str):
+    def __init__(self, launcher: 'ReportPortalLauncher', test_files_map: List[dict], work_directory: str, run_modes: List[str]):
         """
         Initialize the ReportPortalManager.
         :param launcher: Instance of ReportPortalLauncher used to communicate with ReportPortal.
@@ -25,9 +25,9 @@ class ReportPortalManager:
         self.test_files_map = test_files_map
         self.work_directory = work_directory
         self.lock = threading.Lock()
-        self.hierarchy = TestHierarchyManager(test_files_map, work_directory)
+        self.hierarchy = TestHierarchyManager(test_files_map, work_directory, run_modes)
 
-    def start_test(self, test_path: str) -> 'ReportPortalTest':
+    def start_test(self, test_path: str, run_mode: str) -> 'ReportPortalTest':
         """
         Start a test and create any missing parent suites.
         :param test_path: Path to the test file to start.
@@ -36,7 +36,8 @@ class ReportPortalManager:
         with self.lock:
             test_node, parent_id = self.hierarchy.create_suite_chain(
                 test_path=test_path,
-                client=self.launcher.get_client()
+                client=self.launcher.get_client(),
+                run_mode=run_mode
             )
 
             if test_node.get("isStarted"):
@@ -53,14 +54,14 @@ class ReportPortalManager:
 
             return test
 
-    def finish_test(self, test_path: str, return_code: int, **kwargs: Any):
+    def finish_test(self, test_path: str, return_code: int, run_mode: str, **kwargs: Any) -> None:
         """
         Finish a test and automatically finish its parent suites if all their child tests are done.
         :param test_path: Path to the test file to finish.
         :param return_code: Return code of the test (0 = success, non-zero = failure).
         """
         with self.lock:
-            node = self.hierarchy.get_node(test_path)
+            node = self.hierarchy.get_node(test_path, run_mode)
             if node is None:
                 raise ValueError(f"Node for test path '{test_path}' not found in hierarchy.")
 

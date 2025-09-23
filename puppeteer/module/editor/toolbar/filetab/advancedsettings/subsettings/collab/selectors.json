@@ -1,0 +1,16 @@
+{
+    "CO_EDITING": {
+        "FAST": "#fms-rb-coauth-mode-fast",
+        "STRICT": "#fms-rb-coauth-mode-strict"
+    },
+    "SHOW_TACK": {
+        "BALLOONS": "#fms-rb-show-track-ballons",
+        "TOOLTIPS": "#fms-rb-show-track-tooltips"
+    },
+    "REAL_TIME": {
+        "NONE": "#fms-rb-show-changes-none",
+        "ALL": "#fms-rb-show-changes-all"
+    },
+    "SHOW_COMMENT": "#fms-chb-live-comment",
+    "SHOW_RESOLVED": "#fms-chb-resolved-comment"
+}

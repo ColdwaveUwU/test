@@ -1,0 +1,8 @@
+{
+    "TABLESETTINGS_TAB": "#slot-category-id-adv-table-width button",
+    "CELLSETTINGS_TAB": "#slot-category-id-adv-table-cell-props",
+    "BORDERSSETTINGS_TAB": "#slot-category-id-adv-table-borders",
+    "TABLEPOSITIONSETTINGS_TAB": "#slot-category-id-adv-table-position",
+    "TEXTWRAPPINGSETTINGS_TAB": "#slot-category-id-adv-table-wrap",
+    "ALTERNATIVETEXTSSETTINGS_TAB": "#slot-category-id-adv-table-alttext"
+}

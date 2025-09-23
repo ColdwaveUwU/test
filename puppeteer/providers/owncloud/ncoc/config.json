@@ -1,0 +1,15 @@
+{
+    "testOptions": {
+        "url": "https://ncoc.teamlab.info/oc",
+        "userName": "admin",
+        "password": "83cu8Jkp8jhN",
+        "testFolder": "puppeteer-tests"
+    },
+    "reportOptions": {
+        "ignoreBrowserErrors": [
+            "Failed to load resource: the server responded with a status of 404",
+            "cancel",
+            "Blocked autofocusing on a <input> element in a cross-origin subframe."
+        ]
+    }
+}

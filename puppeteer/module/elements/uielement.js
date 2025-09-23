@@ -11,7 +11,7 @@ class UIElement {
     constructor(tester, selector, target = "frame") {
         this.tester = tester;
         this.selector = selector;
-        this.context = target === "page" ? this.tester.page : this.tester.frame;
+        this.context = target === "page" ? this.tester?.page : this.tester?.frame;
     }
 
     /**
@@ -24,9 +24,12 @@ class UIElement {
 
     /**
      * Clicks the UI element.
+     * @param {number} count - The number of times to click the element.
      */
-    async click() {
-        await this.tester.click(this.selector, this.context);
+    async click(count = 1) {
+        for (let i = 0; i < count; i++) {
+            await this.tester.click(this.selector, this.context);
+        }
     }
 }
 

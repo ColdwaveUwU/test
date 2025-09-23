@@ -1,0 +1,88 @@
+{
+    "TAB_BUTTON": "#slot-category-id-chart-settings-dlg-hor button",
+    "HIDE_AXIS_CHECKBOX": "#chart-dlg-chk-hor-hide-0",
+    "TITLE_DROPDOWN": {
+        "selector": "#chart-dlg-combo-hor-title-0",
+        "elementsSelector": "#chart-dlg-combo-hor-title-0 ul li",
+        "descriptionSelector": "a",
+        "elementsValue": []
+    },
+    "GRIDLINES_DROPDOWN": {
+        "selector": "#chart-dlg-combo-hor-grid-0",
+        "elementsSelector": "#chart-dlg-combo-hor-grid-0 ul li",
+        "descriptionSelector": "a",
+        "elementsValue": []
+    },
+    "MINIMUM_VALUE": {
+        "TYPE_DROPDOWN": {
+            "selector": "#chart-dlg-combo-h-mintype-0",
+            "elementsSelector": "#chart-dlg-combo-h-mintype-0 ul li",
+            "descriptionSelector": "a",
+            "elementsValue": []
+        },
+        "INPUT_FIELD": "#chart-dlg-input-h-min-value-0"
+    },
+    "MAXIMUM_VALUE": {
+        "TYPE_DROPDOWN": {
+            "selector": "#chart-dlg-combo-h-maxtype-0",
+            "elementsSelector": "#chart-dlg-combo-h-maxtype-0 ul li",
+            "descriptionSelector": "a",
+            "elementsValue": []
+        },
+        "INPUT_FIELD": "#chart-dlg-input-h-max-value-0"
+    },
+    "AXIS_CROSSES": {
+        "DROPDOWN": {
+            "selector": "#chart-dlg-combo-h-crosstype-0",
+            "elementsSelector": "#chart-dlg-combo-h-crosstype-0 ul li",
+            "descriptionSelector": "a",
+            "elementsValue": []
+        },
+        "INPUT_FIELD": "#chart-dlg-input-h-axis-crosses-0"
+    },
+    "AXIS_POSITION": {
+        "DROPDOWN": {
+            "selector": "#chart-dlg-combo-axis-pos-0",
+            "elementsSelector": "#chart-dlg-combo-axis-pos-0 ul li",
+            "descriptionSelector": "a",
+            "elementsValue": []
+        }
+    },
+    "DISPLAY_UNITS": {
+        "REVERSE_CHECKBOX": "#chart-dlg-check-h-reverse-0",
+        "LOG_SCALE_CHECKBOX": "#chart-dlg-check-h-logscale-0",
+        "BASE_INPUT": "#chart-dlg-input-h-base-0"
+    },
+    "TICK_OPTIONS": {
+        "MAJOR_TYPE_DROPDOWN": {
+            "selector": "#chart-dlg-combo-h-major-type-0",
+            "elementsSelector": "#chart-dlg-combo-h-major-type-0 ul li",
+            "descriptionSelector": "a",
+            "elementsValue": []
+        },
+        "MINOR_TYPE_DROPDOWN": {
+            "selector": "#chart-dlg-combo-h-minor-type-0",
+            "elementsSelector": "#chart-dlg-combo-h-minor-type-0 ul li",
+            "descriptionSelector": "a",
+            "elementsValue": []
+        },
+        "INTERVAL_INPUT": "#chart-dlg-input-marks-interval-0"
+    },
+    "LABEL_OPTIONS": {
+        "POSITION_DROPDOWN": {
+            "selector": "#chart-dlg-combo-h-label-pos-0",
+            "elementsSelector": "#chart-dlg-combo-h-label-pos-0 ul li",
+            "descriptionSelector": "a",
+            "elementsValue": []
+        },
+        "DISTANCE_INPUT": "#chart-dlg-input-label-dist-0",
+        "INTERVAL_TYPE_DROPDOWN": {
+            "selector": "#chart-dlg-combo-label-int-0",
+            "elementsSelector": "#chart-dlg-combo-label-int-0 ul li",
+            "descriptionSelector": "a",
+            "elementsValue": []
+        },
+        "INTERVAL_VALUE_INPUT": "#chart-dlg-input-label-int-0",
+        "FORMAT_BUTTON": "#chart-dlg-btn-h-format-0"
+    }
+}

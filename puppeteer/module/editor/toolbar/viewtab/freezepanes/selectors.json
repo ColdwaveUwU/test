@@ -1,0 +1,7 @@
+{
+    "FREEZE_PANES": {
+        "ELEMENT_SELECTOR": "#slot-btn-freeze",
+        "DEFAULT_BUTTON": "#slot-btn-freeze button",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#slot-btn-freeze ul li a"
+    }
+}

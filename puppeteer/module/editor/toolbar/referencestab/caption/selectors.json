@@ -1,0 +1,53 @@
+{
+    "TOOLBAR": {
+        "CAPTION_BUTTON": {
+            "ELEMENT_SELECTOR": "#slot-btn-caption"
+        }
+    },
+    "MODAL_WINDOW": {
+        "CAPTION_WINDOW": "#window-caption.notransform",
+        "LABEL_MENU": {
+            "MENU_SELECTOR": "#caption-combo-label",
+            "DROPDOWN_ELEMENTS_SELECTOR": "#caption-combo-label ul li",
+            "DESCRIPTION_SELECTOR": "a"
+        },
+        "CAPTION_INPUT": {
+            "ELEMENT_SELECTOR": "#caption-txt-caption > div"
+        },
+        "NUMBERING_MENU": {
+            "MENU_SELECTOR": "#caption-combo-numbering",
+            "DROPDOWN_ELEMENTS_SELECTOR": "#caption-combo-numbering ul li",
+            "DESCRIPTION_SELECTOR": "a"
+        },
+        "ADD_LABEL_MENU": {
+            "ADD_LABEL_BUTTON": "#caption-btn-add",
+            "LABEL_INPUT": "#id-dlg-label-custom-input",
+            "OK_BUTTON": "#window-caption > div.footer.center > button.btn.normal.dlg-btn.primary.canfocused[result='ok'][ratio='ratio'][tabindex='1']"
+        },
+        "DELETE_LABEL_BUTTON": {
+            "ELEMENT_SELECTOR": "#caption-btn-delete"
+        },
+        "EXCLUDE_CHECKBOX": {
+            "ELEMENT_SELECTOR": "#caption-checkbox-exclude"
+        },
+        "CHAPTER_CHECKBOX": {
+            "ELEMENT_SELECTOR": "#caption-checkbox-chapter"
+        },
+        "CHAPTER_STYLE_MENU": {
+            "MENU_SELECTOR": "#caption-combo-chapter",
+            "DROPDOWN_ELEMENTS_SELECTOR": "#caption-combo-chapter ul li",
+            "DESCRIPTION_SELECTOR": "a"
+        },
+        "USE_SEPARATOR_MENU": {
+            "MENU_SELECTOR": "#caption-combo-separator",
+            "DROPDOWN_ELEMENTS_SELECTOR": "#caption-combo-separator ul li",
+            "DESCRIPTION_SELECTOR": "a"
+        },
+        "OK_BUTTON": {
+            "ELEMENT_SELECTOR": "#window-caption .footer .btn.primary"
+        },
+        "CANCEL_BUTTON": {
+            "ELEMENT_SELECTOR": "#window-caption .footer .btn:not(.primary)"
+        }
+    }
+}

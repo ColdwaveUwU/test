@@ -2,14 +2,13 @@ import time
 import sys
 from typing import List, Union
 from concurrent.futures import Future
-
-
+from .report_portal.report_portal_manager import NullReportPortalLauncher
 class LoadingSpinner:
     """
     Loading spinner to visually represent the progress of concurrent tasks.
     Supports both animated and non-animated modes depending on the `disable_animation` flag.
     """
-    def __init__(self, futures: Union[Future, List[Future]], start_message: str = '', disable_animation: bool = True):
+    def __init__(self, futures: Union[Future, List[Future]], start_message: str = '', disable_animation: bool = True, report_portal_launcher: NullReportPortalLauncher = NullReportPortalLauncher) -> None:
         """
         Initialize the loading spinner.
         :param futures: A single Future or a list of Futures representing asynchronous tasks.
@@ -20,6 +19,7 @@ class LoadingSpinner:
         self.futures: List[Future] = futures if isinstance(futures, list) else [futures]
         self.start_message: str = start_message
         self.disable_animation: bool = disable_animation
+        self.report_portal_launcher = report_portal_launcher
 
     def __print_output(self, text: str) -> None:
         """
@@ -37,7 +37,7 @@ class LoadingSpinner:
             print(self.start_message, end='')
         else:
             self.__print_output(self.start_message)
-        self.create_run_output()
+        return self.create_run_output()
 
     def stop(self, success: int = 0, duration: int = 0) -> None:
         """
@@ -48,6 +48,8 @@ class LoadingSpinner:
         duration_message = f". Duration: {duration} ms"
         result_icon = "\033[92m✔\033[0m" if success == 0 else "\033[91m✖\033[0m"
         final_message = f'\r{self.start_message} {result_icon}{duration_message}\n'
+
+        self.report_portal_launcher.send_log(final_message)
         self.__print_output(final_message)
 
     def create_run_output(self) -> None:
@@ -67,6 +69,7 @@ class LoadingSpinner:
         end_time = int(time.time() * 1000)
         duration = end_time - start_time
         self.stop(success, duration)
+        return success, duration
 
     def __run_with_animation(self) -> None:
         """

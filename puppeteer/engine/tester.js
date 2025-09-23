@@ -843,34 +843,6 @@ class TesterImp {
     }
 
     /**
-     * Get the editor version.
-     * @returns {Promise<{version: string, build: string}>}
-     */
-    async getEditorVersion() {
-        try {
-            const scriptSrc = await this.page.$eval("script[src*=api]", (el) => el.src);
-            if (!scriptSrc) {
-                throw new Error("Script with 'api' in src not found");
-            }
-
-            const res = await fetch(scriptSrc);
-            if (!res.ok) {
-                throw new Error(`Fetch failed: ${res.status} ${res.statusText}`);
-            }
-
-            const text = await res.text();
-            const match = text.match(/Version:\s*([\d.]+)\s*\(build:(\d+)\)/);
-            if (!match) {
-                throw new Error("Cannot parse version/build from the script");
-            }
-
-            return { version: match[1], build: match[2] };
-        } catch (err) {
-            throw new Error(`Failed to get editor version: ${err.message}`);
-        }
-    }
-
-    /**
      * Editor loading wait function.
      * @param {string} frameName
      * @param {Frame} [frame]
@@ -921,10 +893,6 @@ class TesterImp {
             this.fileExtension = fileExtension;
             const documentType = this.getEditorTypeByExtension(fileExtension);
             this.setEditorType(documentType);
-
-            const editorVersion = await this.getEditorVersion();
-            console.log(`[attribute] version: ${editorVersion.version}`);
-            console.log(`[attribute] build: ${editorVersion.build}`);
         } catch (error) {
             throw new Error(`Error waitEditor: ${error.message}`);
         }
@@ -2028,214 +1996,6 @@ class TesterImp {
             throw new Error(`Error in verifyInput: ${error.message}`);
         }
     }
-
-    async #handleChildElements(childElements, parentValue) {
-        const childQueue = [];
-
-        for (const child of childElements) {
-            const childKey = Object.keys(child)[0];
-            const childValue = parentValue ? parentValue[childKey] : undefined;
-            if (childValue !== undefined) {
-                const childElement = {
-                    key: childKey,
-                    type: child[childKey]?.type,
-                    value: childValue,
-                    selector: child[childKey]?.selector,
-                    childElements: child[childKey]?.childElements || [],
-                };
-
-                if (childElement.childElements && childElement.childElements.length > 0) {
-                    childElement.childElements = await this.#handleChildElements(
-                        childElement.childElements,
-                        childValue
-                    );
-                }
-
-                childQueue.push(childElement);
-            }
-        }
-
-        return childQueue;
-    }
-
-    /**
-     * Recursively filters and returns the settings object based on the specified document type.
-     * @param {Object} settingsObj - The settings object to be filtered.
-     * @param {string} [documentType=this.getEditorType()] - The document type to filter by. Defaults to the editor type.
-     */
-    getSettingsByDocType(settingsObj, documentType = this.getEditorType()) {
-        const isMatchingDocumentType = (obj) =>
-            obj.documentType && (obj.documentType.includes(documentType) || obj.documentType.includes("common"));
-
-        const getSettings = (obj) => {
-            if (Array.isArray(obj)) {
-                const filteredArray = obj.map(getSettings).filter(Boolean);
-                return filteredArray.length ? filteredArray : null;
-            }
-
-            if (obj && typeof obj === "object") {
-                let updatedObj = { ...obj };
-
-                if (
-                    Array.isArray(obj.selector) &&
-                    obj.selector.every((item) => typeof item === "object" && item !== null)
-                ) {
-                    updatedObj.selector = obj.selector
-                        .map((item) => getSettings(item))
-                        .filter((item) => item && isMatchingDocumentType(Object.values(item)[0]));
-                } else if (obj.selector) {
-                    updatedObj.selector = obj.selector;
-                }
-
-                const matches = isMatchingDocumentType(updatedObj);
-
-                const children = Object.entries(updatedObj).reduce((acc, [key, value]) => {
-                    if (key !== "selector" && key !== "documentType") {
-                        const child = getSettings(value);
-                        if (child !== null) {
-                            acc[key] = child;
-                        }
-                    }
-                    return acc;
-                }, {});
-
-                return matches || Object.keys(children).length ? { ...updatedObj, ...children } : null;
-            }
-
-            return null;
-        };
-
-        return getSettings(settingsObj);
-    }
-
-    async #generateActionQueue(settings, selectors) {
-        const actionQueue = [];
-
-        for (const [key, value] of Object.entries(settings)) {
-            if (value === undefined || value === null) continue;
-
-            const selectorConfig = selectors[key];
-
-            if (!selectorConfig) {
-                throw new Error(`Unknown key: ${key}`);
-            }
-
-            const parsedElement = {
-                key: key,
-                type: selectorConfig?.type,
-                value: value,
-                selector: selectorConfig?.selector,
-            };
-
-            if (selectorConfig.childElements && selectorConfig.childElements.length > 0) {
-                parsedElement.childElements = await this.#handleChildElements(selectorConfig.childElements, value);
-            }
-
-            actionQueue.push(parsedElement);
-        }
-
-        return actionQueue;
-    }
-
-    async createActionsQueue(settings, selectors) {
-        return this.#generateActionQueue(settings, selectors);
-    }
-
-    async #doAction(elem) {
-        switch (elem.type) {
-            case "modalWindow":
-                const [openButtonSelector, modalWindowSelector] = elem.selector;
-                await Promise.all([this.checkSelector(modalWindowSelector), this.click(openButtonSelector)]);
-                break;
-            case "checkbox":
-                const checkBox = new Checkbox(this, elem.selector);
-                await checkBox.set(elem.value);
-                break;
-            case "activeButton":
-                const buttonIsActive = await this.checkSelector(`${elem.selector}.active`);
-                if (!buttonIsActive) {
-                    await this.click(elem.selector);
-                }
-                break;
-            case "button":
-                if (await this.checkSelector(elem.selector, elem.context)) {
-                    await this.click(elem.selector, elem.context);
-                } else {
-                    throw new Error("Unable to find the selector for button click operation");
-                }
-                break;
-            case "inputForm":
-                await this.inputToForm(elem.value, elem.selector);
-                break;
-            case "textButton":
-                const targetElem = elem.selector.find((sel) => sel[elem.value]);
-                const targetSelector = targetElem[elem.value].selector;
-                await this.click(targetSelector);
-
-                break;
-            case "infoElement":
-                const textValue = await this.frame.evaluate((selector) => {
-                    const element = document.querySelector(selector);
-                    if (element) {
-                        if (element?.value) {
-                            return element.value;
-                        }
-                        return element?.textContent;
-                    }
-                    return undefined;
-                }, elem.selector);
-                return textValue;
-            case "dropdown":
-                const [dropdownButtonSelector, optionsSelector] = elem.selector;
-                await this.selectDropdown(dropdownButtonSelector);
-                await this.selectByText(elem.value, optionsSelector);
-                break;
-            case "section":
-                if (typeof elem.value === "string") {
-                    const targetElem = elem.childElements.find((sel) => sel[elem.value]);
-                    const targetSelector = targetElem[elem.value].selector;
-                    await this.click(targetSelector);
-                }
-                break;
-            default:
-                throw new Error(`Unknown file type: ${elem.type}`);
-        }
-    }
-
-    async startActions(actionQueue) {
-        const actionValues = [];
-
-        for (const action of actionQueue) {
-            try {
-                const actionResult = await this.#doAction(action);
-
-                if (actionResult) {
-                    actionValues.push(actionResult);
-                }
-
-                if (action.childElements && action.childElements.length > 0) {
-                    const childResults = await this.startActions(action.childElements);
-                    actionValues.push(...childResults);
-                }
-
-                if (action.type === "modalWindow") {
-                    const closeSelector = action.selector[2];
-                    const modalWindowIsClosed = this.frame.waitForFunction(
-                        (selector) => {
-                            return document.querySelector(selector).style.display === "none";
-                        },
-                        {},
-                        ".modals-mask"
-                    );
-                    await Promise.all([modalWindowIsClosed, this.click(closeSelector)]);
-                }
-            } catch (error) {
-                throw new Error(`startActions: Failed to perform action. ${error.message}`, { cause: error });
-            }
-        }
-
-        return actionValues;
-    }
 }
 
 const TEST_CONFIG = "%%CONFIG%%";
@@ -2268,19 +2028,29 @@ async function readConfig(configPath) {
  */
 async function loadProviderAddon(addonName) {
     if (addonName) {
-        const addonPath = path.resolve(path.join(workDirectory, "providers", path.parse(addonName).name, addonName));
-        const providerConfigPath = path.resolve(
-            path.join(workDirectory, "providers", path.parse(addonName).name, "config.json")
-        );
+        const addonPath = path.resolve(path.join(workDirectory, "providers", "index.js"));
         const addonFileUrl = url.pathToFileURL(addonPath).href;
+        const module = await import(addonFileUrl);
 
-        const [module, providerConfig] = await Promise.all([import(addonFileUrl), readConfig(providerConfigPath)]);
-
-        const CustomProviderAddonClass = module.default;
-
-        return { CustomProviderAddonClass, providerConfig };
+        const providerAddonObj = module.default[addonName];
+        const { provider, config } = providerAddonObj;
+        return { CustomProviderAddonClass: provider, providerConfig: config };
     }
     return { CustomProviderAddonClass: null, providerConfig: null };
+}
+
+function deepMerge(target, source) {
+    const result = { ...target };
+
+    for (const key in source) {
+        if (source[key] && typeof source[key] === "object" && !Array.isArray(source[key])) {
+            result[key] = deepMerge(target[key] || {}, source[key]);
+        } else {
+            result[key] = source[key];
+        }
+    }
+
+    return result;
 }
 
 /**
@@ -2289,10 +2059,8 @@ async function loadProviderAddon(addonName) {
 async function run() {
     try {
         const { provider } = TEST_CONFIG || {};
-
         const { CustomProviderAddonClass, providerConfig } = provider ? await loadProviderAddon(provider) : {};
-
-        const mergedConfig = providerConfig ? { ...TEST_CONFIG, ...providerConfig } : TEST_CONFIG;
+        const mergedConfig = providerConfig ? deepMerge(TEST_CONFIG, providerConfig) : TEST_CONFIG;
         const regularTester = new TesterImp(mergedConfig, CustomProviderAddonClass);
         const proxyTester = createProxy(regularTester);
         globalThis.Tester = proxyTester;

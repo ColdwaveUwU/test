@@ -1,0 +1,10 @@
+{
+    "TAB_BUTTON": "#slot-category-id-adv-image-wrap button",
+    "STYLE": "#image-advanced-button-wrap-{style} button",
+    "DISTANCE": {
+        "TOP": "#image-advanced-distance-top",
+        "BOTTOM": "#image-advanced-distance-bottom",
+        "LEFT": "#image-advanced-distance-left",
+        "RIGHT": "#image-advanced-distance-right"
+    }
+}

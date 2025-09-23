@@ -1,0 +1,11 @@
+{
+    "USERNAME": "#user",
+    "PASSWORD": "#password",
+    "LOGIN_BUTTON": "#submit",
+    "MAIN_CONTENT": "#app-content-files",
+    "FOLDER_NAME_SELECTOR": "#fileList span.innernametext",
+    "UPLOAD_MENU_BUTTON": "#controls .icon-add",
+    "FILE_MENU": ".newFileMenu",
+    "UPLOAD_PROGRESS_SELECTOR": "#uploadprogressbar",
+    "FILE_UPLOAD_START_SELECTOR": "#file_upload_start"
+}

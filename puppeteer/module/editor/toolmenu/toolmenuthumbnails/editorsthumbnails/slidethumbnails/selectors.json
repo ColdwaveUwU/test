@@ -1,0 +1,10 @@
+{
+    "LEFT_MENU": {
+        "THUMB_BUTTON": "#left-btn-thumbs"
+    },
+    "THUMB_MENU": {
+        "MENU": {
+            "THUNB_LIST": "#id_thumbnails"
+        }
+    }
+}

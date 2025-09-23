@@ -1,0 +1,7 @@
+{
+    "SENDBACKWARD": {
+        "ELEMENT_SELECTOR": "#slot-img-movebkwd > div",
+        "DEFAULT_BUTTON": "#slot-img-movebkwd > div button",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#slot-img-movebkwd > div ul li a"
+    }
+}

@@ -19,21 +19,10 @@ FileMenu.rename("test2");
 FileMenu.createNew("Blank");
 
 // Protect the presentation with password options
-FileMenu.protect({
-    addPassword: { password: "123", repeatPassword: "123" }, // Add a new password
-    changePassword: { password: "321", repeatPassword: "321" }, // Change the password
-    deletePassword: true, // Remove password protection
-});
+FileMenu.protect("ADD", { password: "123", repeatPassword: "123" }); // Add a password);
 
 // Add or modify properties of the presentation
-FileMenu.addProperties({
-    addProperty: { title: "test", type: "Number", value: "123" }, // Add a custom property
-    author: "test1", // Set the author of the document
-    title: "test1", // Set the title of the presentation
-    tags: "test1", // Add tags to the presentation
-    subject: "test2", // Define the subject of the presentation
-    comment: "test2", // Add a comment to the presentation
-});
+FileMenu.addProperties({ staticElement: { value: "test", title: "Author" } });
 
 // Retrieve and display document information
 FileMenu.getDocumentInfo();
@@ -45,7 +34,7 @@ FileMenu.setAdvancedSettings({
         showPasteOptions: false, // Disable paste options
     },
     collab: {
-        coEditingMode: "Strict", // Set co-editing mode to strict
+        coEditing: "strict", // Set co-editing mode to strict
     },
     proofing: {
         spellCheck: true, // Enable spell checking

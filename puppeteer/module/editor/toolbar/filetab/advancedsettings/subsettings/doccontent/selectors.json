@@ -1,0 +1,6 @@
+{
+    "NUMBERAL": {
+        "SELECTOR": "#fms-cmb-numeral",
+        "ELEMENTS_SELECTOR": "#fms-cmb-numeral ul li"
+    }
+}

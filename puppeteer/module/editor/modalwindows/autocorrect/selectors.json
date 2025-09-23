@@ -1,0 +1,73 @@
+{
+    "CONTENT": {
+        "MATH": {
+            "SECTION": {
+                "BUTTON": "#slot-category-id-autocorrect-dialog-settings-math button"
+            },
+            "CONTENT": {
+                "REPLACE_AS_TYPE": "#auto-correct-chb-replace-type",
+                "REPLACE_INPUT": "#auto-correct-replace",
+                "BY_INPUT": "#auto-correct-by",
+                "ACTIONS": {
+                    "DEFAULT": "#auto-correct-btn-reset",
+                    "ADD": "#auto-correct-btn-edit",
+                    "REPLACE": "#auto-correct-btn-edit",
+                    "DELETE": "#auto-correct-btn-delete"
+                },
+                "MODAL_MASK": {
+                    "YES_BUTTON": "button[result=yes]"
+                }
+            }
+        },
+        "RECOGNIZED": {
+            "SECTION": {
+                "BUTTON": "#slot-category-id-autocorrect-dialog-settings-recognized button"
+            },
+            "CONTENT": {
+                "VALUE_INPUT": "#auto-correct-rec-find",
+                "ACTIONS": {
+                    "DEFAULT": "#auto-correct-btn-rec-reset",
+                    "ADD": "#auto-correct-btn-rec-edit",
+                    "REPLACE": "#auto-correct-btn-rec-edit",
+                    "DELETE": "auto-correct-btn-rec-delete"
+                }
+            }
+        },
+        "AS_TYPE": {
+            "SECTION": {
+                "BUTTON": "#slot-category-id-autocorrect-dialog-settings-de-autoformat"
+            },
+            "CONTENT": {
+                "QUOTES": "#id-autocorrect-dialog-chk-quotes",
+                "HYPHENS": "#id-autocorrect-dialog-chk-hyphens",
+                "HYPERLINKS": "#id-autocorrect-dialog-chk-hyperlink",
+                "PERIOD": "#id-autocorrect-dialog-chk-double-space",
+                "BULLETED": "#id-autocorrect-dialog-chk-bulleted",
+                "NUMBERED": "#id-autocorrect-dialog-chk-numbered"
+            }
+        },
+        "TEXT_AUTOCORRECT": {
+            "SECTION": {
+                "BUTTON": "#slot-category-id-autocorrect-dialog-settings-exceptions button"
+            },
+            "CONTENT": {
+                "SENTENCES": "#auto-correct-exceptions-chk-sentence",
+                "CELLS": "#auto-correct-exceptions-chk-cells",
+                "EXCEPTIONS": {
+                    "BUTTON": "#auto-correct-exceptions-lang",
+                    "ELEMENTS": "#auto-correct-exceptions-lang ul li"
+                },
+                "CAPITALIZE": {
+                    "VALUE_INPUT": "#auto-correct-exceptions-find",
+                    "ACTIONS": {
+                        "DEFAULT": "#auto-correct-btn-exceptions-reset",
+                        "ADD": "#auto-correct-btn-exceptions-edit",
+                        "REPLACE": "#auto-correct-btn-exceptions-edit",
+                        "DELETE": "#auto-correct-btn-exceptions-delete"
+                    }
+                }
+            }
+        }
+    },
+    "CLOSE_BUTTON": "button[result=close]"
+}

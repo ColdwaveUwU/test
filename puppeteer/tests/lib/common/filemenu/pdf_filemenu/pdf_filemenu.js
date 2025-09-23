@@ -12,21 +12,10 @@ FileMenu.saveCopyAs("pdf");
 // rename file
 FileMenu.rename("test2");
 
-FileMenu.protect({
-    addPassword: { password: "123", repeatPassword: "123" }, // step 1 - add password
-    changePassword: { password: "321", repeatPassword: "321" }, // step 2 - change password
-    deletePassword: true, // step 3 delete password
-});
+FileMenu.protect("ADD", { password: "123", repeatPassword: "123" }); // Add a password);
 
 // add properties in filemenu
-FileMenu.addProperties({
-    addProperty: { title: "test", type: "Number", value: "123" },
-    author: "test1",
-    title: "test1",
-    tags: "test1",
-    subject: "test2",
-    comment: "test2",
-});
+FileMenu.addProperties({ staticElement: { value: "test", title: "Author" } });
 // get file document info
 const docInfo = FileMenu.getDocumentInfo();
 console.log(docInfo);
@@ -36,11 +25,10 @@ FileMenu.setAdvancedSettings({
     editing: { autosave: false, showPasteOptions: false, useSmart: false },
     // change Collaboration settings
     collab: {
-        coEditingMode: "Strict",
-        showTrack: "Show by hover in tooltips",
-        realTimeChanges: "View none",
-        showComments: true,
-        showResolved: true,
+        coEditing: "strict",
+        showChanges: "tooltips",
+        realTime: "none",
+        showComments: false,
     },
     // change Proofing settings
     proofing: {

@@ -1,0 +1,7 @@
+{
+    "BLANK_PAGE": {
+        "ELEMENT_SELECTOR": "#tlbtn-insertpage-1",
+        "DEFAULT_BUTTON": "#tlbtn-insertpage-1 button",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#tlbtn-insertpage-1 ul li a"
+    }
+}

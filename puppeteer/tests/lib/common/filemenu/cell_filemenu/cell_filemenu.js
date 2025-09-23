@@ -16,21 +16,10 @@ FileMenu.rename("test2");
 FileMenu.createNew("Blank");
 
 // Protect the spreadsheet with password options
-FileMenu.protect({
-    addPassword: { password: "123", repeatPassword: "123" }, // Add a new password
-    changePassword: { password: "321", repeatPassword: "321" }, // Change the password
-    deletePassword: true, // Remove the password protection
-});
+FileMenu.protect("ADD", { password: "123", repeatPassword: "123" }); // Add a password);
 
 // Add or modify properties of the spreadsheet
-FileMenu.addProperties({
-    addProperty: { title: "test", type: "Number", value: "123" }, // Add a custom property
-    author: "test1", // Set the author of the document
-    title: "test1", // Set the title of the document
-    tags: "test1", // Add tags for the document
-    subject: "test2", // Define the subject of the document
-    comment: "test2", // Add a comment to the document
-});
+FileMenu.addProperties({ staticElement: { value: "test", title: "Author" } });
 
 // Configure advanced settings for the spreadsheet
 FileMenu.setAdvancedSettings({
@@ -40,14 +29,14 @@ FileMenu.setAdvancedSettings({
         showTooltip: false, // Disable tooltips
     },
     collab: {
-        coEditingMode: "Strict", // Set co-editing mode to strict
-        showComments: true, // show comments in the document
+        coEditing: "strict", // Set co-editing mode to strict
+        showComments: false, // Hide comments in the document
         showResolved: true, // Display resolved comments
     },
     proofing: {
         ignoreUpper: false, // Do not ignore uppercase words during proofing
         ignoreWithNumber: false, // Do not ignore words with numbers
-        dictLang: "German – Germany", // Set the dictionary language for proofing
+        dictLang: "German - Germany", // Set the dictionary language for proofing
         autoCorrect: {
             math: {
                 replaceAsType: true, // Replace math symbols as you type

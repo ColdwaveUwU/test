@@ -1,0 +1,16 @@
+{
+    "THEME": {
+        "VALUE": {
+            "SELECTOR": "#fms-cmb-theme",
+            "ELEMENTS_SELECTOR": "#fms-cmb-theme ul li"
+        },
+        "DARK_MODE": "#fms-chb-dark-mode"
+    },
+    "TAB_STYLE": {
+        "VALUE": {
+            "SELECTOR": "#fms-cmb-tab-style",
+            "ELEMENTS_SELECTOR": "#fms-cmb-tab-style ul li"
+        }
+    },
+    "BACKGROUND": "#fms-chb-tab-background"
+}

@@ -1,0 +1,29 @@
+{
+    "CHECKBOX": {
+        "TURN_ON_SCREEN": "#fms-chb-scrn-reader",
+        "ALIGMENT": "#fms-chb-align-guides",
+        "USE_ALT": "#fms-chb-use-alt-key"
+    },
+    "QUICK_ACCESS": {
+        "BUTTON": "#fms-btn-customize-quick-access"
+    },
+    "DROPDOWN": {
+        "UNIT": {
+            "SELECTOR": "#fms-cmb-unit",
+            "ELEMENTS_SELECTOR": "#fms-cmb-unit ul li"
+        },
+        "DEFAULT_ZOOM": {
+            "SELECTOR": "#fms-cmb-zoom",
+            "ELEMENTS_SELECTOR": "#fms-cmb-zoom ul li"
+        },
+        "FONT_HINT": {
+            "SELECTOR": "#fms-cmb-font-render",
+            "ELEMENTS_SELECTOR": "#fms-cmb-font-render ul li"
+        },
+        "MACROS_SETTINGS": {
+            "SELECTOR": "#fms-cmb-macros",
+            "ELEMENTS_SELECTOR": "#fms-cmb-macros ul li",
+            "DESCRIPTION_SELECTOR": ".font-weight-bold"
+        }
+    }
+}

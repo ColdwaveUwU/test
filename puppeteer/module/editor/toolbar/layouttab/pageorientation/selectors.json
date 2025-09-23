@@ -1,0 +1,7 @@
+{
+    "PAGE_ORIENTATION_MENU": {
+        "MENU_SELECTOR": "#tlbtn-pageorient",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#tlbtn-pageorient ul li a",
+        "DESCRIPTION_SELECTOR": "a > span"
+    }
+}

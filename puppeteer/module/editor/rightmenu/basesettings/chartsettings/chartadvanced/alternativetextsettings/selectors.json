@@ -1,0 +1,5 @@
+{
+    "TAB_BUTTON": "#slot-category-id-adv-image-alttext button",
+    "TITLE": "#image-advanced-alt-title",
+    "DESCRIPTION": "#image-advanced-alt-description"
+}

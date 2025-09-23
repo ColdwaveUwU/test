@@ -1,0 +1,71 @@
+{
+    "ENCODING": [
+        "Arabic (ISO 8859-6)",
+        "Arabic (OEM 720)",
+        "Arabic (Windows-1256)",
+        "Baltic (ISO 8859-4)",
+        "Baltic (ISO 8859-13)",
+        "Baltic (OEM 775)",
+        "Baltic (Windows-1257)",
+        "Celtic (ISO 8859-14)",
+        "Cyrillic (ISO 8859-5)",
+        "Cyrillic (KOI8-R)",
+        "Cyrillic (KOI8-U)",
+        "Cyrillic (MacCyrillic)",
+        "Cyrillic (OEM 855)",
+        "Cyrillic (OEM 866)",
+        "Cyrillic (Windows-1251)",
+        "Central European (OEM 852)",
+        "Central European (Windows-1250)",
+        "Chinese (Big5)",
+        "Chinese (GB2312)",
+        "Eastern European (ISO 8859-2)",
+        "Greek (ISO 8859-7)",
+        "Greek (OEM 737)",
+        "Greek (OEM 869)",
+        "Greek (Windows-1253)",
+        "Hebrew (ISO 8859-8)",
+        "Hebrew (OEM 862)",
+        "Hebrew (Windows-1255)",
+        "Japanese (Shift_JIS)",
+        "Japanese (EUC-JP)",
+        "Korean (Windows-949)",
+        "Korean (EUC-KR)",
+        "North European (Icelandic OEM 861)",
+        "North European (Nordic OEM 865)",
+        "Thai (TIS-620)",
+        "Turkish (ISO 8859-3)",
+        "Turkish (ISO 8859-9)",
+        "Turkish (OEM 857)",
+        "Turkish (Windows-1254)",
+        "Western European (ISO 8859-1)",
+        "Western European (ISO 8859-15)",
+        "Western European (OEM 850)",
+        "Western European (OEM 858)",
+        "Western European (OEM 860 : Portuguese)",
+        "Western European (OEM 863 : French)",
+        "Western European (OEM-US 437)",
+        "Western European (Windows-1252)",
+        "Vietnamese (Windows-1258)",
+        "Unicode (UTF-8)",
+        "Unicode (UTF-7)",
+        "Unicode (UTF-16LE)",
+        "Unicode (UTF-16BE)",
+        "Unicode (UTF-32LE)",
+        "Unicode (UTF-32BE)"
+    ],
+    "NEW_PROPERTY_VALUE": {
+        "TYPE": {
+            "TEXT": "Text",
+            "NUMBER": "Number",
+            "DATE": "Date",
+            "BOOLEAN": "\"Yes\" or \"No\""
+        },
+        "VALUE": {
+            "BOOLEAN": [
+                "Yes",
+                "No"
+            ]
+        }
+    }
+}

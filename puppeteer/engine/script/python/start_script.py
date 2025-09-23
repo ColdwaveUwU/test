@@ -43,7 +43,14 @@ class TestRunner:
         self.report_portal_launcher = report_portal_launcher
         self.report_portal_test = report_portal_test
 
-    def start_server(self, server_script_path, port, directory, stdout, stderr):
+    def start_server(
+            self, 
+            server_script_path, 
+            port, 
+            directory, 
+            stdout, 
+            stderr
+            ):
         """
         Starts the server process using the specified server script.
 
@@ -57,14 +64,15 @@ class TestRunner:
         Returns:
             subprocess.Popen: The process object representing the started server.
         """
-        process = subprocess.Popen(
+        return subprocess.Popen(
             ["node", server_script_path, str(port), directory],
             stdout=stdout,
             stderr=stderr,
         )
-        return process
 
-    def stop_server(self, process):
+    def stop_server(
+            self, 
+            process):
         """
         Stops the server process if it is still running.
 
@@ -75,7 +83,16 @@ class TestRunner:
             process.terminate()
             process.wait()
 
-    def execute_script(self, run_path, test_path, out_dir_path, debug_flag, server_url, stdout_dest, stderr_dest):
+    def execute_script(
+            self, 
+            run_path, 
+            test_path, 
+            out_dir_path, 
+            debug_flag, 
+            server_url, 
+            stdout_dest, 
+            stderr_dest
+        ):
         """
         Executes a Node.js test script and reports the result.
         Args:
@@ -94,25 +111,26 @@ class TestRunner:
                 - 3: Verification failed (detected in output)
                 - 4: AscOnError
                 - 5: asc_onErrorWarning
-        """
+            """
         start_time = int(time.time() * 1000)
 
         command = ["node", "--no-warnings", run_path, server_url]
         if debug_flag:
             self.report_portal_launcher.send_log("Debug mode enabled...", level="DEBUG", print_output=False)
+            print("Debug mode enabled...")
             command.insert(1, "--inspect-brk")
 
         process = subprocess.Popen(
             command,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            stdin=subprocess.DEVNULL,
             text=True,
             encoding='utf-8',
             errors='replace'
         )
 
-        verification_failed, outputs = self._read_process_output(process, stdout_dest, stderr_dest)
+        verification_failed = self._read_process_output(process, stdout_dest, stderr_dest)
+
         exit_code = process.returncode
         if verification_failed:
             exit_code = 3
@@ -133,11 +151,12 @@ class TestRunner:
             message = status_messages.get(exit_code, f'\rRunning "{test_path}" {self.GREEN}✔{self.RESET}. {duration} ms.')
             message_plain = re.sub(r'\033\[\d+m', '', message)
             message_level = "ERROR" if exit_code > 0 and exit_code != 5 else "WARN" if exit_code == 5 else "INFO"
+            self.report_portal_launcher.send_log(message=message, level=message_level, print_output=False)
             self.report_portal_test.send_log(message=message_plain, level=message_level)
             print(f'\r{message}')
             sys.stdout.flush()
 
-        return exit_code, outputs
+        return exit_code
 
     def _read_process_output(self, process, stdout_dest, stderr_dest) -> bool:
         """
@@ -152,19 +171,18 @@ class TestRunner:
             bool: True if verification failed was detected, False otherwise.
         """
         verification_failed = False
-        outputs = [] 
+
         def read_output(pipe, dest):
             nonlocal verification_failed
             for line in iter(pipe.readline, ''):
-                outputs.append(line.strip())
                 if "[ver] Verification failed." in line:
                     verification_failed = True
                 if dest:
                     dest.write(line)
                     dest.flush()
 
-        stdout_thread = threading.Thread(target=read_output, args=(process.stdout, stdout_dest), daemon=True)
-        stderr_thread = threading.Thread(target=read_output, args=(process.stderr, stderr_dest), daemon=True)
+        stdout_thread = threading.Thread(target=read_output, args=(process.stdout, stdout_dest))
+        stderr_thread = threading.Thread(target=read_output, args=(process.stderr, stderr_dest))
         stdout_thread.start()
         stderr_thread.start()
 
@@ -172,11 +190,23 @@ class TestRunner:
         stdout_thread.join()
         stderr_thread.join()
 
-        return verification_failed, outputs
+        return verification_failed
 
-    def run(self, file_path, test_path, report_path, debug_flag, server_port, server_script_path, test_resource_dir, terminal_log, terminal_error):
+    def run(
+            self, 
+            file_path, 
+            test_path, 
+            report_path, 
+            debug_flag, 
+            server_port, 
+            server_script_path, 
+            test_resource_dir, 
+            terminal_log, 
+            terminal_error
+            ):
         """
         Runs the entire process: starts the server, executes the script, and reports the result.
+
         Args:
             file_path (str): Path to the file to run.
             test_path (str): Path to the test.
@@ -209,8 +239,8 @@ class TestRunner:
                 exit_code = self.execute_script(file_path, test_path, report_path, debug_flag, server_url, stdout, stderr)
                 return exit_code
             except Exception as e:
-                error_message = str(e)
-                print(f"Error occurred: {error_message}")
+                error_message = str(e)  
+                print(f"Error occurred: {error_message}")  
                 return 1
             finally:
                 self.stop_server(server_process)

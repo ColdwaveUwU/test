@@ -1,0 +1,150 @@
+{
+    "FILE_BUTTON": "#toolbar ul li[data-layout-name=\"toolbar-file\"]",
+    "PANEL_MENU": {
+        "CREATE_NEW": {
+            "BUTTON": "#fm-btn-create",
+            "DOC": "#panel-createnew .blank-document .title",
+            "BLANK": "#panel-createnew .thumb-wrap .title",
+            "SAMPLE": "#panel-createnew .thumb-wrap .title"
+        },
+        "SAVE": {
+            "BUTTON": "#fm-btn-save"
+        },
+        "DOWNLOAD_AS": {
+            "BUTTON": "#fm-btn-download",
+            "WARNING_WINDOW": {
+                "OK_BUTTON": "button[result=ok]"
+            },
+            "ENCODING_WINDOW": {
+                "SELECTOR": "#id-codepages-combo",
+                "ELEMENTS_SELECTOR": "#id-codepages-combo ul li",
+                "OK_BUTTON": "button[result=ok]"
+            },
+            "FILE_TYPE": {
+                "DOCX": "#panel-saveas .svg-format-docx",
+                "PDF": "#panel-saveas .svg-format-pdf",
+                "ODT": "#panel-saveas .svg-format-odt",
+                "DOTX": "#panel-saveas .svg-format-dotx",
+                "PDFA": "#panel-saveas .svg-format-pdfa",
+                "OTT": "#panel-saveas .svg-format-ott",
+                "RTF": "#panel-saveas .svg-format-rtf",
+                "TXT": "#panel-saveas .svg-format-txt",
+                "FB2": "#panel-saveas .svg-format-fb2",
+                "EPUB": "#panel-saveas .svg-format-epub",
+                "HTML": "#panel-saveas .svg-format-html",
+                "JPG": "#panel-saveas .svg-format-jpg",
+                "PNG": "#panel-saveas .svg-format-png",
+                "XLSX": "#panel-saveas .svg-format-xlsx",
+                "ODS": "#panel-saveas .svg-format-ods",
+                "CSV": "#panel-saveas .svg-format-csv",
+                "PPTX": "#panel-saveas .svg-format-pptx",
+                "POTX": "#panel-saveas .svg-format-potx",
+                "OTP": "#panel-saveas .svg-format-otp",
+                "XLTX": "#panel-saveas .svg-format-xltx",
+                "OTS": "#panel-saveas .svg-format-ots",
+                "XLSB": "#panel-saveas .svg-format-xlsb",
+                "PPSX": "#panel-saveas .svg-format-ppsx",
+                "ODP": "#panel-saveas .svg-format-odp"
+            }
+        },
+        "SAVE_COPY_AS": {
+            "BUTTON": "#fm-btn-save-copy",
+            "WARNING_WINDOW": {
+                "OK_BUTTON": "button[result=ok]"
+            },
+            "ENCODING_WINDOW": {
+                "SELECTOR": "#id-codepages-combo",
+                "ELEMENTS_SELECTOR": "#id-codepages-combo ul li",
+                "OK_BUTTON": "button[result=ok]"
+            },
+            "FILE_TYPE": {
+                "DOCX": "#panel-savecopy .svg-format-docx",
+                "PDF": "#panel-savecopy .svg-format-pdf",
+                "ODT": "#panel-savecopy .svg-format-odt",
+                "DOTX": "#panel-savecopy .svg-format-dotx",
+                "PDFA": "#panel-savecopy .svg-format-pdfa",
+                "OTT": "#panel-savecopy .svg-format-ott",
+                "RTF": "#panel-savecopy .svg-format-rtf",
+                "TXT": "#panel-savecopy .svg-format-txt",
+                "FB2": "#panel-savecopy .svg-format-fb2",
+                "EPUB": "#panel-savecopy .svg-format-epub",
+                "HTML": "#panel-savecopy .svg-format-html",
+                "JPG": "#panel-savecopy .svg-format-jpg",
+                "PNG": "#panel-savecopy .svg-format-png"
+            }
+        },
+        "RENAME": {
+            "BUTTON": "#fm-btn-rename",
+            "MODAL_WINDOW": {
+                "MODAL_WINDOW_SELECTOR": ".modal.modal-dlg",
+                "INPUT_FORM": "#id-dlg-newname",
+                "OK_BUTTON": "button[result=ok]"
+            }
+        },
+        "PROTECT": {
+            "BUTTON": "#fm-btn-protect",
+            "ACTIONS": {
+                "ADD": "#fms-btn-add-pwd button",
+                "CHANGE": "#fms-btn-change-pwd button",
+                "DELETE": "#fms-btn-delete-pwd button"
+            },
+            "MODAL_WINDOW": {
+                "MODAL_WINDOW_SELECTOR": ".modal.modal-dlg",
+                "PASSWORD_FORM": {
+                    "INPUT_PASSWORD": "#id-password-txt",
+                    "INPUT_REPEAT": "#id-repeat-txt"
+                },
+                "OK_BUTTON": "button[result=ok]"
+            }
+        },
+        "INFO": {
+            "BUTTON": "#fm-btn-info",
+            "COMMON": {
+                "OWNER": "#id-info-owner",
+                "UPLOADED": "#id-info-uploaded",
+                "LAST_MOD": "#id-info-modify-date",
+                "LAST_MOD_BY": "#id-info-modify-by"
+            },
+            "STATISTICS": {
+                "PAGES": "#id-info-pages",
+                "PARAGRAPHS": "#id-info-paragraphs",
+                "WORDS": "#id-info-words",
+                "CHAR": "#id-info-symbols",
+                "CHAR_WITH_SPACES": "#id-info-spaces"
+            },
+            "PROPERTIES": {
+                "STATIC": {
+                    "AUTHOR": "#id-info-add-author",
+                    "TITLE": "#id-info-title",
+                    "TAGS": "#id-info-tags",
+                    "SUBJECT": "#id-info-subject",
+                    "COMMENT": "#id-info-comment"
+                },
+                "ADD_PROPERTY": {
+                    "BUTTON": "#fminfo-btn-add-property",
+                    "MODAL_WINDOW": {
+                        "MODAL_WINDOW_SELECTOR": ".modal.modal-dlg",
+                        "TITLE": "#id-dlg-title",
+                        "TYPE": {
+                            "SELECTOR": "#id-dlg-type",
+                            "ELEMENTS_SELECTOR": "#id-dlg-type ul li"
+                        },
+                        "VALUE": {
+                            "INPUT": "#id-dlg-value-input",
+                            "DATE": "#id-dlg-value-date",
+                            "BOOLEAN": {
+                                "SELECTOR": "#id-dlg-value-boolean",
+                                "ELEMENTS_SELECTOR": "#id-dlg-value-boolean ul li"
+                            }
+                        },
+                        "OK_BUTTON": "button[result=ok]"
+                    }
+                }
+            }
+        },
+        "ADV_SETTINGS": {
+            "BUTTON": "#fm-btn-settings > a",
+            "APPLY": ".fms-flex-apply button"
+        }
+    }
+}

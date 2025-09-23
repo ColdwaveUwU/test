@@ -9,12 +9,13 @@ class TestHierarchyManager:
     Builds a nested structure of test folders and nodes and coordinates reporting.
     """
 
-    def __init__(self, test_files_map: List[dict], work_directory: str):
+    def __init__(self, test_files_map: List[dict], work_directory: str, run_modes: List[str]):
         """
         Initialize the test hierarchy manager.
         Args:
             test_files_map (List[dict]): A list of dictionaries containing test file information.
             work_directory (str): The root directory relative to which test paths will be resolved.
+            run_modes (List[str]): List of run modes to be used for the tests.
         Raises:
             ValueError: If the test_files_map is empty.
         """
@@ -23,27 +24,33 @@ class TestHierarchyManager:
         
         self.test_files_map = test_files_map
         self.work_directory = work_directory
+        self.run_modes = run_modes
         self.test_hierarchy = self._build_test_hierarchy()
 
     def _build_test_hierarchy(self) -> dict:
         """
-        Build the internal hierarchical representation of test files.
+        Build the internal hierarchical representation of test files grouped by run_mode.
         Returns:
-            dict: The root node of the test hierarchy.
+            dict: A dictionary where keys are run_modes and values are the root node of the hierarchy for that mode.
         """
-        first_entry = self._get_relative_parts(self.test_files_map[0]["script"])
-        root_name = first_entry[0]
-        root = TestNodes.create_folder_node(root_name, None)
+        hierarchy = {}
 
-        for entry in self.test_files_map:
-            parts = self._get_relative_parts(entry["script"])
-            node = root
-            for part in parts[1:-1]:
-                node = node["children"].setdefault(part, TestNodes.create_folder_node(part, node))
-            node["children"][parts[-1]] = TestNodes.create_test_node(parts[-1], node)
+        for run_mode in self.run_modes:
+            root = TestNodes.create_folder_node(run_mode, None)
 
-        self._initialize_active_tests(root)
-        return root
+            for entry in self.test_files_map:
+                parts = self._get_relative_parts(entry["script"])
+                full_parts = [run_mode] + parts
+
+                node = root
+                for part in full_parts[:-1]:
+                    node = node["children"].setdefault(part, TestNodes.create_folder_node(part, node))
+                node["children"][full_parts[-1]] = TestNodes.create_test_node(full_parts[-1], node)
+
+            self._initialize_active_tests(root)
+            hierarchy[run_mode] = root
+
+        return hierarchy
 
     def _initialize_active_tests(self, node: dict):
         """
@@ -67,7 +74,7 @@ class TestHierarchyManager:
         relative_path = os.path.relpath(test_path, self.work_directory)
         return os.path.normpath(relative_path).split(os.sep)
 
-    def get_node(self, test_path: str) -> Optional[dict]:
+    def get_node(self, test_path: str, run_mode: str) -> Optional[dict]:
         """
         Retrieve a node in the test hierarchy by its path.
         Args:
@@ -76,8 +83,8 @@ class TestHierarchyManager:
             Optional[dict]: The node representing the test, or None if not found.
         """
         parts = self._get_relative_parts(test_path)
-        node = self.test_hierarchy
-        for part in parts[1:]:
+        node = self.test_hierarchy.get(run_mode)['children'][run_mode]
+        for part in parts:
             node = node["children"].get(part)
             if node is None:
                 return None
@@ -86,7 +93,8 @@ class TestHierarchyManager:
     def create_suite_chain(
         self,
         test_path: str,
-        client: object
+        client: object,
+        run_mode: str
     ) -> Tuple[dict, Optional[str]]:
         """
         Create ReportPortal suite hierarchy for the given test path.
@@ -97,7 +105,7 @@ class TestHierarchyManager:
             Tuple[dict, Optional[str]]: The final test node and its parent suite's item ID.
         """
         parts = self._get_relative_parts(test_path)
-        node = self.test_hierarchy
+        node = self.test_hierarchy.get(run_mode)['children'][run_mode]
         parent_id: Optional[str] = None
 
         if node["suite"] is None:
@@ -107,7 +115,7 @@ class TestHierarchyManager:
             node["item_id"] = suite.get_item_id()
         parent_id = node["item_id"]
 
-        for part in parts[1:-1]:
+        for part in parts[:-1]:
             node = node["children"][part]
             if node["suite"] is None:
                 suite = ReportPortalTest(client)

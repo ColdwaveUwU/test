@@ -1,0 +1,10 @@
+{
+    "CHECKBOX": {
+        "SPELL_CHECKING": "#fms-chb-spell-check",
+        "IGNORE_UPPER": "#fms-chb-ignore-uppercase-words",
+        "IGNORE_NUMBERS": "#fms-chb-ignore-numbers-words"
+    },
+    "AUTOCORRECT": {
+        "BUTTON": "#fms-btn-auto-correct"
+    }
+}

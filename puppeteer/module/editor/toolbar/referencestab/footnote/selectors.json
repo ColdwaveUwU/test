@@ -1,0 +1,70 @@
+{
+    "TOOLBAR": {
+        "NOTES_BUTTON": {
+            "selector": "[id^='id-toolbar-toolbar__icon'][id*='btn-notes']",
+            "defaultButton": "[id^='id-toolbar-toolbar__icon'][id*='btn-notes'] button",
+            "dropdownToggle": "[id^='id-toolbar-toolbar__icon'][id*='btn-notes'] button.dropdown-toggle",
+            "elementsSelector": "[id^='id-toolbar-toolbar__icon'][id*='btn-notes'] ul.dropdown-menu li",
+            "descriptionSelector": "a",
+            "idSelector": "a",
+            "elementsValue": []
+        },
+        "GO_TO_FOOTNOTE": {
+            "NEXT": "#id-menu-goto-footnote-next-0",
+            "PREVIOUS": "#id-menu-goto-footnote-prev-0"
+        },
+        "GO_TO_ENDNOTE": {
+            "NEXT": "#id-menu-goto-endnote-next-0",
+            "PREVIOUS": "#id-menu-goto-endnote-prev-0"
+        }
+    },
+    "MODAL_WINDOW": {
+        "NOTES_SETTINGS": {
+            "WINDOW": "#window-note-settings",
+            "FOOTNOTE_RADIO": "#note-settings-radio-foot",
+            "ENDNOTE_RADIO": "#note-settings-radio-end",
+            "FOOTNOTE_LOCATION_COMBO": {
+                "selector": "#note-settings-combo-footnote",
+                "elementsSelector": "#note-settings-combo-footnote ul li",
+                "descriptionSelector": "a",
+                "elementsValue": []
+            },
+            "ENDNOTE_LOCATION_COMBO": {
+                "selector": "#note-settings-combo-endnote",
+                "elementsSelector": "#note-settings-combo-endnote ul li",
+                "descriptionSelector": "a",
+                "elementsValue": []
+            },
+            "FORMAT_COMBO": {
+                "selector": "#note-settings-combo-format",
+                "elementsSelector": "#note-settings-combo-format ul li",
+                "descriptionSelector": "a",
+                "elementsValue": []
+            },
+            "START_AT_SPINNER": "#note-settings-spin-start",
+            "NUMBERING_COMBO": {
+                "selector": "#note-settings-combo-numbering",
+                "elementsSelector": "#note-settings-combo-numbering ul li",
+                "descriptionSelector": "a",
+                "elementsValue": []
+            },
+            "CUSTOM_MARK_INPUT": "#note-settings-txt-custom",
+            "APPLY_COMBO": {
+                "selector": "#note-settings-combo-apply",
+                "elementsSelector": "#note-settings-combo-apply ul li",
+                "descriptionSelector": "a",
+                "elementsValue": []
+            },
+            "INSERT_BUTTON": "#window-note-settings .footer button[result=insert]",
+            "APPLY_BUTTON": "#window-note-settings .footer button[result=apply]",
+            "CANCEL_BUTTON": "#window-note-settings .footer button[result=cancel]"
+        },
+        "DELETE_ALL_NOTES": {
+            "WINDOW": ".asc-window.modal-dlg.notransform",
+            "FOOTNOTE_CHECKBOX": "#notes-remove-chk-foot",
+            "ENDNOTE_CHECKBOX": "#notes-remove-chk-end",
+            "OK_BUTTON": ".footer.center button[result=ok]",
+            "CANCEL_BUTTON": ".footer.center button[result=cancel]"
+        }
+    }
+}

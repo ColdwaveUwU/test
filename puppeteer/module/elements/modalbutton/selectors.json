@@ -1,0 +1,4 @@
+{
+    "DEFAULT_MODAL_WINDOW": ".asc-window.modal",
+    "CONTAINER": "#id-editor-container, .box"
+}

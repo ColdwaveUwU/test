@@ -1,0 +1,45 @@
+{
+    "SIZE": {
+        "WIDTH": "#chart-spin-width",
+        "HEIGHT": "#chart-spin-height"
+    },
+    "CHART_BUTTON": "#chart-button-type",
+    "WRAPPING_DROPDOWN": {
+        "selector": "#chart-combo-wrap",
+        "elementsSelector": "#chart-combo-wrap .item.canfocused",
+        "idSelector": ".item-icon-box",
+        "descriptionSelector": "[aria-label]",
+        "elementsValue": []
+    },
+    "CHART_STYLE_DROPDOWN": {
+        "selector": "#chart-combo-style",
+        "elementsSelector": "#chart-combo-style .item.canfocused",
+        "idSelector": ".style",
+        "descriptionSelector": "[aria-label]",
+        "elementsValue": []
+    },
+    "ROTATION": {
+        "X": {
+            "LEFT": "#chart-btn-x-left button",
+            "RIGHT": "#chart-btn-x-right button",
+            "INPUT": "#chart-spin-x"
+        },
+        "Y": {
+            "UP": "#chart-btn-y-up button",
+            "DOWN": "#chart-btn-y-down button",
+            "INPUT": "#chart-spin-y"
+        },
+        "PERSPECTIVE": {
+            "NARROW": "#chart-btn-narrow button",
+            "WIDE": "#chart-btn-widen button",
+            "INPUT": "#chart-spin-persp"
+        },
+        "CHECKBOX": {
+            "RIGHT_ANGLE": "#chart-checkbox-right-angle",
+            "AUTOSCALE": "#chart-checkbox-autoscale"
+        },
+        "DEPTH": "#chart-spin-3d-depth",
+        "HEIGHT": "#chart-spin-3d-height",
+        "DEFAULT_ROTATION": "#chart-def-rotate-link"
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "TABLE_SIZE": {
+        "SIZE": {
+            "CHECKBOX": "#tableadv-checkbox-width",
+            "WIDTH": "#tableadv-number-width",
+            "MEASURE": {
+                "SELECTOR": "#tableadv-cmb-unit",
+                "ELEMENTS_SELECTORS": "#tableadv-cmb-unit ul li"
+            }
+        },
+        "AUTO_RESIZE": "#tableadv-checkbox-autofit"
+    },
+    "CELL_MARGINS": {
+        "TOP": "#tableadv-number-margin-table-top",
+        "BOTTOM": "#tableadv-number-margin-table-bottom",
+        "LEFT": "#tableadv-number-margin-table-left",
+        "RIGHT": "#tableadv-number-margin-table-right"
+    },
+    "OPTIONS": {
+        "CHECKBOX": "#tableadv-checkbox-spacing",
+        "INPUT_SPACING": "#tableadv-number-spacing"
+    }
+}

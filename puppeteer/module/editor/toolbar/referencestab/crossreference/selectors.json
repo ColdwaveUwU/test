@@ -1,0 +1,47 @@
+{
+    "TOOLBAR": {
+        "CROSS_REFERENCE_BUTTON": {
+            "ELEMENT_SELECTOR": "#slot-btn-crossref"
+        }
+    },
+    "MODAL_WINDOW": {
+        "CROSS_REFERENCE_WINDOW": "#window-cross-ref",
+        "REFERENCE_TYPE_MENU": {
+            "MENU_SELECTOR": "#id-dlg-cross-type",
+            "DROPDOWN_ELEMENTS_SELECTOR": "#id-dlg-cross-type ul li",
+            "DESCRIPTION_SELECTOR": "a"
+        },
+        "INSERT_REFERENCE_TO_MENU": {
+            "MENU_SELECTOR": "#id-dlg-cross-ref",
+            "DROPDOWN_ELEMENTS_SELECTOR": "#id-dlg-cross-ref ul li",
+            "DESCRIPTION_SELECTOR": "a"
+        },
+        "INSERT_AS_HYPERLINK_CHECKBOX": {
+            "ELEMENT_SELECTOR": "#id-dlg-cross-insert-as"
+        },
+        "INCLUDE_ABOVE_BELOW_CHECKBOX": {
+            "ELEMENT_SELECTOR": "#id-dlg-cross-below-above"
+        },
+        "SEPARATE_NUMBERS_WITH_CHECKBOX": {
+            "ELEMENT_SELECTOR": "#id-dlg-cross-separate"
+        },
+        "SEPARATOR_INPUT": {
+            "ELEMENT_SELECTOR": "#id-dlg-cross-separator"
+        },
+        "WHICH_NUMBERED_ITEM_LABEL": {
+            "ELEMENT_SELECTOR": "#id-dlg-cross-which"
+        },
+        "ITEMS_LIST": {
+            "ELEMENT_SELECTOR": "#id-dlg-cross-list .listview.inner .item .list-item"
+        },
+        "INSERT_BUTTON": {
+            "ELEMENT_SELECTOR": "#window-cross-ref .footer button[result=\"ok\"]"
+        },
+        "CANCEL_BUTTON": {
+            "ELEMENT_SELECTOR": "#window-cross-ref .footer button[result=\"close\"]"
+        },
+        "CLOSE_BUTTON": {
+            "ELEMENT_SELECTOR": "#window-cross-ref .header .tool.close"
+        }
+    }
+}

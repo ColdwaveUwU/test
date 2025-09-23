@@ -1,27 +1,37 @@
 import os
 import re
 import zipfile
+import io
 import tempfile
 import uuid
+from pathlib import Path
 
 class ReportGenerator:
     def __init__(self, report_portal_launcher):
-        self.generated_reports = []
-        self.html_report_path = ""
-        self.isNewTable = True
+        self.generated_reports = {}
         self.report_portal_launcher = report_portal_launcher
 
-    def generate_test_report(self, report_object):
+    def generate_test_report(self, report_object, run_mode):
         try:
-            report_info = self._prepare_report_info(report_object)
+            report_info = self._prepare_report_info(report_object, run_mode)
             self._write_report_to_file(report_info['report_file_path'], report_info['combined_content'])
-            self.generated_reports.append(report_info)
+
+            if run_mode not in self.generated_reports:
+                self.generated_reports[run_mode] = {
+                    "isNewTable": True,
+                    "reports": []
+                }
+            else:
+                self.generated_reports[run_mode]["isNewTable"] = True
+
+            self.generated_reports[run_mode]["reports"].append(report_info)
+ 
             return report_info
 
         except Exception as e:
             print(f"Error generating report {report_object['file_name']}: {str(e)}")
 
-    def _prepare_report_info(self, report_object):
+    def _prepare_report_info(self, report_object, run_mode):
         report_info = {}
         report_info['test_directory'] = report_object['test_directory']
         report_info['file_name'] = report_object['file_name']
@@ -107,13 +117,13 @@ class ReportGenerator:
                 return '\n'.join(extracted_lines), cleaned_content
             return '', content
 
-        def generate_section(title, content):
+        def _generate_section(title, content):
             return (
                 f'<details><summary>{title}</summary>'
                 f'<div><pre>{content}</pre></div></details>' if content else ''
             )
 
-        def parse_actions(content):
+        def _parse_actions(content):
             actions_html = []
             command_blocks = []
             current_command = None
@@ -179,7 +189,7 @@ class ReportGenerator:
             "EXTERNAL SCRIPT ERROR",
         ]
 
-        def parse_browser_logs(browser_log_content):
+        def _parse_browser_logs(browser_log_content):
             result = []
 
             pattern = re.compile(
@@ -203,9 +213,9 @@ class ReportGenerator:
 
             return ''.join(result)
         
-        def get_section_content(key):
+        def _get_section_content(key):
             if key == "ACTIONS":
-                return parse_actions(test_time_content)
+                return _parse_actions(test_time_content)
             
             if key == "BROWSER ERROR":
                 return '\n'.join(
@@ -214,13 +224,13 @@ class ReportGenerator:
                 )
             
             if key == "BROWSER LOG":
-                return parse_browser_logs(report_info.get('browser_log_content', {}))
+                return _parse_browser_logs(report_info.get('browser_log_content', {}))
             
             return report_info.get(f'{key.lower().replace(" ", "_")}_content', '')
 
         html_sections = ''.join(
-            generate_section(title, get_section_content(title))
-            for _, title in enumerate(sections) if get_section_content(title)
+            _generate_section(title, _get_section_content(title))
+            for _, title in enumerate(sections) if _get_section_content(title)
         )
 
         return (
@@ -246,36 +256,80 @@ class ReportGenerator:
         with open(report_file_path, "w", encoding="utf-8") as report_file:
             report_file.write(combined_content)
 
-    def generate_launch_html_report(self, execution_time):
-        self.html_report_path = os.path.join(self.generated_reports[0]['out_directory_path'], "report.html")
-        for generated_report in self.generated_reports:
-            test_name = os.path.basename(generated_report['file_name'])
-            stdout = ""
+    def _generate_provider_report(self, result_objects):
+        provider_report_paths = {}
+        for run_mode, info in self.generated_reports.items():
+            reports = info['reports']
+            run_mode_execution_time = result_objects[run_mode]['duration']
+            for report in reports:
+                html_report_path = os.path.join(report['out_directory_path'], "report.html")
+                test_name = os.path.basename(report['file_name'])
+   
+                stdout = self._get_stdout_from_report(report)
 
-            if os.path.exists(generated_report['report_file_path']):
-                stdout = self._get_stdout_from_report(generated_report)
+                row_color, status = self._get_row_color_and_status(report['return_code'])
 
-                row_color, status = self._get_row_color_and_status(generated_report['return_code'])
-
-                new_content = f"<tr style='background-color: {row_color};'><td>{test_name}</td><td>{generated_report['start_test_time']}</td><td>{generated_report['execution_time']} ms</td>"
+                new_content = f"<tr style='background-color: {row_color};'><td>{test_name}</td><td>{report['start_test_time']}</td><td>{report['execution_time']} ms</td>"
                 new_content += f"<td>{status}</td>"
                 new_content += f"<td>{stdout}</td>"
-                new_content += f"<td><a href=\"{generated_report['report_file_path']}\">View Text Report</a></td><td>{generated_report['test_directory']}</td></tr>\n"
-                self._update_html_report(self.html_report_path, new_content)
-            else:
-                self._create_html_report(self.html_report_path, test_name)
-                
-        self._close_table(self.html_report_path, execution_time)
-        self._close_html(self.html_report_path)
+                new_content += f"<td><a href=\"{os.path.relpath(report['report_file_path'], os.path.dirname(html_report_path))}\">View Text Report</a></td><td>{report['test_directory']}</td></tr>\n"
+                headers = ["Test Name", "Start Time", "Execution Time", "Status", "External Stdout", "Text Report", "Test Path"]
+                self._update_html_report(html_report_path, new_content, info['isNewTable'], run_mode.capitalize(), headers)
+                info['isNewTable'] = False
+                    
+            self._close_table(html_report_path, run_mode_execution_time)
+            self._close_html(html_report_path)
+            provider_report_paths[run_mode] = html_report_path
+        return provider_report_paths
 
-        zip_path = self._create_zip_with_html_report_and_links(self.html_report_path)
+    def _send_report_to_report_portal(self, report_directory_path):
+        if self.report_portal_launcher:
+            try:
+                zip_buffer = io.BytesIO()
+                with zipfile.ZipFile(zip_buffer, mode="w", compression=zipfile.ZIP_DEFLATED) as zip_file:
+                    for root, _, files in os.walk(report_directory_path):
+                        for file in files:
+                            full_path = os.path.join(root, file)
+                            relative_path = os.path.relpath(full_path, start=report_directory_path)
+                            with open(full_path, "rb") as f:
+                                file_data = f.read()
+                                zip_file.writestr(relative_path, file_data)
+
+                zip_buffer.seek(0)
+
+                self.report_portal_launcher.send_log("HTML Report attached", "INFO", 
+                                                     attachment = {"name": "launch_report", 
+                                                                   "data": zip_buffer.getvalue(), 
+                                                                   "mime": "application/zip"})
+
+            except Exception as e:
+                print(f"Error sending report to Report Portal: {str(e)}")
+
+    def generate_launch_html_report(self, result_objects):
+        provider_report_paths = self._generate_provider_report(result_objects)
+        report_paths = [
+            str(Path(path).resolve().parents[len(Path(path).resolve().parts) - Path(path).resolve().parts.index(provider) - 1])
+            for provider, path in provider_report_paths.items()
+        ]
+
+        common_path = os.path.commonpath(report_paths)
+        launch_html_report_path = os.path.join(common_path, "report.html")
+
+        for run_mode, report_path in provider_report_paths.items():
+            status, _ = self._get_row_color_and_status(result_objects[run_mode]['success'])
+            if os.path.exists(report_path):
+                headers = ["Run Mode", "Start Time", "Text Report", "Duration"]
+
+                table_html = f"<tr style='background-color: {status};'>"
+                table_html += f"<td>{run_mode}</td>"
+                table_html += f"<td>{result_objects[run_mode]['start_launch_time']}</td>"
+                table_html += f"<td><a href=\"{os.path.relpath(report_path, os.path.dirname(launch_html_report_path))}\">View Report</a></td>"
+                table_html += f"<td>{result_objects[run_mode]['duration']} ms</td>\n"    
+                self._update_html_report(launch_html_report_path, table_html, isNewTable=True, run_mode="Launch", headers=headers)
         
-        with open(zip_path, "rb") as file:
-            self.report_portal_launcher.send_log("HTML Report attached.", "INFO", 
-                                                 attachment={"name": os.path.basename(zip_path), 
-                                                            "data": file.read(),
-                                                            "mime": "application/zip"})
-        os.remove(zip_path)
+        self._close_table(launch_html_report_path, result_objects['execution_time'])
+        self._close_html(launch_html_report_path)
+        self._send_report_to_report_portal(common_path)
 
     def _create_zip_with_html_report_and_links(self, html_report_path):
         zip_file_path = f"{html_report_path}.zip"
@@ -345,32 +399,33 @@ class ReportGenerator:
             row_color = "#FFD700"
         return row_color, status
 
-    def _update_html_report(self, html_report_path, new_content):
+    def _update_html_report(self, html_report_path, new_content, isNewTable, run_mode, headers):
         if os.path.exists(html_report_path):
             old_content = ""
             with open(html_report_path, "r", encoding="utf-8") as html_report:
                 old_content = html_report.read()
                 
-            if self.isNewTable:
+            if isNewTable:
                 old_content = old_content.replace("</body></html>", "")
                 with open(html_report_path, "a", encoding="utf-8") as html_report:
-                    self._create_table(html_report, new_content)
-                self.isNewTable = False
+                    self._create_table(html_report, new_content, headers)
+                isNewTable = False
             else:
                 table_end = old_content.rfind("</tr>")
                 new_content = old_content[:table_end] + new_content + old_content[table_end:]
                 with open(html_report_path, "w", encoding="utf-8") as html_report:
                     html_report.write(new_content)
         else:
-            self.isNewTable = False
-            self._create_html_report(html_report_path, new_content)
+            isNewTable = False
+            self._create_html_report(html_report_path, new_content, run_mode, headers)
 
-    def _create_table(self, html_report, new_content):
+    def _create_table(self, html_report, new_content, headers):
         html_report.write("<table border='1'>\n")
-        html_report.write("<tr><th>Test Name</th><th>Start Time</th><th>Execution Time</th><th>Status</th><th>External Stdout</th><th>Text Report</th><th>Test Path</th></tr>\n")
+        header_row = ''.join(f"<th>{header}</th>" for header in headers)
+        html_report.write(f"<tr>{header_row}</tr>\n")
         html_report.write(new_content)
-            
-    def _close_table(self, html_report_path, execution_time):  
+
+    def _close_table(self, html_report_path, execution_time):
         with open(html_report_path, "a", encoding="utf-8") as html_report:
             html_report.write("</table>\n")
             html_report.write(f"</table><p>Test execution time: {execution_time} ms</p>")
@@ -379,8 +434,8 @@ class ReportGenerator:
         with open(html_report_path, "a", encoding="utf-8") as html_report:
             html_report.write("</body>\n</html>")
             
-    def _create_html_report(self, html_report_path, new_content):
+    def _create_html_report(self, html_report_path, new_content, run_mode, headers):
         with open(html_report_path, "w", encoding="utf-8") as html_report:
-            html_report.write("<html>\n<head>\n<title>Test Report</title>\n</head>\n<body>\n")
-            html_report.write("<h1>Test Report</h1>\n")
-            self._create_table(html_report, new_content)
+            html_report.write(f"<html>\n<head>\n<title>{run_mode} Report</title>\n</head>\n<body>\n")
+            html_report.write(f"<h1>{run_mode} Report</h1>\n")
+            self._create_table(html_report, new_content, headers)

@@ -1,0 +1,27 @@
+{
+    "TAB_BUTTON": "#slot-category-id-chart-settings-dlg-layout button",
+    "CHART_TITLE_DROPDOWN": {
+        "selector": "#chart-dlg-combo-chart-title",
+        "elementsSelector": "#chart-dlg-combo-chart-title ul li",
+        "descriptionSelector": "a",
+        "elementsValue": []
+    },
+    "DATA_LABELS": {
+        "DROPDOWN": {
+            "selector": "#chart-dlg-combo-data-labels",
+            "elementsSelector": "#chart-dlg-combo-data-labels ul li",
+            "descriptionSelector": "a",
+            "elementsValue": []
+        },
+        "SEPARATOR":"#chart-dlg-txt-separator"
+    },
+    "LEGEND_DROPDOWN": {
+        "selector": "#chart-dlg-combo-legend-pos",
+        "elementsSelector": "#chart-dlg-combo-legend-pos ul li",
+        "descriptionSelector": "a",
+        "elementsValue": []
+    },
+    "SERIES_CHECKBOX":"#chart-dlg-check-series",
+    "CATEGORY_CHECKBOX":"#chart-dlg-check-category",
+    "VALUE_CHECKBOX":"#chart-dlg-check-value"
+}

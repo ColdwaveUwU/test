@@ -1,0 +1,21 @@
+{
+    "TOOLBAR": {
+        "EDIT_DATA": "#chart-button-edit-data button",
+        "UNDO_BUTTON": "#id-toolbar-btn-undo",
+        "REDO_BUTTON": "#id-toolbar-btn-redo"
+    },
+    "MODAL_WINDOWS": {
+        "CHART_EDITOR": {
+            "WINDOW": "#id-external-diagram-editor.notransform",
+            "CLOSE_BUTTON": "#id-external-diagram-editor .header .tool.close",
+            "POSITION": {
+                "LEFT": 0,
+                "TOP": 0
+            },
+            "SIZE": {
+                "WIDTH": 720,
+                "HEIGHT": 602
+            }
+        }
+    }
+}
