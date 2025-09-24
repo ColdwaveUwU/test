@@ -22,7 +22,7 @@ class DocContent extends SubSettings {
                 selector: numberalSelectors.SELECTOR,
                 elementsSelector: numberalSelectors.ELEMENTS_SELECTOR,
             });
-            await numberalDropdown.getItemsAndSelectDropdown(docContentSettings.numeral);
+            await numberalDropdown.selectDropdownItem(docContentSettings.numeral);
         }
     }
 }

@@ -4,6 +4,7 @@ Tester.createFile("docx");
 
 // add smart pyramid art - Inverted pyramid
 SmartArt.clickPyramidArt(2);
+Tester.waitAutosave();
 FileMenu.downloadAs("docx");
 Verification.openFile();
 

@@ -14,7 +14,8 @@
         "DROPDOWN_ELEMENTS_SELECTOR": "#tlbtn-rotate ul li a"
     },
     "EDIT_TEXT": {
-        "BUTTON": "#slot-btn-edittext > button"
+        "BUTTON": "#id-toolbar-btn-edittext",
+        "DISABLED_BUTTON": "#id-toolbar-btn-edittext.disabled"
     },
     "DELETE_PAGE": {
         "BUTTON": "#id-toolbar-btn-delpage"

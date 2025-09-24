@@ -7,8 +7,8 @@ Tester.createFile(fileName);
 
 FileMenu.setAdvancedSettings({
     appearance: {
-        theme: "Classic Light"
-    }
+        theme: { value: "Classic Light" },
+    },
 });
 
 const isClassicLightThemeApplied = Tester.checkSelector("body.theme-classic-light");

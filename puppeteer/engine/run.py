@@ -617,7 +617,6 @@ if __name__ == "__main__":
         execution_time = end_time - start_time
         result_objects['execution_time'] = execution_time
         report_generator.generate_launch_html_report(result_objects)
-        report_portal_launcher.finish_launch()
     finally:
         if isinstance(report_portal_launcher, ReportPortalLauncher) and report_portal_launcher.launch_is_started is not False:
             try:

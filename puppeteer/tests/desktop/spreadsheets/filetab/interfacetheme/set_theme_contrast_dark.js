@@ -7,8 +7,8 @@ Tester.createFile(fileName);
 
 FileMenu.setAdvancedSettings({
     appearance: {
-        theme: "Contrast Dark"
-    }
+        theme: { value: "Contrast Dark" },
+    },
 });
 
 const isContrastDarkThemeApplied = Tester.checkSelector("body.theme-contrast-dark");

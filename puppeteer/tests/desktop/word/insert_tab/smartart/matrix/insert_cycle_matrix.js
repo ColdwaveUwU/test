@@ -4,6 +4,7 @@ Tester.createFile("docx");
 
 // add smart matrix art - Cycle matrix
 SmartArt.clickMatrixArt(0);
+Tester.waitAutosave();
 FileMenu.downloadAs("docx");
 Verification.openFile();
 

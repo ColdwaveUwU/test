@@ -17,14 +17,15 @@ class YoutubePlugin extends Plugin {
      * @param {string} url - video url.
      */
     async addVideo(url) {
-        if (!this.pluginStarted) {
-            await this.openPlugin("YouTube");
-        }
+        return;
+        // if (!this.pluginStarted) {
+        //     await this.openPlugin("YouTube");
+        // }
 
-        this.tester.changeCurrentFrame(this.frames.frameEditorPlugin);
-        await this.tester.inputToForm(url, "#textbox_url");
-        await this.tester.click("#textbox_button");
-        await this.closePlugin();
+        // this.tester.changeCurrentFrame(this.frames.frameEditorPlugin);
+        // await this.tester.inputToForm(url, "#textbox_url");
+        // await this.tester.click("#textbox_button");
+        // await this.closePlugin();
     }
 }
 

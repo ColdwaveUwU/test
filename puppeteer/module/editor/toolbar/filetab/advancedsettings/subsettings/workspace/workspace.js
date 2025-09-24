@@ -110,7 +110,7 @@ class Workspace extends SubSettings {
                 elementsSelector: dropdownInfo.ELEMENTS_SELECTOR,
                 descriptionSelector: dropdownInfo?.DESCRIPTION_SELECTOR,
             });
-            await dropdown.getItemsAndSelectDropdown(value);
+            await dropdown.selectDropdownItem(value);
         }
     }
 

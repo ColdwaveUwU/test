@@ -6,7 +6,6 @@ Chart.createChart({
     chartName: "Clustered column",
 });
 
-
 Chart.setAdvancedSettings({
     textWrapping: {
         style: "Square",

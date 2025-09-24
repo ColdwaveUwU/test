@@ -4,6 +4,7 @@ Tester.createFile("docx");
 
 // add smart matrix art - Basic matrix
 SmartArt.clickMatrixArt(3);
+Tester.waitAutosave();
 FileMenu.downloadAs("docx");
 Verification.openFile();
 

@@ -874,7 +874,11 @@ class TesterImp {
                 this.disableTooltips && !this.urlParam.includes("type=mobile")
             );
 
-            await Promise.all([waitForDisableTooltips, this.waitForAscEvent("asc_onDocumentContentReady")]);
+            await Promise.all([
+                waitForDisableTooltips,
+                this.waitForAscEvent("asc_onDocumentContentReady"),
+                this.sleep(500), //todo to fix click on file tab
+            ]);
 
             await this.frame.waitForFunction(() => {
                 return !!window?.Asc?.editor?.asc_getDocumentName();
@@ -1355,6 +1359,23 @@ class TesterImp {
             }, selector);
         } catch (error) {
             throw new Error(`Failed to check selector "${selector}" in context "${context}": ${error.message}`);
+        }
+    }
+
+    async waitSelector(selector, context = "frame", timeout = 5000) {
+        const target = context === "page" ? this.page : this.frame;
+
+        try {
+            await target.waitForFunction(
+                (sel) => {
+                    return document.querySelector(sel);
+                },
+                { timeout: timeout, polling: 100 },
+                selector
+            );
+            return true;
+        } catch {
+            return false;
         }
     }
 

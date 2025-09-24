@@ -1,6 +1,7 @@
 const selectors = require("./selectors.json");
 const elementsValue = require("./elementsValue.json");
 const Toolbar = require("../../toolbar/toolbar");
+const path = require("path");
 const { Dropdown, ModalButton, Input } = require("../../../elements");
 const AdvancedSettings = require("./advancedsettings");
 
@@ -12,6 +13,9 @@ class FileMenu extends Toolbar {
     static FILEMENU_SELECTORS = selectors;
     static ELEMENTS_VALUE = elementsValue;
 
+    async clickFileMenu() {
+        await this.openTargetTab();
+    }
     /**
      * Creates a promise that resolves when a popup is opened on the specified page within a timeout period.
      * Sets the tester's page to the newly opened popup page.
@@ -101,7 +105,12 @@ class FileMenu extends Toolbar {
                     await this.tester.click(downloadSelectors.ENCODING_WINDOW.OK_BUTTON);
                 }
             }
-            await downloadCompleted;
+            const filePath = await downloadCompleted;
+            const fileInfo = {
+                name: path.basename(filePath),
+                extension: path.extname(filePath).substring(1),
+            };
+            return fileInfo;
         } catch (error) {
             throw new Error(`downloadAs: Failed to download file. ${error.message}`, { cause: error });
         }
@@ -388,9 +397,7 @@ class FileMenu extends Toolbar {
             await advancedSettings.setSettings(settings);
             await this.tester.click(advancedSettingsSelectors.APPLY);
         } catch (error) {
-            throw new Error(
-                `setAdvancedSettings: Failed to set advanced settings. ${error.message}`
-            );
+            throw new Error(`setAdvancedSettings: Failed to set advanced settings. ${error.message}`);
         }
     }
 }

@@ -4,6 +4,7 @@ Tester.createFile("docx");
 
 // add hierarchy smart art - Horizontal multi-level hierarchy
 SmartArt.clickHierarchyArt(4);
+Tester.waitAutosave();
 FileMenu.downloadAs("docx");
 Verification.openFile();
 
@@ -43,17 +44,9 @@ Verification.check(
     "[Text]"
 );
 
-Verification.check(
-    "word/diagrams/data1.xml",
-    "//dgm:dataModel[1]/dgm:ptLst[1]/dgm:pt[12]/@type",
-    "parTrans"
-);
+Verification.check("word/diagrams/data1.xml", "//dgm:dataModel[1]/dgm:ptLst[1]/dgm:pt[12]/@type", "parTrans");
 
-Verification.check(
-    "word/diagrams/data1.xml",
-    "//dgm:dataModel[1]/dgm:ptLst[1]/dgm:pt[13]/@type",
-    "sibTrans"
-);
+Verification.check("word/diagrams/data1.xml", "//dgm:dataModel[1]/dgm:ptLst[1]/dgm:pt[13]/@type", "sibTrans");
 
 Verification.check(
     "word/diagrams/data1.xml",

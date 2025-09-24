@@ -6,7 +6,6 @@ const selectors = require("./selectors.json");
 class EditPdf extends HomeTab {
     constructor(tester) {
         super(tester);
-        this.moreButtons = new MoreButtons(this.tester);
     }
 
     /**
@@ -63,7 +62,9 @@ class EditPdf extends HomeTab {
      */
     async editText() {
         const editTextSelectors = EditPdf.EDIT_PDF_SELECTORS.EDIT_TEXT;
+        const waitStartEditPdfMode = this.tester.waitSelector(editTextSelectors.DISABLED_BUTTON);
         await this.#executeAction(this.#getButton(editTextSelectors.BUTTON), "click", "editText");
+        await waitStartEditPdfMode;
     }
 
     /**
@@ -108,26 +109,9 @@ class EditPdf extends HomeTab {
     async #executeAction(element, action, methodName, actionParams = []) {
         try {
             await this.clickEditPdf(true);
-            await this.#openMoreButtons();
             return await element[action](...actionParams);
         } catch (error) {
             this.#handleError(methodName, error);
-        }
-    }
-
-    /**
-     * Recovery logic for retrying failed actions
-     * @return {boolean} Returns true if the more buttons were opened, false otherwise
-     */
-    async #openMoreButtons() {
-        try {
-            if (!(await this.moreButtons.isDisplayed())) {
-                await this.moreButtons.waitForDisplayed();
-            }
-            await this.moreButtons.open();
-            return true;
-        } catch (error) {
-            return false;
         }
     }
 
@@ -161,7 +145,7 @@ class EditPdf extends HomeTab {
      * @return {Promise<boolean>} True if button is active, false otherwise
      */
     async #isEditPdfButtonActive() {
-        return await this.#getButton(EditPdf.EDIT_PDF_SELECTORS.EDIT_PDF.ACTIVE_BUTTON).checkSelector();
+        return await this.#getButton(EditPdf.EDIT_PDF_SELECTORS.EDIT_PDF.ACTIVE_BUTTON).waitSelector();
     }
 
     /**

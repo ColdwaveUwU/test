@@ -1,9 +1,20 @@
-const { Chart, Shape, FileMenu, TestData, Font, TextForm, Verification, Color, YoutubePlugin, DropCap } = require("lib");
+const {
+    Chart,
+    Shape,
+    FileMenu,
+    TestData,
+    Font,
+    TextForm,
+    Verification,
+    Color,
+    YoutubePlugin,
+    DropCap,
+} = require("lib");
 Tester.createFile("docx");
 
 // Retrieve the list of charts and log the output
-Chart.createChart("Pie", 1);
-Chart.addChart();
+Chart.createChart({ groupName: "Pie", chartName: 1 });
+Chart.closeEditor();
 FileMenu.downloadAs("docx");
 // Getting verification results
 Verification.openFile();
@@ -75,7 +86,6 @@ Verification.check("word/document.xml", "//w:p[.//w:pPr/w:framePr[@w:dropCap='dr
 isSuccess = Verification.isSuccess();
 console.log(isSuccess);
 
-
 //change all indents via the ruler (no method) and compare with the values ​​in the right panel
 
 Tester.keyDown("ControlLeft");
@@ -132,8 +142,11 @@ Tester.keyUp("ControlLeft");
 
 FileMenu.downloadAs("docx");
 Verification.openFile();
-Verification.check("word/document.xml",
-    "(//w:p[*]/w:r[*]/w:rPr[*]/w:sz[@*])|(//w:p[*]/w:r[*]/w:rPr[*]/w:szCs[@*]/@w:val)","28");
+Verification.check(
+    "word/document.xml",
+    "(//w:p[*]/w:r[*]/w:rPr[*]/w:sz[@*])|(//w:p[*]/w:r[*]/w:rPr[*]/w:szCs[@*]/@w:val)",
+    "28"
+);
 isSuccess = Verification.isSuccess();
 console.log(isSuccess);
 

@@ -4,6 +4,7 @@ Tester.createFile("docx");
 
 // add smart pyramid art - Segmented pyramid
 SmartArt.clickPyramidArt(0);
+Tester.waitAutosave();
 FileMenu.downloadAs("docx");
 Verification.openFile();
 

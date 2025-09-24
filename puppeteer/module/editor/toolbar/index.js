@@ -9,6 +9,7 @@ const Referencestab = require("./referencestab");
 const FileMenu = require("./filetab");
 const DrawTab = require("./drawtab");
 const ViewToolbar = require("./viewtoolbar");
+const Plugins = require("./plugins");
 
 const Toolbar = {
     ...HomeTab,
@@ -21,7 +22,8 @@ const Toolbar = {
     ...Referencestab,
     ...FileMenu,
     ...DrawTab,
-    ...ViewToolbar
+    ...ViewToolbar,
+    ...Plugins,
 };
 
 module.exports = Toolbar;

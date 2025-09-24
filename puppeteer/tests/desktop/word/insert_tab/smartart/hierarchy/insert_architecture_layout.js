@@ -4,6 +4,7 @@ Tester.createFile("docx");
 
 // add hierarchy smart art - Architecture layout
 SmartArt.clickHierarchyArt(5);
+Tester.waitAutosave()
 FileMenu.downloadAs("docx");
 Verification.openFile();
 
@@ -55,17 +56,9 @@ Verification.check(
     "[Text]"
 );
 
-Verification.check(
-    "word/diagrams/data1.xml",
-    "//dgm:dataModel[1]/dgm:ptLst[1]/dgm:pt[18]/@type",
-    "parTrans"
-);
+Verification.check("word/diagrams/data1.xml", "//dgm:dataModel[1]/dgm:ptLst[1]/dgm:pt[18]/@type", "parTrans");
 
-Verification.check(
-    "word/diagrams/data1.xml",
-    "//dgm:dataModel[1]/dgm:ptLst[1]/dgm:pt[19]/@type",
-    "sibTrans"
-);
+Verification.check("word/diagrams/data1.xml", "//dgm:dataModel[1]/dgm:ptLst[1]/dgm:pt[19]/@type", "sibTrans");
 
 Verification.check(
     "word/diagrams/data1.xml",

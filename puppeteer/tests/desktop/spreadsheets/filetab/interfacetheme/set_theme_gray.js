@@ -7,8 +7,8 @@ Tester.createFile(fileName);
 
 FileMenu.setAdvancedSettings({
     appearance: {
-        theme: "Gray"
-    }
+        theme: { value: "Gray" },
+    },
 });
 
 const isGrayThemeApplied = Tester.checkSelector("body.theme-gray");

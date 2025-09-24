@@ -4,6 +4,7 @@ Tester.createFile("docx");
 
 // add hierarchy smart art - Hierarchy
 SmartArt.clickHierarchyArt(9);
+Tester.waitAutosave();
 FileMenu.downloadAs("docx");
 Verification.openFile();
 

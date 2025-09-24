@@ -17,8 +17,8 @@ let user2 = collab.addUser({
 
 user1.doSync(async function () {
     // Retrieve the list of charts and log the output
-    Chart.createChart("Line", 4);
-    Chart.addChart();
+    Chart.createChart({ groupName: "Line", chartName: "Stacked line with markers" });
+    Chart.closeEditor();
 });
 
 user2.do(async function () {

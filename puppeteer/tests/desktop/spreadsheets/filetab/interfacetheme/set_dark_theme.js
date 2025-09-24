@@ -7,8 +7,8 @@ Tester.createFile(fileName);
 
 FileMenu.setAdvancedSettings({
     appearance: {
-        theme: "Dark"
-    }
+        theme: { value: "Dark" },
+    },
 });
 
 const isDarkThemeApplied = Tester.checkSelector("body.theme-dark");

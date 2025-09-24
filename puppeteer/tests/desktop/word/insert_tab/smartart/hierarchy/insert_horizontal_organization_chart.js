@@ -4,6 +4,7 @@ Tester.createFile("docx");
 
 // add hierarchy smart art - Horizontal organization chart
 SmartArt.clickHierarchyArt(6);
+Tester.waitAutosave();
 FileMenu.downloadAs("docx");
 Verification.openFile();
 
@@ -49,17 +50,9 @@ Verification.check(
     "[Text]"
 );
 
-Verification.check(
-    "word/diagrams/data1.xml",
-    "//dgm:dataModel[1]/dgm:ptLst[1]/dgm:pt[15]/@type",
-    "parTrans"
-);
+Verification.check("word/diagrams/data1.xml", "//dgm:dataModel[1]/dgm:ptLst[1]/dgm:pt[15]/@type", "parTrans");
 
-Verification.check(
-    "word/diagrams/data1.xml",
-    "//dgm:dataModel[1]/dgm:ptLst[1]/dgm:pt[16]/@type",
-    "sibTrans"
-);
+Verification.check("word/diagrams/data1.xml", "//dgm:dataModel[1]/dgm:ptLst[1]/dgm:pt[16]/@type", "sibTrans");
 
 Verification.check(
     "word/diagrams/data1.xml",

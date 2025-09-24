@@ -7,8 +7,8 @@ Tester.createFile(fileName);
 
 FileMenu.setAdvancedSettings({
     appearance: {
-        theme: "Same as system"
-    }
+        theme: { value: "Same as system" },
+    },
 });
 
 // System theme can be either light (theme-white) or dark (theme-night) depending on system settings

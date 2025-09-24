@@ -4,6 +4,7 @@ Tester.createFile("docx");
 
 // add smart pyramid art - Pyramid list
 SmartArt.clickPyramidArt(1);
+Tester.waitAutosave();
 FileMenu.downloadAs("docx");
 Verification.openFile();
 

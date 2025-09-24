@@ -169,7 +169,7 @@ class AutoCorrect {
                 selector: exceptionsSelectors.BUTTON,
                 elementsSelector: exceptionsSelectors.ELEMENTS,
             });
-            await dropdown.getItemsAndSelectDropdown(textAutoCorrectSettings.exceptions);
+            await dropdown.selectDropdownItem(textAutoCorrectSettings.exceptions);
         }
 
         if (textAutoCorrectSettings?.dontCapitalize) {

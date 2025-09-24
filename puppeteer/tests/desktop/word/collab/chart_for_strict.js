@@ -37,8 +37,8 @@ user2.doSync(async function () {
 });
 
 user1.doSync(async function () {
-    Chart.createChart(randomType, 1);
-    Chart.addChart();
+    Chart.createChart({ groupName: randomType, chartName: 1 });
+    Chart.closeEditor();
     FileMenu.save();
 });
 

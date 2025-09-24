@@ -38,14 +38,13 @@ class Appearance extends SubSettings {
             },
             {
                 type: "checkbox",
-                value: appearanceSettings?.background,
+                value: appearanceSettings?.useToolbarColor,
                 selector: selectors.BACKGROUND,
             },
         ];
 
         for (const element of uiElements) {
             const { type, value, selector, elementsSelector } = element;
-
             if (value == null || !selector) continue;
 
             if (type === "dropdown" && elementsSelector) {
@@ -53,7 +52,7 @@ class Appearance extends SubSettings {
                     selector,
                     elementsSelector,
                 });
-                await dropdown.getItemsAndSelectDropdown(value);
+                await dropdown.selectDropdownItem(value);
             } else if (type === "checkbox") {
                 const checkbox = new Checkbox(this.tester, selector);
                 await checkbox.set(value);

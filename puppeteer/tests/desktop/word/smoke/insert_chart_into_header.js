@@ -3,8 +3,8 @@ const { FileMenu, Verification, Chart, PageHeaderFooter } = require("lib");
 Tester.createFile("docx");
 
 Tester.input("Test");
-Chart.createChart("Pie", 1);
-Chart.addChart();
+Chart.createChart({ groupName: "Pie", chartName: 1 });
+Chart.closeEditor();
 Tester.keyDown("Control");
 Tester.keyPress("A");
 Tester.keyPress("C");

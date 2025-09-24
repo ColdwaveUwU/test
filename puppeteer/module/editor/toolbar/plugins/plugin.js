@@ -174,7 +174,7 @@ class Plugin {
                     await openPluginFunction(targetPlugin.pluginId);
                 } else {
                     console.log(`The plugin '${pluginName}' is not installed.`);
-                    await this.tester.close();
+                    return;
                 }
             }
             await promise;

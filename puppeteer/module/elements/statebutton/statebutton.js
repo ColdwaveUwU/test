@@ -18,7 +18,7 @@ class StateButton extends Button {
             return btn.classList.contains("active") || btn.getAttribute("aria-pressed") === "true";
         }, this.selector);
 
-        await super.click(this.selector);
+        await super.click();
 
         return this.context.waitForFunction(
             (sel, prev) => {

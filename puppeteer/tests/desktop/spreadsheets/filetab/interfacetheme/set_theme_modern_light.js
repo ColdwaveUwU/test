@@ -7,8 +7,8 @@ Tester.createFile(fileName);
 
 FileMenu.setAdvancedSettings({
     appearance: {
-        theme: "Modern Light"
-    }
+        theme: { value: "Modern Light" },
+    },
 });
 
 const isModernLightThemeApplied = Tester.checkSelector("body.theme-white");

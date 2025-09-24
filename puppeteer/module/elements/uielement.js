@@ -22,6 +22,10 @@ class UIElement {
         return await this.tester.checkSelector(this.selector);
     }
 
+    async waitSelector() {
+        return await this.tester.waitSelector(this.selector);
+    }
+
     /**
      * Clicks the UI element.
      * @param {number} count - The number of times to click the element.
