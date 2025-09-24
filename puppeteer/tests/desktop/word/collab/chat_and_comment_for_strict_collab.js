@@ -40,7 +40,9 @@ user1.doSync(async function () {
 });
 
 user2.doSync(async function () {
+    Tester.waitUpdates();
     FileMenu.save();
+    Tester.waitAutosave();
     FileMenu.downloadAs("docx");
 });
 
@@ -54,7 +56,9 @@ user1.doSync(async function () {
 });
 
 user2.doSync(async function () {
+    Tester.waitUpdates();
     FileMenu.save();
+    Tester.waitAutosave();
     ToolMenuComments.sortComments("newest");
     const firstComment = ToolMenuComments.getComments();
     if (firstComment[0].text !== TestData.LOREM_IPSUM()) {

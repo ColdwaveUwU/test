@@ -1556,6 +1556,23 @@ class TesterImp {
         }
     }
 
+    async waitUpdates() {
+        try {
+            await this.frame.waitForFunction(
+                () => {
+                    const labelAction =
+                        document.querySelector("#label-action") || document.querySelector("#status-label-action");
+                    return labelAction && labelAction.textContent.includes("You have updates");
+                },
+                {
+                    timeout: 30000,
+                }
+            );
+        } catch (error) {
+            throw new Error(`Error waitAutosave: ${error.message}`);
+        }
+    }
+
     /**
      * Opens a dropdown.
      * @param {string} selector

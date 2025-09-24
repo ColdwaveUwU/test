@@ -29,7 +29,7 @@ FileMenu.setAdvancedSettings({
         showTooltip: false, // Disable tooltips
     },
     collab: {
-        coEditing: "strict", // Set co-editing mode to strict
+        coEditingMode: "strict", // Set co-editing mode to strict
         showComments: false, // Hide comments in the document
         showResolved: true, // Display resolved comments
     },

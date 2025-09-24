@@ -1,7 +1,6 @@
 const baseModules = require("../module");
 const providers = require("../providers");
 const { createProxy, collectClasses } = require("../engine/script/js");
-
 const providerModules = providers[globalThis.providerName]?.modules ?? {};
 const baseClassMap = collectClasses(baseModules);
 const providerClassMapRaw = collectClasses(providerModules);

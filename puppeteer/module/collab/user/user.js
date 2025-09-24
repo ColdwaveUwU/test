@@ -9,8 +9,7 @@
  * @property {string} firstName
  * @property {string} lastName
  */
-
-const modules = require("../../editor");
+const mod = { ...require("../../common"), ...require("../../editor") };
 const { collectClasses } = require("../../../engine/script/js");
 
 class User {
@@ -24,7 +23,7 @@ class User {
         this.lastName = userDetails.lastName;
         this.Tester = new TesterImp(config, RegularTester.providerAddonClass, true);
 
-        const classMap = collectClasses(modules);
+        const classMap = collectClasses(mod);
         for (const name in classMap) {
             try {
                 this[name] = new classMap[name](this.Tester);

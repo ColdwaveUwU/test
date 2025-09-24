@@ -53,10 +53,11 @@ user1.doSync(async function () {
 });
 
 user2.doSync(async function () {
+    Tester.waitUpdates();
     FileMenu.save();
+    Tester.waitAutosave();
     ViewToolbarHome.setNextPage();
-
-     // get current thumbnail number for user2
+    // get current thumbnail number for user2
     let currentThumbnailNumberTwo = ToolMenuThumbnails.getCurrentThumbnailNumber();
     console.log(`currentThumbnailNumberTwo before goto: ${currentThumbnailNumberTwo}`);
     if (currentThumbnailNumberTwo !== 2) {

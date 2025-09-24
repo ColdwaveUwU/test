@@ -1,4 +1,4 @@
-const { ViewToolbarDocumentModeSelectors } = require("../../../constants");
+const { ViewToolbarDocumentModeSelectors } = require("../../../../../constants");
 
 class ViewToolbarDocumentMode {
     static Modes = {

@@ -4,4 +4,5 @@ module.exports = {
     TestData: require("./testdata"),
     Connector: require("./connector"),
     DocumentUploader: require("./documentuploader"),
+    Verification: require("./scripts"),
 };

@@ -25,7 +25,7 @@ FileMenu.setAdvancedSettings({
     editing: { autosave: false, showPasteOptions: false, useSmart: false },
     // change Collaboration settings
     collab: {
-        coEditing: "strict",
+        coEditingMode: "strict",
         showChanges: "tooltips",
         realTime: "none",
         showComments: false,

@@ -11,7 +11,7 @@ class Collaboration extends SubSettings {
     static COLLABORATION_SELECTORS = selectors;
 
     #settingsMap = {
-        coEditing: (value) => [Collaboration.COLLABORATION_SELECTORS.CO_EDITING?.[value], true],
+        coEditingMode: (value) => [Collaboration.COLLABORATION_SELECTORS.CO_EDITING?.[value], true],
         showChanges: (value) => [Collaboration.COLLABORATION_SELECTORS.SHOW_TACK?.[value], true],
         realTime: (value) => [Collaboration.COLLABORATION_SELECTORS.REAL_TIME?.[value], true],
         showComments: (value) => [Collaboration.COLLABORATION_SELECTORS.SHOW_COMMENT, value],

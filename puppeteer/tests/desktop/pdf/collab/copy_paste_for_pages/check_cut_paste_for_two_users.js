@@ -52,12 +52,14 @@ user1.doSync(async function () {
 });
 
 user2.doSync(async function () {
+    Tester.waitUpdates();
     FileMenu.save();
+    Tester.waitAutosave();
     EditPdf.clickEditPdf();
     ToolMenuThumbnails.setThumbnailsOption({ highlight: true, size: 7 });
     ToolMenuThumbnails.clickThumbnailsMenu();
 
-     // get current thumbnail number for user2 after cut
+    // get current thumbnail number for user2 after cut
     let currentThumbnailNumberCutTwo = ToolMenuThumbnails.getCurrentThumbnailNumber();
     console.log(`currentThumbnailNumberCutTwo before goto: ${currentThumbnailNumberCutTwo}`);
     if (currentThumbnailNumberCutTwo !== 1) {
@@ -87,11 +89,13 @@ user1.doSync(async function () {
 });
 
 user2.doSync(async function () {
+    Tester.waitUpdates();
     FileMenu.save();
+    Tester.waitAutosave();
     EditPdf.clickEditPdf(false);
     ViewToolbarHome.setNextPage();
 
-     // get current thumbnail number for user2 after paste
+    // get current thumbnail number for user2 after paste
     let currentThumbnailNumberPasteTwo = ToolMenuThumbnails.getCurrentThumbnailNumber();
     console.log(`currentThumbnailNumberPasteTwo before goto: ${currentThumbnailNumberPasteTwo}`);
     if (currentThumbnailNumberPasteTwo !== 2) {

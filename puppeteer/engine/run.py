@@ -265,7 +265,7 @@ def run_test(test_map, params_dict, cache_dir, server_port):
     puppeteer = os.path.join(engine_directory, "node_modules", "puppeteer").replace("\\", '/')
     replace_in_file(run_file, "require(\"%%PUPPETEER%%\")", f"require(\"{puppeteer}\")")
 
-    collab = os.path.join(engine_directory, "..", "module", "collab").replace("\\", '/')
+    collab = os.path.join(engine_directory, "..", "module").replace("\\", '/')
     replace_in_file(run_file, "require(\"%%COLLAB%%\")", f"require(\"{collab}\")")
 
     elements = os.path.join(engine_directory, "..", "module", "elements").replace("\\", '/')

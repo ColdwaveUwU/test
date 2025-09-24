@@ -1,1 +1,1 @@
-module.exports = { Collab: require("./collab") };
+module.exports = require("./collab");

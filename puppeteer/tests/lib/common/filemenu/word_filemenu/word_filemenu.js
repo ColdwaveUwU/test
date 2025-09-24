@@ -36,7 +36,7 @@ FileMenu.setAdvancedSettings({
         makeComp: true,
     },
     collab: {
-        coEditing: "strict", // Set co-editing mode to strict
+        coEditingMode: "strict", // Set co-editing mode to strict
         showChanges: "tooltips", // Show track changes by hovering
         realTime: "all", // Disable real-time change view
         showComments: true, // Hide comments

@@ -75,7 +75,7 @@ class ToolMenuThumbnails extends ToolMenu {
      */
     async goToThumbnail(thumbNumber) {
         try {
-            return this.statusBar.goToPage(thumbNumber);
+            return await this.statusBar.goToPage(thumbNumber);
         } catch (error) {
             throw new Error(`goToThumbnail: Failed to goto thumb. ${error.message}`, {
                 cause: error,
@@ -89,7 +89,7 @@ class ToolMenuThumbnails extends ToolMenu {
      */
     async getCurrentThumbnailNumber() {
         try {
-            return this.statusBar.getCurrentPage();
+            return await this.statusBar.getCurrentPage();
         } catch (error) {
             throw new Error(`getCurrentThumbnail: Failed to get current thumbnail. ${error.message}`, {
                 cause: error,
@@ -103,7 +103,7 @@ class ToolMenuThumbnails extends ToolMenu {
      */
     async getCountThumbnails() {
         try {
-            return this.statusBar.getCountPages();
+            return await this.statusBar.getCountPages();
         } catch (error) {
             throw new Error(`getCountThumbnails: Failed to get count thumbnails. ${error.message}`, {
                 cause: error,

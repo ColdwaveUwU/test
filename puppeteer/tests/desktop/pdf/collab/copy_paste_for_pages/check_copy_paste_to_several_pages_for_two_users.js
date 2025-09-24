@@ -44,7 +44,9 @@ user1.doSync(async function () {
 });
 
 user2.doSync(async function () {
+    Tester.waitUpdates();
     FileMenu.save();
+    Tester.waitAutosave();
     EditPdf.clickEditPdf();
     ToolMenuThumbnails.setThumbnailsOption({ highlight: true, size: 7 });
     EditPdf.clickEditPdf(false);

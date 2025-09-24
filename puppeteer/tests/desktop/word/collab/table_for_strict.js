@@ -40,7 +40,9 @@ user1.doSync(async function () {
 });
 
 user2.doSync(async function () {
+    Tester.waitUpdates();
     FileMenu.save();
+    Tester.waitAutosave();
     Tester.lockParagraph();
     Tester.keyDown("Control");
     Tester.keyPress("A");
@@ -55,7 +57,9 @@ user2.doSync(async function () {
 });
 
 user1.doSync(async function () {
+    Tester.waitUpdates();
     FileMenu.save();
+    Tester.waitAutosave();
 });
 
 collab.wait([user2]);

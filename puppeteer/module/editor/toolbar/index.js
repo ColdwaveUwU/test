@@ -8,6 +8,8 @@ const CollaborationTab = require("./collaborationtab");
 const Referencestab = require("./referencestab");
 const FileMenu = require("./filetab");
 const DrawTab = require("./drawtab");
+const ViewToolbar = require("./viewtoolbar");
+
 const Toolbar = {
     ...HomeTab,
     ...InsertTab,
@@ -19,6 +21,7 @@ const Toolbar = {
     ...Referencestab,
     ...FileMenu,
     ...DrawTab,
+    ...ViewToolbar
 };
 
 module.exports = Toolbar;

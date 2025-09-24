@@ -1,3 +1,1 @@
-module.exports = {
-    Verification: require("./verification"),
-};
+module.exports = require("./verification");

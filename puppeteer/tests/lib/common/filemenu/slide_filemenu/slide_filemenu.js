@@ -34,7 +34,7 @@ FileMenu.setAdvancedSettings({
         showPasteOptions: false, // Disable paste options
     },
     collab: {
-        coEditing: "strict", // Set co-editing mode to strict
+        coEditingMode: "strict", // Set co-editing mode to strict
     },
     proofing: {
         spellCheck: true, // Enable spell checking

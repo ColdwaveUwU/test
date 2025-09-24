@@ -1,4 +1,4 @@
-const { Draw } = require("../../../../editor");
+const { Draw } = require("../../../../editor/toolbar/drawtab");
 const { Color } = require("../../../../common");
 const ViewToolbarStatic = require("../viewtoolbarstatic/viewtoolbarstatic");
 const selectors = require("./selectors.json");

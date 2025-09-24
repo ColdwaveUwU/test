@@ -124,6 +124,7 @@ class TestRunner:
             command,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
+            stdin=subprocess.DEVNULL,
             text=True,
             encoding='utf-8',
             errors='replace'
@@ -181,8 +182,8 @@ class TestRunner:
                     dest.write(line)
                     dest.flush()
 
-        stdout_thread = threading.Thread(target=read_output, args=(process.stdout, stdout_dest))
-        stderr_thread = threading.Thread(target=read_output, args=(process.stderr, stderr_dest))
+        stdout_thread = threading.Thread(target=read_output, args=(process.stdout, stdout_dest), daemon=True)
+        stderr_thread = threading.Thread(target=read_output, args=(process.stderr, stderr_dest), daemon=True)
         stdout_thread.start()
         stderr_thread.start()
 
