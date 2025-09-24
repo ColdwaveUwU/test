@@ -8,7 +8,7 @@ Tester.createFile(fileName);
 
 FileMenu.setAdvancedSettings({
     appearance: {
-        theme: "Same as system",
+        theme: { value: "Same as system" },
     },
 });
 
@@ -29,7 +29,7 @@ console.log("System theme is dark, proceeding with dark mode test");
 
 FileMenu.setAdvancedSettings({
     appearance: {
-        theme: "Same as system",
+        theme: { value: "Same as system" },
         darkMode: true,
     },
 });

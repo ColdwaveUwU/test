@@ -8,7 +8,7 @@ Tester.createFile(fileName);
 
 FileMenu.setAdvancedSettings({
     appearance: {
-        theme: "Dark",
+        theme: { value: "Dark" },
         darkMode: true,
     },
 });

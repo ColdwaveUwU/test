@@ -69,7 +69,7 @@ FileMenu.setAdvancedSettings({
         },
     },
     appearance: {
-        theme: "Dark", // Set the UI theme to dark mode
+        theme: { value: "Dark" }, // Set the UI theme to dark mode
         tabStyle: "Line", // Use line-style tabs
         useToolbarColor: true, // Apply toolbar color to tabs background
     },

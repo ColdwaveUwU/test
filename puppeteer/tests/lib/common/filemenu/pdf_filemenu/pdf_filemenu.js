@@ -56,7 +56,7 @@ FileMenu.setAdvancedSettings({
         },
     },
     // change Appearance settings
-    appearance: { theme: "Dark", tabStyle: "Line", darkMode: true, useToolbarColor: true },
+    appearance: { theme: { value: "Dark" }, tabStyle: "Line", darkMode: true, useToolbarColor: true },
     // change workspace settings
     workspace: {
         turnOnScreen: true,

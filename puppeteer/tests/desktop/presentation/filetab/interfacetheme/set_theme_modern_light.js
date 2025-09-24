@@ -7,7 +7,7 @@ Tester.createFile(fileName);
 
 FileMenu.setAdvancedSettings({
     appearance: {
-        theme: "Modern Light",
+        theme: { value: "Modern Light" },
     },
 });
 

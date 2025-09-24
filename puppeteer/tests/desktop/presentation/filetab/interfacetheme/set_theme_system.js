@@ -7,7 +7,7 @@ Tester.createFile(fileName);
 
 FileMenu.setAdvancedSettings({
     appearance: {
-        theme: "Same as system",
+        theme: { value: "Same as system" },
     },
 });
 

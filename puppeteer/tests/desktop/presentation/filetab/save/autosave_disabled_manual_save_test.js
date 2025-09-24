@@ -3,7 +3,7 @@
 const { FileMenu, Verification } = require("lib");
 
 Tester.createFile("pptx");
-
+FileMenu.clickFileMenu();
 FileMenu.setAdvancedSettings({
     editing: {
         autosave: false,
@@ -11,7 +11,6 @@ FileMenu.setAdvancedSettings({
 });
 
 Tester.input("Initial content for autosave test");
-FileMenu.clickFileMenu();
 FileMenu.save();
 
 FileMenu.downloadAs("pptx");
