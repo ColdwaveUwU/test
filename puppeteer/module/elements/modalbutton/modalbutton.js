@@ -31,18 +31,29 @@ class ModalButton extends UIElement {
     #modalIndex = null;
 
     /**
-     * Checks if the modal window is currently open by verifying the presence of the modal selector.
-     * @returns {Promise<boolean>} Resolves to true if the modal is open, otherwise false.
-     * @throws {Error} Throws an error if the check fails.
+     * Checks if the modal is open using the provided selector checker.
+     * @param {"check"|"wait"} type - Type of check: "check" uses checkSelector, "wait" uses waitSelector
+     * @returns {Promise<boolean>}
      */
-    async isModalOpen() {
+    async #checkModalOpen(type = "check") {
         try {
-            const isOpen = await this.tester.checkSelector(this.modalWindowSelector);
+            const selector = `${this.modalWindowSelector}.notransform`;
+            const isOpen =
+                type === "wait" ? await this.tester.waitSelector(selector) : await this.tester.checkSelector(selector);
+
             this.#modalIndex = isOpen ? await this.tester.getModalCounter() : null;
             return isOpen;
         } catch (error) {
-            this.handleError("isModalOpen", error, "Failed to check if modal is open.");
+            this.handleError("checkModalOpen", error, `Failed to ${type} if modal is open.`);
         }
+    }
+
+    async isModalOpen() {
+        return this.#checkModalOpen("check");
+    }
+
+    async waitModalLoaded() {
+        return this.#checkModalOpen("wait");
     }
 
     /**
@@ -57,7 +68,7 @@ class ModalButton extends UIElement {
                 return;
             }
             await this.click();
-            const modalOpened = await this.isModalOpen();
+            const modalOpened = await this.waitModalLoaded();
 
             if (!modalOpened) {
                 this.handleError("openModal", error, `Modal window ${this.modalWindowSelector} is not open.`);

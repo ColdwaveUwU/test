@@ -29,8 +29,7 @@ console.log("System theme is dark, proceeding with dark mode test");
 
 FileMenu.setAdvancedSettings({
     appearance: {
-        theme: { value: "Same as system" },
-        darkMode: true,
+        theme: { value: "Same as system", darkMode: true },
     },
 });
 

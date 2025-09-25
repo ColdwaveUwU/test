@@ -78,7 +78,7 @@ class Checkbox extends UIElement {
         if (!checkboxElement) {
             throw new Error(`Checkbox with selector "${checkBoxSelector}" not found`);
         }
-
+        debugger;
         await this.context.waitForFunction(
             (el, expected) => {
                 const state =

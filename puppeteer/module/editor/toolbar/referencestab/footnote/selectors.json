@@ -21,40 +21,6 @@
     "MODAL_WINDOW": {
         "NOTES_SETTINGS": {
             "WINDOW": "#window-note-settings",
-            "FOOTNOTE_RADIO": "#note-settings-radio-foot",
-            "ENDNOTE_RADIO": "#note-settings-radio-end",
-            "FOOTNOTE_LOCATION_COMBO": {
-                "selector": "#note-settings-combo-footnote",
-                "elementsSelector": "#note-settings-combo-footnote ul li",
-                "descriptionSelector": "a",
-                "elementsValue": []
-            },
-            "ENDNOTE_LOCATION_COMBO": {
-                "selector": "#note-settings-combo-endnote",
-                "elementsSelector": "#note-settings-combo-endnote ul li",
-                "descriptionSelector": "a",
-                "elementsValue": []
-            },
-            "FORMAT_COMBO": {
-                "selector": "#note-settings-combo-format",
-                "elementsSelector": "#note-settings-combo-format ul li",
-                "descriptionSelector": "a",
-                "elementsValue": []
-            },
-            "START_AT_SPINNER": "#note-settings-spin-start",
-            "NUMBERING_COMBO": {
-                "selector": "#note-settings-combo-numbering",
-                "elementsSelector": "#note-settings-combo-numbering ul li",
-                "descriptionSelector": "a",
-                "elementsValue": []
-            },
-            "CUSTOM_MARK_INPUT": "#note-settings-txt-custom",
-            "APPLY_COMBO": {
-                "selector": "#note-settings-combo-apply",
-                "elementsSelector": "#note-settings-combo-apply ul li",
-                "descriptionSelector": "a",
-                "elementsValue": []
-            },
             "INSERT_BUTTON": "#window-note-settings .footer button[result=insert]",
             "APPLY_BUTTON": "#window-note-settings .footer button[result=apply]",
             "CANCEL_BUTTON": "#window-note-settings .footer button[result=cancel]"

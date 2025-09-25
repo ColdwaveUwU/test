@@ -37,6 +37,14 @@ class OptionsButton extends UIElement {
             await optionsDropdown.selectDropdownItem(optionValue);
         }
     }
+
+    async getOptions() {
+        const optionsDropdown = new Dropdown(this.tester, {
+            selector: this.selector,
+            ...this.dropdownSelectors,
+        });
+        return await optionsDropdown.getDropdownItems();
+    }
 }
 
 module.exports = OptionsButton;

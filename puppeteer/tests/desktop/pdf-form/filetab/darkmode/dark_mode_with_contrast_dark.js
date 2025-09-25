@@ -8,11 +8,9 @@ Tester.createFile(fileName);
 
 FileMenu.setAdvancedSettings({
     appearance: {
-        theme: { value: "Contrast Dark" },
-        darkMode: true,
+        theme: { value: "Contrast Dark", darkMode: true },
     },
 });
-
 const isDarkModeEnabled = Tester.checkSelector("#fms-chb-dark-mode input:checked");
 if (!isDarkModeEnabled) {
     throw new Error("Document dark mode checkbox was not enabled");

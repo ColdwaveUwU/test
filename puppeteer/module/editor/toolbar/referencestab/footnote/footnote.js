@@ -1,7 +1,7 @@
 const ReferencesTab = require("../referencestab");
 const selectors = require("./selectors.json");
 const { Input, ModalButton, OptionsButton, Dropdown, Checkbox } = require("../../../../elements");
-
+const { NotesSettings, DeleteNotes } = require("../../../modalwindows");
 /**
  * @typedef {Object} NotesSettings
  * @property {string} [location] - Notes location ("Bottom of page" or "Below text" or "End of section" or "End of document")
@@ -22,53 +22,35 @@ class Footnote extends ReferencesTab {
      */
     static SELECTORS = selectors;
 
-    /**
-     * @enum
-     */
-    static SETTINGS_MAP = {
-        location: "selectLocation",
-        numberFormat: "selectNumberFormat",
-        startAt: "setStartAt",
-        numbering: "selectNumbering",
-        customMark: "setCustomMark",
-        applyChangesTo: "selectApplyChangesTo",
-    };
+    #footnoteDropdown = null;
+    #notesSettingsModal = null;
+    #notesSettings = null;
 
-    /**
-     * @enum
-     */
-    static LOCATION_CONFIG = {
-        "Bottom of page": {
-            radioSelector: Footnote.SELECTORS.MODAL_WINDOW.NOTES_SETTINGS.FOOTNOTE_RADIO,
-            dropdownSelector: Footnote.SELECTORS.MODAL_WINDOW.NOTES_SETTINGS.FOOTNOTE_LOCATION_COMBO,
-        },
-        "Below text": {
-            radioSelector: Footnote.SELECTORS.MODAL_WINDOW.NOTES_SETTINGS.FOOTNOTE_RADIO,
-            dropdownSelector: Footnote.SELECTORS.MODAL_WINDOW.NOTES_SETTINGS.FOOTNOTE_LOCATION_COMBO,
-        },
-        "End of section": {
-            radioSelector: Footnote.SELECTORS.MODAL_WINDOW.NOTES_SETTINGS.ENDNOTE_RADIO,
-            dropdownSelector: Footnote.SELECTORS.MODAL_WINDOW.NOTES_SETTINGS.ENDNOTE_LOCATION_COMBO,
-        },
-        "End of document": {
-            radioSelector: Footnote.SELECTORS.MODAL_WINDOW.NOTES_SETTINGS.ENDNOTE_RADIO,
-            dropdownSelector: Footnote.SELECTORS.MODAL_WINDOW.NOTES_SETTINGS.ENDNOTE_LOCATION_COMBO,
-        },
-    };
-
-    /**
-     * Returns the notes settings modal
-     * @returns {ModalButton} - The notes settings modal
-     */
-    get notesSettingsModal() {
-        if (!this._notesSettingsModal) {
-            this._notesSettingsModal = new ModalButton(
-                this.tester,
-                "",
-                Footnote.SELECTORS.MODAL_WINDOW.NOTES_SETTINGS.WINDOW
-            );
+    get footnoteDropdown() {
+        if (!this.#footnoteDropdown) {
+            const btn = Footnote.SELECTORS.TOOLBAR.NOTES_BUTTON;
+            this.#footnoteDropdown = new OptionsButton(this.tester, btn.selector, btn.defaultButton, btn);
         }
-        return this._notesSettingsModal;
+        return this.#footnoteDropdown;
+    }
+
+    get notesSettings() {
+        if (!this.#notesSettings && this.#notesSettingsModal) {
+            this.#notesSettings = new NotesSettings(this.tester, this.#notesSettingsModal);
+        }
+        return this.#notesSettings;
+    }
+
+    async #selectFootnoteOption(optionValue) {
+        await this.footnoteDropdown.setOption(optionValue);
+    }
+
+    #getNotesSettingsModal(selector) {
+        if (!this.#notesSettingsModal) {
+            const { WINDOW, APPLY_BUTTON } = Footnote.SELECTORS.MODAL_WINDOW.NOTES_SETTINGS;
+            this.#notesSettingsModal = new ModalButton(this.tester, selector, WINDOW, APPLY_BUTTON);
+        }
+        return this.#notesSettingsModal;
     }
 
     /**
@@ -76,7 +58,10 @@ class Footnote extends ReferencesTab {
      */
     async openNotesSettings() {
         try {
-            await Promise.all([this.notesSettingsModal.isModalOpen(), this.#footnoteDropdown("Notes settings")]);
+            const notesDropdownButtons = await this.footnoteDropdown.getOptions();
+            const notesSettings = notesDropdownButtons.find((elem) => elem.description === "Notes settings");
+            this.#getNotesSettingsModal(notesSettings.id);
+            await this.notesSettings.openNotesSettings();
         } catch (error) {
             this.#handleError("openNotesSettings", error);
         }
@@ -87,7 +72,7 @@ class Footnote extends ReferencesTab {
      */
     async convertAllNotes() {
         try {
-            await this.#footnoteDropdown("Convert all notes");
+            await this.#selectFootnoteOption("Convert all notes");
         } catch (error) {
             this.#handleError("convertAllNotes", error);
         }
@@ -98,7 +83,7 @@ class Footnote extends ReferencesTab {
      */
     async clickFootnote() {
         try {
-            await this.#footnoteDropdown();
+            await this.#selectFootnoteOption();
         } catch (error) {
             this.#handleError("clickFootnote", error);
         }
@@ -109,7 +94,7 @@ class Footnote extends ReferencesTab {
      */
     async insertFootnote() {
         try {
-            await this.#footnoteDropdown("Insert footnote");
+            await this.#selectFootnoteOption("Insert footnote");
         } catch (error) {
             this.#handleError("insertFootnote", error);
         }
@@ -120,7 +105,7 @@ class Footnote extends ReferencesTab {
      */
     async insertEndnote() {
         try {
-            await this.#footnoteDropdown("Insert endnote");
+            await this.#selectFootnoteOption("Insert endnote");
         } catch (error) {
             this.#handleError("insertEndnote", error);
         }
@@ -134,20 +119,17 @@ class Footnote extends ReferencesTab {
     async deleteAllNotes(footnotes = true, endnotes = true) {
         const checkboxSelectors = Footnote.SELECTORS.MODAL_WINDOW.DELETE_ALL_NOTES;
         try {
+            const notesDropdownButtons = await this.footnoteDropdown.getOptions();
+            const notesSettings = notesDropdownButtons.find((elem) => elem.description === "Delete all notes");
             const deleteNotesModal = new ModalButton(
                 this.tester,
-                "",
+                notesSettings.id,
                 checkboxSelectors.WINDOW,
                 checkboxSelectors.OK_BUTTON
             );
 
-            await Promise.all([deleteNotesModal.isModalOpen(), this.#footnoteDropdown("Delete all notes")]);
-
-            await Promise.all([
-                new Checkbox(this.tester, checkboxSelectors.FOOTNOTE_CHECKBOX).set(footnotes),
-                new Checkbox(this.tester, checkboxSelectors.ENDNOTE_CHECKBOX).set(endnotes),
-            ]);
-            await deleteNotesModal.closeModal();
+            const deleteNotesSettings = new DeleteNotes(this.tester, deleteNotesModal);
+            await deleteNotesSettings.deleteAllNotes(footnotes, endnotes);
         } catch (error) {
             this.#handleError("deleteAllNotes", error);
         }
@@ -195,7 +177,8 @@ class Footnote extends ReferencesTab {
     async convertAllFootnotesToEndnotes() {
         try {
             await this.#clickFootnoteDropdownToggle();
-            await Promise.all([this.convertAllNotes(), this.#footnoteDropdown("Convert all footnotes to endnotes")]);
+            await this.convertAllNotes();
+            await this.#selectFootnoteOption("Convert all footnotes to endnotes");
         } catch (error) {
             this.#handleError("convertAllFootnotesToEndnotes", error);
         }
@@ -207,7 +190,8 @@ class Footnote extends ReferencesTab {
     async convertAllEndnotesToFootnotes() {
         try {
             await this.#clickFootnoteDropdownToggle();
-            await Promise.all([this.convertAllNotes(), this.#footnoteDropdown("Convert all endnotes to footnotes")]);
+            await this.convertAllNotes();
+            await this.#selectFootnoteOption("Convert all endnotes to footnotes");
         } catch (error) {
             this.#handleError("convertAllEndnotesToFootnotes", error);
         }
@@ -219,7 +203,8 @@ class Footnote extends ReferencesTab {
     async swapFootnotesAndEndnotes() {
         try {
             await this.#clickFootnoteDropdownToggle();
-            await Promise.all([this.convertAllNotes(), this.#footnoteDropdown("Swap footnotes and endnotes")]);
+            await this.convertAllNotes();
+            await this.#selectFootnoteOption("Swap footnotes and endnotes");
         } catch (error) {
             this.#handleError("swapFootnotesAndEndnotes", error);
         }
@@ -232,12 +217,7 @@ class Footnote extends ReferencesTab {
      */
     async setNotesSettings(settings, method = "insert") {
         await this.openNotesSettings();
-        await this.setSettingsByMap(settings, Footnote.SETTINGS_MAP);
-        if (method.toLowerCase() === "insert") {
-            await this.clickInsertNotesSettings();
-        } else {
-            await this.clickApplyNotesSettings();
-        }
+        await this.notesSettings.setNotesSettings(settings, method);
     }
 
     /**
@@ -245,7 +225,7 @@ class Footnote extends ReferencesTab {
      */
     async clickCancelNotesSettings() {
         try {
-            await this.notesSettingsModal.closeModal(Footnote.SELECTORS.MODAL_WINDOW.NOTES_SETTINGS.CANCEL_BUTTON);
+            await this.notesSettings.clickCancelNotesSettings();
         } catch (error) {
             this.#handleError("clickCancelNotesSettings", error);
         }
@@ -256,7 +236,7 @@ class Footnote extends ReferencesTab {
      */
     async clickApplyNotesSettings() {
         try {
-            await this.notesSettingsModal.closeModal(Footnote.SELECTORS.MODAL_WINDOW.NOTES_SETTINGS.APPLY_BUTTON);
+            await this.notesSettings.clickApplyNotesSettings();
         } catch (error) {
             this.#handleError("clickApplyNotesSettings", error);
         }
@@ -267,7 +247,7 @@ class Footnote extends ReferencesTab {
      */
     async clickInsertNotesSettings() {
         try {
-            await this.notesSettingsModal.closeModal(Footnote.SELECTORS.MODAL_WINDOW.NOTES_SETTINGS.INSERT_BUTTON);
+            await this.notesSettings.clickInsertNotesSettings();
         } catch (error) {
             this.#handleError("clickInsertNotesSettings", error);
         }
@@ -278,15 +258,8 @@ class Footnote extends ReferencesTab {
      * @param { "End of section" | "End of document" | "Bottom of page" | "Below text" } location - Notes location
      */
     async selectLocation(location) {
-        const locationConfig = Footnote.LOCATION_CONFIG[location];
-        if (!locationConfig) {
-            throw new Error(`Invalid location: ${location}`);
-        }
-
         try {
-            await this.tester.click(locationConfig.radioSelector);
-            const locationDropdown = new Dropdown(this.tester, locationConfig.dropdownSelector);
-            await locationDropdown.selectDropdownItem(location);
+            await this.notesSettings.selectLocation(location);
         } catch (error) {
             this.#handleError("selectLocation", error);
         }
@@ -297,10 +270,8 @@ class Footnote extends ReferencesTab {
      * @param { "1, 2, 3,..." | "a, b, c,..." | "A, B, C,..." | "i, ii, iii,..." | "I, II, III,..." } numberFormat
      */
     async selectNumberFormat(numberFormat) {
-        const formatSelectors = Footnote.SELECTORS.MODAL_WINDOW.NOTES_SETTINGS.FORMAT_COMBO;
-        const formatDropdown = new Dropdown(this.tester, formatSelectors);
         try {
-            await formatDropdown.selectDropdownItem(numberFormat);
+            await this.notesSettings.selectNumberFormat(numberFormat);
         } catch (error) {
             this.#handleError("selectNumberFormat", error);
         }
@@ -312,12 +283,7 @@ class Footnote extends ReferencesTab {
      */
     async setStartAt(startAt) {
         try {
-            const inputStartAt = new Input(
-                this.tester,
-                Footnote.SELECTORS.MODAL_WINDOW.NOTES_SETTINGS.START_AT_SPINNER,
-                false
-            );
-            await inputStartAt.set(startAt);
+            await this.notesSettings.setStartAt(startAt);
         } catch (error) {
             this.#handleError("setStartAt", error);
         }
@@ -328,10 +294,8 @@ class Footnote extends ReferencesTab {
      * @param { "Continuous" | "Restart each section" | "Restart each page" } numbering
      */
     async selectNumbering(numbering) {
-        const numberingSelectors = Footnote.SELECTORS.MODAL_WINDOW.NOTES_SETTINGS.NUMBERING_COMBO;
-        const numberingDropdown = new Dropdown(this.tester, numberingSelectors);
         try {
-            await numberingDropdown.selectDropdownItem(numbering);
+            await this.notesSettings.selectNumbering(numbering);
         } catch (error) {
             this.#handleError("selectNumbering", error);
         }
@@ -343,12 +307,7 @@ class Footnote extends ReferencesTab {
      */
     async setCustomMark(customMark) {
         try {
-            const inputCustomMark = new Input(
-                this.tester,
-                Footnote.SELECTORS.MODAL_WINDOW.NOTES_SETTINGS.CUSTOM_MARK_INPUT,
-                false
-            );
-            await inputCustomMark.set(customMark, 100);
+            await this.notesSettings.setCustomMark(customMark);
         } catch (error) {
             this.#handleError("setCustomMark", error);
         }
@@ -359,10 +318,8 @@ class Footnote extends ReferencesTab {
      * @param { "Whole document" } applyChangesTo - Apply changes to
      */
     async selectApplyChangesTo(applyChangesTo) {
-        const applyChangesToSelectors = Footnote.SELECTORS.MODAL_WINDOW.NOTES_SETTINGS.APPLY_COMBO;
-        const applyChangesToDropdown = new Dropdown(this.tester, applyChangesToSelectors);
         try {
-            await applyChangesToDropdown.selectDropdownItem(applyChangesTo);
+            await this.notesSettings.selectApplyChangesTo(applyChangesTo);
         } catch (error) {
             this.#handleError("selectApplyChangesTo", error);
         }
@@ -377,31 +334,6 @@ class Footnote extends ReferencesTab {
         } catch (error) {
             this.#handleError("#clickFootnoteDropdown", error);
         }
-    }
-
-    /**
-     * Selects a specific item from the dropdown.
-     * @param {
-     * "Insert footnote" |
-     * "Insert endnote" |
-     * "Delete all notes" |
-     * "Convert all notes" |
-     * "Convert all footnotes to endnotes" |
-     * "Convert all endnotes to footnotes" |
-     * "Swap footnotes and endnotes" |
-     * "Notes settings"
-     * } optionValue - The value of the dropdown item to select.
-     * @throws {Error} - Throws an error if the specified option is not found in the dropdown.
-     */
-    async #footnoteDropdown(optionValue) {
-        const notesButtonSelectors = Footnote.SELECTORS.TOOLBAR.NOTES_BUTTON;
-        const notesOptionsButton = new OptionsButton(
-            this.tester,
-            notesButtonSelectors.selector,
-            notesButtonSelectors.defaultButton,
-            notesButtonSelectors
-        );
-        await notesOptionsButton.setOption(optionValue);
     }
 
     /**
