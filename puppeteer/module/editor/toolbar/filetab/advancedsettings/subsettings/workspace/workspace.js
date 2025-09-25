@@ -2,7 +2,7 @@ const SubSettings = require("../subsettings");
 const selectors = require("./selectors.json");
 const { Checkbox } = require("../../../../../../elements");
 const { Dropdown } = require("../../../../../../elements");
-
+const { CustomQuick } = require("../../../../../modalwindows");
 /**
  * @typedef WorkspaceCheckboxSettings
  * @property {boolean} [turnOnScreen]

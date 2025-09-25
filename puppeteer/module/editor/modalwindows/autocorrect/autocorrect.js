@@ -33,10 +33,7 @@ class AutoCorrect {
         }
 
         const button = new Button(this.tester, section.SECTION.BUTTON);
-        if (!(await button.isActive())) {
-            await button.click();
-        }
-        return;
+        await button.click();
     }
 
     /**
@@ -48,7 +45,7 @@ class AutoCorrect {
 
         if (mathSettings?.asType) {
             const asTypeCheckbox = new Checkbox(this.tester, mathSettingsSelectors.REPLACE_AS_TYPE);
-            await asTypeCheckbox.clickCheckbox(mathSettings.asType);
+            await asTypeCheckbox.set(mathSettings.asType);
         }
 
         if (mathSettings?.replace) {
@@ -73,11 +70,9 @@ class AutoCorrect {
             const selector = actionMap[actionKey];
 
             if (selector) {
-                const expectedCounter = (await this.tester.getModalsMaskCounter()) + 1;
-
                 await this.tester.click(selector);
-
-                if (await this.tester.checkModalMask(expectedCounter)) {
+                const expectedCounter = await this.tester.getModalCounter();
+                if (expectedCounter > 0) {
                     await this.tester.click(mathSettingsSelectors.MODAL_MASK.YES_BUTTON);
                 }
             } else {
@@ -146,7 +141,7 @@ class AutoCorrect {
             }
 
             const checkbox = new Checkbox(this.tester, selector);
-            await checkbox.clickCheckbox(value);
+            await checkbox.set(value);
         }
     }
 
@@ -160,7 +155,7 @@ class AutoCorrect {
         const checkBoxes = { cells: textAutoCorrectSettings?.cells, sentences: textAutoCorrectSettings?.sentences };
         for (const [key, value] of Object.entries(checkBoxes)) {
             const checkBox = new Checkbox(this.tester, autoCorrectSelectors.CONTENT[key.toUpperCase()]);
-            await checkBox.clickCheckbox(value);
+            await checkBox.set(value);
         }
 
         if (textAutoCorrectSettings?.exceptions) {

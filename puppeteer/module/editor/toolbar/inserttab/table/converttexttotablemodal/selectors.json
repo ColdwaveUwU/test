@@ -5,18 +5,18 @@
     },
     "AUTOFIT": {
         "CHECKBOXES": {
-            "FIXED_COLUMN": "#id-text-table-radio-fixed > div",
-            "AUTOFIT_CONTENTS": "#id-text-table-radio-contents > div",
-            "AUTOFIT_WINDOW": "#id-text-table-radio-window > div"
+            "FIXED_COLUMN": "#id-text-table-radio-fixed",
+            "AUTOFIT_CONTENTS": "#id-text-table-radio-contents",
+            "AUTOFIT_WINDOW": "#id-text-table-radio-window"
         },
         "INPUT_WIDTH": "#id-text-table-spn-fixed"
     },
     "SEPARATE": {
         "CHECKBOXES": {
-            "PARA": "#id-text-table-radio-para > div",
-            "TABS": "#id-text-table-radio-tabs > div",
-            "SEMI": "#id-text-table-radio-semi > div",
-            "OTHER": "#id-text-table-radio-other > div"
+            "PARA": "#id-text-table-radio-para",
+            "TABS": "#id-text-table-radio-tabs",
+            "SEMI": "#id-text-table-radio-semi",
+            "OTHER": "#id-text-table-radio-other"
         },
         "INPUT_OTHER": "#id-text-table-txt-other"
     }

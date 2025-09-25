@@ -102,13 +102,15 @@ class Table extends InsertTab {
     async insertTable(column, row) {
         const insertTableSelectors = Table.TABLE_SELECTORS.INSERT_TABLE;
 
-        await this.tableDropdown.selectDropdownItem("Insert custom table");
+        const covertTextButtons = await this.tableDropdown.getDropdownItems();
+        const target = covertTextButtons.find((elem) => elem.description === "Insert custom table");
         const customTableModalWindow = new ModalButton(
             this.tester,
-            "",
+            target.id,
             insertTableSelectors.MODAL_WINDOW.SELECTOR,
             insertTableSelectors.MODAL_WINDOW.OK_BUTTON
         );
+        await customTableModalWindow.openModal();
         if (await customTableModalWindow.isModalOpen()) {
             if (column) {
                 const columnInput = new Input(this.tester, insertTableSelectors.MODAL_WINDOW.INPUT_COLUMN, false);
@@ -150,20 +152,20 @@ class Table extends InsertTab {
      */
     async convertTextToTable(settings) {
         const convertTextToTableSelectors = Table.TABLE_SELECTORS.COVERT_TEXT;
-        await this.tableDropdown.selectDropdownItem("Convert Text to Table");
+        const convertTextToTable = new ConvertTextToTableModal(this.tester);
 
+        const covertTextButtons = await this.tableDropdown.getDropdownItems();
+        const target = covertTextButtons.find((elem) => elem.description === "Convert Text to Table");
         const convertTextToTableModal = new ModalButton(
             this.tester,
-            "",
+            target.id,
             convertTextToTableSelectors.MODAL_WINDOW,
             convertTextToTableSelectors.OK_BUTTON
         );
 
-        if (await convertTextToTableModal.isModalOpen()) {
-            const convertTextToTable = new ConvertTextToTableModal(this.tester);
-            await convertTextToTable.setSettings(settings);
-            await convertTextToTableModal.closeModal();
-        }
+        await convertTextToTableModal.openModal();
+        await convertTextToTable.setSettings(settings);
+        await convertTextToTableModal.closeModal();
     }
 
     /**

@@ -35,7 +35,7 @@ class CustomQuick {
                     throw new Error(`Selector for key "${key}" not found in CUSTOM_QUICK_SELECTORS.CHECKBOXES`);
                 }
                 const checkbox = new Checkbox(this.tester, selector);
-                await checkbox.clickCheckbox(value);
+                await checkbox.set(value);
             }
             await this.tester.click(customQuickSelectors.OK_BUTTON);
         } catch (err) {
