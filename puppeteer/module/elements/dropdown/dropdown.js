@@ -134,6 +134,18 @@ class Dropdown extends UIElement {
         }
         await this.tester.click(items[index].id);
     }
+
+    /**
+     * Get dropdown item by key & value
+     * @param {string} itemKey
+     * @param {string} itemValue
+     * @returns {string}
+     */
+    async getDropdownItem(itemKey, itemValue) {
+        const dropdownItems = await this.getDropdownItems();
+        const targetItem = dropdownItems.find((elem) => elem[itemKey] === itemValue);
+        return targetItem;
+    }
 }
 
 module.exports = Dropdown;

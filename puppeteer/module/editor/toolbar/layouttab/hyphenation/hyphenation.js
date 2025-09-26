@@ -1,5 +1,5 @@
 const LayoutTab = require("../layouttab");
-const { Dropdown, Input, Checkbox } = require("../../../../elements");
+const { Dropdown, Input, Checkbox, ModalButton } = require("../../../../elements");
 const selectors = require("./selectors.json");
 
 class Hyphenation extends LayoutTab {
@@ -19,17 +19,43 @@ class Hyphenation extends LayoutTab {
         HYPHENATION_TYPES: ["None", "Automatic", "Hyphenation options"],
     };
 
+    #hyphenationDropdown = null;
+    #hyphenationModalWindow = null;
+    #getHyphenationDropdown() {
+        if (!this.#hyphenationDropdown) {
+            const hyphenationMenuSelectors = Hyphenation.HYPHENATION_SELECTORS.HYPHENATION_MENU;
+            this.#hyphenationDropdown = new Dropdown(this.tester, {
+                selector: hyphenationMenuSelectors.MENU_SELECTOR,
+                elementsValue: Hyphenation.TYPES.HYPHENATION_TYPES,
+                elementsSelector: hyphenationMenuSelectors.DROPDOWN_ELEMENTS_SELECTOR,
+            });
+        }
+        return this.#hyphenationDropdown;
+    }
+
+    async #getHyphenationModalWindow() {
+        if (!this.#hyphenationModalWindow) {
+            const targetElement = await this.#getHyphenationDropdown().getDropdownItem(
+                "description",
+                "Hyphenation options"
+            );
+            debugger;
+            const hyphenationModalSelectors = Hyphenation.HYPHENATION_SELECTORS.HYPHENATION_WINDOW;
+            this.#hyphenationModalWindow = new ModalButton(
+                this.tester,
+                targetElement.id,
+                hyphenationModalSelectors.WINDOW,
+                hyphenationModalSelectors.OK_BUTTON
+            );
+        }
+        return this.#hyphenationModalWindow;
+    }
     /**
      * Select hyphenation option from dropdown menu
      * @param {"None" | "Automatic" | "Hyphenation options"} [optionValue]
      */
     async setHyphenation(optionValue) {
-        const hyphenationMenuSelectors = Hyphenation.HYPHENATION_SELECTORS.HYPHENATION_MENU;
-        const hyphenationDropdown = new Dropdown(this.tester, {
-            selector: hyphenationMenuSelectors.MENU_SELECTOR,
-            elementsValue: Hyphenation.TYPES.HYPHENATION_TYPES,
-            elementsSelector: hyphenationMenuSelectors.DROPDOWN_ELEMENTS_SELECTOR,
-        });
+        const hyphenationDropdown = this.#getHyphenationDropdown();
         try {
             await hyphenationDropdown.selectDropdownItem(optionValue);
         } catch (error) {
@@ -43,10 +69,9 @@ class Hyphenation extends LayoutTab {
      * Open Hyphenation window
      */
     async openHyphenationWindow() {
-        const hyphenationWindowSelector = Hyphenation.HYPHENATION_SELECTORS.HYPHENATION_WINDOW.WINDOW;
         try {
-            await this.setHyphenation("Hyphenation options");
-            await this.tester.checkSelector(hyphenationWindowSelector);
+            const hyphenationModalWindow = await this.#getHyphenationModalWindow();
+            await hyphenationModalWindow.openModal();
         } catch (error) {
             throw new Error(`openHyphenationWindow: Failed to open hyphenation". \n${error.message}`, {
                 cause: error,
@@ -157,7 +182,8 @@ class Hyphenation extends LayoutTab {
      */
     async clickOkButton() {
         try {
-            await this.tester.click(Hyphenation.HYPHENATION_SELECTORS.HYPHENATION_WINDOW.OK_BUTTON);
+            const hyphenationModalWindow = await this.#getHyphenationModalWindow();
+            await hyphenationModalWindow.closeModal();
         } catch (error) {
             throw new Error(`clickOkButton: Failed click ok button". \n${error.message}`, {
                 cause: error,
@@ -172,9 +198,8 @@ class Hyphenation extends LayoutTab {
     async setHyphenationSettings(hyphenationSettings) {
         try {
             await this.openHyphenationWindow();
-            await this.applySettings(hyphenationSettings).then(async () => {
-                await this.clickOkButton();
-            });
+            await this.applySettings(hyphenationSettings);
+            await this.clickOkButton();
         } catch (error) {
             throw new Error(`setHyphenationSettings: Failed set settings". \n${error.message}`, {
                 cause: error,

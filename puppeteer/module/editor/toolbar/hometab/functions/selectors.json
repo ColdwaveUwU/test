@@ -2,9 +2,7 @@
     "TOOLBAR": {
         "FUNCTIONS_BUTTON": {
             "selector": "#id-toolbar-btn-insertformula",
-            "elementsSelector": "#id-toolbar-btn-insertformula ul li",
-            "descriptionSelector": "a",
-            "elementsValue": []
+            "elementsSelector": "#id-toolbar-btn-insertformula ul li a"
         }
     },
     "MODAL_WINDOW": {

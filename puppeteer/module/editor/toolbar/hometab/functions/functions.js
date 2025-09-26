@@ -2,7 +2,6 @@ const HomeTab = require("../hometab");
 const selectors = require("./selectors.json");
 const { Input, ModalButton, Dropdown } = require("../../../../elements");
 
-
 /**
  * @typedef {Object} Function
  * @property { "SUM" | "AVERAGE" | "MIN" | "MAX" | "COUNT" | "Additional" } value - The function to set.
@@ -46,6 +45,14 @@ class Functions extends HomeTab {
         functionArguments: "setFunctionArguments",
     };
 
+    #functionsDropdown = null;
+    #getFunctionsDropdown() {
+        if (!this.#functionsDropdown) {
+            this.#functionsDropdown = new Dropdown(this.tester, Functions.SELECTORS.TOOLBAR.FUNCTIONS_BUTTON);
+        }
+        return this.#functionsDropdown;
+    }
+
     /**
      * Sets multiple settings in the Functions dialog
      * @param {FunctionsSettings} settings - Functions settings
@@ -60,7 +67,7 @@ class Functions extends HomeTab {
      * @param {boolean} [pressEnter=false] - Whether to press Enter after selecting the function.
      */
     async setFunction(optionValue, pressEnter = false) {
-        const functionsDropdown = new Dropdown(this.tester, Functions.SELECTORS.TOOLBAR.FUNCTIONS_BUTTON);
+        const functionsDropdown = this.#getFunctionsDropdown();
         try {
             await functionsDropdown.selectDropdownItem(optionValue);
             if (pressEnter) {
@@ -235,7 +242,10 @@ class Functions extends HomeTab {
      * @param {ModalButton} modalWindow - The modal window to open.
      */
     async #openFunctionModalWindow(modalWindow) {
-        await Promise.all([this.setFunction("Additional", false), modalWindow.isModalOpen()]);
+        const functionsDropdown = this.#getFunctionsDropdown();
+        const { id } = await functionsDropdown.getDropdownItem("description", "Additional");
+        modalWindow.selector = id;
+        await modalWindow.openModal();
     }
 
     /**

@@ -93,44 +93,40 @@ class TableOfContents extends ReferencesTab {
     }
 
     /**
-     * Sets multiple settings in the Table of Contents dialog
-     * @param {TableOfContentsSettings} settings - Table of Contents settings
+     * Opens the Table of Contents settings modal, applies settings, and closes it with the specified button.
+     * @param {TableOfContentsSettings} settings - Settings to apply.
+     * @param {string} closeButtonSelector - Selector of the button to close the modal (OK or Cancel).
      */
-    async setTableOfContentsSettings(settings) {
+    async #handleTableOfContentsSettings(settings, closeButtonSelector) {
+        const { id } = await this.#getTableOfContentsOptionsButton().getOption("description", "Settings");
+
         const tableOfContentsSettingsModalWindow = new ModalButton(
             this.tester,
-            "",
+            id,
             TableOfContents.SELECTORS.MODAL_WINDOW.TABLE_OF_CONTENTS_WINDOW
         );
 
-        await Promise.all([
-            this.#getTableOfContentsOptionsButton().setOption("Settings"),
-            tableOfContentsSettingsModalWindow.isModalOpen(),
-        ]);
-
+        await tableOfContentsSettingsModalWindow.openModal();
         await this.setSettingsByMap(settings, TableOfContents.SETTINGS_MAP);
-        await tableOfContentsSettingsModalWindow.closeModal(
+        await tableOfContentsSettingsModalWindow.closeModal(closeButtonSelector);
+    }
+
+    /**
+     * Sets multiple settings in the Table of Contents dialog and confirms with OK.
+     */
+    async setTableOfContentsSettings(settings) {
+        await this.#handleTableOfContentsSettings(
+            settings,
             TableOfContents.SELECTORS.MODAL_WINDOW.OK_BUTTON.ELEMENT_SELECTOR
         );
     }
 
     /**
-     * Cancels the Table of Contents settings modal after applying the provided settings.
-     * @param {TableOfContentsSettings} settings - An object containing the settings to be applied before cancellation.
-     * @returns {Promise<void>} Resolves when the modal has been closed.
+     * Sets multiple settings in the Table of Contents dialog and cancels.
      */
     async cancelTableOfContentsSettings(settings) {
-        const tableOfContentsSettingsModalWindow = new ModalButton(
-            this.tester,
-            "",
-            TableOfContents.SELECTORS.MODAL_WINDOW.TABLE_OF_CONTENTS_WINDOW
-        );
-        await Promise.all([
-            this.#getTableOfContentsOptionsButton().setOption("Settings"),
-            tableOfContentsSettingsModalWindow.isModalOpen(),
-        ]);
-        await this.setSettingsByMap(settings, TableOfContents.SETTINGS_MAP);
-        await tableOfContentsSettingsModalWindow.closeModal(
+        await this.#handleTableOfContentsSettings(
+            settings,
             TableOfContents.SELECTORS.MODAL_WINDOW.CANCEL_BUTTON.ELEMENT_SELECTOR
         );
     }
@@ -291,7 +287,7 @@ class TableOfContents extends ReferencesTab {
                     const inputSelector = `${item.id}`;
                     if (typeof level !== "undefined" && level !== 0 && level !== "0" && level !== "") {
                         const inputLevel = new Input(this.tester, inputSelector, false);
-                        await inputLevel.set(level, 100);
+                        await inputLevel.set(level);
                     } else {
                         await this.tester.click(inputSelector);
                         await this.tester.page.keyboard.press("Delete");
