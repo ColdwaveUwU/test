@@ -1,5 +1,5 @@
 const LayoutTab = require("../layouttab");
-const { Dropdown, Input, Checkbox } = require("../../../../elements");
+const { Dropdown, Input, Checkbox, ModalButton } = require("../../../../elements");
 const selectors = require("./selectors.json");
 
 class PageColumns extends LayoutTab {
@@ -19,20 +19,39 @@ class PageColumns extends LayoutTab {
         PAGE_COLUMNS_TYPES: ["One", "Two", "Three", "Left", "Right", "Custom columns"],
     };
 
+    #columnsDropdown = null;
+    #customColumnWindow = null;
+
+    #getColumnsDropdown() {
+        if (!this.#columnsDropdown) {
+            const columnsMenuSelectors = PageColumns.PAGE_COLUMNS_SELECTORS.PAGE_COLUMNS_MENU;
+            this.#columnsDropdown = new Dropdown(this.tester, {
+                selector: columnsMenuSelectors.MENU_SELECTOR,
+                elementsValue: PageColumns.TYPES.PAGE_COLUMNS_TYPES,
+                elementsSelector: columnsMenuSelectors.DROPDOWN_ELEMENTS_SELECTOR,
+                descriptionSelector: columnsMenuSelectors.DESCRIPTION_SELECTOR,
+            });
+            return this.#columnsDropdown;
+        }
+    }
+
+    async #getCustomColumnWindow() {
+        const { WINDOW, OK_BUTTON } = PageColumns.PAGE_COLUMNS_SELECTORS.CUSTOM_COLUMNS;
+        if (!this.#customColumnWindow) {
+            const columnsDropdown = this.#getColumnsDropdown();
+            const target = await columnsDropdown.getDropdownItem("description", "Custom columns");
+            this.#customColumnWindow = new ModalButton(this.tester, target.id, WINDOW, OK_BUTTON);
+        }
+        return this.#customColumnWindow;
+    }
+
     /**
      * Select page columns option from dropdown menu
      * @param {"One" | "Two" | "Three" | "Left" | "Right" | "Custom columns"} [optionValue]
      */
     async setColumns(optionValue) {
         try {
-            const columnsMenuSelectors = PageColumns.PAGE_COLUMNS_SELECTORS.PAGE_COLUMNS_MENU;
-            const columnsDropdown = new Dropdown(this.tester, {
-                selector: columnsMenuSelectors.MENU_SELECTOR,
-                elementsValue: PageColumns.TYPES.PAGE_COLUMNS_TYPES,
-                elementsSelector: columnsMenuSelectors.DROPDOWN_ELEMENTS_SELECTOR,
-                descriptionSelector: columnsMenuSelectors.DESCRIPTION_SELECTOR,
-            });
-
+            const columnsDropdown = this.#getColumnsDropdown();
             await columnsDropdown.selectDropdownItem(optionValue);
         } catch (error) {
             throw new Error(`setColumns: Failed to set columns "${optionValue}". ${error.message}`, {
@@ -47,8 +66,8 @@ class PageColumns extends LayoutTab {
     async openCustomColumnsWindow() {
         const customColumnsWindowSelector = PageColumns.PAGE_COLUMNS_SELECTORS.CUSTOM_COLUMNS.WINDOW;
         try {
-            await this.setColumns("Custom columns");
-            await this.tester.checkSelector(customColumnsWindowSelector);
+            const customColumnWindow = await this.#getCustomColumnWindow();
+            await customColumnWindow.openModal();
         } catch (error) {
             throw new Error(
                 `openCustomColumnsWindow: Failed to open custom columns window "${customColumnsWindowSelector}". ${error.message}`,
@@ -228,7 +247,8 @@ class PageColumns extends LayoutTab {
      */
     async clickOkButton() {
         try {
-            await this.tester.click(PageColumns.PAGE_COLUMNS_SELECTORS.CUSTOM_COLUMNS.OK_BUTTON);
+            const customColumnWindow = await this.#getCustomColumnWindow();
+            await customColumnWindow.closeModal();
         } catch (error) {
             throw new Error(`clickOkButton: Failed to click ok button. ${error.message}`, {
                 cause: error,

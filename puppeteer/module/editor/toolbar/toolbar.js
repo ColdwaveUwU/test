@@ -64,7 +64,7 @@ class Toolbar {
 
     async clickTargetTab() {
         if (this.tabTarget === "File") {
-            await this.tester.sleep(1000);
+            await this.tester.sleep(1000); // todo fix open FIleTab after mask
         }
         const tabSelector = `#toolbar .box-tabs li a[data-title=${this.tabTarget}]`;
         await this.tester.click(tabSelector);
