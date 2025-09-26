@@ -48,14 +48,21 @@ class Color {
             Custom: 4,
             CustomClick: 5,
         };
-        this.MoreColorsModal = new ModalButton(
-            this.tester,
-            "",
-            ModalDialogSelectors.MODAL_WINDOW,
-            ModalDialogSelectors.APPLY_BUTTON
-        );
     }
 
+    #moreColorsModal = null;
+
+    #getMoreColorsModal(selector) {
+        if (!this.#moreColorsModal) {
+            this.#moreColorsModal = new ModalButton(
+                this.tester,
+                selector,
+                ModalDialogSelectors.MODAL_WINDOW,
+                ModalDialogSelectors.APPLY_BUTTON
+            );
+        }
+        return this.#moreColorsModal;
+    }
     /**
      * Selects a color based on the provided color settings.
      * @param {string} selector - The CSS selector to locate the color picker element.
@@ -156,7 +163,8 @@ class Color {
         const { menuType } = color;
         const x = color.x - 1;
         const y = color.y - 1;
-        await this.#selectDropdownOption(selector, "Eyedropper", menuType);
+        const dropdown = this.#selectDropdownOption(selector, menuType);
+        await dropdown.selectDropdownItem("Eyedropper");
         await this.tester.clickMouseInsideMain(x, y);
     }
 
@@ -167,15 +175,16 @@ class Color {
      */
     async #selectCustomColor(selector, color) {
         const { menuType } = color;
-        const waitOpenColorMenu = this.tester.frame.waitForSelector(ColorSettingID.Colorpicker);
-        await this.#selectDropdownOption(selector, "More colors", menuType);
-        await waitOpenColorMenu;
+        const dropdown = this.#selectDropdownOption(selector, menuType);
+        const target = await dropdown.getDropdownItem("description", "More colors");
+        const moreColorModalWindow = this.#getMoreColorsModal(target.id);
+        await moreColorModalWindow.openModal();
         if (color.hex) {
             await this.#inputHexColor(color.hex);
         } else {
             await this.#inputRgbColor(color);
         }
-        await this.#confirmSelection();
+        await moreColorModalWindow.closeModal();
     }
 
     /**
@@ -209,10 +218,13 @@ class Color {
      */
     async #selectCustomClickColor(selector, color) {
         const { menuType } = color;
-        await this.#selectDropdownOption(selector, "More colors", menuType);
+        const dropdown = this.#selectDropdownOption(selector, menuType);
+        const target = await dropdown.getDropdownItem("description", "More colors");
+        const moreColorModalWindow = this.#getMoreColorsModal(target.id);
+        await moreColorModalWindow.openModal();
         await this.tester.mouseClickInsideElement(`${ColorSettingID.Colorpicker} .cnt-hb`, color.x, color.y);
         await this.tester.mouseClickInsideElement(`${ColorSettingID.Colorpicker} .cnt-sat`, 0, color.hue);
-        await this.#confirmSelection();
+        await moreColorModalWindow.closeModal();
     }
 
     /**
@@ -225,15 +237,6 @@ class Color {
     }
 
     /**
-     * Confirms the color selection by clicking the confirm button and checking the modal window.
-     */
-    async #confirmSelection() {
-        if (await this.MoreColorsModal.isModalOpen()) {
-            await this.MoreColorsModal.closeModal();
-        }
-    }
-
-    /**
      * Sets the value of an input field.
      * @param {string} value - The value to set in the input field.
      * @param {string} selector - The CSS selector to locate the input field.
@@ -243,14 +246,14 @@ class Color {
         await input.set(value);
     }
 
-    async #selectDropdownOption(selector, option, type) {
+    #selectDropdownOption(selector, type) {
         const menuOptions = ColorMenuType[type];
         const dropdown = new Dropdown(this.tester, {
             selector: selector,
             elementsSelector: `${selector} li[id]`,
             elementsValue: menuOptions,
         });
-        await dropdown.selectDropdownItem(option);
+        return dropdown;
     }
 }
 
