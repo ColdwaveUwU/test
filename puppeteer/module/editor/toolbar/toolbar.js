@@ -63,6 +63,9 @@ class Toolbar {
     }
 
     async clickTargetTab() {
+        if (this.tabTarget === "File") {
+            await this.tester.sleep(1000);
+        }
         const tabSelector = `#toolbar .box-tabs li a[data-title=${this.tabTarget}]`;
         await this.tester.click(tabSelector);
     }
