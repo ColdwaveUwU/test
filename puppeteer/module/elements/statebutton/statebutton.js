@@ -10,17 +10,49 @@ class StateButton extends Button {
      * @returns {Promise<void>}
      */
     async click() {
-        const prevState = await this.context.evaluate((sel) => {
+        const prevState = await this.getState();
+        await super.click();
+        await this.waitForStateChange(prevState);
+    }
+
+    /**
+     * Set the button to the desired state (active/pressed or inactive/unpressed).
+     * Clicks only if the current state is different.
+     * @param {boolean} desiredState - true for active/pressed, false for inactive/unpressed.
+     * @returns {Promise<void>}
+     */
+    async setState(desiredState) {
+        const currentState = await this.getState();
+
+        if (currentState === desiredState) {
+            return;
+        }
+
+        await super.click();
+        await this.waitForStateChange(currentState);
+    }
+
+    /**
+     * Get current state of the button
+     * @returns {Promise<boolean|null>}
+     */
+    async getState() {
+        return this.context.evaluate((sel) => {
             const btn = document.querySelector(sel);
             if (!btn) {
                 return null;
             }
             return btn.classList.contains("active") || btn.getAttribute("aria-pressed") === "true";
         }, this.selector);
+    }
 
-        await super.click();
-
-        return this.context.waitForFunction(
+    /**
+     * Wait until the button state changes from prevState
+     * @param {boolean|null} prevState
+     * @returns {Promise<void>}
+     */
+    async waitForStateChange(prevState) {
+        await this.context.waitForFunction(
             (sel, prev) => {
                 const btn = document.querySelector(sel);
                 const curr = btn
@@ -28,7 +60,7 @@ class StateButton extends Button {
                     : false;
                 return prev === null ? curr : curr !== prev;
             },
-            { timeout: 1000 },
+            { timeout: 5000 },
             this.selector,
             prevState
         );

@@ -135,7 +135,7 @@ class FileMenu extends Toolbar {
     async saveCopyAs(format, encode = "Unicode (UTF-8)") {
         try {
             const saveCopyAsSelectos = FileMenu.FILEMENU_SELECTORS.PANEL_MENU.SAVE_COPY_AS;
-            await this.tester.click(downloadSelectors.BUTTON);
+            await this.tester.click(saveCopyAsSelectos.BUTTON);
             const { SELECTOR, WARNING, OPTIONS } = saveCopyAsSelectos.FILE_TYPE[format.toUpperCase()];
             await this.tester.click(SELECTOR);
             if (WARNING) {

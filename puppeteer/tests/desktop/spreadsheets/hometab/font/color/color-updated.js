@@ -28,7 +28,7 @@ Font.clickFontColor({
     x: 150,
     y: 100,
 });
-
+debugger;
 Font.clickFontColor({
     type: Color.Type.Custom,
     r: customColor.r,

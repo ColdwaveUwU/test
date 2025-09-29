@@ -3,7 +3,7 @@ const BaseSettings = require("../basesettings");
 const selectors = require("./selectors.json");
 const TableAdvanced = require("./tableadvanced");
 const TableBaseSettings = require("./tablebasesettings");
-
+const { StateButton } = require("../../../../elements");
 class TableSettings extends BaseSettings {
     constructor(tester) {
         super(tester, selectors.RIGHT_MENU);
@@ -21,18 +21,8 @@ class TableSettings extends BaseSettings {
      * Open table settings
      */
     async openTableSettings() {
-        if (!(await this.#checkActive(TableSettings.TABLE_TAB_SELECTORS.RIGHT_MENU))) {
-            await this.rightMenu.openSettings(this);
-        }
-    }
-
-    /**
-     * Checks if the element is active
-     * @param {string} selector
-     */
-    async #checkActive(selector) {
-        const activeSelector = selector + ".active";
-        return await this.tester.checkSelector(activeSelector);
+        const tableSettingsButton = new StateButton(this.tester, TableSettings.TABLE_TAB_SELECTORS.RIGHT_MENU);
+        await tableSettingsButton.setState(true);
     }
 
     async setBaseSettings(settings) {
@@ -55,7 +45,7 @@ class TableSettings extends BaseSettings {
      */
     async applySettings(tabName, settings, tableSettingsModalWindow) {
         await this.openAdvancedSettings(tableSettingsModalWindow);
-        return await this.advancedSettings.setSetting(tabName, settings);
+        await this.advancedSettings.setSetting(tabName, settings);
     }
 }
 

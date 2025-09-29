@@ -216,6 +216,7 @@ class Table extends InsertTab {
             setAdvancedSettingsSelectors.WINDOW,
             setAdvancedSettingsSelectors.OK_BUTTON
         );
+        
         for (const [kind, prop] of Object.entries(options)) {
             await this.tableSettings.applySettings(kind, prop, tableSettingsModalWindow);
         }

@@ -92,6 +92,11 @@
                     "WARNING": null,
                     "OPTIONS": null
                 },
+                "XLTX": {
+                    "SELECTOR": "#panel-saveas .svg-format-xltx",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
                 "ODS": {
                     "SELECTOR": "#panel-saveas .svg-format-ods",
                     "WARNING": true,
@@ -268,6 +273,11 @@
                 },
                 "XLSB": {
                     "SELECTOR": "#panel-savecopy .svg-format-xlsb",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "XLTX": {
+                    "SELECTOR": "#panel-savecopy .svg-format-xltx",
                     "WARNING": null,
                     "OPTIONS": null
                 },

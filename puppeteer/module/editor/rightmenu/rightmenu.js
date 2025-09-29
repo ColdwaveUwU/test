@@ -24,9 +24,7 @@ class RightMenu {
      * @returns {Promise<void>}
      */
     async openSettings(settings) {
-        if (!(await this.isButtonActive(settings.selector))) {
-            await settings.open();
-        }
+        await settings.open();
     }
 }
 

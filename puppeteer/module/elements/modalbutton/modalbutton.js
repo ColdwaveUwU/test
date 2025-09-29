@@ -46,8 +46,18 @@ class ModalButton extends UIElement {
         await this.context.waitForFunction(
             async (id) => {
                 const el = document.getElementById(id);
-                if (!el) return true;
-                return !el.checkVisibility();
+                const modalsMask = document.querySelector(".modals-mask");
+
+                const isMaskHidden =
+                    !modalsMask ||
+                    (modalsMask.getAttribute("counter") === "0" &&
+                        window.getComputedStyle(modalsMask).display === "none");
+
+                if (!el) {
+                    return isMaskHidden;
+                }
+
+                return !el.checkVisibility() && isMaskHidden;
             },
             { polling: 100, timeout: 10000 },
             modalId
