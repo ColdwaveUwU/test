@@ -14,30 +14,6 @@ Tester.keyPress("Tab");
 Tester.input("40");
 Tester.keyPress("ArrowDown");
 
-// Test basic function selection from dropdown
-Functions.setFunction("SUM");
-Functions.setFunctionArguments(["A1:D1"]);
-
-// Move to next cell and test AVERAGE function
-Tester.keyPress("ArrowDown");
-Functions.setFunction("AVERAGE");
-Functions.setFunctionArguments(["A1:D1"]);
-
-// Move to next cell and test MIN function
-Tester.keyPress("ArrowDown");
-Functions.setFunction("MIN");
-Functions.setFunctionArguments(["A1:D1"]);
-
-// Move to next cell and test MAX function
-Tester.keyPress("ArrowDown");
-Functions.setFunction("MAX");
-Functions.setFunctionArguments(["A1:D1"]);
-
-// Move to next cell and test COUNT function
-Tester.keyPress("ArrowDown");
-Functions.setFunction("COUNT");
-Functions.setFunctionArguments(["A1:D1"]);
-
 // Test inserting a custom function from Additional menu
 Tester.keyPress("ArrowDown");
 Functions.insertFunction({

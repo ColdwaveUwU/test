@@ -245,12 +245,7 @@ class Functions extends HomeTab {
      */
     async #setArgumentValue(argumentIndex, value) {
         const argumentsSelector = Functions.SELECTORS.MODAL_WINDOW.FUNCTION_ARGUMENTS;
-        const argumentInput = new Input(
-            this.tester,
-            `${argumentsSelector.ARGUMENT_CONTAINER}${argumentIndex}`,
-            false,
-            argumentsSelector.ARGUMENT_INPUT
-        );
+        const argumentInput = new Input(this.tester, `${argumentsSelector.ARGUMENT_CONTAINER}${argumentIndex}`, false);
         try {
             await argumentInput.set(value);
         } catch (error) {
