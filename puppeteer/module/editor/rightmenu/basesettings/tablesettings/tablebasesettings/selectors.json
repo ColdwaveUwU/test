@@ -84,8 +84,8 @@
       }
     },
     "CONVERT_TABLE_TO_TEXT": {
-      "WINDOW": ".asc-window.modal.notransform",
-      "OK_BUTTON": ".asc-window.modal.notransform .footer.center button[result='ok']",
+      "WINDOW": ".asc-window.modal",
+      "OK_BUTTON": ".asc-window.modal .footer.center button[result='ok']",
       "CHECKBOX_NESTED": "#id-table-text-check-nested",
       "SEPARATE_TYPES": {
         "PARA": "#id-table-text-radio-para",

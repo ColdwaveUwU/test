@@ -1,7 +1,7 @@
 const selectors = require("./selectors.json");
 const InsertTab = require("../../inserttab");
 const path = require("path");
-
+const { ModalButton, Input } = require("../../../../../elements");
 class ImageInsert extends InsertTab {
     constructor(tester) {
         super(tester);
@@ -92,11 +92,18 @@ class ImageInsert extends InsertTab {
      */
     async #handleUrlInput(url, fromUrlSelectors) {
         try {
+            const modalUrlForm = new ModalButton(
+                this.tester,
+                fromUrlSelectors.FROM_URL_BUTTON,
+                fromUrlSelectors.WINDOW,
+                fromUrlSelectors.OK_BUTTON
+            );
+            const inputUrlForm = new Input(this.tester, fromUrlSelectors.INPUT_FORM, false);
             const page = this.tester.getPage();
-            await this.tester.click(fromUrlSelectors.FROM_URL_BUTTON);
-            await this.tester.inputToForm(url, fromUrlSelectors.INPUT_FORM);
+            await modalUrlForm.openModal();
+            await inputUrlForm.set(url);
             const loading = page.waitForResponse((response) => response.ok());
-            await this.tester.click(fromUrlSelectors.OK_BUTTON);
+            await modalUrlForm.closeModal();
             await loading;
             if (await this.tester.checkSelector(fromUrlSelectors.ERROR_ELEMENT)) {
                 throw new Error("Incorrect URL. The cancel button was pressed.");

@@ -38,6 +38,8 @@ Table.setTableSettings({
     },
 });
 
+Tester.waitAutosave(); // todo fix auto-closing the dropdown table after conversion
+
 // Insert table 3x3
 Table.insertTable(3, 3);
 

@@ -1,3 +1,4 @@
+const { StateButton } = require("../../../elements");
 /**
  * Base class for handling settings interactions.
  */
@@ -70,7 +71,8 @@ class BaseSettings {
      * Opens the settings by clicking on the specified selector.
      */
     async open() {
-        await this.tester.click(this.selector);
+        const openRightMenuOption = new StateButton(this.tester, this.selector);
+        await openRightMenuOption.setState(true);
     }
 }
 

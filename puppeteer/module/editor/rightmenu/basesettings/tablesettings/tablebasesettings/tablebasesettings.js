@@ -415,7 +415,7 @@ class TableBaseSettings extends BaseSettings {
         if (!this._convertTableToTextModalWindow) {
             this._convertTableToTextModalWindow = new ModalButton(
                 this.tester,
-                "",
+                TableBaseSettings.SELECTORS.CONVERT_TO_TEXT_BUTTON,
                 TableBaseSettings.SELECTORS.MODAL_WINDOWS.CONVERT_TABLE_TO_TEXT.WINDOW,
                 TableBaseSettings.SELECTORS.MODAL_WINDOWS.CONVERT_TABLE_TO_TEXT.OK_BUTTON
             );
@@ -693,9 +693,7 @@ class TableBaseSettings extends BaseSettings {
      * Opens the convert table to text modal window.
      */
     async openConvertTableToText() {
-        const buttonSelector = TableBaseSettings.SELECTORS.CONVERT_TO_TEXT_BUTTON;
-        const triggerAction = () => this.#executeAction(Button, buttonSelector, "click", "openConvertTableToText");
-        await this.#openModalWithAction(this.convertTableToTextModalWindow, triggerAction, "openConvertTableToText");
+        await this.convertTableToTextModalWindow.openModal();
     }
 
     /**

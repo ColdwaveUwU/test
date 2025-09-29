@@ -21,8 +21,7 @@ class TableSettings extends BaseSettings {
      * Open table settings
      */
     async openTableSettings() {
-        const tableSettingsButton = new StateButton(this.tester, TableSettings.TABLE_TAB_SELECTORS.RIGHT_MENU);
-        await tableSettingsButton.setState(true);
+        await this.rightMenu.openSettings(this);
     }
 
     async setBaseSettings(settings) {
