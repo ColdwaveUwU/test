@@ -6,7 +6,7 @@ const inputText = "BlankDocumentSpecificTest";
 
 Tester.createFile(fileName);
 
-FileMenu.createNew("Blank document");
+FileMenu.createNew("blank doc");
 
 Tester.input(inputText);
 

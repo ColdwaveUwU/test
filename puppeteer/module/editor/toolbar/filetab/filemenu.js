@@ -85,26 +85,36 @@ class FileMenu extends Toolbar {
         try {
             const downloadSelectors = FileMenu.FILEMENU_SELECTORS.PANEL_MENU.DOWNLOAD_AS;
             const downloadCompleted = this.tester.handleFileDownload();
+
             await this.tester.click(downloadSelectors.BUTTON);
-            const fileTypeSelector = downloadSelectors.FILE_TYPE[format.toUpperCase()];
-            await this.tester.click(fileTypeSelector);
+            const { SELECTOR, WARNING, OPTIONS } = downloadSelectors.FILE_TYPE[format.toUpperCase()];
+            await this.tester.click(SELECTOR);
+            if (WARNING) {
+                const warningModal = new ModalButton(
+                    this.tester,
+                    null,
+                    downloadSelectors.WARNING_WINDOW.SELECTOR,
+                    downloadSelectors.WARNING_WINDOW.OK_BUTTON
+                );
+                if (await warningModal.waitModalLoaded()) {
+                    await warningModal.closeModal();
+                }
+            }
 
-            const modalWindowIsClosed = await this.tester.getModalCounter();
-            if (modalWindowIsClosed !== 0) {
-                await this.tester.click(downloadSelectors.WARNING_WINDOW.OK_BUTTON);
-
-                const encodingWindowIsClosed = await this.tester.getModalCounter();
-                if (!encodingWindowIsClosed === 0) {
+            if (OPTIONS) {
+                const encodingModal = new ModalButton(this.tester, null, OPTIONS.MODAL_WINDOW, OPTIONS.OK_BUTTON);
+                if (await encodingModal.waitModalLoaded()) {
                     const dropdownElement = new Dropdown(this.tester, {
-                        selector: downloadSelectors.ENCODING_WINDOW.SELECTOR,
-                        elementsSelector: downloadSelectors.ENCODING_WINDOW.ELEMENTS_SELECTOR,
+                        selector: OPTIONS.SELECTOR,
+                        elementsSelector: OPTIONS.ELEMENTS_SELECTOR,
                         elementsValue: FileMenu.ELEMENTS_VALUE.ENCODING,
                     });
 
                     await dropdownElement.selectDropdownItem(encode);
-                    await this.tester.click(downloadSelectors.ENCODING_WINDOW.OK_BUTTON);
+                    await encodingModal.closeModal(OPTIONS.OK_BUTTON);
                 }
             }
+
             const filePath = await downloadCompleted;
             const fileInfo = {
                 name: path.basename(filePath),
@@ -125,23 +135,32 @@ class FileMenu extends Toolbar {
     async saveCopyAs(format, encode = "Unicode (UTF-8)") {
         try {
             const saveCopyAsSelectos = FileMenu.FILEMENU_SELECTORS.PANEL_MENU.SAVE_COPY_AS;
-            await this.tester.click(saveCopyAsSelectos.BUTTON);
-            const fileTypeSelector = saveCopyAsSelectos.FILE_TYPE[format.toUpperCase()];
-            await this.tester.click(fileTypeSelector);
-            const modalWindowIsClosed = await this.tester.getModalCounter();
-            if (modalWindowIsClosed !== 0) {
-                await this.tester.click(saveCopyAsSelectos.WARNING_WINDOW.OK_BUTTON);
+            await this.tester.click(downloadSelectors.BUTTON);
+            const { SELECTOR, WARNING, OPTIONS } = saveCopyAsSelectos.FILE_TYPE[format.toUpperCase()];
+            await this.tester.click(SELECTOR);
+            if (WARNING) {
+                const warningModal = new ModalButton(
+                    this.tester,
+                    null,
+                    saveCopyAsSelectos.WARNING_WINDOW.SELECTOR,
+                    saveCopyAsSelectos.WARNING_WINDOW.OK_BUTTON
+                );
+                if (await warningModal.waitModalLoaded()) {
+                    await warningModal.closeModal();
+                }
+            }
 
-                const encodingWindowIsClosed = await this.tester.getModalCounter();
-                if (!encodingWindowIsClosed === 0) {
+            if (OPTIONS) {
+                const encodingModal = new ModalButton(this.tester, null, OPTIONS.MODAL_WINDOW, OPTIONS.OK_BUTTON);
+                if (await encodingModal.waitModalLoaded()) {
                     const dropdownElement = new Dropdown(this.tester, {
-                        selector: saveCopyAsSelectos.ENCODING_WINDOW.SELECTOR,
-                        elementsSelector: saveCopyAsSelectos.ENCODING_WINDOW.ELEMENTS_SELECTOR,
+                        selector: OPTIONS.SELECTOR,
+                        elementsSelector: OPTIONS.ELEMENTS_SELECTOR,
                         elementsValue: FileMenu.ELEMENTS_VALUE.ENCODING,
                     });
 
                     await dropdownElement.selectDropdownItem(encode);
-                    await this.tester.click(saveCopyAsSelectos.ENCODING_WINDOW.OK_BUTTON);
+                    await encodingModal.closeModal(OPTIONS.OK_BUTTON);
                 }
             }
         } catch (error) {

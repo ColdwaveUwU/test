@@ -50,18 +50,15 @@ class Color {
         };
     }
 
-    #moreColorsModal = null;
-
     #getMoreColorsModal(selector) {
-        if (!this.#moreColorsModal) {
-            this.#moreColorsModal = new ModalButton(
-                this.tester,
-                selector,
-                ModalDialogSelectors.MODAL_WINDOW,
-                ModalDialogSelectors.APPLY_BUTTON
-            );
-        }
-        return this.#moreColorsModal;
+        const moreColorsModal = new ModalButton(
+            this.tester,
+            selector,
+            ModalDialogSelectors.MODAL_WINDOW,
+            ModalDialogSelectors.APPLY_BUTTON
+        );
+
+        return moreColorsModal;
     }
     /**
      * Selects a color based on the provided color settings.
@@ -174,8 +171,7 @@ class Color {
      * @param {CustomColorProp} color - The color properties including hex or RGB values.
      */
     async #selectCustomColor(selector, color) {
-        const { menuType } = color;
-        const dropdown = this.#selectDropdownOption(selector, menuType);
+        const dropdown = this.#selectDropdownOption(selector);
         const target = await dropdown.getDropdownItem("description", "More colors");
         const moreColorModalWindow = this.#getMoreColorsModal(target.id);
         await moreColorModalWindow.openModal();
@@ -217,8 +213,7 @@ class Color {
      * @param {CustomClickColorProp} color - The color properties including X, Y, and hue values.
      */
     async #selectCustomClickColor(selector, color) {
-        const { menuType } = color;
-        const dropdown = this.#selectDropdownOption(selector, menuType);
+        const dropdown = this.#selectDropdownOption(selector);
         const target = await dropdown.getDropdownItem("description", "More colors");
         const moreColorModalWindow = this.#getMoreColorsModal(target.id);
         await moreColorModalWindow.openModal();
@@ -246,12 +241,10 @@ class Color {
         await input.set(value);
     }
 
-    #selectDropdownOption(selector, type) {
-        const menuOptions = ColorMenuType[type];
+    #selectDropdownOption(selector) {
         const dropdown = new Dropdown(this.tester, {
             selector: selector,
-            elementsSelector: `${selector} li[id]`,
-            elementsValue: menuOptions,
+            elementsSelector: `${selector} li`,
         });
         return dropdown;
     }

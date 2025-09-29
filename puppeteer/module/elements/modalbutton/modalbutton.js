@@ -26,9 +26,35 @@ class ModalButton extends UIElement {
         this.modalWindowSelector = modalWindowSelector;
         this.closeButtonSelector = closeButtonSelector;
         this.handleError = createErrorHandler(this.constructor.name);
+        this.target = target;
     }
 
-    #modalIndex = null;
+    #modalId = null;
+
+    /**
+     * Waiting for modal windows to close
+     * @param {number} [modalCounter]
+     * @returns {Promise<import("puppeteer").HandleFor<ReturnType<Func>>>}
+     */
+    async waitModalWindowClosed() {
+        if (!this.#modalId) {
+            throw new Error("waitModalWindowClosed: modalId is not set. Cannot wait for closing.");
+        }
+
+        const modalId = this.#modalId;
+
+        await this.context.waitForFunction(
+            async (id) => {
+                const el = document.getElementById(id);
+                if (!el) return true;
+                return !el.checkVisibility();
+            },
+            { polling: 100, timeout: 10000 },
+            modalId
+        );
+
+        this.#modalId = null;
+    }
 
     /**
      * Checks if the modal is open using the provided selector checker.
@@ -39,9 +65,19 @@ class ModalButton extends UIElement {
         try {
             const selector = `${this.modalWindowSelector}.notransform`;
             const isOpen =
-                type === "wait" ? await this.tester.waitSelector(selector) : await this.tester.checkSelector(selector);
+                type === "wait"
+                    ? await this.tester.waitSelector(selector, this.target)
+                    : await this.tester.checkSelector(selector, this.target);
 
-            this.#modalIndex = isOpen ? await this.tester.getModalCounter() : null;
+            if (isOpen) {
+                this.#modalId = await this.context.evaluate((sel) => {
+                    const modal = document.querySelector(sel);
+                    return modal ? modal.getAttribute("id") : null;
+                }, selector);
+            } else {
+                this.#modalId = null;
+            }
+
             return isOpen;
         } catch (error) {
             this.handleError("checkModalOpen", error, `Failed to ${type} if modal is open.`);
@@ -49,11 +85,11 @@ class ModalButton extends UIElement {
     }
 
     async isModalOpen() {
-        return this.#checkModalOpen("check");
+        return await this.#checkModalOpen("check");
     }
 
     async waitModalLoaded() {
-        return this.#checkModalOpen("wait");
+        return await this.#checkModalOpen("wait");
     }
 
     /**
@@ -87,27 +123,15 @@ class ModalButton extends UIElement {
      */
     async closeModal(closeButtonSelector = this.closeButtonSelector) {
         try {
-            if (!(await this.tester.checkSelector(this.modalWindowSelector))) {
-                this.#modalIndex = null;
+            if (!(await this.tester.checkSelector(this.modalWindowSelector, this.target))) {
                 return;
             }
-            const waitForModal = this.waitModalWindowClosed(this.#modalIndex);
-            await this.tester.click(closeButtonSelector);
+            const waitForModal = this.waitModalWindowClosed();
+            await this.click(1, closeButtonSelector);
             await waitForModal;
-            this.#modalIndex = null;
         } catch (error) {
             this.handleError("closeModal", error, "Failed to close modal window.");
         }
-    }
-
-    /**
-     * Waits for the modal window to close.
-     * @param {number} [modalIndex=null] - The modal index to wait for. Defaults to the instance's modalIndex.
-     * @returns {Promise<void>} Resolves when the modal window has been closed.
-     * @throws {Error} If waiting for the modal window to close fails.
-     */
-    async waitModalWindowClosed(modalIndex = 1) {
-        return await this.tester.waitModalWindowClosed(modalIndex);
     }
 
     /**

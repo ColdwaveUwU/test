@@ -5,7 +5,7 @@ const fileName = "xlsx";
 
 Tester.createFile(fileName);
 
-FileMenu.createNew("With sample content");
+FileMenu.createNew("sample");
 
 FileMenu.downloadAs("xlsx");
 

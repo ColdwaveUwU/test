@@ -6,7 +6,7 @@ const inputText = "BlankSpreadsheetTemplateTest";
 
 Tester.createFile(fileName);
 
-FileMenu.createNew("Blank Spreadsheet");
+FileMenu.createNew("Blank");
 
 Tester.input(inputText);
 

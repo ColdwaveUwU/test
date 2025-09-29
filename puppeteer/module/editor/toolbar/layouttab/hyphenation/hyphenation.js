@@ -33,17 +33,12 @@ class Hyphenation extends LayoutTab {
         return this.#hyphenationDropdown;
     }
 
-    async #getHyphenationModalWindow() {
+    async #getHyphenationModalWindow(selector) {
         if (!this.#hyphenationModalWindow) {
-            const targetElement = await this.#getHyphenationDropdown().getDropdownItem(
-                "description",
-                "Hyphenation options"
-            );
-            debugger;
             const hyphenationModalSelectors = Hyphenation.HYPHENATION_SELECTORS.HYPHENATION_WINDOW;
             this.#hyphenationModalWindow = new ModalButton(
                 this.tester,
-                targetElement.id,
+                selector,
                 hyphenationModalSelectors.WINDOW,
                 hyphenationModalSelectors.OK_BUTTON
             );
@@ -70,7 +65,11 @@ class Hyphenation extends LayoutTab {
      */
     async openHyphenationWindow() {
         try {
-            const hyphenationModalWindow = await this.#getHyphenationModalWindow();
+            const targetElement = await this.#getHyphenationDropdown().getDropdownItem(
+                "description",
+                "Hyphenation options"
+            );
+            const hyphenationModalWindow = await this.#getHyphenationModalWindow(targetElement.id);
             await hyphenationModalWindow.openModal();
         } catch (error) {
             throw new Error(`openHyphenationWindow: Failed to open hyphenation". \n${error.message}`, {
@@ -182,7 +181,11 @@ class Hyphenation extends LayoutTab {
      */
     async clickOkButton() {
         try {
-            const hyphenationModalWindow = await this.#getHyphenationModalWindow();
+            const targetElement = await this.#getHyphenationDropdown().getDropdownItem(
+                "description",
+                "Hyphenation options"
+            );
+            const hyphenationModalWindow = await this.#getHyphenationModalWindow(targetElement.id);
             await hyphenationModalWindow.closeModal();
         } catch (error) {
             throw new Error(`clickOkButton: Failed click ok button". \n${error.message}`, {

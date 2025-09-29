@@ -11,7 +11,6 @@ for (let i = 0; i < inputText.length; i++) {
 }
 Tester.keyUp("Shift");
 const customColor = { r: 255, g: 128, b: 64 }; // Orange color
-
 // Tests for default color menu
 Font.clickFontColor({
     type: Color.Type.Theme,
@@ -19,16 +18,15 @@ Font.clickFontColor({
     subIndex: 5,
 });
 
- Font.clickFontColor({
+Font.clickFontColor({
     type: Color.Type.Standard,
     index: 4,
 });
 
- Font.clickFontColor({
+Font.clickFontColor({
     type: Color.Type.EyeDropper,
     x: 150,
     y: 100,
-    menuType: "DEFAULT",
 });
 
 Font.clickFontColor({
@@ -36,7 +34,6 @@ Font.clickFontColor({
     r: customColor.r,
     g: customColor.g,
     b: customColor.b,
-    menuType: "DEFAULT",
 });
 
 Font.clickFontColor({
@@ -44,44 +41,38 @@ Font.clickFontColor({
     x: 150,
     y: 100,
     hue: 50,
-    menuType: "DEFAULT",
-}); 
-
+});
 
 // Tests for fill color menu
 Font.clickFillColor({
-  type: Color.Type.Theme,
-  index: 1,
-  subIndex: 5,
+    type: Color.Type.Theme,
+    index: 1,
+    subIndex: 5,
 });
 
 Font.clickFillColor({
-  type: Color.Type.Standard,
-  index: 4,
+    type: Color.Type.Standard,
+    index: 4,
 });
 
 Font.clickFillColor({
-  type: Color.Type.EyeDropper,
-  x: 150,
-  y: 100,
-  menuType: "FILL",
+    type: Color.Type.EyeDropper,
+    x: 150,
+    y: 100,
 });
 
 Font.clickFillColor({
-  type: Color.Type.Custom,
-  r: customColor.r,
-  g: customColor.g,
-  b: customColor.b,
-  menuType: "FILL",
+    type: Color.Type.Custom,
+    r: customColor.r,
+    g: customColor.g,
+    b: customColor.b,
 });
 
 Font.clickFillColor({
-  type: Color.Type.CustomClick,
-  x: 40,
-  y: 50,
-  hue: 85,
-  menuType: "FILL",
-}); 
-
+    type: Color.Type.CustomClick,
+    x: 40,
+    y: 50,
+    hue: 85,
+});
 
 Tester.close();

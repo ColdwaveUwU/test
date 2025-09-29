@@ -30,9 +30,9 @@ class UIElement {
      * Clicks the UI element.
      * @param {number} count - The number of times to click the element.
      */
-    async click(count = 1) {
+    async click(count = 1, selector = this.selector) {
         for (let i = 0; i < count; i++) {
-            await this.tester.click(this.selector, this.context);
+            await this.tester.click(selector, this.context);
         }
     }
 }

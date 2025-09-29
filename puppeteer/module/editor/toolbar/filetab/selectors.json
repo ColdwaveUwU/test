@@ -3,9 +3,9 @@
     "PANEL_MENU": {
         "CREATE_NEW": {
             "BUTTON": "#fm-btn-create",
-            "DOC": "#panel-createnew .blank-document .title",
+            "BLANK DOC": "#panel-createnew .blank-document .title",
             "BLANK": "#panel-createnew .thumb-wrap .title",
-            "SAMPLE": "#panel-createnew .thumb-wrap .title"
+            "SAMPLE": "#panel-createnew .thumb-wrap[template*=\"sample=true\"] .title"
         },
         "SAVE": {
             "BUTTON": "#fm-btn-save"
@@ -13,43 +13,141 @@
         "DOWNLOAD_AS": {
             "BUTTON": "#fm-btn-download",
             "WARNING_WINDOW": {
-                "OK_BUTTON": "button[result=ok]"
-            },
-            "ENCODING_WINDOW": {
-                "SELECTOR": "#id-codepages-combo",
-                "ELEMENTS_SELECTOR": "#id-codepages-combo ul li",
+                "SELECTOR": ".modal.alert",
                 "OK_BUTTON": "button[result=ok]"
             },
             "FILE_TYPE": {
-                "DOCX": "#panel-saveas .svg-format-docx",
-                "PDF": "#panel-saveas .svg-format-pdf",
-                "ODT": "#panel-saveas .svg-format-odt",
-                "DOTX": "#panel-saveas .svg-format-dotx",
-                "PDFA": "#panel-saveas .svg-format-pdfa",
-                "OTT": "#panel-saveas .svg-format-ott",
-                "RTF": "#panel-saveas .svg-format-rtf",
-                "TXT": "#panel-saveas .svg-format-txt",
-                "FB2": "#panel-saveas .svg-format-fb2",
-                "EPUB": "#panel-saveas .svg-format-epub",
-                "HTML": "#panel-saveas .svg-format-html",
-                "JPG": "#panel-saveas .svg-format-jpg",
-                "PNG": "#panel-saveas .svg-format-png",
-                "XLSX": "#panel-saveas .svg-format-xlsx",
-                "ODS": "#panel-saveas .svg-format-ods",
-                "CSV": "#panel-saveas .svg-format-csv",
-                "PPTX": "#panel-saveas .svg-format-pptx",
-                "POTX": "#panel-saveas .svg-format-potx",
-                "OTP": "#panel-saveas .svg-format-otp",
-                "XLTX": "#panel-saveas .svg-format-xltx",
-                "OTS": "#panel-saveas .svg-format-ots",
-                "XLSB": "#panel-saveas .svg-format-xlsb",
-                "PPSX": "#panel-saveas .svg-format-ppsx",
-                "ODP": "#panel-saveas .svg-format-odp"
+                "DOCX": {
+                    "SELECTOR": "#panel-saveas .svg-format-docx",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "PDF": {
+                    "SELECTOR": "#panel-saveas .svg-format-pdf",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "ODT": {
+                    "SELECTOR": "#panel-saveas .svg-format-odt",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "DOTX": {
+                    "SELECTOR": "#panel-saveas .svg-format-dotx",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "PDFA": {
+                    "SELECTOR": "#panel-saveas .svg-format-pdfa",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "OTT": {
+                    "SELECTOR": "#panel-saveas .svg-format-ott",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "RTF": {
+                    "SELECTOR": "#panel-saveas .svg-format-rtf",
+                    "WARNING": true,
+                    "OPTIONS": null
+                },
+                "TXT": {
+                    "SELECTOR": "#panel-saveas .svg-format-txt",
+                    "WARNING": true,
+                    "OPTIONS": {
+                        "MODAL_WINDOW": ".modal.modal-dlg",
+                        "SELECTOR": "#id-codepages-combo",
+                        "ELEMENTS_SELECTOR": "#id-codepages-combo ul li",
+                        "OK_BUTTON": "button[result=ok]"
+                    }
+                },
+                "FB2": {
+                    "SELECTOR": "#panel-saveas .svg-format-fb2",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "EPUB": {
+                    "SELECTOR": "#panel-saveas .svg-format-epub",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "HTML": {
+                    "SELECTOR": "#panel-saveas .svg-format-html",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "JPG": {
+                    "SELECTOR": "#panel-saveas .svg-format-jpg",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "PNG": {
+                    "SELECTOR": "#panel-saveas .svg-format-png",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "XLSX": {
+                    "SELECTOR": "#panel-saveas .svg-format-xlsx",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "ODS": {
+                    "SELECTOR": "#panel-saveas .svg-format-ods",
+                    "WARNING": true,
+                    "OPTIONS": null
+                },
+                "CSV": {
+                    "SELECTOR": "#panel-saveas .svg-format-csv",
+                    "WARNING": true,
+                    "OPTIONS": {
+                        "MODAL_WINDOW": ".modal.modal-dlg",
+                        "SELECTOR": "#id-codepages-combo",
+                        "ELEMENTS_SELECTOR": "#id-codepages-combo ul li",
+                        "OK_BUTTON": "button[result=ok]"
+                    }
+                },
+                "PPTX": {
+                    "SELECTOR": "#panel-saveas .svg-format-pptx",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "POTX": {
+                    "SELECTOR": "#panel-saveas .svg-format-potx",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "OTP": {
+                    "SELECTOR": "#panel-saveas .svg-format-otp",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "OTS": {
+                    "SELECTOR": "#panel-saveas .svg-format-ots",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "XLSB": {
+                    "SELECTOR": "#panel-saveas .svg-format-xlsb",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "PPSX": {
+                    "SELECTOR": "#panel-saveas .svg-format-ppsx",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "ODP": {
+                    "SELECTOR": "#panel-saveas .svg-format-odp",
+                    "WARNING": null,
+                    "OPTIONS": null
+                }
             }
         },
         "SAVE_COPY_AS": {
             "BUTTON": "#fm-btn-save-copy",
             "WARNING_WINDOW": {
+                "SELECTOR": ".modal.alert",
                 "OK_BUTTON": "button[result=ok]"
             },
             "ENCODING_WINDOW": {
@@ -58,19 +156,131 @@
                 "OK_BUTTON": "button[result=ok]"
             },
             "FILE_TYPE": {
-                "DOCX": "#panel-savecopy .svg-format-docx",
-                "PDF": "#panel-savecopy .svg-format-pdf",
-                "ODT": "#panel-savecopy .svg-format-odt",
-                "DOTX": "#panel-savecopy .svg-format-dotx",
-                "PDFA": "#panel-savecopy .svg-format-pdfa",
-                "OTT": "#panel-savecopy .svg-format-ott",
-                "RTF": "#panel-savecopy .svg-format-rtf",
-                "TXT": "#panel-savecopy .svg-format-txt",
-                "FB2": "#panel-savecopy .svg-format-fb2",
-                "EPUB": "#panel-savecopy .svg-format-epub",
-                "HTML": "#panel-savecopy .svg-format-html",
-                "JPG": "#panel-savecopy .svg-format-jpg",
-                "PNG": "#panel-savecopy .svg-format-png"
+                "DOCX": {
+                    "SELECTOR": "#panel-savecopy .svg-format-docx",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "PDF": {
+                    "SELECTOR": "#panel-savecopy .svg-format-pdf",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "ODT": {
+                    "SELECTOR": "#panel-savecopy .svg-format-odt",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "DOTX": {
+                    "SELECTOR": "#panel-savecopy .svg-format-dotx",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "PDFA": {
+                    "SELECTOR": "#panel-savecopy .svg-format-pdfa",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "OTT": {
+                    "SELECTOR": "#panel-savecopy .svg-format-ott",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "RTF": {
+                    "SELECTOR": "#panel-savecopy .svg-format-rtf",
+                    "WARNING": true,
+                    "OPTIONS": null
+                },
+                "TXT": {
+                    "SELECTOR": "#panel-savecopy .svg-format-txt",
+                    "WARNING": true,
+                    "OPTIONS": {
+                        "MODAL_WINDOW": ".modal.modal-dlg",
+                        "SELECTOR": "#id-codepages-combo",
+                        "ELEMENTS_SELECTOR": "#id-codepages-combo ul li",
+                        "OK_BUTTON": "button[result=ok]"
+                    }
+                },
+                "FB2": {
+                    "SELECTOR": "#panel-savecopy .svg-format-fb2",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "EPUB": {
+                    "SELECTOR": "#panel-savecopy .svg-format-epub",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "HTML": {
+                    "SELECTOR": "#panel-savecopy .svg-format-html",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "JPG": {
+                    "SELECTOR": "#panel-savecopy .svg-format-jpg",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "PNG": {
+                    "SELECTOR": "#panel-savecopy .svg-format-png",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "XLSX": {
+                    "SELECTOR": "#panel-savecopy .svg-format-xlsx",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "ODS": {
+                    "SELECTOR": "#panel-savecopy .svg-format-ods",
+                    "WARNING": true,
+                    "OPTIONS": null
+                },
+                "CSV": {
+                    "SELECTOR": "#panel-savecopy .svg-format-csv",
+                    "WARNING": true,
+                    "OPTIONS": {
+                        "MODAL_WINDOW": ".modal.modal-dlg",
+                        "SELECTOR": "#id-codepages-combo",
+                        "ELEMENTS_SELECTOR": "#id-codepages-combo ul li",
+                        "OK_BUTTON": "button[result=ok]"
+                    }
+                },
+                "PPTX": {
+                    "SELECTOR": "#panel-savecopy .svg-format-pptx",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "POTX": {
+                    "SELECTOR": "#panel-savecopy .svg-format-potx",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "OTP": {
+                    "SELECTOR": "#panel-savecopy .svg-format-otp",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "OTS": {
+                    "SELECTOR": "#panel-savecopy .svg-format-ots",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "XLSB": {
+                    "SELECTOR": "#panel-savecopy .svg-format-xlsb",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "PPSX": {
+                    "SELECTOR": "#panel-savecopy .svg-format-ppsx",
+                    "WARNING": null,
+                    "OPTIONS": null
+                },
+                "ODP": {
+                    "SELECTOR": "#panel-savecopy .svg-format-odp",
+                    "WARNING": null,
+                    "OPTIONS": null
+                }
             }
         },
         "RENAME": {

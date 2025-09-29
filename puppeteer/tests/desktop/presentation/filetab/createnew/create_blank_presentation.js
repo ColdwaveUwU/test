@@ -6,7 +6,7 @@ const inputText = "BlankPresentationTemplateTest";
 
 Tester.createFile(fileName);
 
-FileMenu.createNew("Blank Presentation");
+FileMenu.createNew("BLANK");
 
 Tester.input(inputText);
 
