@@ -1,0 +1,20 @@
+{
+    "HYPERLINK_MODAL": {
+        "SELECTOR": "[id=\"id-toolbar-toolbar__icon btn-big-inserthyperlink0\"]",
+        "WINDOW": "#window-hyperlink",
+        "OK_BUTTON": "#window-hyperlink button[result=ok]"
+    },
+    "TYPES": {
+        "EXTERNAL_LINK": {
+            "BUTTON": "#id-dlg-hyperlink-external"
+        },
+        "PLACE": {
+            "BUTTON": "#id-dlg-hyperlink-internal"
+        }
+    },
+    "INPUT_FORMS": {
+        "link": "#id-dlg-hyperlink-url",
+        "display": "#id-dlg-hyperlink-display",
+        "screenTip": "#id-dlg-hyperlink-tip"
+    }
+}

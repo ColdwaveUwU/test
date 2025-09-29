@@ -5,7 +5,6 @@ const { Input, ModalButton, Button } = require("../../../../elements");
 class Bookmark extends ReferencesTab {
     constructor(tester) {
         super(tester);
-        this._bookmarkModalButton = null;
     }
 
     /**
@@ -13,21 +12,22 @@ class Bookmark extends ReferencesTab {
      */
     static BOOKMARK_SELECTORS = selectors;
 
+    #bookmarkModalButton = null;
     /**
      * Get or create bookmark modal button with lazy initialization
      * @returns {ModalButton}
      */
-    get bookmarkModalButton() {
-        if (!this._bookmarkModalButton) {
+    #getBookmarkModalButton() {
+        if (!this.#bookmarkModalButton) {
             const selectors = Bookmark.BOOKMARK_SELECTORS;
-            this._bookmarkModalButton = new ModalButton(
+            this.#bookmarkModalButton = new ModalButton(
                 this.tester,
                 selectors.TOOLBAR.BOOKMARK_BUTTON,
                 selectors.MODAL_WINDOW.BOOKMARK_WINDOW,
                 selectors.MODAL_WINDOW.CLOSE_BUTTON
             );
         }
-        return this._bookmarkModalButton;
+        return this.#bookmarkModalButton;
     }
 
     /**
@@ -35,11 +35,10 @@ class Bookmark extends ReferencesTab {
      * @param {string} name Bookmark name
      */
     async addBookmark(name) {
-        return this.#executeBookmarkOperation("addBookmark", async () => {
+        return this.#executeBookmarkOperation("addBookmark", async (modalButton) => {
             const selectors = Bookmark.BOOKMARK_SELECTORS.MODAL_WINDOW;
-            await this.#getInput(selectors.NAME_INPUT, [false]).set(name, 100);
-            await this.#getButton(selectors.ADD_BUTTON).click();
-            await this.tester.waitModalWindowClosed();
+            await this.#getInput(selectors.NAME_INPUT, [false]).set(name);
+            await modalButton.closeModal(selectors.ADD_BUTTON);
         });
     }
 
@@ -48,9 +47,10 @@ class Bookmark extends ReferencesTab {
      * @param {string} name Bookmark name
      */
     async deleteBookmark(name) {
-        return this.#executeBookmarkOperation("deleteBookmark", async () => {
+        return this.#executeBookmarkOperation("deleteBookmark", async (modalButton) => {
             await this.#selectBookmarkByName(name);
             await this.#getButton(Bookmark.BOOKMARK_SELECTORS.MODAL_WINDOW.DELETE_BUTTON).click();
+            await modalButton.closeModal();
         });
     }
 
@@ -59,9 +59,10 @@ class Bookmark extends ReferencesTab {
      * @param {string} name Bookmark name
      */
     async goToBookmark(name) {
-        return this.#executeBookmarkOperation("goToBookmark", async () => {
+        return this.#executeBookmarkOperation("goToBookmark", async (modalButton) => {
             await this.#selectBookmarkByName(name);
             await this.#getButton(Bookmark.BOOKMARK_SELECTORS.MODAL_WINDOW.GOTO_BUTTON).click();
+            await modalButton.closeModal();
         });
     }
 
@@ -71,9 +72,11 @@ class Bookmark extends ReferencesTab {
      * @returns {Promise<string>} Link value
      */
     async getBookmarkLink(name) {
-        return this.#executeBookmarkOperation("getBookmarkLink", async () => {
+        return this.#executeBookmarkOperation("getBookmarkLink", async (modalButton) => {
             await this.#selectBookmarkByName(name);
-            return await this.#getLinkFromField();
+            const link = await this.#getLinkFromField();
+            await modalButton.closeModal();
+            return link;
         });
     }
 
@@ -131,9 +134,9 @@ class Bookmark extends ReferencesTab {
      */
     async #executeBookmarkOperation(methodName, operation) {
         try {
-            await this.bookmarkModalButton.openModal();
-            const result = await operation();
-            await this.bookmarkModalButton.closeModal();
+            const bookmarkModalButton = this.#getBookmarkModalButton();
+            await bookmarkModalButton.openModal();
+            const result = await operation(bookmarkModalButton);
             return result;
         } catch (error) {
             this.#handleError(methodName, error);

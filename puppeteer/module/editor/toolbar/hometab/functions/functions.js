@@ -24,17 +24,6 @@ const { Input, ModalButton, Dropdown } = require("../../../../elements");
 class Functions extends HomeTab {
     constructor(tester) {
         super(tester);
-        this.insertFunctionModalWindow = new ModalButton(
-            this.tester,
-            "",
-            Functions.SELECTORS.MODAL_WINDOW.INSERT_FUNCTION.WINDOW
-        );
-        this.functionArgumentsModalWindow = new ModalButton(
-            this.tester,
-            "",
-            Functions.SELECTORS.MODAL_WINDOW.FUNCTION_ARGUMENTS.WINDOW,
-            Functions.SELECTORS.MODAL_WINDOW.FUNCTION_ARGUMENTS.OK_BUTTON
-        );
     }
 
     static SELECTORS = selectors;
@@ -46,11 +35,38 @@ class Functions extends HomeTab {
     };
 
     #functionsDropdown = null;
+    #insertFunctionModalWindow = null;
+    #functionArgumentsModalWindow = null;
+
     #getFunctionsDropdown() {
         if (!this.#functionsDropdown) {
             this.#functionsDropdown = new Dropdown(this.tester, Functions.SELECTORS.TOOLBAR.FUNCTIONS_BUTTON);
         }
         return this.#functionsDropdown;
+    }
+
+    #getInsertFunctionModalWindow(selector) {
+        if (!this.#insertFunctionModalWindow) {
+            this.#insertFunctionModalWindow = new ModalButton(
+                this.tester,
+                selector,
+                Functions.SELECTORS.MODAL_WINDOW.INSERT_FUNCTION.WINDOW,
+                Functions.SELECTORS.MODAL_WINDOW.INSERT_FUNCTION.OK_BUTTON
+            );
+        }
+        return this.#insertFunctionModalWindow;
+    }
+
+    #getFunctionArgumentsModalWindow() {
+        if (!this.#functionArgumentsModalWindow) {
+            this.#functionArgumentsModalWindow = new ModalButton(
+                this.tester,
+                "",
+                Functions.SELECTORS.MODAL_WINDOW.FUNCTION_ARGUMENTS.WINDOW,
+                Functions.SELECTORS.MODAL_WINDOW.FUNCTION_ARGUMENTS.OK_BUTTON
+            );
+        }
+        return this.#functionArgumentsModalWindow;
     }
 
     /**
@@ -113,7 +129,10 @@ class Functions extends HomeTab {
      */
     async openInsertFunction() {
         try {
-            await this.#openFunctionModalWindow(this.insertFunctionModalWindow);
+            const functionsDropdown = this.#getFunctionsDropdown();
+            const { id } = await functionsDropdown.getDropdownItem("description", "Additional");
+            const modalWindow = this.#getInsertFunctionModalWindow(id);
+            await modalWindow.openModal();
         } catch (error) {
             this.#handleError("openInsertFunction", error);
         }
@@ -124,16 +143,17 @@ class Functions extends HomeTab {
      * Call this function only after the function is inserted.
      */
     async openFunctionArguments() {
-        await this.#openFunctionModalWindow(this.functionArgumentsModalWindow);
+        const modalWindow = this.#getFunctionArgumentsModalWindow();
+        await modalWindow.waitModalLoaded();
     }
 
     /**
      * Applies the inserted function and waits for the function arguments modal window to open
      */
     async applyInsertFunction() {
-        const okButtonSelector = Functions.SELECTORS.MODAL_WINDOW.INSERT_FUNCTION.OK_BUTTON;
         try {
-            await Promise.all([this.tester.click(okButtonSelector), this.functionArgumentsModalWindow.isModalOpen()]);
+            const modalWindow = this.#getInsertFunctionModalWindow();
+            await modalWindow.closeModal();
         } catch (error) {
             this.#handleError("applyInsertFunction", error);
         }
@@ -144,7 +164,8 @@ class Functions extends HomeTab {
      */
     async applyFunctionArguments() {
         try {
-            await this.functionArgumentsModalWindow.closeModal();
+            const modalWindow = this.#getFunctionArgumentsModalWindow();
+            await modalWindow.closeModal();
         } catch (error) {
             this.#handleError("applyFunctionArguments", error);
         }
@@ -235,17 +256,6 @@ class Functions extends HomeTab {
         } catch (error) {
             this.#handleError("setArgumentValue", error);
         }
-    }
-
-    /**
-     * Opens a function modal window and sets the function to "Additional"
-     * @param {ModalButton} modalWindow - The modal window to open.
-     */
-    async #openFunctionModalWindow(modalWindow) {
-        const functionsDropdown = this.#getFunctionsDropdown();
-        const { id } = await functionsDropdown.getDropdownItem("description", "Additional");
-        modalWindow.selector = id;
-        await modalWindow.openModal();
     }
 
     /**

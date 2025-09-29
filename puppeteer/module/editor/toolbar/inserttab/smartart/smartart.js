@@ -61,7 +61,7 @@ class SmartArt extends InsertTab {
         const dropdownSelector = SmartArt.SELECTORS.SMART_ART_DROPDOWN.SELECTOR;
 
         try {
-            const waitListLoaded = this.tester.checkSelector(loadedSelector);
+            const waitListLoaded = this.tester.waitSelector(loadedSelector);
             const dropdownItems = await this.smartArtDropdown.getDropdownItems();
 
             const target = dropdownItems.find((item) => item.description === description);

@@ -16,11 +16,19 @@ const { Input, ModalButton, Checkbox } = require("../../../../elements");
 class Caption extends ReferencesTab {
     constructor(tester) {
         super(tester);
-        this.captionModalButton = new ModalButton(
-            this.tester,
-            Caption.SELECTORS.TOOLBAR.CAPTION_BUTTON.ELEMENT_SELECTOR,
-            Caption.SELECTORS.MODAL_WINDOW.CAPTION_WINDOW
-        );
+    }
+
+    #captionModalButton = null;
+    #getCaptionModalWindow() {
+        if (!this.#captionModalButton) {
+            this.#captionModalButton = new ModalButton(
+                this.tester,
+                Caption.SELECTORS.TOOLBAR.CAPTION_BUTTON.ELEMENT_SELECTOR,
+                Caption.SELECTORS.MODAL_WINDOW.CAPTION_WINDOW,
+                Caption.SELECTORS.MODAL_WINDOW.OK_BUTTON
+            );
+        }
+        return this.#captionModalButton;
     }
 
     /**
@@ -46,7 +54,8 @@ class Caption extends ReferencesTab {
      * @param {CaptionSettings} settings - Caption settings
      */
     async setCaptionSettings(settings) {
-        await this.captionModalButton.openModal();
+        const captionModal = this.#getCaptionModalWindow();
+        await captionModal.openModal();
         await this.setSettingsByMap(settings, Caption.SETTINGS_MAP);
         await this.#applyCaptionSettings();
     }
@@ -57,11 +66,12 @@ class Caption extends ReferencesTab {
      * @returns {Promise<void>} Resolves when the cancel operation is complete.
      */
     async cancelCaptionSettings(settings) {
-        await this.captionModalButton.openModal();
+        const captionModal = this.#getCaptionModalWindow();
+        await captionModal.openModal();
         await this.setSettingsByMap(settings, Caption.SETTINGS_MAP);
 
         const cancelButtonSelector = Caption.SELECTORS.MODAL_WINDOW.CANCEL_BUTTON.ELEMENT_SELECTOR;
-        await this.captionModalButton.closeModal(cancelButtonSelector);
+        await captionModal.closeModal(cancelButtonSelector);
     }
 
     /**
@@ -70,12 +80,21 @@ class Caption extends ReferencesTab {
      */
     async addLabel(labelName) {
         try {
-            await this.captionModalButton.openModal();
+            const captionModal = this.#getCaptionModalWindow();
+            await captionModal.openModal();
+
             const addLabelSelectors = Caption.SELECTORS.MODAL_WINDOW.ADD_LABEL_MENU;
-            await this.tester.click(addLabelSelectors.ADD_LABEL_BUTTON);
-            await this.tester.checkSelector(addLabelSelectors.LABEL_INPUT);
-            const inputLabel = new Input(this.tester, addLabelSelectors.LABEL_INPUT);
+            const addLabelModalWindow = new ModalButton(
+                this.tester,
+                addLabelSelectors.ADD_LABEL_BUTTON,
+                addLabelSelectors.WINDOW,
+                addLabelSelectors.OK_BUTTON
+            );
+            await addLabelModalWindow.openModal();
+            const inputLabel = new Input(this.tester, addLabelSelectors.LABEL_INPUT, false);
             await inputLabel.set(labelName);
+            await addLabelModalWindow.closeModal();
+
             await this.#applyCaptionSettings();
         } catch (error) {
             throw new Error(`Caption.addLabel: Failed to add label '${labelName}'. ${error.message}`, { cause: error });
@@ -88,7 +107,8 @@ class Caption extends ReferencesTab {
      */
     async deleteLabel(labelName) {
         try {
-            await this.captionModalButton.openModal();
+            const captionModal = this.#getCaptionModalWindow();
+            await captionModal.openModal();
             const deleteLabelSelectors = Caption.SELECTORS.MODAL_WINDOW.DELETE_LABEL_BUTTON;
             await this.setLabel(labelName);
             await this.tester.click(deleteLabelSelectors.ELEMENT_SELECTOR);
@@ -211,8 +231,9 @@ class Caption extends ReferencesTab {
      */
     async #applyCaptionSettings() {
         try {
+            const captionModal = this.#getCaptionModalWindow();
             const okButtonSelectors = Caption.SELECTORS.MODAL_WINDOW.OK_BUTTON.ELEMENT_SELECTOR;
-            await this.captionModalButton.closeModal(okButtonSelectors);
+            await captionModal.closeModal(okButtonSelectors);
         } catch (error) {
             throw new Error(`Caption.applyCaptionSettings: Failed to apply caption settings. ${error.message}`, {
                 cause: error,

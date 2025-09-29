@@ -3,7 +3,7 @@
         "BOOKMARK_BUTTON": "#slot-btn-bookmarks"
     },
     "MODAL_WINDOW": {
-        "BOOKMARK_WINDOW": "#window-bookmarks.notransform",
+        "BOOKMARK_WINDOW": "#window-bookmarks",
         "NAME_INPUT": "#bookmarks-txt-name > div",
         "ADD_BUTTON": "#bookmarks-btn-add",
         "CLOSE_BUTTON": "#window-bookmarks > div.body > div.footer.center > button",

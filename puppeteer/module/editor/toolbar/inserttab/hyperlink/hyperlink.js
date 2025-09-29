@@ -1,5 +1,6 @@
 const InsertTab = require("../inserttab");
-
+const { ModalButton, Input, StateButton } = require("../../../../elements");
+const selectors = require("./selectors.json");
 /**
  * @typedef {Object} ExternalLink
  * @property {string} link - url link
@@ -19,29 +20,34 @@ class Hyperlink extends InsertTab {
         super(tester, "span.slot-inshyperlink");
     }
 
+    static HYPERLINK_SELECTORS = selectors;
     #linkModalWindowSelector = "#window-hyperlink";
+
+    #hyperlinkDropdown = null;
+    #getHyperlinkDropdown() {
+        if (!this.#hyperlinkDropdown) {
+            const { HYPERLINK_MODAL } = Hyperlink.HYPERLINK_SELECTORS;
+            this.#hyperlinkDropdown = new ModalButton(
+                this.tester,
+                HYPERLINK_MODAL.SELECTOR,
+                HYPERLINK_MODAL.WINDOW,
+                HYPERLINK_MODAL.OK_BUTTON
+            );
+        }
+        return this.#hyperlinkDropdown;
+    }
 
     /**
      * Enters values into hyperlink fields
      * @param {string} targetLink
      */
     async #fillLinkForm(targetLink) {
-        const formSelectors = {
-            link: "#id-dlg-hyperlink-url input",
-            display: "#id-dlg-hyperlink-display input",
-            screenTip: "#id-dlg-hyperlink-tip input",
-        };
+        const formSelectors = Hyperlink.HYPERLINK_SELECTORS.INPUT_FORMS;
 
         for (const [key, value] of Object.entries(targetLink)) {
             if (value && formSelectors[key]) {
-                if (key === "display") {
-                    await this.tester.frame.evaluate((selector) => {
-                        const textarea = document.querySelector(selector);
-                        textarea.focus();
-                        textarea.select();
-                    }, formSelectors[key]);
-                }
-                await this.tester.inputToForm(value, formSelectors[key]);
+                const inputForm = new Input(this.tester, formSelectors[key], false);
+                await inputForm.set(value);
             }
         }
     }
@@ -50,21 +56,16 @@ class Hyperlink extends InsertTab {
      * Accepts changes in the hyperlink window
      */
     async #submitForm() {
-        const okButton = `${this.#linkModalWindowSelector} div.footer button[result="ok"]`;
-        await this.tester.click(okButton);
-
-        if (await this.tester.checkSelector(this.#linkModalWindowSelector)) {
-            console.error("Hyperlink: Error when submitting the hyperlink form.");
-        }
+        const modalWindow = this.#getHyperlinkDropdown();
+        await modalWindow.closeModal();
     }
 
     /**
      * click hyperlink button
      */
     async clickHyperlink() {
-        const waitHyperLinksOpen = this.tester.frame.waitForSelector("#window-hyperlink");
-        await this.clickTargetButton();
-        await waitHyperLinksOpen;
+        const hyperlinkModalButton = this.#getHyperlinkDropdown();
+        await hyperlinkModalButton.openModal();
     }
 
     /**
@@ -72,6 +73,7 @@ class Hyperlink extends InsertTab {
      * @param {ExternalLink} linkSetting
      */
     async addExternalLink(linkSetting) {
+        const externalLinkSelectors = Hyperlink.HYPERLINK_SELECTORS.TYPES.EXTERNAL_LINK;
         await this.clickHyperlink();
 
         const targetLink = {
@@ -81,7 +83,8 @@ class Hyperlink extends InsertTab {
             ...linkSetting,
         };
 
-        await this.tester.click("#id-dlg-hyperlink-external");
+        const externalLinkButton = new StateButton(this.tester, externalLinkSelectors.BUTTON);
+        await externalLinkButton.setState(true);
 
         if (targetLink?.link) {
             await this.#fillLinkForm(targetLink);
@@ -96,6 +99,7 @@ class Hyperlink extends InsertTab {
      * @param {InternalLink} [linkSetting] - The settings for the internal link.
      */
     async placeInDoc(linkSetting) {
+        const placeInDocSelectors = Hyperlink.HYPERLINK_SELECTORS.TYPES.PLACE;
         const targetLink = {
             linkTo: "Beginning of document",
             display: "",
@@ -103,7 +107,9 @@ class Hyperlink extends InsertTab {
             ...linkSetting,
         };
         await this.clickHyperlink();
-        await this.tester.click("#id-dlg-hyperlink-internal");
+        const externalLinkButton = new StateButton(this.tester, placeInDocSelectors.BUTTON);
+        await externalLinkButton.setState(true);
+
         await this.tester.selectByText(targetLink.linkTo, "#id-dlg-hyperlink-list div.item div.name");
 
         await this.#fillLinkForm(targetLink);

@@ -23,7 +23,7 @@ class ModalButton extends UIElement {
 
     constructor(tester, selector, modalWindowSelector, closeButtonSelector, target = "frame") {
         super(tester, selector, target);
-        this.modalWindowSelector = modalWindowSelector;
+        this.modalWindowSelector = `${modalWindowSelector}.notransform`;
         this.closeButtonSelector = closeButtonSelector;
         this.handleError = createErrorHandler(this.constructor.name);
         this.target = target;
@@ -42,24 +42,20 @@ class ModalButton extends UIElement {
         }
 
         const modalId = this.#modalId;
-
         await this.context.waitForFunction(
             async (id) => {
                 const el = document.getElementById(id);
                 const modalsMask = document.querySelector(".modals-mask");
 
-                const isMaskHidden =
-                    !modalsMask ||
-                    (modalsMask.getAttribute("counter") === "0" &&
-                        window.getComputedStyle(modalsMask).display === "none");
-
-                if (!el) {
-                    return isMaskHidden;
+                const counter = modalsMask.getAttribute("counter");
+                if (counter === "0") {
+                    const isMaskHidden = window.getComputedStyle(modalsMask).display === "none";
+                    return !el && isMaskHidden;
+                } else {
+                    return !el;
                 }
-
-                return !el.checkVisibility() && isMaskHidden;
             },
-            { polling: 100, timeout: 10000 },
+            { polling: "raf", timeout: 10000 },
             modalId
         );
 
@@ -73,17 +69,16 @@ class ModalButton extends UIElement {
      */
     async #checkModalOpen(type = "check") {
         try {
-            const selector = `${this.modalWindowSelector}.notransform`;
             const isOpen =
                 type === "wait"
-                    ? await this.tester.waitSelector(selector, this.target)
-                    : await this.tester.checkSelector(selector, this.target);
+                    ? await this.tester.waitSelector(this.modalWindowSelector, this.target)
+                    : await this.tester.checkSelector(this.modalWindowSelector, this.target);
 
             if (isOpen) {
                 this.#modalId = await this.context.evaluate((sel) => {
                     const modal = document.querySelector(sel);
-                    return modal ? modal.getAttribute("id") : null;
-                }, selector);
+                    return modal ? `#${modal.getAttribute("id")}` : null;
+                }, this.modalWindowSelector);
             } else {
                 this.#modalId = null;
             }
@@ -136,9 +131,8 @@ class ModalButton extends UIElement {
             if (!(await this.tester.checkSelector(this.modalWindowSelector, this.target))) {
                 return;
             }
-            const waitForModal = this.waitModalWindowClosed();
             await this.click(1, closeButtonSelector);
-            await waitForModal;
+            await this.waitModalWindowClosed();
         } catch (error) {
             this.handleError("closeModal", error, "Failed to close modal window.");
         }

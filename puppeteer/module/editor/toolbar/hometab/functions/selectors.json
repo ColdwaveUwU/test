@@ -7,7 +7,7 @@
     },
     "MODAL_WINDOW": {
         "FUNCTION_ARGUMENTS": {
-            "WINDOW": ".asc-window.modal.advanced-settings-dlg.notransform",
+            "WINDOW": ".asc-window.modal.advanced-settings-dlg",
             "ARGUMENTS_TABLE": "#formula-wizard-tbl-args",
             "ARGUMENTS_INPUT": "#formula-wizard-tbl-args input",
             "ARGUMENT_CONTAINER": "#formula-wizard-txt-arg",
@@ -16,7 +16,7 @@
             "OK_BUTTON": ".asc-window.modal.advanced-settings-dlg .footer.center button[result=ok]"
         },
         "INSERT_FUNCTION": {
-            "WINDOW": ".asc-window.modal.modal-dlg.formula-dlg.notransform",
+            "WINDOW": ".asc-window.modal.modal-dlg.formula-dlg",
             "SEARCH_INPUT": "#formula-dlg-search",
             "CANCEL_BUTTON": ".footer.center button[result=cancel]",
             "FUNCTION_LIST": "#formula-dlg-combo-functions .listview.inner .list-item",

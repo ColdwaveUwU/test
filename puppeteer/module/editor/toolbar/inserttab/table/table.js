@@ -22,30 +22,34 @@ class Table extends InsertTab {
     constructor(tester) {
         super(tester, "#slot-btn-instable");
         this.tableSettings = new TableSettings(tester);
-        this.insertSpreadSheetModal = new ModalButton(
-            this.tester,
-            "",
-            Table.TABLE_SELECTORS.INSERT_SPREADSHEET.MODAL_WINDOW,
-            Table.TABLE_SELECTORS.INSERT_SPREADSHEET.SAVE_BUTTON
-        );
     }
 
     static TABLE_SELECTORS = selectors;
 
-    get tableDropdown() {
-        const createTableSelectors = Table.TABLE_SELECTORS;
-        const tableDropdownButton = new Dropdown(this.tester, {
-            selector: createTableSelectors.TABLE_BUTTON_SELECTOR,
-            elementsSelector: createTableSelectors.TABLE_ELEMENTS,
-        });
-        return tableDropdownButton;
+    #tableDropdownButton = null;
+    #insertSpreadSheetModal = null;
+
+    #getTableDropdown() {
+        if (!this.#tableDropdownButton) {
+            const createTableSelectors = Table.TABLE_SELECTORS;
+            this.#tableDropdownButton = new Dropdown(this.tester, {
+                selector: createTableSelectors.TABLE_BUTTON_SELECTOR,
+                elementsSelector: createTableSelectors.TABLE_ELEMENTS,
+            });
+        }
+        return this.#tableDropdownButton;
     }
 
-    /**
-     * Opens the table dropdown.
-     */
-    async #openTableDropdown() {
-        await this.tableDropdown.selectDropdown();
+    #getInsertSpreadSheetModalWindow(selector) {
+        if (!this.#insertSpreadSheetModal) {
+            this.#insertSpreadSheetModal = new ModalButton(
+                this.tester,
+                selector,
+                Table.TABLE_SELECTORS.INSERT_SPREADSHEET.MODAL_WINDOW,
+                Table.TABLE_SELECTORS.INSERT_SPREADSHEET.SAVE_BUTTON
+            );
+        }
+        return this.#insertSpreadSheetModal;
     }
 
     /**
@@ -102,7 +106,7 @@ class Table extends InsertTab {
     async insertTable(column, row) {
         const insertTableSelectors = Table.TABLE_SELECTORS.INSERT_TABLE;
 
-        const covertTextButtons = await this.tableDropdown.getDropdownItems();
+        const covertTextButtons = await this.#getTableDropdown().getDropdownItems();
         const target = covertTextButtons.find((elem) => elem.description === "Insert custom table");
         const customTableModalWindow = new ModalButton(
             this.tester,
@@ -132,7 +136,7 @@ class Table extends InsertTab {
      * @param {{x: number, y: number}} position
      */
     async drawTable(tableSize, position) {
-        await this.tableDropdown.selectDropdownItem("Draw table");
+        await this.#getTableDropdown().selectDropdownItem("Draw table");
         await this.#drawRectangle(tableSize, position);
     }
 
@@ -142,7 +146,7 @@ class Table extends InsertTab {
      * @param {{x: number, y: number}} position
      */
     async eraseTable(tableSize, position) {
-        await this.tableDropdown.selectDropdownItem("Erase table");
+        await this.#getTableDropdown().selectDropdownItem("Erase table");
         await this.#drawRectangle(tableSize, position);
     }
 
@@ -154,7 +158,7 @@ class Table extends InsertTab {
         const convertTextToTableSelectors = Table.TABLE_SELECTORS.COVERT_TEXT;
         const convertTextToTable = new ConvertTextToTableModal(this.tester);
 
-        const covertTextButtons = await this.tableDropdown.getDropdownItems();
+        const covertTextButtons = await this.#getTableDropdown().getDropdownItems();
         const target = covertTextButtons.find((elem) => elem.description === "Convert Text to Table");
         const convertTextToTableModal = new ModalButton(
             this.tester,
@@ -179,10 +183,10 @@ class Table extends InsertTab {
                 resolve();
             });
         });
-        await this.tableDropdown.selectDropdownItem("Insert Spreadsheet");
-        if (await this.insertSpreadSheetModal.isModalOpen()) {
-            await waitInsertSpreadSheetFrame;
-        }
+        const targetItem = await this.#getTableDropdown().getDropdownItem("description", "Insert Spreadsheet");
+        const insertSpreadSheetModal = this.#getInsertSpreadSheetModalWindow(targetItem.id);
+        await insertSpreadSheetModal.openModal();
+        await waitInsertSpreadSheetFrame;
     }
 
     /**
@@ -191,9 +195,7 @@ class Table extends InsertTab {
     async closeInsertSpreadsheet() {
         const frame = this.tester.frame.parentFrame();
         this.tester.changeCurrentFrame(frame);
-        if (await this.insertSpreadSheetModal.isModalOpen()) {
-            await this.insertSpreadSheetModal.closeModal();
-        }
+        await this.#insertSpreadSheetModal.closeModal();
     }
 
     /**
