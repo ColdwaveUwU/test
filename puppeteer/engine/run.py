@@ -16,7 +16,8 @@ from script.python.description_parser import DescriptionParser
 from script.python.loading_spinner import LoadingSpinner
 from script.python.config_manager import ConfigManager
 from script.python.install import check_dependencies
-from typing import List, Dict, Optional
+import requests
+from urllib.parse import urlparse, urljoin
 
 sys.path.append(os.path.abspath(os.path.join(__file__, "../../..")))
 from tools.report_portal.report_portal_launcher import ReportPortalLauncher
@@ -435,6 +436,21 @@ def update_description_json(module_paths, tester_path):
             spinner = LoadingSpinner(future, "Updating method descriptions...")  
             spinner.start()
 
+def get_editor_version(url: str) -> tuple[str, str]:
+    parsed = urlparse(url)
+    origin = f"{parsed.scheme}://{parsed.netloc}"
+    
+    script_url = urljoin(origin, "/web-apps/apps/api/documents/api.js")
+    
+    response = requests.get(script_url)
+    response.raise_for_status()
+    
+    match = re.search(r"Version:\s*([\d.]+)\s*\(build:(\d+)\)", response.text)
+    if not match:
+        raise RuntimeError("Cannot parse version/build from the script")
+    
+    return match.group(1), match.group(2)
+
 if __name__ == "__main__":
     check_dependencies(engine_directory)
     start_time = int(time.time() * 1000)
@@ -534,9 +550,12 @@ if __name__ == "__main__":
         test_file_config_map.extend(get_matching_paths(target_path))
 
     for run_mode in run_modes:
+        version, build = get_editor_version(config["testOptions"]["url"])
         launch_attributes = [{"key": "platform", "value": system_name}, 
                         {"key": "browser", "value": config["puppeteerOptions"]["browser"]}, 
-                        {"key": "provider", "value": run_mode}]
+                        {"key": "provider", "value": run_mode},
+                        {"key": "version", "value": version},
+                        {"key": "build", "value": build} ]
         try: 
             report_portal_launcher = ReportPortalLauncher()
             create_connection = connect_portal or report_portal_launcher.need_connection
