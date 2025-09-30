@@ -16,8 +16,10 @@ from script.python.description_parser import DescriptionParser
 from script.python.loading_spinner import LoadingSpinner
 from script.python.config_manager import ConfigManager
 from script.python.install import check_dependencies
-import requests
+
 from urllib.parse import urlparse, urljoin
+from urllib.request import urlopen, Request
+from urllib.error import URLError, HTTPError
 
 sys.path.append(os.path.abspath(os.path.join(__file__, "../../..")))
 from tools.report_portal.report_portal_launcher import ReportPortalLauncher
@@ -442,14 +444,21 @@ def get_editor_version(url: str) -> tuple[str, str]:
     
     script_url = urljoin(origin, "/web-apps/apps/api/documents/api.js")
     
-    response = requests.get(script_url)
-    response.raise_for_status()
+    try:
+        req = Request(script_url)
+        with urlopen(req) as response:
+            text = response.read().decode('utf-8')
+            
+        match = re.search(r"Version:\s*([\d.]+)\s*\(build:(\d+)\)", text)
+        if not match:
+            raise RuntimeError("Cannot parse version/build from the script")
+        
+        return match.group(1), match.group(2)
     
-    match = re.search(r"Version:\s*([\d.]+)\s*\(build:(\d+)\)", response.text)
-    if not match:
-        raise RuntimeError("Cannot parse version/build from the script")
-    
-    return match.group(1), match.group(2)
+    except HTTPError as e:
+        raise RuntimeError(f"HTTP error: {e.code} {e.reason}")
+    except URLError as e:
+        raise RuntimeError(f"URL error: {e.reason}")
 
 if __name__ == "__main__":
     check_dependencies(engine_directory)
