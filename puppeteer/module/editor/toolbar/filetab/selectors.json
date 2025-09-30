@@ -3,7 +3,7 @@
     "PANEL_MENU": {
         "CREATE_NEW": {
             "BUTTON": "#fm-btn-create",
-            "BLANK DOC": "#panel-createnew .blank-document .title",
+            "DOC": "#panel-createnew .blank-document .title",
             "BLANK": "#panel-createnew .thumb-wrap .title",
             "SAMPLE": "#panel-createnew .thumb-wrap[template*=\"sample=true\"] .title"
         },
