@@ -1,5 +1,5 @@
 const selectors = require("./selectors.json");
-const { Button, Checkbox, Input, Dropdown } = require("../../../elements");
+const { Button, Checkbox, Input, Dropdown, ModalButton } = require("../../../elements");
 class AutoCorrect {
     constructor(tester) {
         this.tester = tester;
@@ -70,10 +70,16 @@ class AutoCorrect {
             const selector = actionMap[actionKey];
 
             if (selector) {
+                const warningWindow = new ModalButton(
+                    this.tester,
+                    selector,
+                    mathSettingsSelectors.MODAL_MASK.MODAL,
+                    mathSettingsSelectors.MODAL_MASK.YES_BUTTON
+                );
+                const isWarningWindowOpened = warningWindow.waitModalLoaded();
                 await this.tester.click(selector);
-                const expectedCounter = await this.tester.getModalCounter();
-                if (expectedCounter > 0) {
-                    await this.tester.click(mathSettingsSelectors.MODAL_MASK.YES_BUTTON);
+                if (await isWarningWindowOpened) {
+                    await warningWindow.closeModal();
                 }
             } else {
                 throw new Error(`Unknown math action: "${mathSettings.action}"`);

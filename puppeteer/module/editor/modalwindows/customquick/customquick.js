@@ -1,23 +1,27 @@
 const selectors = require("./selectors.json");
-const { Checkbox } = require("../../../elements");
+const { Checkbox, ModalButton } = require("../../../elements");
 class CustomQuick {
     constructor(tester, openButtonSelector) {
         this.tester = tester;
         this.openButtonSelector = openButtonSelector;
     }
 
-    static CUSTOM_QUICK_SELECTORS = selectors;
+    #customQuickWindow = null;
 
-    async #openCustomQuickWindow() {
-        const customQuickSelector = CustomQuick.CUSTOM_QUICK_SELECTORS.WINDOW_SELECTOR;
-
-        const modalOpened = await this.tester.checkModalWindow();
-        const selectorExists = await this.tester.checkSelector(customQuickSelector);
-        const customQuickWindowIsOpened = modalOpened && selectorExists;
-        if (!(await customQuickWindowIsOpened)) {
-            await this.tester.click(this.openButtonSelector);
+    #getCustomQuickWindow() {
+        if (!this.#customQuickWindow) {
+            const customQuickSelectors = CustomQuick.CUSTOM_QUICK_SELECTORS;
+            this.#customQuickWindow = new ModalButton(
+                this.tester,
+                this.openButtonSelector,
+                customQuickSelectors.WINDOW_SELECTOR,
+                customQuickSelectors.OK_BUTTON
+            );
         }
+        return this.#customQuickWindow;
     }
+
+    static CUSTOM_QUICK_SELECTORS = selectors;
 
     /**
      *
@@ -27,7 +31,8 @@ class CustomQuick {
     async setCustomQuickSettings(settings) {
         const customQuickSelectors = CustomQuick.CUSTOM_QUICK_SELECTORS;
         try {
-            await this.#openCustomQuickWindow();
+            const customQuickModalWindow = this.#getCustomQuickWindow();
+            await customQuickModalWindow.openModal();
             for (const [key, value] of Object.entries(settings)) {
                 const selectorKey = key.toUpperCase();
                 const selector = customQuickSelectors.CHECKBOXES[selectorKey];
@@ -37,7 +42,7 @@ class CustomQuick {
                 const checkbox = new Checkbox(this.tester, selector);
                 await checkbox.set(value);
             }
-            await this.tester.click(customQuickSelectors.OK_BUTTON);
+            await customQuickModalWindow.closeModal();
         } catch (err) {
             throw new Error(`setCustomQuickSettings failed: ${err.message}`);
         }

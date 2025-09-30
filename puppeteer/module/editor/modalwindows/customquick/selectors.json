@@ -1,5 +1,5 @@
 {
-    "WINDOW_SELECTOR": ".quick-access-dlg.notransform",
+    "WINDOW_SELECTOR": ".quick-access-dlg",
     "CHECKBOXES": {
         "SAVE": "#quick-access-chb-save",
         "PRINT": "#quick-access-chb-print",
