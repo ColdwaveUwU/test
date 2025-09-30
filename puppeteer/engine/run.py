@@ -16,6 +16,7 @@ from script.python.description_parser import DescriptionParser
 from script.python.loading_spinner import LoadingSpinner
 from script.python.config_manager import ConfigManager
 from script.python.install import check_dependencies
+from typing import List, Dict, Optional
 
 sys.path.append(os.path.abspath(os.path.join(__file__, "../../..")))
 from tools.report_portal.report_portal_launcher import ReportPortalLauncher
@@ -217,7 +218,7 @@ def create_out_directory(test_path, params, current_datetime):
     
     new_test_directory = resolve_test_directory()
     out_directory_path = os.path.join(work_directory, out_directory) if "puppeteer" in test_path else os.path.join(os.path.dirname(target_path), out_directory)
-    out_directory = os.path.normpath(out_directory_path)
+    
     create_dir(new_test_directory)
     
     for rel_path, files in DIR_STRUCTURE.items():
@@ -232,7 +233,7 @@ def create_out_directory(test_path, params, current_datetime):
 def run_test(test_map, params_dict, cache_dir, server_port):
     test_path = test_map["script"]
     file_name = os.path.basename(test_path)
-    report_portal_test = report_portal_manager.start_test(test_path, params_dict['run_mode'])
+    report_portal_test = report_portal_manager.start_test(test_path)
     report_portal_test.send_log("Start test")
     current_datetime = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     test_directory, out_directory_path, test_resource_dir = create_out_directory(test_path, params_dict, current_datetime)
@@ -247,12 +248,6 @@ def run_test(test_map, params_dict, cache_dir, server_port):
 
     cache_dir = cache_dir.replace("\\", '/')
     replace_in_file(run_file, "%%CACHEDIR%%", str(cache_dir).replace("\\", "/"))
-
-    config = config_manager.get_main_config()
-    run_mode = params_dict.get('run_mode', 'example')
-    config['provider'] = "" if run_mode == "example" else run_mode
-    config_manager.set_main_config(config)
-
     if "config" in test_map:
         sub_config_path = test_map["config"]
         test_config = config_manager.merge_with_config(sub_config_path)
@@ -265,12 +260,12 @@ def run_test(test_map, params_dict, cache_dir, server_port):
     puppeteer = os.path.join(engine_directory, "node_modules", "puppeteer").replace("\\", '/')
     replace_in_file(run_file, "require(\"%%PUPPETEER%%\")", f"require(\"{puppeteer}\")")
 
-    collab = os.path.join(engine_directory, "..", "module").replace("\\", '/')
+    collab = os.path.join(engine_directory, "..", "module", "collab").replace("\\", '/')
     replace_in_file(run_file, "require(\"%%COLLAB%%\")", f"require(\"{collab}\")")
 
     elements = os.path.join(engine_directory, "..", "module", "elements").replace("\\", '/')
     replace_in_file(run_file, "require(\"%%ELEMENTS%%\")", f"require(\"{elements}\")")
-
+    
     replace_in_file(run_file, "\"%%TESTER_PARAMS%%\"", f"{params_dict['params']}")
 
     replace_in_file(run_file, "\"%%FILE_NAME%%\"", f"\"{file_name}\"")
@@ -306,7 +301,7 @@ def run_test(test_map, params_dict, cache_dir, server_port):
     execution_time = end_time - start_time
     formatted_time = "[{:02}:{:02}.{:03}]".format(execution_time // 60000, (execution_time // 1000) % 60, execution_time % 1000)
     append_file(log_file, f"{formatted_time} [end] [test] {file_name} Duration {execution_time}")
-    
+
     report_object = {
         'test_path': test_path,
         'file_name': file_name,
@@ -320,7 +315,6 @@ def run_test(test_map, params_dict, cache_dir, server_port):
         'start_test_time': start_test_time,
         'return_code': return_code
     }
-
     test_report_info = report_generator.generate_test_report(report_object=report_object, run_mode=params_dict['run_mode'])
     action_content = test_report_info['time_log_content']
 
@@ -333,8 +327,12 @@ def run_test(test_map, params_dict, cache_dir, server_port):
         report_portal_test.send_log(message=f"{file_name} report attached.", attachment={"name": os.path.basename(test_report_path),
                                                                                  "data": file.read(),
                                                                                  "mime": "text/html"})
-
-    report_portal_manager.finish_test(test_path, 0 if return_code == 5 else return_code, params_dict['run_mode'])
+    
+    report_portal_manager.finish_test(test_path, 
+                                      0 if return_code == 5 else return_code,
+                                      params_dict['run_mode'])
+    
+    report_object['test_report_path'] = test_report_path
     return report_object
 
 def run_test_with_retries(test_map, params_dict):
@@ -413,7 +411,8 @@ def update_description_json(module_paths, tester_path):
                 json.dump(modules_descriptions, methods_json, ensure_ascii=False, indent=4)
 
             return [{"return_code": 0}] 
-        except Exception as e:   
+        except Exception as e:
+            
             print(f"Error while saving descriptions: {e}")
             return [{"return_code": 1}] 
 
@@ -534,94 +533,87 @@ if __name__ == "__main__":
     elif is_dir(target_path):
         message = f'Running tests in folder "{test_path}"'
         test_file_config_map.extend(get_matching_paths(target_path))
-    
-    common_attributes = [{"key": "platform", "value": system_name}, 
-                        {"key": "browser", "value": config["puppeteerOptions"]["browser"]}]
-    try: 
-        global report_portal_launcher
-        report_portal_launcher = ReportPortalLauncher()
-        create_connection = connect_portal or report_portal_launcher.need_connection
-        if create_connection:
-            report_portal_launcher.start_launch()
-            report_portal_launcher.send_log(f"Starting tests in {target_path}...")
 
-            report_portal_manager = ReportPortalManager(report_portal_launcher, test_file_config_map, work_directory, run_modes)
-        else: 
-            report_portal_launcher = NullReportPortalLauncher()
-            report_portal_manager = NullReportPortalManager()
-        
-        report_generator = ReportGenerator(report_portal_launcher)
-        report_portal_launcher.send_log(message, print_output=False)
-        if len(test_file_config_map) == 0:
-            report_portal_launcher.send_log(f"Error: Test files not found.", level="ERROR")
-            sys.exit(1)
-        
-        module_paths = {
-            dir_key: [file_path for file_name, file_path in file_data.items() if file_name == "script"]
-            for dir_key, file_data in create_dir_map(os.path.join(work_directory, "module")).items()
-            if "script" in file_data
-        }
+    for run_mode in run_modes:
+        launch_attributes = [{"key": "platform", "value": system_name}, 
+                        {"key": "browser", "value": config["puppeteerOptions"]["browser"]}, 
+                        {"key": "provider", "value": run_mode}]
+        try: 
+            report_portal_launcher = ReportPortalLauncher()
+            create_connection = connect_portal or report_portal_launcher.need_connection
+            if create_connection:
+                report_portal_launcher.start_launch()
+                report_portal_launcher.send_log(f"Starting tests in {target_path}...")
 
-        tester_path = {engine_directory: [os.path.join(engine_directory, "tester.js")]}
-        update_description_json(module_paths, tester_path)
+                report_portal_manager = ReportPortalManager(report_portal_launcher, test_file_config_map, work_directory)
+            else: 
+                report_portal_launcher = NullReportPortalLauncher()
+                report_portal_manager = NullReportPortalManager()
+            
+            report_generator = ReportGenerator(report_portal_launcher)
+            report_portal_launcher.send_log(message, print_output=False)
+            if len(test_file_config_map) == 0:
+                report_portal_launcher.send_log(f"Error: Test files not found.", level="ERROR")
+                sys.exit(1)
+            
+            module_paths = {
+                dir_key: [file_path for file_name, file_path in file_data.items() if file_name == "script"]
+                for dir_key, file_data in create_dir_map(os.path.join(work_directory, "module")).items()
+                if "script" in file_data
+            }
 
-        resource_path = config["resourceServer"]["resourcePath"]
+            tester_path = {engine_directory: [os.path.join(engine_directory, "tester.js")]}
+            update_description_json(module_paths, tester_path)
 
-        if not os.path.isabs(resource_path):
-            resource_path = os.path.join(work_directory, resource_path)
+            resource_path = config["resourceServer"]["resourcePath"]
 
-        result_objects = {}
-        for run_mode in run_modes:
-                start_launch_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                report_portal_launcher.send_log(f"=== Running tests with run mode: {run_mode} ===")
-                params_dict = {
-                    'test_path': test_path,
-                    'num_retries': num_retries,
-                    'config_path': config_path,
-                    'out_directory': f"{out_directory}/{run_mode}",
-                    'target_path': target_path,
-                    'params': params,
-                    'exceptionErrors': config["reportOptions"],
-                    'resource_path': resource_path,
-                    'debug': debug,
-                    'terminal_error': args.terminal_error,
-                    'terminal_log': args.terminal_log,
-                    'run_mode': run_mode,
-                }
-                
-                if num_threads == -1:
-                    num_threads = int(min(32, (os.cpu_count() or 1) + 4) * 1/3)
-                if not prcache:
-                    num_threads = min(num_threads, len(test_file_config_map))
-                    for i in range(num_threads):
-                        cache_dir = os.path.join(browser_cache_dir, f"cache{i}")
-                        server_port = config["resourceServer"]["port"] + i
-                        server_queue.put(server_port)
-                        cache_queue.put(cache_dir)
-                        
-                    with ThreadPoolExecutor(max_workers=num_threads) as poolExecutor:
-                        futures = [poolExecutor.submit(run_test_with_retries, test_map, params_dict) for test_map in test_file_config_map]
-                        spinner = LoadingSpinner(futures, message, disable_animation or config.get('runOptions', {}).get("disableAnimation", False), report_portal_launcher)
-                        success, duration = spinner.start() 
-                        result_objects[run_mode] = {
-                            "success": success,
-                            "duration": duration,
-                            "start_launch_time": start_launch_time,
-                        }
-                        report_portal_launcher.send_log(f"Run mode {run_mode} completed with success: {success}, duration: {duration} ms")
-                else:
-                    init_cache_script = os.path.join(engine_directory, "script", "js", "scripts", "prepareCache.js")
-                    command = f"node {init_cache_script} {config_path} {num_threads}"
-                    subprocess.run(command, shell=True)
-        end_time = int(time.time() * 1000)
-        execution_time = end_time - start_time
-        result_objects['execution_time'] = execution_time
-        report_generator.generate_launch_html_report(result_objects)
-    finally:
-        if isinstance(report_portal_launcher, ReportPortalLauncher) and report_portal_launcher.launch_is_started is not False:
-            try:
-                report_portal_launcher.finish_launch(
-                    status="FAILED" if sys.exc_info()[0] is not None else "PASSED"
-                )
-            except Exception as e:
-                print(f"Error finishing ReportPortal launch: {e}")
+            if not os.path.isabs(resource_path):
+                resource_path = os.path.join(work_directory, resource_path)
+
+            params_dict = {
+                'test_path': test_path,
+                'num_retries': num_retries,
+                'config_path': config_path,
+                'out_directory': f"{out_directory}/{run_mode}",
+                'target_path': target_path,
+                'params': params,
+                'exceptionErrors': config["reportOptions"],
+                'resource_path': resource_path,
+                'debug': debug,
+                'terminal_error': args.terminal_error,
+                'terminal_log': args.terminal_log,
+                'run_mode': run_mode
+            }
+            
+            if num_threads == -1:
+                num_threads = int(min(32, (os.cpu_count() or 1) + 4) * 1/3)
+            if not prcache:
+                num_threads = min(num_threads, len(test_file_config_map))
+                for i in range(num_threads):
+                    cache_dir = os.path.join(browser_cache_dir, f"cache{i}")
+                    server_port = config["resourceServer"]["port"] + i
+                    server_queue.put(server_port)
+                    cache_queue.put(cache_dir)
+                    
+                with ThreadPoolExecutor(max_workers=num_threads) as poolExecutor:
+                    futures = [poolExecutor.submit(run_test_with_retries, test_map, params_dict) for test_map in test_file_config_map]
+                    spinner = LoadingSpinner(futures, message, disable_animation or config.get('runOptions', {}).get("disableAnimation", False))
+                    spinner.start()
+                    end_time = int(time.time() * 1000)
+                    execution_time = end_time - start_time
+                    
+                    report_generator.generate_launch_html_report(execution_time, run_mode)
+
+            else:
+                init_cache_script = os.path.join(engine_directory, "script", "js", "scripts", "prepareCache.js")
+                command = f"node {init_cache_script} {config_path} {num_threads}"
+                subprocess.run(command, shell=True)
+        finally:
+            if isinstance(report_portal_launcher, ReportPortalLauncher) and report_portal_launcher.launch_is_started is not False:
+                try:
+                    report_portal_launcher.finish_launch(
+                        status="FAILED" if sys.exc_info()[0] is not None else "PASSED",
+                        attributes = launch_attributes
+                    )
+                except Exception as e:
+                    print(f"Error finishing ReportPortal launch: {e}")
