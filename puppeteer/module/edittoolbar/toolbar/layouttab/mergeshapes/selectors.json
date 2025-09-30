@@ -1,6 +1,0 @@
-{
-    "MERGE_SHAPES_MENU": {
-        "MENU_SELECTOR": "#slot-shapes-merge",
-        "DROPDOWN_ELEMENTS_SELECTOR": "#slot-shapes-merge ul li a"
-    }
-}

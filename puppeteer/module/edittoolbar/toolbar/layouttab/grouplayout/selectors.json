@@ -1,6 +1,0 @@
-{
-    "GROUP_MENU": {
-        "MENU_SELECTOR": "#slot-img-group",
-        "DROPDOWN_ELEMENTS_SELECTOR": "#slot-img-group ul li a"
-    }
-}

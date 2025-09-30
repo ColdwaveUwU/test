@@ -1,7 +1,0 @@
-{
-  "DISPLAY_MODE": {
-      "ELEMENT_SELECTOR": "#btn-review-view > div",
-      "DEFAULT_BUTTON": "#btn-review-view > div button",
-      "DROPDOWN_ELEMENTS_SELECTOR": "#btn-review-view > div ul li a"
-  }
-}

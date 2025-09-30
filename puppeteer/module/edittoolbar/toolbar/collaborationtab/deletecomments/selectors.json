@@ -1,7 +1,0 @@
-{
-    "DELETE_COMMENTS": {
-        "ELEMENT_SELECTOR": "#slot-comment-remove > div",
-        "DEFAULT_BUTTON": "#slot-comment-remove > div button",
-        "DROPDOWN_ELEMENTS_SELECTOR": "#slot-comment-remove > div ul li a"
-    }
-}

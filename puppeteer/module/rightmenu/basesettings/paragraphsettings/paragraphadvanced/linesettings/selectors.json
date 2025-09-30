@@ -1,7 +1,0 @@
-{
-    "PAGE_BREAK_BEFORE_CHECKBOX": "#paragraphadv-checkbox-break-before",
-    "ORPHAN_CONTROL_CHECKBOX": "#paragraphadv-checkbox-orphan",
-    "SUPPRESS_LINE_NUMBERS_CHECKBOX": "#paragraphadv-checkbox-suppress-line-numbers",
-    "KEEP_LINES_TOGETHER_CHECKBOX": "#paragraphadv-checkbox-keep-lines",
-    "KEEP_WITH_NEXT_CHECKBOX": "#paragraphadv-checkbox-keep-next"
-}

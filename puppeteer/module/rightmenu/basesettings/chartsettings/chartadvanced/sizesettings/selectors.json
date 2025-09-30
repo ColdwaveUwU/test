@@ -1,8 +1,0 @@
-{
-    "WIDTH": "#image-advanced-spin-width input",
-    "HEIGHT": "#image-advanced-spin-height input",
-    "INCREMENT_BTN": "#image-advanced-spin-{prop} .spinner-up",
-    "DECREMENT_BTN": "#image-advanced-spin-{prop} .spinner-down",
-    "FILD_CONTAINER": "#id-adv-image-width",
-    "CONSTANT": "#image-advanced-button-ratio button"
-}

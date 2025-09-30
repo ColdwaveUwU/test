@@ -1,8 +1,0 @@
-{
-    "COMMENT_TAB_ACTIVE": "#toolbar .ribtab.active #comment",
-    "COMMENT_TAB": "#comment",
-    "STAMP_BUTTON": "#tlbtn-stamp > button",
-    "STAMP_DROPDOWN_BUTTON": "#tlbtn-stamp button.dropdown-toggle",
-    "STAMP_TYPES_LIST": "#tlbtn-stamp ul li a",
-    "STAMP_TYPE_ELEMENT": "a"
-}

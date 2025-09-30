@@ -1,7 +1,0 @@
-{
-    "BRINGFORWARD": {
-        "ELEMENT_SELECTOR": "#slot-img-movefrwd > div",
-        "DEFAULT_BUTTON": "#slot-img-movefrwd > div button",
-        "DROPDOWN_ELEMENTS_SELECTOR": "#slot-img-movefrwd > div ul li a"
-    }
-}

@@ -1,7 +1,0 @@
-{
-    "RESOLVE_COMMENTS": {
-        "ELEMENT_SELECTOR": "#slot-comment-resolve > div",
-        "DEFAULT_BUTTON": "#slot-comment-resolve > div button",
-        "DROPDOWN_ELEMENTS_SELECTOR": "#slot-comment-resolve > div ul li a"
-    }
-}

@@ -1,6 +1,0 @@
-{
-    "ALIGN_MENU": {
-        "MENU_SELECTOR": "#slot-img-align",
-        "DROPDOWN_ELEMENTS_SELECTOR": "#slot-img-align ul li a"
-    }
-}

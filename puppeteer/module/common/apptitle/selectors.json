@@ -1,6 +1,0 @@
-{
-    "UNDO_BUTTON": "#slot-btn-dt-undo > button",
-    "REDO_BUTTON": "#slot-btn-dt-redo > button",
-    "SAVE_BUTTON": "#slot-btn-dt-save > button",
-    "PRINT_BUTTON": "#slot-btn-dt-print > button"
-}

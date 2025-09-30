@@ -1,8 +1,0 @@
-{
-    "SIZE_TAB": "#slot-category-id-adv-image-width button",
-    "WRAPPING_TAB": "#slot-category-id-adv-image-wrap button",
-    "POSITION_TAB": "#slot-category-id-adv-image-position button",
-    "ALT_TEXT_TAB": "#slot-category-id-adv-image-alttext button",
-    "OK_BTN": ".asc-window.modal.advanced-settings-dlg.notransform button[result=ok]",
-    "CANCEL_BTN": ".asc-window.modal.advanced-settings-dlg.notransform button[result=cancel]"
-}
