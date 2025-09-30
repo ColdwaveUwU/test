@@ -329,8 +329,7 @@ def run_test(test_map, params_dict, cache_dir, server_port):
                                                                                  "mime": "text/html"})
     
     report_portal_manager.finish_test(test_path, 
-                                      0 if return_code == 5 else return_code,
-                                      params_dict['run_mode'])
+                                      0 if return_code == 5 else return_code)
     
     report_object['test_report_path'] = test_report_path
     return report_object
@@ -542,7 +541,7 @@ if __name__ == "__main__":
             report_portal_launcher = ReportPortalLauncher()
             create_connection = connect_portal or report_portal_launcher.need_connection
             if create_connection:
-                report_portal_launcher.start_launch()
+                report_portal_launcher.start_launch(attributes = launch_attributes)
                 report_portal_launcher.send_log(f"Starting tests in {target_path}...")
 
                 report_portal_manager = ReportPortalManager(report_portal_launcher, test_file_config_map, work_directory)
@@ -612,8 +611,7 @@ if __name__ == "__main__":
             if isinstance(report_portal_launcher, ReportPortalLauncher) and report_portal_launcher.launch_is_started is not False:
                 try:
                     report_portal_launcher.finish_launch(
-                        status="FAILED" if sys.exc_info()[0] is not None else "PASSED",
-                        attributes = launch_attributes
+                        status="FAILED" if sys.exc_info()[0] is not None else "PASSED"
                     )
                 except Exception as e:
                     print(f"Error finishing ReportPortal launch: {e}")

@@ -278,7 +278,9 @@ class ReportGenerator:
                     
             self._close_table(html_report_path, execution_time)
             self._close_html(html_report_path)
-            self._send_report_to_report_portal(html_report_path)
+
+            parent_folder = os.path.dirname(html_report_path)
+            self._send_report_to_report_portal(parent_folder)
             provider_report_paths[run_mode] = html_report_path
             
         return provider_report_paths
