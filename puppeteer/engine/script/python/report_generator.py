@@ -397,18 +397,18 @@ class ReportGenerator:
         row_color = "#FFA07A"
         status = ""
 
-        if return_code == "0":
+        if return_code == 0:
             row_color = "#90EE90"
             status = "OK"
-        elif return_code == "1":
+        elif return_code == 1:
             status = "Error in script terminal."
-        elif return_code == "2":
+        elif return_code == 2:
             status = "Error in browser console."
-        elif return_code == "3":
+        elif return_code == 3:
             status = "Verification failed."
-        elif return_code == "4":
+        elif return_code == 4:
             status = "asc_onError triggered"
-        elif return_code == "5":
+        elif return_code == 5:
             status = "asc_onErrorWarning triggered"
             row_color = "#FFD700"
         return row_color, status
