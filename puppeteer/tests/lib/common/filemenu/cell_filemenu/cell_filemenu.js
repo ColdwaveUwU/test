@@ -31,7 +31,6 @@ FileMenu.setAdvancedSettings({
     collab: {
         coEditingMode: "strict", // Set co-editing mode to strict
         showComments: false, // Hide comments in the document
-        showResolved: true, // Display resolved comments
     },
     proofing: {
         ignoreUpper: false, // Do not ignore uppercase words during proofing
@@ -39,18 +38,18 @@ FileMenu.setAdvancedSettings({
         dictLang: "German - Germany", // Set the dictionary language for proofing
         autoCorrect: {
             math: {
-                replaceAsType: true, // Replace math symbols as you type
-                correctReplace: "!", // Specify the replacement symbol
-                correctBy: "@", // Specify the corrected symbol
-                methodButton: "Add", // Action for adding the correction
+                asType: true, // Replace math symbols as you type
+                replace: "!!",
+                by: "22",
+                action: "add",
             },
             recognized: {
-                recFind: "test", // Add recognized terms for auto-correction
-                methodButton: "Add", // Specify the action for adding terms
+                value: "test",
+                action: "add",
             },
             autoFormat: {
-                hyperlinks: false, // Disable automatic hyperlink detection
-                includeNewRows: false, // Exclude new rows from auto-formatting
+                replace: { hyperlinks: false }, // Disable automatic hyperlink detection
+                apply: { includeNewRows: false }, // Exclude new rows from auto-formatting
             },
         },
     },

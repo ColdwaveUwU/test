@@ -32,8 +32,14 @@ class Editing extends SubSettings {
                 const selectorKey = this.#settingsMap[key];
                 const selector = editingSelectors[selectorKey];
                 if (selector) {
-                    const checkbox = new Checkbox(this.tester, selector);
-                    await checkbox.set(value);
+                    try {
+                        const checkbox = new Checkbox(this.tester, selector);
+                        await checkbox.set(value);
+                    } catch (err) {
+                        throw new Error(
+                            `Failed to set setting "${key}"=${value} (selectorKey="${selectorKey}", selector="${selector}"): ${err.message}`
+                        );
+                    }
                 }
             }
         }

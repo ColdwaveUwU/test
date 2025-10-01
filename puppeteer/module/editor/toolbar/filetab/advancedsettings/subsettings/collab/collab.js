@@ -31,23 +31,27 @@ class Collaboration extends SubSettings {
     async setSettings(settings) {
         for (const [key, value] of Object.entries(settings)) {
             if (value === undefined) {
-                throw new Error(`Value for setting "${key}" is undefined`);
+                throw new Error(`Undefined value for setting "${key}"`);
             }
 
             const getConfig = this.#settingsMap[key];
             if (!getConfig) {
-                throw new Error(`Unknown setting key: "${key}"`);
+                throw new Error(`Unknown setting key "${key}"`);
             }
 
-            const normalizedValue = typeof value === "string" ? value.toLocaleUpperCase() : value;
-            const [selector, finalValue] = getConfig(normalizedValue);
+            try {
+                const normalizedValue = typeof value === "string" ? value.toLocaleUpperCase() : value;
+                const [selector, finalValue] = getConfig(normalizedValue);
 
-            if (!selector) {
-                throw new Error(`Selector not found for setting "${key}" with value "${value}"`);
+                if (!selector) {
+                    throw new Error(`No selector for setting "${key}" (value="${value}")`);
+                }
+
+                const checkbox = new Checkbox(this.tester, selector);
+                await checkbox.set(finalValue);
+            } catch (err) {
+                throw new Error(`Failed to apply setting "${key}"=${value}: ${err.message}`);
             }
-
-            const checkbox = new Checkbox(this.tester, selector);
-            await checkbox.set(finalValue);
         }
     }
 }

@@ -22,9 +22,10 @@ async function executeAction(
     actionParams = [],
     constructorParams = []
 ) {
+    let elementClassName = "UndefinedElementClass";
     try {
         const element = new elementClass(tester, selector, ...constructorParams);
-        const elementClassName = element?.constructor?.name || "UndefinedElement";
+        elementClassName = element?.constructor?.name || elementClassName;
 
         if (typeof element[action] !== "function") {
             throw new Error(`Action '${action}' is not a function on ${elementClassName}`);
@@ -53,9 +54,8 @@ async function executeAction(
  * @returns {Promise<any>} Result of the action execution
  */
 async function executeObjectAction(handleError, targetObject, action, methodName, actionParams = []) {
+    const objectClassName = targetObject?.constructor?.name || "UndefinedObject";
     try {
-        const objectClassName = targetObject?.constructor?.name || "UndefinedObject";
-
         if (typeof targetObject[action] !== "function") {
             throw new Error(`Action '${action}' is not a function on ${objectClassName}`);
         }

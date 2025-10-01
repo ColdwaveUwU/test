@@ -5,6 +5,8 @@
         "IGNORE_NUMBERS": "#fms-chb-ignore-numbers-words"
     },
     "AUTOCORRECT": {
-        "BUTTON": "#fms-btn-auto-correct"
+        "BUTTON": "#fms-btn-auto-correct",
+        "WINDOW": ".modal.advanced-settings-dlg",
+        "CLOSE_BUTTON": "button[result=close]"
     }
 }

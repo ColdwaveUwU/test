@@ -130,16 +130,20 @@ class Workspace extends SubSettings {
             }
         }
 
-        if (Object.keys(checkboxSettings).length) {
-            await this.#setCheckboxSettings(checkboxSettings);
-        }
+        try {
+            if (Object.keys(checkboxSettings).length) {
+                await this.#setCheckboxSettings(checkboxSettings);
+            }
 
-        if (workspaceSettings?.customQuickAcces && Object.keys(workspaceSettings?.customQuickAcces).length) {
-            await this.#setCustomQuickSettings(workspaceSettings.customQuickAcces);
-        }
+            if (workspaceSettings?.customQuickAcces && Object.keys(workspaceSettings.customQuickAcces).length) {
+                await this.#setCustomQuickSettings(workspaceSettings.customQuickAcces);
+            }
 
-        if (Object.keys(dropdownSettings).length) {
-            await this.#setDropdownSettings(dropdownSettings);
+            if (Object.keys(dropdownSettings).length) {
+                await this.#setDropdownSettings(dropdownSettings);
+            }
+        } catch (err) {
+            throw new Error(`Failed to apply workspace settings: ${JSON.stringify(workspaceSettings)}. ${err.message}`);
         }
     }
 }

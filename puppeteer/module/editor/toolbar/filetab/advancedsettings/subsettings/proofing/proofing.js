@@ -1,5 +1,5 @@
 const SubSettings = require("../subsettings");
-const { Checkbox } = require("../../../../../../elements");
+const { Checkbox, ModalButton } = require("../../../../../../elements");
 const { AutoCorrect } = require("../../../../../modalwindows");
 const selector = require("./selectors.json");
 /**
@@ -55,15 +55,36 @@ class Proofing extends SubSettings {
 
         for (const [key, selector] of Object.entries(checkboxMap)) {
             if (typeof settings[key] === "boolean") {
-                const checkBox = new Checkbox(this.tester, selector);
-                await checkBox.set(settings[key]);
+                try {
+                    const checkBox = new Checkbox(this.tester, selector);
+                    await checkBox.set(settings[key]);
+                } catch (err) {
+                    throw new Error(
+                        `Failed to set checkbox "${key}"=${settings[key]} (selector="${selector}"): ${err.message}`
+                    );
+                }
             }
         }
 
         if (settings?.autoCorrect) {
-            await this.tester.click(AUTOCORRECT.BUTTON);
-            const autoCorrect = new AutoCorrect(this.tester);
-            await autoCorrect.setAutoCorrectSettings(settings.autoCorrect);
+            try {
+                const autoCorrectModalButton = new ModalButton(
+                    this.tester,
+                    AUTOCORRECT.BUTTON,
+                    AUTOCORRECT.WINDOW,
+                    AUTOCORRECT.CLOSE_BUTTON
+                );
+                await autoCorrectModalButton.openModal();
+
+                const autoCorrect = new AutoCorrect(this.tester);
+                await autoCorrect.setAutoCorrectSettings(settings.autoCorrect);
+
+                await autoCorrectModalButton.closeModal();
+            } catch (err) {
+                throw new Error(
+                    `Failed to apply AutoCorrect settings: ${JSON.stringify(settings.autoCorrect)}. ${err.message}`
+                );
+            }
         }
     }
 }

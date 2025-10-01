@@ -1,11 +1,66 @@
+const { createExecuteAction, createErrorHandler } = require("../../../../../engine/script/js");
+const { OptionsButton } = require("../../../../elements");
+const selectors = require("./selectors.json");
+const options = require("./options.json");
+
+/**
+ * @typedef {Object} InsertPageBreakObject
+ * @property { "Insert page break" | "Insert column break" | "Insert section break" } optionValue - The value of the option to select from the dropdown.
+ */
+
+/**
+ * @typedef {Object} InsertSectionBreakObject
+ * @property { "Next Page" | "Continuous page" | "Even page" | "Odd Page" } optionValue - The value of the option to select from the dropdown.
+ */
+
+/**
+ * @typedef {Object} SectionBreakOption
+ * @property {boolean} nextPage - Add a section break on the next page
+ * @property {boolean} contPage - Add a section break on the continuous page
+ * @property {boolean} evenPage - Add a section break on the even page
+ * @property {boolean} oddPage - Add a section break on the odd page
+ */
+
+/**
+ * @typedef {Object} PageBreaksOptions
+ * @property {boolean} [pageBreak] - Add a page break
+ * @property {boolean} [columnBreak] - Add a column break
+ * @property {SectionBreakOption} [section] - Add a section break
+ */
+
 function PageBreakActions(Base) {
     return class extends Base {
+        constructor(tester) {
+            super(tester);
+            this.handleError = createErrorHandler(this.constructor.name);
+            this.executeAction = createExecuteAction(this.tester, this.handleError);
+            this.selectors = selectors;
+            this.options = options;
+        }
+
         /**
          * Click insert page break button
+         * @param { InsertPageBreakObject } [optionValue] - The value of the option to select from the dropdown.
          */
-        async insertPageBreak() {
-            const insertPageBreakButton = "section.panel.active span.btn-pagebreak div button";
-            await this.clickTargetButton(insertPageBreakButton);
+        async insertPageBreak(optionValue = null) {
+            const selectors = this.selectors.PAGE_BREAK_BUTTON;
+            await this.executeAction(
+                OptionsButton,
+                selectors.selector,
+                "setOption",
+                "insertPageBreak",
+                [optionValue],
+                [selectors.defaultButton, { ...selectors }]
+            );
+        }
+
+        /**
+         * Click insert section break button
+         * @param {InsertSectionBreakObject} [optionValue] - The value of the option to select from the dropdown.
+         */
+        async insertSectionBreak(optionValue) {
+            await this.insertPageBreak(this.options.pageBreakOptions.sectionBreak);
+            await this.insertPageBreak(optionValue);
         }
 
         /**
@@ -18,41 +73,20 @@ function PageBreakActions(Base) {
                 columnBreak: false,
                 ...options,
             };
-            const dropdownSelector = "section.panel.active span.btn-pagebreak div";
-
-            const openPageBreaksDropdown = async () => {
-                await this.tester.selectDropdown(dropdownSelector);
-            };
-
-            const insertBreak = async (text) => {
-                await openPageBreaksDropdown();
-                await this.tester.selectByText(text, `${dropdownSelector} ul.dropdown-menu li`);
-            };
 
             if (pageBreaksOptions?.pageBreak) {
-                await insertBreak("Insert page break");
+                await this.insertPageBreak(this.options.pageBreakOptions.pageBreak);
             }
 
             if (pageBreaksOptions?.columnBreak) {
-                await insertBreak("Insert column break");
+                await this.insertPageBreak(this.options.pageBreakOptions.columnBreak);
             }
 
             if (pageBreaksOptions?.section) {
-                const sectionOptions = {
-                    nextPage: "Next Page",
-                    contPage: "Continuous page",
-                    evenPage: "Even page",
-                    oddPage: "Odd Page",
-                };
-
+                const sectionOptions = this.options.sectionBreakOptions;
                 for (const [key, value] of Object.entries(pageBreaksOptions.section)) {
                     if (value && sectionOptions[key]) {
-                        await openPageBreaksDropdown();
-                        await this.tester.click(`${dropdownSelector} li.dropdown-submenu a`);
-                        await this.tester.selectByText(
-                            sectionOptions[key],
-                            `${dropdownSelector} li.dropdown-submenu ul.dropdown-menu li`
-                        );
+                        await this.insertSectionBreak(sectionOptions[key]);
                     }
                 }
             }

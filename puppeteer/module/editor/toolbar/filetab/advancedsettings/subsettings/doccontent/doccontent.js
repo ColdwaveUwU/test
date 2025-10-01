@@ -17,12 +17,19 @@ class DocContent extends SubSettings {
         const docContentSelectors = DocContent.DOCCONTENT_SELECTORS;
 
         if (docContentSettings?.numeral) {
-            const numberalSelectors = docContentSelectors.NUMBERAL;
-            const numberalDropdown = new Dropdown(this.tester, {
-                selector: numberalSelectors.SELECTOR,
-                elementsSelector: numberalSelectors.ELEMENTS_SELECTOR,
-            });
-            await numberalDropdown.selectDropdownItem(docContentSettings.numeral);
+            const numeralSelectors = docContentSelectors.NUMBERAL;
+            try {
+                const numeralDropdown = new Dropdown(this.tester, {
+                    selector: numeralSelectors.SELECTOR,
+                    elementsSelector: numeralSelectors.ELEMENTS_SELECTOR,
+                });
+                await numeralDropdown.selectDropdownItem(docContentSettings.numeral);
+            } catch (err) {
+                throw new Error(
+                    `Failed to set numeral="${docContentSettings.numeral}" ` +
+                        `(selector="${numeralSelectors.SELECTOR}", elementsSelector="${numeralSelectors.ELEMENTS_SELECTOR}"): ${err.message}`
+                );
+            }
         }
     }
 }

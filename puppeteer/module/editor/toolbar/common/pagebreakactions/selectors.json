@@ -1,0 +1,11 @@
+{
+    "PAGE_BREAK_BUTTON": {
+        "selector": "section.panel.active span.btn-pagebreak div",
+        "defaultButton": "section.panel.active span.btn-pagebreak div button .btn-fixflex-hcenter",
+        "elementsSelector": "section.panel.active span.btn-pagebreak div ul li",
+        "dropdownToggle": "section.panel.active span.btn-pagebreak div button.dropdown-toggle",
+        "idSelector": "a",
+        "descriptionSelector": "a",
+        "elementsValue": []
+    }
+}
