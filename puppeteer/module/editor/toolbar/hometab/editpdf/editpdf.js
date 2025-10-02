@@ -1,6 +1,5 @@
 const HomeTab = require("../hometab");
 const { Button, OptionsButton } = require("../../../../elements");
-const { MoreButtons } = require("../../../toolbar/common");
 const selectors = require("./selectors.json");
 
 class EditPdf extends HomeTab {

@@ -11,27 +11,6 @@ class NumberFormatCell extends HomeTab {
     /**
      * @enum
      */
-    static NumberFormatCellType = {
-        FORMATS: [
-            "General",
-            "Number",
-            "Scientific",
-            "Accounting",
-            "Currency",
-            "Short Date",
-            "Long Date",
-            "Time",
-            "Percentage",
-            "Fraction",
-            "Text",
-            "More formats",
-        ],
-        ACCOUNTING_STYLES: ["Dollar", "Euro", "Pound", "Rouble", "Yen", "More formats"],
-    };
-
-    /**
-     * @enum
-     */
     static NumberFormatCellSelectors = selectors;
 
     /**
@@ -40,27 +19,12 @@ class NumberFormatCell extends HomeTab {
      * @return {Promise<void>}
      */
     async setFormat(format, moreFormatOptions) {
-        const FORMATS = NumberFormatCell.NumberFormatCellType.FORMATS;
-        const { FORMATS_LIST, FORMATS_ITEM } = NumberFormatCell.NumberFormatCellSelectors;
-        const { TOOLBAR_ACTIVE, TOOLBAR_BUTTON } = NumberFormatCell.NumberFormatCellSelectors;
-
-        if (!FORMATS.includes(format)) {
-            throw new Error(`Error in setFormat: Category ${format} unknown`);
-        }
-
-        const isToolbarOpen = await this.tester.checkSelector(TOOLBAR_ACTIVE);
-
-        if (!isToolbarOpen) {
-            await this.tester.click(TOOLBAR_BUTTON);
-        }
-
-        if (FORMATS.includes(format)) {
-            await new Dropdown(this.tester, {
-                selector: FORMATS_LIST,
-                elementsValue: FORMATS,
-                elementsSelector: FORMATS_ITEM,
-            }).selectDropdownItem(format === "More formats" ? "More formats" : format);
-        }
+        const { FORMATS_LIST, FORMATS_ITEM, FORMATS_DESCRIPTION } = NumberFormatCell.NumberFormatCellSelectors;
+        await new Dropdown(this.tester, {
+            selector: FORMATS_LIST,
+            elementsSelector: FORMATS_ITEM,
+            descriptionSelector: FORMATS_DESCRIPTION,
+        }).selectDropdownItem(format === "More formats" ? "More formats" : format);
 
         if (moreFormatOptions) {
             await this.NumberFormat.setSettings(moreFormatOptions);
@@ -81,27 +45,12 @@ class NumberFormatCell extends HomeTab {
      * @return {Promise<void>}
      */
     async setAccountingStyle(style, moreFormatOptions) {
-        const ACCOUNTING_STYLES = NumberFormatCell.NumberFormatCellType.ACCOUNTING_STYLES;
-        const { TOOLBAR_ACTIVE, TOOLBAR_BUTTON } = NumberFormatCell.NumberFormatCellSelectors;
         const { ACCOUNTING_STYLES_OPENER, ACCOUNTING_STYLES_ITEM } = NumberFormatCell.NumberFormatCellSelectors;
 
-        if (!ACCOUNTING_STYLES.includes(style)) {
-            throw new Error(`Error in setAccountingStyle: Category ${style} unknown`);
-        }
-
-        const isToolbarActive = await this.tester.checkSelector(TOOLBAR_ACTIVE);
-
-        if (!isToolbarActive) {
-            await this.tester.click(TOOLBAR_BUTTON);
-        }
-
-        if (ACCOUNTING_STYLES.includes(style) || style === "More formats") {
-            await new Dropdown(this.tester, {
-                selector: ACCOUNTING_STYLES_OPENER,
-                elementsValue: ACCOUNTING_STYLES,
-                elementsSelector: ACCOUNTING_STYLES_ITEM,
-            }).selectDropdownItem(style === "More formats" ? "More formats" : style);
-        }
+        await new Dropdown(this.tester, {
+            selector: ACCOUNTING_STYLES_OPENER,
+            elementsSelector: ACCOUNTING_STYLES_ITEM,
+        }).selectDropdownItem(style === "More formats" ? "More formats" : style);
 
         if (moreFormatOptions) {
             await this.NumberFormat.setSettings(moreFormatOptions);

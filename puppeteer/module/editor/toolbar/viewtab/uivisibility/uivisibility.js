@@ -1,6 +1,5 @@
 const ViewTab = require("../viewtab");
 const selectors = require("./selectors.json");
-const { MoreButtons } = require("../../../../common");
 const { Checkbox } = require("../../../../elements");
 class UIVisibility extends ViewTab {
     constructor(tester) {
@@ -18,9 +17,6 @@ class UIVisibility extends ViewTab {
      * @param {boolean} condition
      */
     async #setVisibility(selectorKey, condition) {
-        const moreButtons = new MoreButtons(this.tester);
-        await moreButtons.open();
-
         const selector = UIVisibility.SELECTORS[selectorKey];
         const checkbox = new Checkbox(this.tester, selector);
         await checkbox.set(condition);

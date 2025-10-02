@@ -1,7 +1,7 @@
 const { Button } = require("../../../../elements");
 const selectors = require("./selectors.json");
 
-class MoreButtons {
+class MoreButton {
     constructor(tester) {
         this.tester = tester || RegularTester;
     }
@@ -27,7 +27,7 @@ class MoreButtons {
      * @param {boolean} condition - true to open, false to close
      */
     async #setVisibility(condition) {
-        const moreBoxButtonElementSelector = MoreButtons.SELECTORS.MORE_BUTTON_ELEMENT;
+        const moreBoxButtonElementSelector = MoreButton.SELECTORS.MORE_BUTTON_ELEMENT;
 
         if (!(await this.isDisplayed())) {
             return;
@@ -52,8 +52,8 @@ class MoreButtons {
      * @return {boolean}
      */
     async isDisplayed() {
-        const selector = MoreButtons.SELECTORS.MORE_BUTTON;
-        return await this.tester.frame.evaluate(MoreButtons.#isDisplayedFunction, selector);
+        const selector = MoreButton.SELECTORS.MORE_BUTTON;
+        return await this.tester.frame.evaluate(MoreButton.#isDisplayedFunction, selector);
     }
 
     /**
@@ -61,10 +61,10 @@ class MoreButtons {
      * @param {number} timeout - Timeout in milliseconds
      */
     async waitForDisplayed(timeout = 5000) {
-        const selector = MoreButtons.SELECTORS.MORE_BUTTON;
+        const selector = MoreButton.SELECTORS.MORE_BUTTON;
         try {
             await this.tester.frame.waitForFunction(
-                MoreButtons.#isDisplayedFunction,
+                MoreButton.#isDisplayedFunction,
                 { timeout, polling: 100 },
                 selector
             );
@@ -88,4 +88,4 @@ class MoreButtons {
     }
 }
 
-module.exports = MoreButtons;
+module.exports = MoreButton;

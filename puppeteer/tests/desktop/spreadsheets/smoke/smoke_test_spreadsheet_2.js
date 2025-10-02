@@ -8,7 +8,7 @@ Tester.keyPress("Tab");
 
 Tester.input("123");
 Tester.keyPress("ArrowUp");
-NumberFormatCell.setAccountingStyle("Euro");
+NumberFormatCell.setAccountingStyle("€ Euro");
 Tester.keyPress("Tab");
 
 FileMenu.downloadAs("xlsx");
@@ -19,7 +19,11 @@ Verification.check("xl/styles.xml", "//xf[2]/@applyNumberFormat", "1");
 Verification.check("xl/worksheets/sheet1.xml", "//c[1]/@s", "1");
 
 Verification.check("xl/styles.xml", "//numFmt[1]/@numFmtId", "164");
-Verification.check("xl/styles.xml", "//numFmt[1]/@formatCode", "_-* #,##0.00\\ [$€-407]_-;\\-* #,##0.00\\ [$€-407]_-;_-* \"-\"??\\ [$€-407]_-;_-@_-");
+Verification.check(
+    "xl/styles.xml",
+    "//numFmt[1]/@formatCode",
+    '_-* #,##0.00\\ [$€-407]_-;\\-* #,##0.00\\ [$€-407]_-;_-* "-"??\\ [$€-407]_-;_-@_-'
+);
 Verification.check("xl/styles.xml", "//xf[3]/@numFmtId", "164");
 Verification.check("xl/worksheets/sheet1.xml", "//c[2]/@s", "2");
 

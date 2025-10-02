@@ -1,9 +1,9 @@
-const MoreButtons = require("./morebuttons");
+const MoreButton = require("./morebutton");
 const PageBreakActions = require("./pagebreakactions");
 const TextBoxActions = require("./textboxactions");
 const ChartActions = require("./chartactions");
 module.exports = {
-    MoreButtons,
+    MoreButton,
     PageBreakActions,
     TextBoxActions,
     ChartActions,

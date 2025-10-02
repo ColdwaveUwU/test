@@ -1,7 +1,6 @@
 const ViewTab = require("../viewtab");
 const selectors = require("./selectors.json");
 const { Input, OptionsButton, ModalButton, Checkbox } = require("../../../../elements");
-const { MoreButtons } = require("../../../toolbar/common");
 
 class Macros extends ViewTab {
     constructor(tester) {
@@ -105,9 +104,6 @@ class Macros extends ViewTab {
      */
     async openMacros() {
         try {
-            const moreButtons = new MoreButtons(this.tester);
-            await moreButtons.open();
-
             const promise = this.waitFramePlugin();
             this.frames.frameEditor = this.tester.frame;
             const macrosModalButton = this.#getMacrosModalButton();

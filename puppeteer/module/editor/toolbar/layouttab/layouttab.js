@@ -22,16 +22,6 @@ class LayoutTab extends Toolbar {
             throw new Error(`Error applying modal settings: ${error}`);
         }
     }
-
-    /**
-     * Click More button if it is present on toolbar
-     */
-    async clickMoreButton() {
-        const moreButtonSelector = LayoutTab.MODAL_SELECTORS.MORE_BUTTON_TOOLBAR;
-        if (await this.tester.checkSelector(`${moreButtonSelector}[aria-pressed='false']`)) {
-            await this.tester.click(moreButtonSelector);
-        }
-    }
 }
 
 module.exports = LayoutTab;
