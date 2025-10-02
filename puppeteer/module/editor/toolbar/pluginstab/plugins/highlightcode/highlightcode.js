@@ -94,14 +94,16 @@ class HighlightCodePlugin extends Plugin {
             const textContainerSelector = "#conteiner_id1";
 
             if (!this.pluginStarted) {
-                await this.openPlugin("Highlightcode");
+                await this.openPlugin("Highlight code");
             }
-
+            this.tester.changeCurrentFrame(this.frames.frameEditorPlugin);
+            const waitPluginLoaded = this.tester.waitSelector(textContainerSelector);
+            await waitPluginLoaded;
             if (option) {
                 await this.setHighlightCodeOption(option);
             }
             await this.tester.inputToForm(inputText, textContainerSelector);
-            await this.closePlugin();
+            await this.closeButton();
         } catch (error) {
             throw new Error(`inputHightLightCode: Failed to input and configure highlighted code. ${error.message}`, {
                 cause: error,

@@ -1,6 +1,5 @@
 const selectors = require("./selectors.json");
-const { Checkbox, Input, Dropdown, ModalButton } = require("../../../elements");
-const StateButton = require("../../../elements/statebutton");
+const { Button, Checkbox, Input, Dropdown, ModalButton } = require("../../../elements");
 class AutoCorrect {
     constructor(tester) {
         this.tester = tester;
@@ -28,21 +27,13 @@ class AutoCorrect {
     };
 
     async #selectAutoCorrectSection(sectionKey) {
-        const editorType = this.tester.getEditorType();
         const section = AutoCorrect.AUTO_CORRECT_SELECTORS.CONTENT[sectionKey];
         if (!section || !section.SECTION?.BUTTON) {
             throw new Error(`Selector for section ${sectionKey} not found`);
         }
 
-        let buttonSelector = "";
-        if (editorType === "cell" && sectionKey === "AS_TYPE") {
-            buttonSelector = section.SECTION.SLIDE_BUTTON;
-        } else {
-            buttonSelector = section.SECTION.BUTTON;
-        }
-
-        const button = new StateButton(this.tester, buttonSelector);
-        await button.setState(true);
+        const button = new Button(this.tester, section.SECTION.BUTTON);
+        await button.click();
     }
 
     /**
@@ -117,17 +108,7 @@ class AutoCorrect {
             const actionKey = recognizedSettings.action.toLocaleLowerCase();
             const selector = actionMap[actionKey];
             if (selector) {
-                const warningWindow = new ModalButton(
-                    this.tester,
-                    selector,
-                    recognizedSelectors.MODAL_MASK.MODAL,
-                    recognizedSelectors.MODAL_MASK.YES_BUTTON
-                );
-                const isWarningWindowOpened = warningWindow.waitModalLoaded();
                 await this.tester.click(selector);
-                if (await isWarningWindowOpened) {
-                    await warningWindow.closeModal();
-                }
             } else {
                 throw new Error(`Unknown math action: "${mathSettings.action}"`);
             }
@@ -139,10 +120,9 @@ class AutoCorrect {
      * @param {import('../../toolbar/edit/filemenutab/advancedsettings/subsettings/proofing').AutoFormat} autoFormatSettings
      */
     async #applyAutoFormatSettings(autoFormatSettings) {
-        const editorType = this.tester.getEditorType();
         const checkBoxesSettings = {
             ...autoFormatSettings.replace,
-            ...autoFormatSettings.apply,
+            ...autoFormatSettings.applyType,
         };
 
         const selectorMap = {
@@ -152,24 +132,16 @@ class AutoCorrect {
             addPeriod: "PERIOD",
             bullet: "BULLETED",
             numbered: "NUMBERED",
-            includeNewRows: "INCLUDE-NEW-ROWS",
         };
 
         const selectors = AutoCorrect.AUTO_CORRECT_SELECTORS.CONTENT.AS_TYPE.CONTENT;
 
         for (const [key, value] of Object.entries(checkBoxesSettings)) {
-            if (typeof value !== "boolean") {
-                continue;
-            }
+            if (typeof value !== "boolean") continue;
 
             const selectorKey = selectorMap[key];
-            let selector = selectors[selectorKey];
-            if (editorType === "cell") {
-                debugger;
-                selector = `${selectors.SECTION.CELL} ${selector}`;
-            } else {
-                selector = `${selectors.SECTION.COMMON} ${selector}`;
-            }
+            const selector = selectors[selectorKey];
+
             if (!selector) {
                 throw new Error(`Selector not found for key: ${key}`);
             }
@@ -232,9 +204,12 @@ class AutoCorrect {
             if (!value || !this.#sectionMap[key]) continue;
 
             const { section, apply } = this.#sectionMap[key];
+
             await this.#selectAutoCorrectSection(section);
             await apply(value);
         }
+
+        await this.tester.click(AutoCorrect.AUTO_CORRECT_SELECTORS.CLOSE_BUTTON);
     }
 }
 

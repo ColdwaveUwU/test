@@ -1,18 +1,13 @@
 const ViewTab = require("../viewtab");
-const Plugin = require("../../plugins/plugin");
 const selectors = require("./selectors.json");
 const { Input, OptionsButton, ModalButton, Checkbox } = require("../../../../elements");
-const { MoreButtons } = require("../../common");
+const { MoreButtons } = require("../../../toolbar/common");
 
 class Macros extends ViewTab {
     constructor(tester) {
         super(tester);
-        this.plugin = tester ? new Plugin(tester) : new Plugin();
-        this.macrosModalButton = new ModalButton(
-            this.tester,
-            Macros.SELECTORS.TOOLBAR.MACROS_BUTTON,
-            Macros.SELECTORS.MACROS_DIALOG.MACROS_WINDOW
-        );
+        this.frames = {};
+        this.pluginStarted = false;
     }
 
     static SELECTORS = selectors;
@@ -23,6 +18,18 @@ class Macros extends ViewTab {
     static TYPES = {
         AI_BUTTON: ["Create from description", "Convert from VBA"],
     };
+
+    #macrosModalButton = null;
+    #getMacrosModalButton() {
+        if (!this.#macrosModalButton) {
+            this.#macrosModalButton = new ModalButton(
+                this.tester,
+                Macros.SELECTORS.TOOLBAR.MACROS_BUTTON,
+                Macros.SELECTORS.MACROS_DIALOG.MACROS_WINDOW
+            );
+        }
+        return this.#macrosModalButton;
+    }
 
     /**
      * Sets the option for the AI button.
@@ -79,6 +86,21 @@ class Macros extends ViewTab {
     }
 
     /**
+     * Attaches a listener for the "frameattached" event to handle frame plugin attachment.
+     */
+    waitFramePlugin() {
+        return new Promise((resolve) => {
+            this.tester.page.once("frameattached", async (frame) => {
+                await frame.waitForNavigation({ waitUntil: "networkidle0" });
+                this.frames.frameEditorPlugin = frame;
+                this.tester.changeCurrentFrame(this.frames.frameEditorPlugin);
+                this.pluginStarted = true;
+                resolve();
+            });
+        });
+    }
+
+    /**
      * Opens the Macros dialog.
      */
     async openMacros() {
@@ -86,9 +108,10 @@ class Macros extends ViewTab {
             const moreButtons = new MoreButtons(this.tester);
             await moreButtons.open();
 
-            const promise = this.plugin.waitFramePlugin();
-            this.plugin.frames.frameEditor = this.tester.frame;
-            await this.macrosModalButton.openModal();
+            const promise = this.waitFramePlugin();
+            this.frames.frameEditor = this.tester.frame;
+            const macrosModalButton = this.#getMacrosModalButton();
+            await macrosModalButton.openModal();
             await promise;
         } catch (error) {
             this.#handleError("openMacros", error);
@@ -243,7 +266,8 @@ class Macros extends ViewTab {
     async cancelMacros() {
         try {
             this.#changeFrameToEditor();
-            await this.macrosModalButton.closeModal(Macros.SELECTORS.MACROS_DIALOG.CANCEL_MACROS_BUTTON);
+            const macrosModalButton = this.#getMacrosModalButton();
+            await macrosModalButton.closeModal(Macros.SELECTORS.MACROS_DIALOG.CANCEL_MACROS_BUTTON);
         } catch (error) {
             this.#handleError("cancelMacros", error);
         }
@@ -292,7 +316,8 @@ class Macros extends ViewTab {
     async saveMacros() {
         try {
             this.#changeFrameToEditor();
-            await this.macrosModalButton.closeModal(Macros.SELECTORS.MACROS_DIALOG.OK_MACROS_BUTTON);
+            const macrosModalButton = this.#getMacrosModalButton();
+            await macrosModalButton.closeModal(Macros.SELECTORS.MACROS_DIALOG.OK_MACROS_BUTTON);
         } catch (error) {
             this.#handleError("saveMacros", error);
         }
@@ -346,8 +371,8 @@ class Macros extends ViewTab {
      */
     #changeFrameToEditor() {
         try {
-            if (this.tester.frame !== this.plugin.frames.frameEditor) {
-                this.tester.changeCurrentFrame(this.plugin.frames.frameEditor);
+            if (this.tester.frame !== this.frames.frameEditor) {
+                this.tester.changeCurrentFrame(this.frames.frameEditor);
             }
         } catch (error) {
             this.#handleError("changeFrameToEditor", error);
@@ -359,8 +384,8 @@ class Macros extends ViewTab {
      */
     #changeFrameToEditorPlugin() {
         try {
-            if (this.tester.frame !== this.plugin.frames.frameEditorPlugin) {
-                this.tester.changeCurrentFrame(this.plugin.frames.frameEditorPlugin);
+            if (this.tester.frame !== this.frames.frameEditorPlugin) {
+                this.tester.changeCurrentFrame(this.frames.frameEditorPlugin);
             }
         } catch (error) {
             this.#handleError("changeFrameToEditorPlugin", error);

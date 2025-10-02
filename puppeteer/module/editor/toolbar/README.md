@@ -12,6 +12,6 @@ The parent library for interacting with various Toolbar elements in edit mode
 -   [**HomeTab**](hometab/README.md)
 -   [**InsertTab**](inserttab/README.md)
 -   [**LayoutTab**](layouttab/README.md)
--   [**PluginTab**](plugins)
+-   [**PluginsTab**](pluginstab/README.md)
 -   [**ReferencesTab**](referencestab/README.md)
 -   [**ViewToolbar**](viewtoolbar)

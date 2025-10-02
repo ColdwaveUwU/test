@@ -47,20 +47,15 @@ class Appearance extends SubSettings {
             const { type, value, selector, elementsSelector } = element;
             if (value == null || !selector) continue;
 
-            try {
-                if (type === "dropdown" && elementsSelector) {
-                    const dropdown = new Dropdown(this.tester, { selector, elementsSelector });
-                    await dropdown.selectDropdownItem(value);
-                } else if (type === "checkbox") {
-                    const checkbox = new Checkbox(this.tester, selector);
-                    await checkbox.set(value);
-                }
-            } catch (err) {
-                throw new Error(
-                    `Failed to set ${type} (selector="${selector}", value="${value}"` +
-                        (elementsSelector ? `, elementsSelector="${elementsSelector}"` : "") +
-                        `): ${err.message}`
-                );
+            if (type === "dropdown" && elementsSelector) {
+                const dropdown = new Dropdown(this.tester, {
+                    selector,
+                    elementsSelector,
+                });
+                await dropdown.selectDropdownItem(value);
+            } else if (type === "checkbox") {
+                const checkbox = new Checkbox(this.tester, selector);
+                await checkbox.set(value);
             }
         }
     }

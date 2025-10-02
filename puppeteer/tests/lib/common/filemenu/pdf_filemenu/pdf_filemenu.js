@@ -21,78 +21,51 @@ const docInfo = FileMenu.getDocumentInfo();
 console.log(docInfo);
 // set advanced settings
 FileMenu.setAdvancedSettings({
-    editing: {
-        autosave: true, // Disable autosave
-        showPasteOptions: true, // Hide paste options
-        useSmart: true, // Disable smart suggestions,
-        makeComp: true,
-    },
+    // change Editing and saving settings
+    editing: { autosave: false, showPasteOptions: false, useSmart: false },
+    // change Collaboration settings
     collab: {
-        coEditingMode: "strict", // Set co-editing mode to strict
-        showChanges: "tooltips", // Show track changes by hovering
-        realTime: "all", // Disable real-time change view
-        showComments: true, // Hide comments
-        showResolved: true, // Show resolved comments
+        coEditingMode: "strict",
+        showChanges: "tooltips",
+        realTime: "none",
+        showComments: false,
     },
+    // change Proofing settings
     proofing: {
         spellCheck: true,
-        ignoreUpper: true,
-        ignoreNumbers: true,
+        ignoreUpper: false,
+        ignoreWithNumber: false,
         autoCorrect: {
-            math: {
-                asType: true,
-                replace: "!!",
-                by: "22",
-                action: "add",
-            },
-            recognized: {
-                value: "test",
-                action: "add",
-            },
+            math: { replaceAsType: true, correctReplace: "!", correctBy: "@", methodButton: "Add" },
+            recognized: { recFind: "test", methodButton: "Add" },
             autoFormat: {
-                replace: {
-                    quotes: true,
-                    hyphens: true,
-                    hyperlinks: true,
-                    addPeriod: true,
-                },
-                apply: { bullet: true, numbered: true },
+                smartQuotes: false,
+                dash: false,
+                hyperlinks: false,
+                doubleSpace: true,
+                bulletedList: false,
+                numberedList: false,
             },
             autoCorrect: {
-                sentences: true,
-                cells: true,
-                exceptions: "Svenska (Sverige)",
-                dontCapitalize: {
-                    value: "test",
-                    action: "add",
-                },
+                sentences: false,
+                tableCells: false,
+                language: "Русский (Россия)",
+                dontCap: "b.",
+                methodButton: "Add",
             },
         },
     },
-    docContent: {
-        numeral: "Hindi",
-    },
-    appearance: {
-        theme: {
-            value: "Dark",
-            darkMode: true,
-        },
-        tabStyle: "Fill",
-        background: true,
-    },
+    // change Appearance settings
+    appearance: { theme: { value: "Dark" }, tabStyle: "Line", darkMode: true, useToolbarColor: true },
+    // change workspace settings
     workspace: {
-        turnOnScreen: false,
-        aligment: false,
+        turnOnScreen: true,
+        alignment: false,
         useAlt: false,
-        customQuickAcces: {
-            save: false,
-            print: false,
-            undo: false,
-            redo: false,
-        },
-        unit: "Centimeter",
-        zoomValue: "120%",
-        fontHint: "Native",
+        quickAccess: { save: false, print: false, undo: false, redo: false },
+        unit: "Inch",
+        zoomValue: "300%",
+        fontHinting: "as OS X",
         macrosSettings: "Enable all",
     },
 });

@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const url = require("url");
 const { execFile } = require("child_process");
-const Collab  = require("%%COLLAB%%");
+const Collab = require("%%COLLAB%%");
 const { Checkbox } = require("%%ELEMENTS%%");
 const profilePath = "%%PROFILE_PATH%%";
 const cacheDir = "%%CACHEDIR%%";
@@ -286,6 +286,33 @@ class TesterImp {
 
     changeCurrentFrame(frame) {
         this.frame = frame;
+    }
+
+    /**
+     * Function to search for a frame on a page by url.
+     * @param {string} frameUrl
+     * @returns {Promise<Puppeteer.Frame>}
+     * @throws {Error}
+     */
+    async findFrameByUrl(frameUrl) {
+        try {
+            let currentFrame = this.page.frames().find((frame) => frame.url().includes(frameUrl));
+            if (!currentFrame) {
+                try {
+                    currentFrame = await this.page.waitForFrame(
+                        async (frame) => {
+                            return frame.url().includes(frameUrl);
+                        },
+                        { timeout: this.#pageTimeout }
+                    );
+                } catch {
+                    throw new Error("Invalid frame url or frame not exist");
+                }
+            }
+            return currentFrame;
+        } catch (error) {
+            throw new Error(`Error findFrameByUrl: ${error.message}`);
+        }
     }
 
     /**

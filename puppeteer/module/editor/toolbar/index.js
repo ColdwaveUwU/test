@@ -9,7 +9,7 @@ const Referencestab = require("./referencestab");
 const FileMenu = require("./filetab");
 const DrawTab = require("./drawtab");
 const ViewToolbar = require("./viewtoolbar");
-const Plugins = require("./plugins");
+const Plugins = require("./pluginstab");
 
 const Toolbar = {
     ...HomeTab,

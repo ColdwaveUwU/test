@@ -2,7 +2,7 @@
     "CONTENT": {
         "MATH": {
             "SECTION": {
-                "BUTTON": "#slot-category-id-autocorrect-dialog-settings-math > button"
+                "BUTTON": "#slot-category-id-autocorrect-dialog-settings-math button"
             },
             "CONTENT": {
                 "REPLACE_AS_TYPE": "#auto-correct-chb-replace-type",
@@ -22,7 +22,7 @@
         },
         "RECOGNIZED": {
             "SECTION": {
-                "BUTTON": "#slot-category-id-autocorrect-dialog-settings-recognized > button"
+                "BUTTON": "#slot-category-id-autocorrect-dialog-settings-recognized button"
             },
             "CONTENT": {
                 "VALUE_INPUT": "#auto-correct-rec-find",
@@ -31,35 +31,25 @@
                     "ADD": "#auto-correct-btn-rec-edit",
                     "REPLACE": "#auto-correct-btn-rec-edit",
                     "DELETE": "auto-correct-btn-rec-delete"
-                },
-                "MODAL_MASK": {
-                    "MODAL": ".modal.alert",
-                    "YES_BUTTON": "button[result=yes]"
                 }
             }
         },
         "AS_TYPE": {
             "SECTION": {
-                "BUTTON": "#slot-category-id-autocorrect-dialog-settings-de-autoformat > button",
-                "SLIDE_BUTTON": "#slot-category-id-autocorrect-dialog-settings-sse-autoformat > button"
+                "BUTTON": "#slot-category-id-autocorrect-dialog-settings-de-autoformat"
             },
             "CONTENT": {
-                "SECTION": {
-                    "COMMON": "#id-autocorrect-dialog-settings-de-autoformat",
-                    "CELL": "#id-autocorrect-dialog-settings-sse-autoformat"
-                },
                 "QUOTES": "#id-autocorrect-dialog-chk-quotes",
                 "HYPHENS": "#id-autocorrect-dialog-chk-hyphens",
                 "HYPERLINKS": "#id-autocorrect-dialog-chk-hyperlink",
                 "PERIOD": "#id-autocorrect-dialog-chk-double-space",
                 "BULLETED": "#id-autocorrect-dialog-chk-bulleted",
-                "NUMBERED": "#id-autocorrect-dialog-chk-numbered",
-                "INCLUDE-NEW-ROWS": "#id-autocorrect-dialog-chk-new-rows"
+                "NUMBERED": "#id-autocorrect-dialog-chk-numbered"
             }
         },
         "TEXT_AUTOCORRECT": {
             "SECTION": {
-                "BUTTON": "#slot-category-id-autocorrect-dialog-settings-exceptions > button"
+                "BUTTON": "#slot-category-id-autocorrect-dialog-settings-exceptions button"
             },
             "CONTENT": {
                 "SENTENCES": "#auto-correct-exceptions-chk-sentence",
@@ -79,5 +69,6 @@
                 }
             }
         }
-    }
+    },
+    "CLOSE_BUTTON": "button[result=close]"
 }

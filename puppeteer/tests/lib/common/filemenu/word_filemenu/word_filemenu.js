@@ -64,7 +64,7 @@ FileMenu.setAdvancedSettings({
                     hyperlinks: true,
                     addPeriod: true,
                 },
-                apply: { bullet: true, numbered: true },
+                applyType: { bullet: true, numbered: true },
             },
             autoCorrect: {
                 sentences: true,

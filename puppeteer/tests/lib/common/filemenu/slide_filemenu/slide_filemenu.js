@@ -30,59 +30,63 @@ FileMenu.getDocumentInfo();
 // Configure advanced settings for the presentation
 FileMenu.setAdvancedSettings({
     editing: {
-        autosave: true, // Disable autosave
-        showPasteOptions: true, // Hide paste options
+        autosave: false, // Disable automatic saving
+        showPasteOptions: false, // Disable paste options
     },
     collab: {
         coEditingMode: "strict", // Set co-editing mode to strict
     },
     proofing: {
-        spellCheck: true,
-        ignoreUpper: true,
-        ignoreNumbers: true,
+        spellCheck: true, // Enable spell checking
+        ignoreUpper: false, // Do not ignore uppercase words during proofing
+        ignoreWithNumber: false, // Do not ignore words with numbers
         autoCorrect: {
             math: {
-                asType: true,
-                replace: "!!",
-                by: "22",
-                action: "add",
+                replaceAsType: true, // Replace math symbols as you type
+                correctReplace: "!", // Specify the replacement symbol
+                correctBy: "@", // Specify the corrected symbol
+                methodButton: "Add", // Action for adding the correction
             },
             recognized: {
-                value: "test",
-                action: "add",
+                recFind: "test", // Add recognized terms for auto-correction
+                methodButton: "Add", // Specify the action for adding terms
             },
             autoFormat: {
-                replace: {
-                    quotes: true,
-                    hyphens: true,
-                    hyperlinks: true,
-                    addPeriod: true,
-                },
-                apply: { bullet: true, numbered: true },
+                smartQuotes: false, // Disable smart quotes auto-formatting
+                dash: false, // Disable automatic dash formatting
+                hyperlinks: false, // Disable automatic hyperlink detection
+                doubleSpace: true, // Enable double-space correction
+                bulletedList: false, // Disable automatic bulleted lists
+                numberedList: false, // Disable automatic numbered lists
+            },
+            autoCorrect: {
+                sentences: false, // Disable automatic sentence capitalization
+                tableCells: false, // Disable automatic table cell capitalization
+                language: "Русский (Россия)", // Set the language for auto-correction
+                dontCap: "b.", // Do not capitalize specific abbreviation
+                methodButton: "Add", // Specify the action for adding corrections
             },
         },
     },
     appearance: {
-        theme: {
-            value: "Dark",
-        },
-        tabStyle: "Fill",
-        background: true,
+        theme: { value: "Dark" }, // Set the UI theme to dark mode
+        tabStyle: "Line", // Use line-style tabs
+        useToolbarColor: true, // Apply toolbar color to tabs background
     },
     workspace: {
-        turnOnScreen: false,
-        aligment: false,
-        useAlt: false,
-        customQuickAcces: {
-            save: false,
-            print: false,
-            undo: false,
-            redo: false,
+        turnOnScreen: true, // Enable screen reader support
+        alignment: false, // Disable grid alignment
+        useAlt: false, // Disable Alt key navigation shortcuts
+        quickAccess: {
+            save: false, // Hide the save button in the quick access toolbar
+            print: false, // Hide the print button in the quick access toolbar
+            undo: false, // Hide the undo button in the quick access toolbar
+            redo: false, // Hide the redo button in the quick access toolbar
         },
-        unit: "Centimeter",
-        zoomValue: "120%",
-        fontHint: "Native",
-        macrosSettings: "Enable All",
+        unit: "Inch", // Set the measurement unit to inches
+        zoomValue: "300%", // Set default zoom level to 300%
+        fontHinting: "as OS X", // Apply font hinting style similar to macOS
+        macrosSettings: "Enable All", // Enable all macros
     },
 });
 

@@ -1,16 +1,16 @@
-# HightLightCodePlugin
+# HighlightCodePlugin
 
-This library allows you to work with the HightLightCode Plugin.
+This library allows you to work with the HighlightCode Plugin.
 
 ## How to Include
 
 ```javascript
-const { HightLightCodePlugin } = require("lib");
+const { HighlightCodePlugin } = require("lib");
 ```
 
 ## Functions
 
-### `inputHightLightCode(inputText, option)`
+### `inputHighlightCode(inputText, option)`
 
 ```javascript
 /**
@@ -27,26 +27,26 @@ const { HightLightCodePlugin } = require("lib");
  * @param {string} inputText - input text
  * @param {Option} option - object options (language, style, tab, fontName, fontSize)
  */
-HightLightCodePlugin.inputHightLightCode(inputText, option);
+HighlightCodePlugin.inputHighlightCode(inputText, option);
 ```
 
 ## Example Usage
 
 ```javascript
-// Include the HightLightCodePlugin library
-const { HightLightCodePlugin } = require("lib");
+// Include the HighlightCodePlugin library
+const { HighlightCodePlugin } = require("lib");
 // Creating a Document File
 Tester.createFile("docx");
 // Creating an object with the code settings
-const hightLightCodeOption = {
+const highlightCodeOption = {
     language: "apache",
     style: "GitHub",
     tab: "2",
     fontName: "Courier New",
     fontSize: 43,
 };
-// Add the text "testtest" to the plugin and set its hightLightCodeOption settings
-HightLightCodePlugin.inputHightLightCode("testtest", hightLightCodeOption);
+// Add the text "testtest" to the plugin and set its highlightCodeOption settings
+HighlightCodePlugin.inputHighlightCode("testtest", highlightCodeOption);
 // Waiting for file auto-save
 Tester.waitAutosave();
 // Close the document

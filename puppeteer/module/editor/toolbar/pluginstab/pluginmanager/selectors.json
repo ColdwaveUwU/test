@@ -1,0 +1,8 @@
+{
+    "PLUGIN_MANAGER_BUTTON": "[data-plugin-guid='asc.{AA2EA9B6-9EC2-415F-9762-634EE8D9A95E}']",
+    "PLUGIN_MANAGER_WINDOW": ".asc-window.modal.advanced-settings-dlg",
+    "PLUGIN_LOADER": "#loader-container.hidden",
+    "SEARCH_PLUGIN_INPUT": "#toolbar_tools",
+    "INSTALL_BUTTON": ".btn-text-default.btn_item.btn_install",
+    "CLOSE_BUTTON": ".tool.close"
+}
