@@ -18,8 +18,7 @@ class MoreButton {
         if (!container) {
             return false;
         }
-        const style = window.getComputedStyle(container);
-        return style.display !== "none";
+        return container.checkVisibility();
     };
 
     /**
@@ -28,7 +27,6 @@ class MoreButton {
      */
     async #setVisibility(condition) {
         const moreBoxButtonElementSelector = MoreButton.SELECTORS.MORE_BUTTON;
-
         if (!(await this.isDisplayed())) {
             return;
         }
