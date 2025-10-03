@@ -21,18 +21,15 @@ class PageColumns extends LayoutTab {
             this.#columnsDropdown = new Dropdown(this.tester, {
                 selector: columnsMenuSelectors.MENU_SELECTOR,
                 elementsSelector: columnsMenuSelectors.DROPDOWN_ELEMENTS_SELECTOR,
-                descriptionSelector: columnsMenuSelectors.DESCRIPTION_SELECTOR,
             });
         }
         return this.#columnsDropdown;
     }
 
-    async #getCustomColumnWindow() {
+    #getCustomColumnWindow(selector) {
         const { WINDOW, OK_BUTTON } = PageColumns.PAGE_COLUMNS_SELECTORS.CUSTOM_COLUMNS;
         if (!this.#customColumnWindow) {
-            const columnsDropdown = this.#getColumnsDropdown();
-            const target = await columnsDropdown.getDropdownItem("description", "Custom columns");
-            this.#customColumnWindow = new ModalButton(this.tester, target.id, WINDOW, OK_BUTTON);
+            this.#customColumnWindow = new ModalButton(this.tester, selector, WINDOW, OK_BUTTON);
         }
         return this.#customColumnWindow;
     }
@@ -58,7 +55,10 @@ class PageColumns extends LayoutTab {
     async openCustomColumnsWindow() {
         const customColumnsWindowSelector = PageColumns.PAGE_COLUMNS_SELECTORS.CUSTOM_COLUMNS.WINDOW;
         try {
-            const customColumnWindow = await this.#getCustomColumnWindow();
+            const columnsDropdown = this.#getColumnsDropdown();
+            const { id } = await columnsDropdown.getDropdownItem("description", "Custom columns");
+            debugger;
+            const customColumnWindow = this.#getCustomColumnWindow(id);
             await customColumnWindow.openModal();
         } catch (error) {
             throw new Error(
@@ -239,7 +239,7 @@ class PageColumns extends LayoutTab {
      */
     async clickOkButton() {
         try {
-            const customColumnWindow = await this.#getCustomColumnWindow();
+            const customColumnWindow = this.#getCustomColumnWindow();
             await customColumnWindow.closeModal();
         } catch (error) {
             throw new Error(`clickOkButton: Failed to click ok button. ${error.message}`, {

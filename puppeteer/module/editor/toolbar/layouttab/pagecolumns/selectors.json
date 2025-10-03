@@ -1,8 +1,7 @@
 {
     "PAGE_COLUMNS_MENU": {
         "MENU_SELECTOR": "#tlbtn-columns",
-        "DROPDOWN_ELEMENTS_SELECTOR": "#tlbtn-columns ul li",
-        "DESCRIPTION_SELECTOR": "a"
+        "DROPDOWN_ELEMENTS_SELECTOR": "#tlbtn-columns ul li a"
     },
     "CUSTOM_COLUMNS": {
         "WINDOW": "#window-custom-columns",

@@ -1,4 +1,4 @@
-const { Button } = require("../../../../elements");
+const { StateButton } = require("../../../../elements");
 const selectors = require("./selectors.json");
 
 class MoreButton {
@@ -27,24 +27,14 @@ class MoreButton {
      * @param {boolean} condition - true to open, false to close
      */
     async #setVisibility(condition) {
-        const moreBoxButtonElementSelector = MoreButton.SELECTORS.MORE_BUTTON_ELEMENT;
+        const moreBoxButtonElementSelector = MoreButton.SELECTORS.MORE_BUTTON;
 
         if (!(await this.isDisplayed())) {
             return;
         }
 
-        const moreBoxButtonElement = await this.tester.frame.$(moreBoxButtonElementSelector);
-
-        if (!moreBoxButtonElement) {
-            return;
-        }
-
-        const isEnabled = await moreBoxButtonElement.evaluate((el) => el.getAttribute("aria-pressed") === "true");
-
-        if (condition !== isEnabled) {
-            const button = new Button(this.tester, moreBoxButtonElementSelector);
-            await button.click();
-        }
+        const button = new StateButton(this.tester, moreBoxButtonElementSelector);
+        await button.setState(condition);
     }
 
     /**
