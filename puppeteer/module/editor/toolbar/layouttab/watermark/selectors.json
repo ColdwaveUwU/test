@@ -27,10 +27,10 @@
             "DESCRIPTION_SELECTOR": "a"
         },
         "FONT_COLOR": "#watermark-textcolor",
-        "BOLD": "#watermark-bold",
-        "ITALIC": "#watermark-italic",
-        "UNDERLINE": "#watermark-underline",
-        "STRIKETHROUGH": "#watermark-strikeout",
+        "BOLD": "#watermark-bold > button",
+        "ITALIC": "#watermark-italic > button",
+        "UNDERLINE": "#watermark-underline > button",
+        "STRIKETHROUGH": "#watermark-strikeout > button",
         "SEMITRANSPARENT_CHECKBOX": "#watermark-chb-transparency",
         "LAYOUT": {
             "DIAGONAL": "#watermark-radio-diag",

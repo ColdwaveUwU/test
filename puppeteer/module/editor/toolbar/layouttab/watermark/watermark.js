@@ -236,8 +236,6 @@ class Watermark extends LayoutTab {
         const colorLib = new Color(this.tester);
 
         try {
-            const fontColorButton = new StateButton(this.tester, fontColorSelector);
-            await fontColorButton.setState(true);
             await colorLib.selectColor(fontColorSelector, fontColor);
         } catch (error) {
             throw new Error(`setFontColor: Failed to set font color "${fontColor}". ${error.message}`, {
