@@ -6,7 +6,7 @@
         "userDelay": 0,
         "cacheEnabled": true,
         "disableTooltips": true,
-        "logEvents": true
+        "logEvents": false
     },
     "puppeteerOptions": {
         "browser": "chrome",

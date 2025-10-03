@@ -34,7 +34,6 @@ PageBreakInsert.insertPageBreakWithOptions({
 });
 Tester.input(TestData.LOREM_IPSUM());
 
-LineNumbers.selectLineNumberDropdownOption("Custom Options");
 
 // Set custom line numbering settings with numbering enabled
 const customSettings = {

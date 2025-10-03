@@ -4,11 +4,10 @@ Tester.createFile("pdf");
 
 // Set predefined line numbering
 LineNumbers.selectLineNumberDropdownOption("Continuous");
-LineNumbers.selectLineNumberDropdownOption("Restart Page");
-LineNumbers.selectLineNumberDropdownOption("Restart Section");
-LineNumbers.selectLineNumberDropdownOption("Suppress");
+LineNumbers.selectLineNumberDropdownOption("Restart each page");
+LineNumbers.selectLineNumberDropdownOption("Restart each section");
+LineNumbers.selectLineNumberDropdownOption("Suppress for current paragraph");
 LineNumbers.selectLineNumberDropdownOption("None");
-LineNumbers.selectLineNumberDropdownOption("Custom Options");
 
 // Set custom line numbering settings with numbering enabled
 const customSettings = {
@@ -34,7 +33,6 @@ const disabledSettings = {
     // CustomValues and Numbering cannot be used when EnableNumbering is false
 };
 
-LineNumbers.selectLineNumberDropdownOption("Custom Options");
 LineNumbers.setCustomLineNumbersSettings(disabledSettings);
 
 Tester.close();

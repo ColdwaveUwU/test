@@ -1,6 +1,6 @@
 const LayoutTab = require("../layouttab");
 const selectors = require("./selectorts.json");
-const { Input, Checkbox } = require("../../../../elements");
+const { Input, Checkbox, ModalButton, Dropdown } = require("../../../../elements");
 class LineNumbers extends LayoutTab {
     constructor(tester) {
         super(tester, "span#slot-btn-line-numbers div button");
@@ -8,27 +8,35 @@ class LineNumbers extends LayoutTab {
 
     static SELECTORS = selectors;
 
+    #lineNumbersDropdown = null;
+    #lineNumbersSettingsWindow = null;
+
+    #getLineNumbersDropdown() {
+        if (!this.#lineNumbersDropdown) {
+            const { DEFAULT_MENU, DROPDOWN_ITEMS } = LineNumbers.SELECTORS.DROPDOWN_MENU;
+            this.#lineNumbersDropdown = new Dropdown(this.tester, {
+                selector: DEFAULT_MENU,
+                elementsSelector: DROPDOWN_ITEMS,
+            });
+        }
+        return this.#lineNumbersDropdown;
+    }
+
+    #getLineNumbersSettingsWindow(openSelector) {
+        if (!this.#lineNumbersSettingsWindow) {
+            const { MODAL_WINDOW, OK_BUTTON } = LineNumbers.SELECTORS;
+            this.#lineNumbersSettingsWindow = new ModalButton(this.tester, openSelector, MODAL_WINDOW, OK_BUTTON);
+        }
+        return this.#lineNumbersSettingsWindow;
+    }
     /**
      * Sets the page line numbers by selecting the specified option name from the dropdown menu.
-     * @param {"None" | "Continuous" | "Restart Page" | "Restart Section" | "Suppress" | "Custom Options"} optionName - The name of the line number option to select
+     * @param {"None" | "Continuous" | "Restart each page" | "Restart each section" | "Suppress for current paragraph" | "Line numbering options"} optionName - The name of the line number option to select
      */
     async selectLineNumberDropdownOption(optionName) {
         try {
-            await this.tester.selectDropdown(LineNumbers.SELECTORS.DROPDOWN_MENU.DEFAULT_MENU);
-
-            const itemDesc = ["None", "Continuous", "Restart Page", "Restart Section", "Suppress", "Custom Options"];
-            const listItems = await this.tester.parseItems(
-                "#tlbtn-line-numbers ul.dropdown-menu.ppm-toolbar li > a",
-                "a"
-            );
-
-            const matchedItem = listItems
-                .map((item, index) => ({ ...item, description: itemDesc[index] }))
-                .find((item) => item.description === optionName);
-
-            if (matchedItem) {
-                await this.tester.click(matchedItem.id);
-            }
+            const lineNumbersDropdown = this.#getLineNumbersDropdown();
+            await lineNumbersDropdown.selectDropdownItem(optionName);
         } catch (error) {
             throw new Error(`Failed to select option: ${optionName}`, error);
         }
@@ -54,13 +62,10 @@ class LineNumbers extends LayoutTab {
             throw new Error("Cannot set CustomValues or Numbering when line numbering is disabled");
         }
         try {
-            await this.tester.frame.waitForFunction(
-                (modalWindowSelectror) => {
-                    return document.querySelector(modalWindowSelectror);
-                },
-                {},
-                LineNumbers.SELECTORS.MODAL_WINDOW
-            );
+            const lineNumbersDropdown = this.#getLineNumbersDropdown();
+            const { id } = await lineNumbersDropdown.getDropdownItem("description", "Line numbering options");
+            const settingsModalWIndow = this.#getLineNumbersSettingsWindow(id);
+            await settingsModalWIndow.openModal();
 
             if (EnableNumbering) {
                 const enableNumberingCheckbox = new Checkbox(
@@ -82,7 +87,7 @@ class LineNumbers extends LayoutTab {
                 await this.#setApplyToDropdownOptions(ApplyTo);
             }
 
-            await this.applyModalSettings();
+            await settingsModalWIndow.closeModal();
         } catch (error) {
             throw new Error(`Failed to set custom line numbers: ${error.message}`);
         }

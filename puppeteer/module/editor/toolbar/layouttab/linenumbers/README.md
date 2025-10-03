@@ -47,7 +47,7 @@ This library implements interaction with the Line Numbers settings.
 ```javascript
 /**
  * Sets the page line numbers by selecting the specified option name from the dropdown menu.
- * @param {"None" | "Continuous" | "Restart Page" | "Restart Section" | "Suppress" | "Custom Options"} optionName - The name of the line number option to select
+ * @param {"None" | "Continuous" | "Restart each page" | "Restart each section" | "Suppress for current paragraph" | "Line numbering options"} optionName - The name of the line number option to select
  */
 LineNumbers.selectLineNumberDropdownOption(optionName);
 ```
@@ -82,11 +82,10 @@ Tester.createFile("pdf");
 
 // Set predefined line numbering
 LineNumbers.selectLineNumberDropdownOption("Continuous");
-LineNumbers.selectLineNumberDropdownOption("Restart Page");
-LineNumbers.selectLineNumberDropdownOption("Restart Section");
-LineNumbers.selectLineNumberDropdownOption("Suppress");
+LineNumbers.selectLineNumberDropdownOption("Restart each page");
+LineNumbers.selectLineNumberDropdownOption("Restart each section");
+LineNumbers.selectLineNumberDropdownOption("Suppress for current paragraph");
 LineNumbers.selectLineNumberDropdownOption("None");
-LineNumbers.selectLineNumberDropdownOption("Custom Options");
 
 // Set custom line numbering settings with numbering enabled
 const customSettings = {
@@ -105,8 +104,6 @@ const customSettings = {
 };
 LineNumbers.setCustomLineNumbersSettings(customSettings);
 
-LineNumbers.selectLineNumberDropdownOption("Custom Options");
-// Set custom line numbering settings with numbering disabled
 const disabledSettings = {
     EnableNumbering: false,
     ApplyTo: "Whole",

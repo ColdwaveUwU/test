@@ -6,7 +6,7 @@ const { LineNumbers, FileMenu, Verification, TestData } = require("lib");
 
 Tester.createFile("docx");
 Tester.input(TestData.LOREM_IPSUM());
-LineNumbers.selectLineNumberDropdownOption("Suppress");
+LineNumbers.selectLineNumberDropdownOption("Suppress for current paragraph");
 FileMenu.downloadAs("docx");
 
 Verification.openFile();

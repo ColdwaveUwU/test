@@ -6,7 +6,7 @@ const { LineNumbers, FileMenu, Verification, TestData } = require("lib");
 
 Tester.createFile("docx");
 Tester.input(TestData.LOREM_IPSUM());
-LineNumbers.selectLineNumberDropdownOption("Restart Page");
+LineNumbers.selectLineNumberDropdownOption("Restart each page");
 FileMenu.downloadAs("docx");
 
 Verification.openFile();

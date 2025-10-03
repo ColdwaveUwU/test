@@ -181,11 +181,7 @@ class Hyphenation extends LayoutTab {
      */
     async clickOkButton() {
         try {
-            const targetElement = await this.#getHyphenationDropdown().getDropdownItem(
-                "description",
-                "Hyphenation options"
-            );
-            const hyphenationModalWindow = await this.#getHyphenationModalWindow(targetElement.id);
+            const hyphenationModalWindow = await this.#getHyphenationModalWindow();
             await hyphenationModalWindow.closeModal();
         } catch (error) {
             throw new Error(`clickOkButton: Failed click ok button". \n${error.message}`, {

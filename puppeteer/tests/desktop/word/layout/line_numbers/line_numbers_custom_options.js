@@ -6,7 +6,6 @@ const { LineNumbers, FileMenu, Verification, TestData } = require("lib");
 
 Tester.createFile("docx");
 Tester.input(TestData.LOREM_IPSUM());
-LineNumbers.selectLineNumberDropdownOption("Custom Options");
 
 const customSettings = {
     EnableNumbering: true,

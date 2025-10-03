@@ -7,11 +7,10 @@ Tester.input(text);
 
 // Apply different line numbering modes
 LineNumbers.selectLineNumberDropdownOption("Continuous");
-LineNumbers.selectLineNumberDropdownOption("Restart Page");
-LineNumbers.selectLineNumberDropdownOption("Restart Section");
-LineNumbers.selectLineNumberDropdownOption("Suppress");
+LineNumbers.selectLineNumberDropdownOption("Restart each page");
+LineNumbers.selectLineNumberDropdownOption("Restart each section");
+LineNumbers.selectLineNumberDropdownOption("Suppress for current paragraph");
 LineNumbers.selectLineNumberDropdownOption("None");
-LineNumbers.selectLineNumberDropdownOption("Custom Options");
 
 // Example: custom settings
 const customSettings = {

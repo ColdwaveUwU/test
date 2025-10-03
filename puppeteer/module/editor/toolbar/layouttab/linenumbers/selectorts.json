@@ -1,9 +1,10 @@
 {
     "DROPDOWN_MENU": {
         "DEFAULT_MENU": "#tlbtn-line-numbers",
-        "DROPDOWN_ITEMS": "#tlbtn-line-numbers ul.dropdown-menu.ppm-toolbar li > a"
+        "DROPDOWN_ITEMS": "#tlbtn-line-numbers ul li a"
     },
     "MODAL_WINDOW": "#window-line-numbers",
+    "OK_BUTTON": "#window-line-numbers button[result=ok]",
     "CHECKBOX_ADD_LINE_NUMBERING": "#line-numbers-add-line-numbering",
     "START_AT": "#line-numbers-start-at",
     "FROM_TEXT": "#line-numbers-from-text",

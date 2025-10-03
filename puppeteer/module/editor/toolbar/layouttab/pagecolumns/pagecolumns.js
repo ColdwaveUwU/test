@@ -12,13 +12,6 @@ class PageColumns extends LayoutTab {
      */
     static PAGE_COLUMNS_SELECTORS = selectors;
 
-    /**
-     * @enum
-     */
-    static TYPES = {
-        PAGE_COLUMNS_TYPES: ["One", "Two", "Three", "Left", "Right", "Custom columns"],
-    };
-
     #columnsDropdown = null;
     #customColumnWindow = null;
 
@@ -27,12 +20,11 @@ class PageColumns extends LayoutTab {
             const columnsMenuSelectors = PageColumns.PAGE_COLUMNS_SELECTORS.PAGE_COLUMNS_MENU;
             this.#columnsDropdown = new Dropdown(this.tester, {
                 selector: columnsMenuSelectors.MENU_SELECTOR,
-                elementsValue: PageColumns.TYPES.PAGE_COLUMNS_TYPES,
                 elementsSelector: columnsMenuSelectors.DROPDOWN_ELEMENTS_SELECTOR,
                 descriptionSelector: columnsMenuSelectors.DESCRIPTION_SELECTOR,
             });
-            return this.#columnsDropdown;
         }
+        return this.#columnsDropdown;
     }
 
     async #getCustomColumnWindow() {

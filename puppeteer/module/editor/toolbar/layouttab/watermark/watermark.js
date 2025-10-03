@@ -1,6 +1,6 @@
 const path = require("path");
 const LayoutTab = require("../layouttab");
-const { Button, Dropdown, DropdownInput, Input, Checkbox } = require("../../../../elements");
+const { Button, Dropdown, DropdownInput, Input, Checkbox, ModalButton, StateButton } = require("../../../../elements");
 const { Color, DocumentUploader } = require("../../../../common");
 const selectors = require("./selectors.json");
 const textPresets = require("./textpresets.json");
@@ -41,19 +41,36 @@ class Watermark extends LayoutTab {
         SCALE_TYPES: ["Auto", "500%", "200%", "150%", "100%", "50%"],
     };
 
+    #watermarkModalWindow = null;
+    #waterMarkDropdown = null;
+
+    #getWatermarkWindow(openSelector) {
+        if (!this.#watermarkModalWindow && openSelector) {
+            const { WINDOW, OK_BUTTON } = Watermark.WATERMARK_SELECTORS.WATERMARK_SETTINGS_WINDOW;
+            this.#watermarkModalWindow = new ModalButton(this.tester, openSelector, WINDOW, OK_BUTTON);
+        }
+        return this.#watermarkModalWindow;
+    }
+
+    #getWatermarkDropdown() {
+        if (!this.#waterMarkDropdown) {
+            const watermarkMenuSelectors = Watermark.WATERMARK_SELECTORS.WATERMARK_MENU;
+            this.#waterMarkDropdown = new Dropdown(this.tester, {
+                selector: watermarkMenuSelectors.MENU_SELECTOR,
+                elementsValue: Watermark.TYPES.WATERMARK_MENU_TYPES,
+                elementsSelector: watermarkMenuSelectors.DROPDOWN_ELEMENTS_SELECTOR,
+            });
+        }
+        return this.#waterMarkDropdown;
+    }
+
     /**
      * Select watermark option from dropdown menu
      * @param {"Custom watermark" | "Remove watermark"} [optionValue]
      */
     async setWatermark(optionValue) {
         try {
-            const watermarkMenuSelectors = Watermark.WATERMARK_SELECTORS.WATERMARK_MENU;
-            const watermarkDropdown = new Dropdown(this.tester, {
-                selector: watermarkMenuSelectors.MENU_SELECTOR,
-                elementsValue: Watermark.TYPES.WATERMARK_MENU_TYPES,
-                elementsSelector: watermarkMenuSelectors.DROPDOWN_ELEMENTS_SELECTOR,
-            });
-
+            const watermarkDropdown = this.#getWatermarkDropdown();
             await watermarkDropdown.selectDropdownItem(optionValue);
         } catch (error) {
             throw new Error(`setWatermark: Failed to select watermark option "${optionValue}". ${error.message}`, {
@@ -68,8 +85,11 @@ class Watermark extends LayoutTab {
     async openWatermarkSettingsWindow() {
         const watermarkSettingsWindowSelector = Watermark.WATERMARK_SELECTORS.WATERMARK_SETTINGS_WINDOW.WINDOW;
         try {
-            await this.setWatermark("Custom watermark");
-            await this.tester.checkSelector(watermarkSettingsWindowSelector);
+            const watermarkDropdown = this.#getWatermarkDropdown();
+            const { id } = await watermarkDropdown.getDropdownItem("description", "Custom watermark");
+
+            const watermarkSettingsWindow = this.#getWatermarkWindow(id);
+            await watermarkSettingsWindow.openModal();
         } catch (error) {
             throw new Error(
                 `openWatermarkSettingsWindow: Failed to open watermark settings window "${watermarkSettingsWindowSelector}". ${error.message}`,
@@ -86,18 +106,23 @@ class Watermark extends LayoutTab {
      */
     async setWatermarkType(watermarkType) {
         const watermarkTypeSelectors = Watermark.WATERMARK_SELECTORS.WATERMARK_SETTINGS_WINDOW.WATERMARK_TYPES;
+
+        const selectorMap = {
+            None: watermarkTypeSelectors.NONE,
+            "Text watermark": watermarkTypeSelectors.TEXT_WATERMARK,
+            "Image watermark": watermarkTypeSelectors.IMAGE_WATERMARK,
+        };
+
         try {
-            if (watermarkType === "None") {
-                await this.tester.click(watermarkTypeSelectors.NONE);
-            } else if (watermarkType === "Text watermark") {
-                await this.tester.click(watermarkTypeSelectors.TEXT_WATERMARK);
-            } else if (watermarkType === "Image watermark") {
-                await this.tester.click(watermarkTypeSelectors.IMAGE_WATERMARK);
+            const selector = selectorMap[watermarkType];
+            if (!selector) {
+                throw new Error(`Unknown watermark type: "${watermarkType}"`);
             }
+
+            const waterMarkRadioButton = new Checkbox(this.tester, selector);
+            await waterMarkRadioButton.set(true);
         } catch (error) {
-            throw new Error(`setWatermarkType: Failed to set watermark type "${watermarkType}". ${error.message}`, {
-                cause: error,
-            });
+            throw new Error(`setWatermarkType: Failed to set watermark type "${watermarkType}". ${error.message}`);
         }
     }
 
@@ -211,7 +236,8 @@ class Watermark extends LayoutTab {
         const colorLib = new Color(this.tester);
 
         try {
-            await this.tester.click(fontColorSelector);
+            const fontColorButton = new StateButton(this.tester, fontColorSelector);
+            await fontColorButton.setState(true);
             await colorLib.selectColor(fontColorSelector, fontColor);
         } catch (error) {
             throw new Error(`setFontColor: Failed to set font color "${fontColor}". ${error.message}`, {
@@ -227,7 +253,7 @@ class Watermark extends LayoutTab {
         const boldSelector = Watermark.WATERMARK_SELECTORS.WATERMARK_SETTINGS_WINDOW.BOLD;
 
         try {
-            const boldButton = new Button(this.tester, boldSelector);
+            const boldButton = new StateButton(this.tester, boldSelector);
             await boldButton.click();
         } catch (error) {
             throw new Error(`setBold: Failed to set bold ${error.message}`, {
@@ -243,7 +269,7 @@ class Watermark extends LayoutTab {
         const italicSelector = Watermark.WATERMARK_SELECTORS.WATERMARK_SETTINGS_WINDOW.ITALIC;
 
         try {
-            const italicButton = new Button(this.tester, italicSelector);
+            const italicButton = new StateButton(this.tester, italicSelector);
             await italicButton.click();
         } catch (error) {
             throw new Error(`setItalic: Failed to set italic ${error.message}`, {
@@ -259,7 +285,7 @@ class Watermark extends LayoutTab {
         const underlineSelector = Watermark.WATERMARK_SELECTORS.WATERMARK_SETTINGS_WINDOW.UNDERLINE;
 
         try {
-            const underlineButton = new Button(this.tester, underlineSelector);
+            const underlineButton = new StateButton(this.tester, underlineSelector);
             await underlineButton.click();
         } catch (error) {
             throw new Error(`setUnderline: Failed to set underline ${error.message}`, {
@@ -275,7 +301,7 @@ class Watermark extends LayoutTab {
         const strikethroughSelector = Watermark.WATERMARK_SELECTORS.WATERMARK_SETTINGS_WINDOW.STRIKETHROUGH;
 
         try {
-            const strikethroughButton = new Button(this.tester, strikethroughSelector);
+            const strikethroughButton = new StateButton(this.tester, strikethroughSelector);
             await strikethroughButton.click();
         } catch (error) {
             throw new Error(`setStrikethrough: Failed to set strikethrough ${error.message}`, {
@@ -308,13 +334,19 @@ class Watermark extends LayoutTab {
      */
     async setLayout(layoutType) {
         const layoutTypeSelectors = Watermark.WATERMARK_SELECTORS.WATERMARK_SETTINGS_WINDOW.LAYOUT;
+        const selectorMap = {
+            Diagonal: layoutTypeSelectors.DIAGONAL,
+            Horizontal: layoutTypeSelectors.HORIZONTAL,
+        };
 
         try {
-            if (layoutType === "Diagonal") {
-                await this.tester.click(layoutTypeSelectors.DIAGONAL);
-            } else if (layoutType === "Horizontal") {
-                await this.tester.click(layoutTypeSelectors.HORIZONTAL);
+            const selector = selectorMap[layoutType];
+            if (!selector) {
+                throw new Error(`Unknown watermark type: "${layoutType}"`);
             }
+
+            const waterMarkRadioButton = new Checkbox(this.tester, selector);
+            await waterMarkRadioButton.set(true);
         } catch (error) {
             throw new Error(`setLayout: Failed to set layout option "${layoutType}". ${error.message}`, {
                 cause: error,
@@ -436,7 +468,8 @@ class Watermark extends LayoutTab {
      */
     async clickOkButton() {
         try {
-            await this.tester.click(Watermark.WATERMARK_SELECTORS.WATERMARK_SETTINGS_WINDOW.OK_BUTTON);
+            const watermarkSettingsWindow = this.#getWatermarkWindow();
+            await watermarkSettingsWindow.closeModal();
         } catch (error) {
             throw new Error(`clickOkButton: Failed to click ok button. ${error.message}`, {
                 cause: error,
