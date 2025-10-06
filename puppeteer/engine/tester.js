@@ -830,7 +830,7 @@ class TesterImp {
 
             await Promise.all([waitForDisableTooltips, this.waitForAscEvent("asc_onDocumentContentReady")]);
 
-            await this.sleep(1000); //todo to fix click on file tab
+            await this.sleep(3000); //todo to fix click on file tab
             await this.frame.waitForFunction(() => {
                 return !!window?.Asc?.editor?.asc_getDocumentName();
             });

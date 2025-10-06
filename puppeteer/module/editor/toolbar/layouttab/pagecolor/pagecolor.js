@@ -22,7 +22,6 @@ class PageColor extends LayoutTab {
         const colorLib = new Color(this.tester);
 
         try {
-            await this.tester.click(pageColorSelector);
             await colorLib.selectColor(pageColorSelector, pageColor);
         } catch (error) {
             throw new Error(`setPageColor: Failed to set page color "${pageColor}". ${error.message}`, {

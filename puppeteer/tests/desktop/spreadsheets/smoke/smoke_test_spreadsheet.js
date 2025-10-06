@@ -58,12 +58,12 @@ Tester.input(TestData.getCellAutoIndex());
 
 Tester.keyPress("Tab");
 Font.selectFont("Verdana");
-Tester.click("#ce-cell-content");
-Tester.input(TestData.getCellAutoIndex());
+Tester.inputToForm(TestData.getCellAutoIndex(), "#ce-cell-content");
 
 Tester.keyPress("Tab");
 Font.setFontSize("14");
 Tester.input(TestData.getCellAutoIndex());
+FileMenu.save();
 
 FileMenu.downloadAs("xlsx");
 Verification.openFile();

@@ -14,7 +14,7 @@ Tester.input("Test content with autosave enabled");
 
 FileMenu.clickFileMenu();
 
-const isSaveButtonDisabled = Tester.checkSelector("#fm-btn-save.disabled");
+const isSaveButtonDisabled = Tester.waitSelector("#fm-btn-save.disabled");
 
 if (isSaveButtonDisabled) {
     console.log("Save button disabled - OK");

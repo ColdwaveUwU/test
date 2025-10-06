@@ -1,0 +1,6 @@
+{
+    "REPLACE_IMAGE_DROPDOWN": {
+        "SELECTOR": "#image-button-replace",
+        "ELEMENTS": "#image-button-replace ul li a"
+    }
+}

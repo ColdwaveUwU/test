@@ -96,6 +96,13 @@ class Dropdown extends UIElement {
      * @param {string} optionValue - The value of the dropdown item to select.
      * @throws {Error} - Throws an error if the specified option is not found in the dropdown.
      */
+    /**
+     * Selects a specific item from the dropdown.
+     * Uses id if available, otherwise falls back to className.
+     * If the item or its parent has `.dropdown-submenu`, performs hover instead of click.
+     * @param {string} optionValue - The value of the dropdown item to select.
+     * @throws {Error} - Throws an error if the specified option is not found in the dropdown.
+     */
     async selectDropdownItem(optionValue) {
         const items = await this.getDropdownItems();
         const elementsValues =
@@ -108,6 +115,7 @@ class Dropdown extends UIElement {
                 .slice(0, elementsValues.length)
                 .map((item, index) => [elementsValues[index], { id: item.id, className: item.className }])
         );
+
         if (!itemsMap[optionValue]) {
             throw new Error(
                 `Dropdown option of type "${optionValue}" with selector "${this.selector}" was not found in the available options.`
@@ -117,7 +125,27 @@ class Dropdown extends UIElement {
         const item = itemsMap[optionValue];
         const selector =
             item.id && item.id.trim() !== "" ? item.id : `${this.dropdownElementsSelector}${item.className}`;
-        await this.tester.click(selector);
+
+        const hasSubmenu = await this.context.$eval(
+            selector,
+            (el) => el.classList.contains("dropdown-submenu") || el.closest(".dropdown-submenu") !== null
+        );
+
+        if (hasSubmenu) {
+            const waitElement = this.context.waitForFunction(
+                (selector) => {
+                    const el = document.querySelector(selector);
+                    if (!el) return false;
+                    const target = el.classList.contains("dropdown-submenu") ? el : el.closest(".dropdown-submenu");
+                    return target && target.classList.contains("over");
+                },
+                { timeout: 5000 },
+                selector
+            );
+            await Promise.all([this.tester.hoverElement(selector), waitElement]);
+        } else {
+            await this.tester.click(selector);
+        }
     }
 
     /**

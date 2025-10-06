@@ -32,7 +32,7 @@ const WrappingImageType = {
     Square: "Square",
     Tight: "Tight",
     Through: "Through",
-    TnB: "Top and Bottom",
+    TnB: "Top and bottom",
     InFront: "In front of Text",
     Behind: "Behind text",
 };

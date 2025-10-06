@@ -9,7 +9,6 @@ const ImageSettingButtonID = {
     RotateLeft: "#image-button-90",
     Fliph: "#image-button-fliph",
     Flipv: "#image-button-flipv",
-    ReplaceImage: "#image-button-replace",
     WrappingDropdown: "#image-combo-wrap",
     ImageWidth: "#image-label-width",
     ImageHeight: "#image-label-height",

@@ -1,0 +1,8 @@
+{
+    "SELECTOR": "#image-button-crop",
+    "BUTTON": "#image-button-crop > button",
+    "DROPDOWN": {
+        "SELECTOR": "#image-button-crop .btn-group",
+        "ELEMENTS": "#image-button-crop .btn-group ul li a"
+    }
+}

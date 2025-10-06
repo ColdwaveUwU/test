@@ -1,0 +1,5 @@
+{
+    "WRAPPING_DRODROPDOWN": "#image-combo-wrap",
+    "ELEMENTS_SELECTOR": "#image-combo-wrap ul li .item",
+    "DESCRIPTION": "[aria-label]"
+}
