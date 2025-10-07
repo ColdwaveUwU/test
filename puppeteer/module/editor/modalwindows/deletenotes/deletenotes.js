@@ -12,7 +12,7 @@ class DeleteNotes {
         await this.deleteNotesModal.openModal();
         await Promise.all([
             new Checkbox(this.tester, DeleteNotes.SELECTORS.FOOTNOTE_CHECKBOX).set(footnotes),
-            new Checkbox(this.tester, DeleteNotes.SELECTORS.FOOTNOTE_CHECKBOX).set(endnotes),
+            new Checkbox(this.tester, DeleteNotes.SELECTORS.ENDNOTE_CHECKBOX).set(endnotes),
         ]);
         await this.deleteNotesModal.closeModal();
     }

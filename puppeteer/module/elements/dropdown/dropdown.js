@@ -128,7 +128,9 @@ class Dropdown extends UIElement {
 
         const hasSubmenu = await this.context.$eval(
             selector,
-            (el) => el.classList.contains("dropdown-submenu") || el.closest(".dropdown-submenu") !== null
+            (el) =>
+                el.classList.contains("dropdown-submenu") ||
+                (el.parentElement && el.parentElement.classList.contains("dropdown-submenu"))
         );
 
         if (hasSubmenu) {

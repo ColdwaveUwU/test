@@ -26,7 +26,7 @@
             "CANCEL_BUTTON": "#window-note-settings .footer button[result=cancel]"
         },
         "DELETE_ALL_NOTES": {
-            "WINDOW": ".asc-window.modal-dlg.notransform",
+            "WINDOW": ".asc-window.modal-dlg",
             "FOOTNOTE_CHECKBOX": "#notes-remove-chk-foot",
             "ENDNOTE_CHECKBOX": "#notes-remove-chk-end",
             "OK_BUTTON": ".footer.center button[result=ok]",

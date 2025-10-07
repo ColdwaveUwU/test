@@ -176,7 +176,6 @@ class Footnote extends ReferencesTab {
      */
     async convertAllFootnotesToEndnotes() {
         try {
-            await this.#clickFootnoteDropdownToggle();
             await this.convertAllNotes();
             await this.#selectFootnoteOption("Convert all footnotes to endnotes");
         } catch (error) {
@@ -189,7 +188,6 @@ class Footnote extends ReferencesTab {
      */
     async convertAllEndnotesToFootnotes() {
         try {
-            await this.#clickFootnoteDropdownToggle();
             await this.convertAllNotes();
             await this.#selectFootnoteOption("Convert all endnotes to footnotes");
         } catch (error) {
@@ -202,7 +200,6 @@ class Footnote extends ReferencesTab {
      */
     async swapFootnotesAndEndnotes() {
         try {
-            await this.#clickFootnoteDropdownToggle();
             await this.convertAllNotes();
             await this.#selectFootnoteOption("Swap footnotes and endnotes");
         } catch (error) {

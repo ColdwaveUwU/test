@@ -1,5 +1,6 @@
 const { Color } = require("../../common");
 const { MoreButton } = require("./common");
+const { StateButton } = require("../../elements");
 /**
  * Wraps the given Toolbar class to automatically invoke `openTargetTab`
  * before each method call in the class.
@@ -41,6 +42,17 @@ class Toolbar {
         this.color = new Color(this.tester);
     }
 
+    #stateToolbarButton = null;
+
+    #getToolbarStateButton() {
+        if (!this.#stateToolbarButton) {
+            debugger;
+            const targetSelector = `#toolbar .box-tabs li[data-layout-name="toolbar-${this.tabTarget.toLowerCase()}"]`;
+            this.#stateToolbarButton = new StateButton(this.tester, targetSelector);
+        }
+        return this.#stateToolbarButton;
+    }
+
     /**
      * Checks if the selector is active
      * @param {string} selector
@@ -53,23 +65,8 @@ class Toolbar {
      * Opens the desired tab on the toolbar
      */
     async openTargetTab() {
-        let tabSelector = `#toolbar .box-tabs li.active a[data-title=${this.tabTarget}]`;
-
-        if (
-            !(await this.checkActive(tabSelector)) &&
-            (await this.tester.findFrameByName()) === this.tester.getFrame()
-        ) {
-            await this.clickTargetTab();
-        }
-        this.tabSelector = tabSelector;
-    }
-
-    async clickTargetTab() {
-        if (this.tabTarget === "File") {
-            await this.tester.sleep(1000); // todo fix open FIleTab after mask
-        }
-        const tabSelector = `#toolbar .box-tabs li a[data-title=${this.tabTarget}]`;
-        await this.tester.click(tabSelector);
+        const stateButton = this.#getToolbarStateButton();
+        await stateButton.setState(true);
     }
 
     /**
