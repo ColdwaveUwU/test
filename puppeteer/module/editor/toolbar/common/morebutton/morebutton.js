@@ -14,11 +14,11 @@ class MoreButton {
      * @return {boolean}
      */
     static #isDisplayedFunction = (selector) => {
-        const container = document.querySelector(selector);
-        if (!container) {
-            return false;
-        }
-        return container.checkVisibility();
+        const el = document.querySelector(selector);
+        if (!el) return false;
+
+        const style = getComputedStyle(el);
+        return style.display !== "none" && style.visibility !== "hidden" && el.offsetParent !== null;
     };
 
     /**
