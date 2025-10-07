@@ -46,9 +46,11 @@ class Toolbar {
 
     #getToolbarStateButton() {
         if (!this.#stateToolbarButton) {
-            debugger;
-            const targetSelector = `#toolbar .box-tabs li[data-layout-name="toolbar-${this.tabTarget.toLowerCase()}"]`;
-            this.#stateToolbarButton = new StateButton(this.tester, targetSelector);
+            const targetSelector = `#toolbar .box-tabs a[data-title=${this.tabTarget}]`;
+            this.#stateToolbarButton = new StateButton(this.tester, targetSelector, {
+                isParentElement: true,
+                activeElementSelector: ".ribtab",
+            });
         }
         return this.#stateToolbarButton;
     }

@@ -1,8 +1,9 @@
 const Button = require("../button");
 
 class StateButton extends Button {
-    constructor(tester, selector, target) {
+    constructor(tester, selector, activeElementSelector, target) {
         super(tester, selector, target);
+        this.activeElementSelector = activeElementSelector;
     }
 
     /**
@@ -24,6 +25,10 @@ class StateButton extends Button {
     async setState(desiredState) {
         const currentState = await this.getState();
 
+        if (typeof currentState !== "boolean") {
+            throw new Error("Failed to determine the current button state.");
+        }
+
         if (currentState === desiredState) {
             return;
         }
@@ -37,13 +42,32 @@ class StateButton extends Button {
      * @returns {Promise<boolean|null>}
      */
     async getState() {
-        return this.context.evaluate((sel) => {
-            const btn = document.querySelector(sel);
-            if (!btn) {
-                return null;
-            }
-            return btn.classList.contains("active") || btn.getAttribute("aria-pressed") === "true";
-        }, this.selector);
+        const { isParentElement, activeElementSelector } = this.activeElementSelector || {};
+        return this.context.evaluate(
+            (selector, isParentElement, activeElementSelector) => {
+                let element = document.querySelector(selector);
+                if (!element) {
+                    return null;
+                }
+
+                if (isParentElement) {
+                    element = element.closest(activeElementSelector);
+                    if (!element) {
+                        return null;
+                    }
+                } else if (activeElementSelector) {
+                    element = document.querySelector(activeElementSelector);
+                    if (!element) {
+                        return null;
+                    }
+                }
+
+                return element.classList.contains("active") || element.getAttribute("aria-pressed") === "true";
+            },
+            this.selector,
+            isParentElement,
+            activeElementSelector
+        );
     }
 
     /**
@@ -51,19 +75,49 @@ class StateButton extends Button {
      * @param {boolean|null} prevState
      * @returns {Promise<void>}
      */
-    async waitForStateChange(prevState) {
-        await this.context.waitForFunction(
-            (sel, prev) => {
-                const btn = document.querySelector(sel);
-                const curr = btn
-                    ? btn.classList.contains("active") || btn.getAttribute("aria-pressed") === "true"
-                    : false;
-                return prev === null ? curr : curr !== prev;
-            },
-            { timeout: 5000 },
-            this.selector,
-            prevState
-        );
+    async waitForStateChange(prevState, stateSelector = this.selector) {
+        const { isParentElement, activeElementSelector } = this.activeElementSelector || {};
+
+        if (typeof prevState !== "boolean") {
+            throw new Error("Failed to wait for state change — expected boolean value for previous state.");
+        }
+
+        try {
+            await this.context.waitForFunction(
+                (selector, prev, isParentElement, activeElementSelector) => {
+                    let element = document.querySelector(selector);
+                    if (!element) {
+                        return false;
+                    }
+
+                    if (isParentElement) {
+                        element = element.closest(activeElementSelector);
+                        if (!element) {
+                            return false;
+                        }
+                    } else if (activeElementSelector) {
+                        element = document.querySelector(activeElementSelector);
+                        if (!element) {
+                            return false;
+                        }
+                    }
+
+                    const curr =
+                        element.classList.contains("active") || element.getAttribute("aria-pressed") === "true";
+
+                    return curr !== prev;
+                },
+                { timeout: 5000 },
+                stateSelector,
+                prevState,
+                isParentElement,
+                activeElementSelector
+            );
+        } catch (error) {
+            throw new Error(
+                `Timeout waiting for button state change for selector "${stateSelector}". Previous state: ${prevState}.`
+            );
+        }
     }
 }
 
