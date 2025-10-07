@@ -12,7 +12,10 @@ class UIElement {
         this.tester = tester;
         this.selector = selector;
         this.target = target;
-        this.context = this.target === "page" ? this.tester?.page : this.tester?.frame;
+    }
+
+    get context() {
+        return this.target === "page" ? this.tester?.page : this.tester?.frame;
     }
 
     /**

@@ -31,6 +31,7 @@
             },
             "FROM_URL": {
                 "FROM_URL_BUTTON": "#tlbtn-insertimage-1 li:nth-child(2)",
+                "WINDOW": ".modal.modal-dlg",
                 "OK_BUTTON": "button[result=\"ok\"]",
                 "INPUT_FORM": ".modal-dlg .input-field",
                 "ERROR_ELEMENT": ".modal-dlg  .input-row input .error"

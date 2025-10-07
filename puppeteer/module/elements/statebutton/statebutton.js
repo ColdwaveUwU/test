@@ -24,7 +24,6 @@ class StateButton extends Button {
      */
     async setState(desiredState) {
         const currentState = await this.getState();
-
         if (typeof currentState !== "boolean") {
             throw new Error("Failed to determine the current button state.");
         }

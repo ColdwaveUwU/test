@@ -57,7 +57,6 @@ class PageColumns extends LayoutTab {
         try {
             const columnsDropdown = this.#getColumnsDropdown();
             const { id } = await columnsDropdown.getDropdownItem("description", "Custom columns");
-            debugger;
             const customColumnWindow = this.#getCustomColumnWindow(id);
             await customColumnWindow.openModal();
         } catch (error) {
