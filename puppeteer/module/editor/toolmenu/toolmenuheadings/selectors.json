@@ -1,0 +1,12 @@
+{
+    "HEADINGS_MENU": "#left-btn-navigation",
+    "HEADINGS_SETTINGS_BUTTON": "#navigation-btn-settings",
+    "HEADINGS_SETTINGS_DROPDOWN": {
+        "selector": "#navigation-btn-settings",
+        "elementsSelector": "#navigation-btn-settings ul li",
+        "dropdownToggleSelector": "#navigation-btn-settings button.dropdown-toggle",
+        "idSelector": "a",
+        "descriptionSelector": "a",
+        "elementsValue": []
+    }
+}

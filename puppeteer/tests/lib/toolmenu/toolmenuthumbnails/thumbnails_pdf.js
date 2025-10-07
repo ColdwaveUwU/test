@@ -1,11 +1,15 @@
 // import ToolMenuThumbnails lib
 const { ToolMenuThumbnails } = require("lib");
+
 // open test pdf file
 Tester.openFile("pdf/demo.pdf");
-// set thumbnails options Thumbnails Settings
-ToolMenuThumbnails.setThumbnailsOption({ highlight: true, size: 6 });
 // click in Thumbnails list
-ToolMenuThumbnails.clickThumbnailsMenu();
+ToolMenuThumbnails.openMenu();
+// close menu
+ToolMenuThumbnails.closeMenu();
+
+// set thumbnails options Thumbnails Settings
+ToolMenuThumbnails.setThumbnailsOption({ highlight: true, size: 60 });
 
 // get current thumbnail number
 let currentThumbnailNumber = ToolMenuThumbnails.getCurrentThumbnailNumber();

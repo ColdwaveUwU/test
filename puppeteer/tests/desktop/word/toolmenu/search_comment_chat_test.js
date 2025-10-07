@@ -6,7 +6,6 @@ Tester.keyDown("Enter");
 ToolMenuSearch.findText(TestData.ONE_WORD_TEXT());
 ToolMenuChats.sendMessage(TestData.LOREM_IPSUM());
 
-ToolMenuChats.clickChat();
 const lastMessage = ToolMenuChats.getLastMessage();
 if (lastMessage !== TestData.LOREM_IPSUM()) throw new Error(`The chat messages don't match`);
 

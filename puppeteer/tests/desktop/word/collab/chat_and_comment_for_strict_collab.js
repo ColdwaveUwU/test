@@ -59,7 +59,7 @@ user2.doSync(async function () {
     Tester.waitUpdates();
     FileMenu.save();
     Tester.waitAutosave();
-    ToolMenuComments.sortComments("newest");
+    ToolMenuComments.sortComments("Newest");
     const firstComment = ToolMenuComments.getComments();
     if (firstComment[0].text !== TestData.LOREM_IPSUM()) {
         throw new Error(`The comments messages don't match`);
@@ -68,7 +68,6 @@ user2.doSync(async function () {
 
 user1.doSync(async function () {
     ToolMenuChats.sendMessage(TestData.LOREM_IPSUM());
-    ToolMenuChats.clickChat();
     const lastMessage = ToolMenuChats.getLastMessage();
     if (lastMessage !== TestData.LOREM_IPSUM()) {
         throw new Error(`The chat messages don't match`);
@@ -77,7 +76,6 @@ user1.doSync(async function () {
 
 user2.doSync(async function () {
     ToolMenuChats.sendMessage(TestData.ONE_WORD_TEXT());
-    ToolMenuChats.clickChat();
     const lastMessage1 = ToolMenuChats.getFirstMessage();
     const lastMessage2 = ToolMenuChats.getLastMessage();
     if (lastMessage1 !== TestData.LOREM_IPSUM()) {
@@ -90,7 +88,6 @@ user2.doSync(async function () {
 
 user1.doSync(async function () {
     Tester.reloadPage();
-    ToolMenuChats.clickChat();
     const lastMessage1 = ToolMenuChats.getFirstMessage();
     const lastMessage2 = ToolMenuChats.getLastMessage();
     if (lastMessage1 !== TestData.LOREM_IPSUM()) {

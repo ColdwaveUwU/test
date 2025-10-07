@@ -1,58 +1,65 @@
 # ToolMenuHeadings
 
-This library is designed to automate interaction with headers and related functions in the editor.
+This library implements interaction with the Headings navigation panel functionality.
 
 ## Table of Contents
 
--   [**How to include**](#how-to-include)
--   [**Example Usage**](#example-usage)
+-   [**Types**](#types)
+    -   [`HeadingOptions`](#headingoptions)
 -   [**Methods**](#methods)
-    -   [ToolMenuHeadings.setExpand()](#toolmenuheadingssetexpand)
-    -   [ToolMenuHeadings.setCollapse()](#toolmenuheadingssetcollapse)
-    -   [ToolMenuHeadings.setExpandLvl(lvl)](#toolmenuheadingssetexpandlvllvl)
-    -   [ToolMenuHeadings.setFontSize(size)](#toolmenuheadingssetfontsizesize)
-    -   [ToolMenuHeadings.setWrap()](#toolmenuheadingssetwrap)
+    -   [`ToolMenuHeadings.setHeadingsSettings(optionValue)`](#toolmenuheadingssetheadingssettingsoptionvalue)
+    -   [`ToolMenuHeadings.setExpand()`](#toolmenuheadingssetexpand)
+    -   [`ToolMenuHeadings.setCollapse()`](#toolmenuheadingssetcollapse)
+    -   [`ToolMenuHeadings.setExpandLvl(lvl)`](#toolmenuheadingssetexpandlvllvl)
+    -   [`ToolMenuHeadings.setFontSize(size)`](#toolmenuheadingssetfontsizesize)
+    -   [`ToolMenuHeadings.setWrap()`](#toolmenuheadingssetwrap)
+-   [**Example**](#example)
 
-## How to Include
+## Types
 
-You can include this module in your project as follows:
+### HeadingOptions
 
-```javascript
-const { ToolMenuHeadings } = require("lib");
-```
-
-## Example Usage
-
-Here's an example of how to use the functions provided by this module:
+Object containing headings panel options.
 
 ```javascript
-const { ToolMenuHeadings } = require("lib");
-Tester.createFile("docx");
-// click Expand all
-ToolMenuHeadings.setExpand();
-// click Collapse all
-ToolMenuHeadings.setCollapse();
-// click Expand to level and set 4
-ToolMenuHeadings.setExpandLvl("4");
-// click Font size and set Small
-ToolMenuHeadings.setFontSize("Small");
-// click Wrap long headings
-ToolMenuHeadings.setWrap();
-Tester.close();
+/**
+ * @typedef {Object} HeadingOptions
+ *  @property  {
+ * "Expand all"
+ * | "Collapse all"
+ * | "Expand to level"
+ * | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+ * | "Font size"
+ * | "Small"
+ * | "Medium"
+ * | "Large"
+ * | "Wrap long headings"
+ * } optionValue - The option to set.
+ */
 ```
 
 ## Methods
 
-### ToolMenuHeadings.setExpand();
+### ToolMenuHeadings.setHeadingsSettings(optionValue)
 
 ```javascript
 /**
- * Click Expand all
+ * Sets the heading options based on provided settings.
+ * @param {HeadingOptions} optionValue - The option to set.
+ */
+ToolMenuHeadings.setHeadingsSettings(optionValue);
+```
+
+### ToolMenuHeadings.setExpand()
+
+```javascript
+/**
+ * Set Expand all
  */
 ToolMenuHeadings.setExpand();
 ```
 
-### ToolMenuHeadings.setCollapse();
+### ToolMenuHeadings.setCollapse()
 
 ```javascript
 /**
@@ -61,31 +68,69 @@ ToolMenuHeadings.setExpand();
 ToolMenuHeadings.setCollapse();
 ```
 
-### ToolMenuHeadings.setExpandLvl(lvl);
+### ToolMenuHeadings.setExpandLvl(lvl)
 
 ```javascript
 /**
  * Sets Expand to level
- * @param {"1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"} lvl
+ * @param {"1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"} lvl - The level to expand to.
  */
 ToolMenuHeadings.setExpandLvl(lvl);
 ```
 
-### ToolMenuHeadings.setFontSize(size);
+### ToolMenuHeadings.setFontSize(size)
 
 ```javascript
 /**
  * Sets Font size
- * @param {"Small" | "Medium" | "Large"} size
+ * @param {"Small" | "Medium" | "Large"} size - The font size to set.
  */
 ToolMenuHeadings.setFontSize(size);
 ```
 
-### ToolMenuHeadings.setWrap();
+### ToolMenuHeadings.setWrap()
 
 ```javascript
 /**
  * Click Wrap long headings
  */
 ToolMenuHeadings.setWrap();
+```
+
+## Example
+
+```javascript
+// Include the ToolMenuHeadings library
+const { ToolMenuHeadings } = require("lib");
+
+// Create a new document
+Tester.createFile("docx");
+
+// Add some headings to the document
+// ... (code to add headings)
+
+// Expand all headings in the navigation panel
+ToolMenuHeadings.setExpand();
+
+// Collapse all headings
+ToolMenuHeadings.setCollapse();
+
+// Expand headings to level 3
+ToolMenuHeadings.setExpandLvl("3");
+
+// Change font size to Large
+ToolMenuHeadings.setFontSize("Large");
+
+// Enable wrapping for long headings
+ToolMenuHeadings.setWrap();
+
+// Use the general settings method
+ToolMenuHeadings.setHeadingsSettings("Medium");
+
+// Expand to level 5 and set medium font size
+ToolMenuHeadings.setExpandLvl("5");
+ToolMenuHeadings.setFontSize("Medium");
+
+// Close the test example
+Tester.close();
 ```

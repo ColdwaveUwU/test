@@ -5,7 +5,7 @@ const { SlideView, ToolMenuThumbnails } = require("lib");
 Tester.createFile("pptx");
 
 SlideView.setSlideMasterView();
-ToolMenuThumbnails.clickThumbnailsMenu();
+ToolMenuThumbnails.selectThumbnailsMenu();
 ToolMenuThumbnails.goToThumbnail(3);
 for (let i = 0; i < 10; i++) {
     Tester.keyPress("Delete");

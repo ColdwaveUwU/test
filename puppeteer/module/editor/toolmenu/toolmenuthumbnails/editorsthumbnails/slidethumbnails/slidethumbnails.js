@@ -1,16 +1,26 @@
 const selectors = require("./selectors.json");
-class SlideThumbnails {
-    constructor(tester) {
-        this.tester = tester;
-    }
+const ToolMenu = require("../../../toolmenu");
+const { createExecuteAction, createErrorHandler } = require("../../../../../../engine/script/js");
+const { Button } = require("../../../../../elements");
 
+class SlideThumbnails extends ToolMenu {
+    /**
+     * @enum
+     */
     static SELECTORS = selectors;
 
+    constructor(tester) {
+        super(SlideThumbnails.SELECTORS.LEFT_MENU.THUMB_BUTTON, tester);
+        this.handleError = createErrorHandler(this.constructor.name);
+        this.executeAction = createExecuteAction(this.tester, this.handleError);
+    }
+
     /**
-     * Click inside thumbnail list
+     * Select thumbnail list area
      */
-    async clickThumbnailsMenu() {
-        await this.tester.click(SlideThumbnails.SELECTORS.THUMB_MENU.MENU.THUNB_LIST);
+    async selectThumbnailsMenu() {
+        await this.openMenu();
+        await this.executeAction(Button, SlideThumbnails.SELECTORS.THUMB_MENU.MENU.THUNB_LIST, "click", "selectThumbnailsMenu");
     }
 
     /**

@@ -1,95 +1,107 @@
 const ToolMenu = require("../toolmenu");
+const selectors = require("./selectors.json");
+const { createExecuteAction, createErrorHandler } = require("../../../../engine/script/js");
+const { Button, Input, Dropdown } = require("../../../elements");
+
+/**
+ * @typedef {Object} SortMethod
+ * @property {
+ * "Newest"
+ * | "Oldest"
+ * | "Author A to Z"
+ * | "Author Z to A"
+ * | "From top"
+ * | "From bottom"
+ * | "Show comments"
+ * | "Add comment to document"
+ * } [sortMethod] - sorting method
+ */
+
+/**
+ * @typedef {Object} ShowCommentsOptions
+ * @property {
+ * | "Open"
+ * | "Resolved"
+ * | "All"
+ * } [showComments] - show comments options
+ */
 
 /**
  * @typedef {Object} DeletedComment
  * @property {number} number - starts from 1
  * @property {number} [replyNumber] - starts from 1
  */
+
 /**
  * @typedef {Object} UpdatedComment
  * @property {number} number - starts from 1
  * @property {number} [replyNumber] - starts from 1
- * @property {boolean} newText
- * @property {string} text
+ * @property {string} text - comment text
  */
+
 /**
  * @typedef {Object} ReplyComment - reply comment
- * @property {string} text
- * @property {number} index
+ * @property {string} text - reply text
+ * @property {string} userName - reply user name
+ * @property {string} date - reply date
+ * @property {number} index - reply index
+ * @property {string} selector - reply selector
  */
+
 /**
  * @typedef {Object} MainCommentInfo - info about comment
- * @property {string} text
- * @property {number} index
- * @property {ReplyComment} replyComments
+ * @property {string} text - comment text
+ * @property {string} selector - comment selector
+ * @property {number} index - comment index
+ * @property {string} userName - comment user name
+ * @property {string} date - comment date
+ * @property {ReplyComment} replyComments - reply comments
  */
 
 class ToolMenuComments extends ToolMenu {
+    /**
+     * @enum
+     */
+    static SELECTORS = selectors;
+
     constructor(tester) {
-        super("#left-btn-comments", tester);
+        super(ToolMenuComments.SELECTORS.COMMENTS_MENU, tester);
+        this.handleError = createErrorHandler(this.constructor.name);
+        this.executeAction = createExecuteAction(this.tester, this.handleError);
     }
 
-    #waitUpdateCommentsView(commentsElementsSelector) {
-        return this.tester.frame.waitForFunction(
-            (commentsElementsSelector) => {
-                const commentsCount = window.editor.pluginMethod_GetAllComments().length;
-                const commentElements = document.querySelectorAll(commentsElementsSelector).length;
-                return commentsCount == commentElements;
-            },
-            {},
-            commentsElementsSelector
-        );
-    }
     /**
      * Checking empty comments
+     * @returns {Promise<boolean>}
      */
     async checkEmptyComments() {
-        const emptyCommentsSelector = this.selector + " .empty-text";
-        return await this.tester.checkSelector(emptyCommentsSelector);
-    }
-
-    async addComment(text) {
-        await this.tester.click("#left-btn-comments");
-        await this.tester.click("#comments-btn-add");
-        const inputFormSelector = ".msg-reply";
-        const sendSelector = "#id-comments-change-popover";
-        if (!(await this.checkActive())) {
-            await this.tester.click(this.selector);
-        }
-        await this.tester.click(inputFormSelector);
-        await this.tester.inputToForm(text, inputFormSelector);
-        await this.tester.click(sendSelector);
+        const emptyCommentsSelector = ToolMenuComments.SELECTORS.EMPTY_COMMENTS;
+        return await this.executeAction(Button, emptyCommentsSelector, "checkSelector", "checkEmptyComments");
     }
 
     /**
-     * Gets the created comments from the comments window
-     * @returns {Promise<Array<MainCommentInfo>>}
+     * Adding a comment
+     * @param {string} text - comment text
      */
-    async #parseComments() {
-        const commentsElementsSelector = "#comments-box .user-comment-item";
-        await this.#waitUpdateCommentsView(commentsElementsSelector);
-        /**
-         * @type {Array<MainCommentInfo>}
-         */
-        const comments = await this.tester.frame.evaluate((commentsElementsSelector) => {
-            const commentElements = document.querySelectorAll(commentsElementsSelector);
+    async addComment(text) {
+        const methodName = "addComment";
+        const selectors = ToolMenuComments.SELECTORS;
+        await this.openMenu();
+        await this.executeAction(Button, selectors.TOOLMENU_COMMENTS.ADD_COMMENT_BUTTON, "click", methodName);
+        await this.executeAction(Input, selectors.COMMENT_WINDOW.COMMENT_INPUT, "set", methodName, [text], [false, ""]);
+        await this.executeAction(Button, selectors.COMMENT_WINDOW.ADD_COMMENT_BUTTON, "click", methodName);
+    }
 
-            return Array.from(commentElements).map((comment, index) => {
-                const numberElement = index + 1; // number for nth-child
-                const mainCommentText = comment.querySelector(".user-message.user-select").textContent.trim();
-                const childComments = Array.from(comment.querySelectorAll(".reply-item-ct")).map(
-                    (childComment, childIndex) => {
-                        const replyCommentNumber = childIndex + 1; // number for nth-child
-                        const childCommentText = childComment
-                            .querySelector(".user-message.user-select")
-                            .textContent.trim();
-                        return { text: childCommentText, number: replyCommentNumber };
-                    }
-                );
-                return { text: mainCommentText, number: numberElement, replyComments: childComments };
-            });
-        }, commentsElementsSelector);
-        return comments;
+    /**
+     * Adding a comment to the document
+     * @param {string} text - comment text
+     */
+    async addCommentToDocument(text) {
+        const methodName = "addCommentToDocument";
+        const selectors = ToolMenuComments.SELECTORS.TOOLMENU_COMMENTS;
+        await this.sortComments("Add comment to document");
+        await this.executeAction(Input, selectors.NEW_COMMENT_INPUT, "set", methodName, [text], [false, ""]);
+        await this.executeAction(Button, selectors.ADD_COMMENT_TO_DOCUMENT_BUTTON, "click", methodName);
     }
 
     /**
@@ -97,9 +109,6 @@ class ToolMenuComments extends ToolMenu {
      * @returns {Promise<MainCommentInfo>}
      */
     async getLastComment() {
-        /**
-         * @type {Array<MainCommentInfo>}
-         */
         const comments = await this.#parseComments();
         return comments.at(-1);
     }
@@ -109,9 +118,6 @@ class ToolMenuComments extends ToolMenu {
      * @returns {Promise<MainCommentInfo>}
      */
     async getFirstComment() {
-        /**
-         * @type {Array<MainCommentInfo>}
-         */
         const comments = await this.#parseComments();
         return comments[0];
     }
@@ -121,184 +127,239 @@ class ToolMenuComments extends ToolMenu {
      * @returns {Promise<Array<MainCommentInfo>>}
      */
     async getComments() {
-        /**
-         * @type {Array<MainCommentInfo>}
-         */
-        const comments = await this.#parseComments();
-        return comments;
+        return await this.#parseComments();
     }
 
     /**
-     * @param {string} text
-     * @param {number} commentNumber
+     * @param {number} commentNumber - comment number
+     * @returns {Promise<MainCommentInfo>}
+     */
+    async getComment(commentNumber) {
+        const comments = await this.#parseComments();
+        try {
+            const foundComment = comments.find((c) => c.index === commentNumber);
+            if (!foundComment) {
+                throw new Error(`Comment with number ${commentNumber} was not found`);
+            }
+            return foundComment;
+        } catch (error) {
+            this.handleError("getComment", error);
+        }
+    }
+
+    /**
+     * @param {string} text - reply text
+     * @param {number} commentNumber - comment number (default is 1)
      */
     async addReplyComment(text, commentNumber = 1) {
-        const userCommentSelector = `#comments-box .ps-container.oo div:nth-child(${commentNumber}).item`;
-        const addReplySelector = `${userCommentSelector} .user-comment-item .user-reply`;
-        const areaTextSelector = `${userCommentSelector} .user-comment-item .user-select.textarea-control`;
-        const commentsChangeSelector = "#id-comments-change";
-
-        if (!(await this.checkActive())) {
-            await this.tester.click(this.selector);
-        }
-        if (await this.checkEmptyComments()) {
-            throw new Error("Set comments");
-        }
-        await this.tester.click(addReplySelector);
-        await this.tester.inputToForm(text, areaTextSelector);
-        await this.tester.click(commentsChangeSelector);
+        const methodName = "addReplyComment";
+        const commentsChangeSelector = ToolMenuComments.SELECTORS.TOOLMENU_COMMENTS.COMMENTS_CHANGE_BUTTON;
+        const comment = await this.getComment(commentNumber);
+        const itemSelectors = this.#buildCommentItemSelectors(comment);
+        await this.executeAction(Button, itemSelectors.addReplyButton, "click", methodName);
+        await this.executeAction(Input, itemSelectors.areaText, "set", methodName, [text], [false, ""]);
+        await this.executeAction(Button, commentsChangeSelector, "click", methodName);
     }
 
     /**
      * Editing comment
-     * @param {UpdatedComment} comment default comment.number = 1;
+     * @param {UpdatedComment} commentNumber - comment number
      */
-    async editComment(comment) {
-        if (!(await this.checkActive())) {
-            await this.tester.click(this.selector);
-        }
-
-        if (await this.checkEmptyComments()) {
-            throw new Error("Set comments");
-        }
-
-        /**
-         * @type {Array<MainCommentInfo>}
-         */
-        const comments = await this.#parseComments();
-        const { number = 1, replyNumber = null, newText = true, text = "" } = comment;
-        const foundComment = comments.find((c) => c.number === number);
-
-        if (!foundComment) {
-            throw new Error("The comment was not found");
-        }
-
-        const mainCommentSelector = `#comments-box .item:nth-child(${number})`;
-        const okButtonSelector = "#id-comments-change";
-        let targetSelector, editButtonSelector, textareaSelector;
-
-        if (replyNumber !== null) {
-            const foundReplyComment = foundComment.replyComments.find((r) => r.number === replyNumber);
-            if (foundReplyComment) {
-                targetSelector = `${mainCommentSelector} .user-comment-item div:nth-child(${4 + replyNumber})`; // number div in DOM
-                editButtonSelector = `${targetSelector} .btn-edit`;
-            }
-        }
-
-        if (!targetSelector) {
-            targetSelector = mainCommentSelector;
-            editButtonSelector = `${targetSelector} .edit-ct .btn-edit-common`;
-        }
-
-        textareaSelector = `${targetSelector} textarea.msg-reply`;
-
-        await this.tester.click(editButtonSelector);
-        if (newText) {
-            await this.tester.frame.evaluate((selector) => {
-                const textarea = document.querySelector(selector);
-                textarea.focus();
-                textarea.select();
-            }, textareaSelector);
-        }
-        await this.tester.inputToForm(text, textareaSelector);
-        await this.tester.click(okButtonSelector);
+    async editComment(commentNumber) {
+        const { number = 1, replyNumber = null, text } = commentNumber;
+        const okButtonSelector = ToolMenuComments.SELECTORS.TOOLMENU_COMMENTS.COMMENTS_CHANGE_BUTTON;
+        const comment = await this.getComment(number);
+        const itemSelectors = this.#buildCommentItemSelectors(comment, replyNumber);
+        await this.executeAction(Button, itemSelectors.editButton, "click", "editComment");
+        await this.executeAction(Input, itemSelectors.areaText, "set", "editComment", [text], [false, ""]);
+        await this.executeAction(Button, okButtonSelector, "click", "editComment");
     }
 
     /**
      * Delete comment.
-     * @param {DeletedComment} comment
+     * @param {DeletedComment} comment default comment.number = 1;
      */
-    async deleteComment(comment) {
-        if (!(await this.checkActive())) {
-            await this.tester.click(this.selector);
-        }
-
+    async deleteComment(commentNumber) {
+        const { number, replyNumber = null } = commentNumber;
         if (await this.checkEmptyComments()) {
             throw new Error("Set comments");
         }
-
-        /**
-         * @type {Array<MainCommentInfo>}
-         */
-        const comments = await this.#parseComments();
-        const { number, replyNumber = null } = comment;
-        const foundComment = comments.find((c) => c.number === number);
-
-        if (!foundComment) throw new Error("The comment was not found");
-
-        const mainCommentSelector = `#comments-box .item:nth-child(${number})`;
-        let targetSelector, deleteCommentSelector;
-
-        if (replyNumber !== null) {
-            const foundReplyComment = foundComment.replyComments.find((r) => r.number === replyNumber);
-            if (foundReplyComment) {
-                targetSelector = `${mainCommentSelector} .user-comment-item div:nth-child(${4 + replyNumber})`; // number div in DOM
-                deleteCommentSelector = `${targetSelector} .btn-delete`;
-            }
-        }
-
-        if (!targetSelector) {
-            targetSelector = mainCommentSelector;
-            deleteCommentSelector = `${targetSelector} .edit-ct .btn-delete`;
-        }
-        await this.tester.click(deleteCommentSelector);
+        const comment = await this.getComment(number);
+        const commentSeletors = this.#buildCommentItemSelectors(comment, replyNumber);
+        await this.executeAction(Button, commentSeletors.deleteButton, "click", "deleteComment");
     }
 
     /**
      * Set Resolve Comment.
-     * @param {number} commentNumber
+     * @param {number} commentNumber - comment number
      */
     async setResolve(commentNumber = 1) {
-        if (!(await this.checkActive())) {
-            await this.tester.click(this.selector);
-        }
-        if (await this.checkEmptyComments()) {
-            throw new Error("Set comments");
-        }
-        const userCommentSelector = `#comments-box .ps-container.oo div:nth-child(${commentNumber}).item`;
-        const resolveSelector = `${userCommentSelector} .btn-resolve`;
-        await this.tester.click(resolveSelector);
+        const comment = await this.getComment(commentNumber);
+        const itemSelectors = this.#buildCommentItemSelectors(comment);
+        await this.executeAction(Button, itemSelectors.resolveButton, "click", "setResolve");
     }
 
     /**
-     * @param {string} sortMethod
+     * Sort comments
+     * @param {SortMethod} [sortMethod] - sorting method
      */
     async sortComments(sortMethod) {
-        const dropdownSelector = "#comments-btn-sort";
-
-        if (!(await this.checkActive())) {
-            await this.tester.click(this.selector);
-        }
-        await this.tester.selectDropdown(dropdownSelector);
-
-        switch (sortMethod) {
-            case "newest":
-                await this.tester.selectByText("Newest", "#comments-btn-sort .menu-item.checkable");
-                break;
-            case "oldest":
-                await this.tester.selectByText("Oldest", "#comments-btn-sort .menu-item.checkable");
-                break;
-            case "az":
-                await this.tester.selectByText("Author A to Z", "#comments-btn-sort .menu-item.checkable");
-                break;
-            case "za":
-                await this.tester.selectByText("Author Z to A", "#comments-btn-sort .menu-item.checkable");
-                break;
-            default:
-                console.error(`Invalid sortMethod: ${sortMethod}`);
-        }
-        await this.#parseComments();
+        await this.openMenu();
+        const selectors = ToolMenuComments.SELECTORS.TOOLMENU_COMMENTS.SORT_DROPDOWN;
+        await this.executeAction(Dropdown, selectors, "selectDropdownItem", "sortComments", [sortMethod]);
     }
 
     /**
+     * @param {ShowCommentsOptions} [showComments] - Show comments options
+     */
+    async showComments(showComments) {
+        await this.sortComments("Show comments");
+        await this.sortComments(showComments);
+    }
+
+    /**
+     * Close comments
      * @returns {Promise<void>}
      */
     async closeComments() {
-        const closeSelector = "#comments-btn-close";
-        if (!(await this.checkActive())) {
-            await this.tester.click(this.selector);
+        const closeSelector = ToolMenuComments.SELECTORS.COMMENTS_CLOSE_BUTTON;
+        await this.executeAction(Button, closeSelector, "click", "closeComments");
+    }
+
+    /**
+     * @param {MainCommentInfo} comments comment objects
+     * @param {number} [replyNumber] - reply number (default is null)
+     * @returns {Object} - comment item selectors
+     */
+    #buildCommentItemSelectors(comment, replyNumber = null) {
+        try {
+            const baseSelectors = ToolMenuComments.SELECTORS.COMMENT_ITEM_BASE;
+            const mainCommentSelector = !replyNumber ? baseSelectors.mainCommentSelector : "";
+            let commentSelector = comment.selector;
+
+            if (replyNumber) {
+                const replyComment = this.#getReplyComment(comment, replyNumber);
+                commentSelector = replyComment.selector;
+            }
+            return Object.fromEntries(
+                Object.entries(baseSelectors).map(([key, value]) => {
+                    const selector = value
+                        .replace("${userCommentId}", commentSelector)
+                        .replace("${mainCommentSelector}", mainCommentSelector);
+
+                    return [key, selector];
+                })
+            );
+        } catch (error) {
+            this.handleError("buildCommentItemSelectors", error);
         }
-        await this.tester.click(closeSelector);
+    }
+
+    /**
+     * @param {MainCommentInfo} comment - main comment
+     * @param {number} replyNumber - reply number
+     * @returns {ReplyComment} - reply comment
+     */
+    #getReplyComment(comment, replyNumber) {
+        try {
+            const replyComment = comment.replyComments.find((r) => r.index === replyNumber);
+            if (!replyComment) {
+                throw new Error(`The reply comment with number ${replyNumber} was not found`);
+            }
+            return replyComment;
+        } catch (error) {
+            this.handleError("getReplyComment", error);
+        }
+    }
+
+    /**
+     * Waiting for comments view to update
+     * @param {string} commentsElementsSelector - comments elements selector
+     * @returns {Promise<void>}
+     */
+    #waitUpdateCommentsView(commentsElementsSelector, timeout = 5000) {
+        try {
+            return this.tester.frame.waitForFunction(
+                (commentsElementsSelector) => {
+                    const commentsCount = window.Asc.editor.pluginMethod_GetAllComments().length;
+                    const commentElements = document.querySelectorAll(commentsElementsSelector).length;
+                    return commentsCount == commentElements;
+                },
+                { polling: 100, timeout: timeout },
+                commentsElementsSelector
+            );
+        } catch (error) {
+            this.handleError("waitUpdateCommentsView", error);
+        }
+    }
+
+    /**
+     * Gets the created comments from the comments window
+     * @returns {Promise<Array<MainCommentInfo>>}
+     */
+    async #parseComments() {
+        try {
+            await this.openMenu();
+            const selectors = ToolMenuComments.SELECTORS.COMENTS_LIST;
+            await this.#waitUpdateCommentsView(selectors.elementsSelector);
+
+            return await this.tester.frame.evaluate(
+                ({
+                    selector,
+                    elementsSelector,
+                    descriptionSelector,
+                    replySelector,
+                    userNameSelector,
+                    dateSelector,
+                }) => {
+                    const extractData = (element) => ({
+                        text: element.querySelector(descriptionSelector)?.textContent?.trim() || "",
+                        userName: element.querySelector(userNameSelector)?.textContent?.trim() || "",
+                        date: element.querySelector(dateSelector)?.textContent?.trim() || "",
+                    });
+                    const buildSelector = (element, baseSelector, nthIndex) => {
+                        if (element.id) return `#${element.id}`;
+                        const classes = element.className ? ` .${element.className.split(" ").join(".")}` : "";
+                        return `${baseSelector}${classes}:nth-child(${nthIndex})`;
+                    };
+
+                    const commentElements = Array.from(document.querySelectorAll(elementsSelector));
+                    return commentElements.map((commentElement, index) => {
+                        const commentIndex = index + 1;
+                        const commentSelector = buildSelector(commentElement, selector, commentIndex);
+                        const replyElements = Array.from(commentElement.querySelectorAll(`${replySelector}`));
+
+                        const replyComments = replyElements.map((replyElement, replyIndex) => {
+                            const nthChildIndex = Array.from(commentElement.children).indexOf(replyElement) + 1;
+                            const replyElementSelector = `${commentSelector} div:nth-child(${nthChildIndex})`;
+                            return {
+                                ...extractData(replyElement),
+                                index: replyIndex + 1,
+                                selector: replyElementSelector,
+                            };
+                        });
+
+                        return {
+                            ...extractData(commentElement),
+                            index: commentIndex,
+                            selector: commentSelector,
+                            replyComments,
+                        };
+                    });
+                },
+                {
+                    selector: selectors.selector,
+                    elementsSelector: selectors.elementsSelector,
+                    descriptionSelector: selectors.descriptionSelector,
+                    replySelector: selectors.replySelector,
+                    userNameSelector: selectors.userNameSelector,
+                    dateSelector: selectors.dateSelector,
+                }
+            );
+        } catch (error) {
+            this.handleError("parseComments", error);
+        }
     }
 }
+
 module.exports = ToolMenuComments;

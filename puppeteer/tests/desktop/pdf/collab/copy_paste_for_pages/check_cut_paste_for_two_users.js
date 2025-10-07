@@ -34,7 +34,7 @@ user2.doSync(async function () {
 user1.doSync(async function () {
     EditPdf.clickEditPdf();
     ToolMenuThumbnails.setThumbnailsOption({ highlight: true, size: 7 });
-    ToolMenuThumbnails.clickThumbnailsMenu();
+    ToolMenuThumbnails.selectThumbnailsMenu();
     Tester.keyDown("ControlLeft");
     Tester.keyPress("X");
     Tester.keyUp("ControlLeft");
@@ -57,7 +57,7 @@ user2.doSync(async function () {
     Tester.waitAutosave();
     EditPdf.clickEditPdf();
     ToolMenuThumbnails.setThumbnailsOption({ highlight: true, size: 7 });
-    ToolMenuThumbnails.clickThumbnailsMenu();
+    ToolMenuThumbnails.selectThumbnailsMenu();
 
     // get current thumbnail number for user2 after cut
     let currentThumbnailNumberCutTwo = ToolMenuThumbnails.getCurrentThumbnailNumber();
@@ -71,7 +71,7 @@ user2.doSync(async function () {
 });
 
 user1.doSync(async function () {
-    ToolMenuThumbnails.clickThumbnailsMenu();
+    ToolMenuThumbnails.selectThumbnailsMenu();
     Tester.keyDown("ControlLeft");
     Tester.keyPress("V");
     Tester.keyUp("ControlLeft");

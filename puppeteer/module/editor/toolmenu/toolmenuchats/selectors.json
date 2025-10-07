@@ -1,0 +1,8 @@
+{
+    "CHAT_SELECTOR": "#left-btn-chat",
+    "CHAT_INPUT_SELECTOR": "#chat-msg-text",
+    "CHAT_SEND_BUTTON_SELECTOR": "#chat-msg-btn-add",
+    "CHAT_MESSAGES_SELECTOR": "#chat-messages .user-content",
+    "CHAT_USER_NAME_SELECTOR": ".user-name",
+    "CHAT_USER_MESSAGE_SELECTOR": ".message"
+}

@@ -4,7 +4,7 @@ const { EditPdf, ToolMenuThumbnails, ViewToolbarHome, FileMenu } = require("lib"
 Tester.openFile("pdf/headings.pdf");
 
 EditPdf.clickEditPdf();
-ToolMenuThumbnails.clickThumbnailsMenu();
+ToolMenuThumbnails.selectThumbnailsMenu();
 Tester.click("#thumbnails-list");
 Tester.keyDown("ControlLeft");
 Tester.keyPress("C");

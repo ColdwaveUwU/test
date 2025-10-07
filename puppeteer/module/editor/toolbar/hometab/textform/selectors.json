@@ -16,8 +16,8 @@
             "elementsValue": []
         },
         "STYLE": {
-            "selector": "#slot-field-styles .combo-dataview .btn-group",
-            "elementsSelector": ".combo-dataview .btn-group ul.dropdown-menu li .item",
+            "selector": "#slot-field-styles .btn-group",
+            "elementsSelector": ".combo-dataview .btn-group ul.dropdown-menu li",
             "idSelector": ".style",
             "descriptionSelector": "[aria-label]",
             "elementsValue": []

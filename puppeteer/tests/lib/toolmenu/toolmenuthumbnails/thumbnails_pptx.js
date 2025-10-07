@@ -2,8 +2,12 @@
 const { ToolMenuThumbnails } = require("lib");
 // open test pdf file
 Tester.openFile("pptx/PPTCompatTest.pptx");
+
 // click in Thumbnails list
-ToolMenuThumbnails.clickThumbnailsMenu();
+ToolMenuThumbnails.openMenu();
+// close menu
+ToolMenuThumbnails.closeMenu();
+
 ToolMenuThumbnails.goToThumbnail(1);
 // get current thumbnail number
 let currentThumbnailNumber = ToolMenuThumbnails.getCurrentThumbnailNumber();

@@ -11,7 +11,8 @@ class UIElement {
     constructor(tester, selector, target = "frame") {
         this.tester = tester;
         this.selector = selector;
-        this.context = target === "page" ? this.tester?.page : this.tester?.frame;
+        this.target = target;
+        this.context = this.target === "page" ? this.tester?.page : this.tester?.frame;
     }
 
     /**
@@ -22,8 +23,13 @@ class UIElement {
         return await this.tester.checkSelector(this.selector);
     }
 
-    async waitSelector() {
-        return await this.tester.waitSelector(this.selector);
+    /**
+     * Waits for the UI element to be present on the page or frame.
+     * @param {number} timeout - The timeout in milliseconds.
+     * @returns {Promise<boolean>} - Returns `true` if the element is found, `false` otherwise.
+     */
+    async waitSelector(timeout = 5000) {
+        return await this.tester.waitSelector(this.selector, this.target, timeout);
     }
 
     /**

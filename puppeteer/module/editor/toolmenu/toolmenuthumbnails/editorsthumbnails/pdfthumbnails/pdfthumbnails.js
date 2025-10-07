@@ -1,45 +1,65 @@
 const selectors = require("./selectors.json");
-const { Dropdown, Checkbox } = require("../../../../../elements");
-class PDFThumbnails {
-    constructor(tester) {
-        this.tester = tester;
-    }
+const ToolMenu = require("../../../toolmenu");
+const { createExecuteAction, createErrorHandler } = require("../../../../../../engine/script/js");
+const { Dropdown, Checkbox, Button } = require("../../../../../elements");
 
+/**
+ * @typedef {Object} PDFThumbnailsOptions
+ * @property {number | undefined} size - The size of the thumbnail.
+ * @property {boolean | undefined} highlight - Whether the thumbnail should be highlighted.
+ */
+
+class PDFThumbnails extends ToolMenu {
+    /**
+     * @enum
+     */
     static SELECTORS = selectors;
 
+    constructor(tester) {
+        super(PDFThumbnails.SELECTORS.LEFT_MENU.THUMB_BUTTON, tester);
+        this.handleError = createErrorHandler(this.constructor.name);
+        this.executeAction = createExecuteAction(this.tester, this.handleError);
+    }
+
     /**
-     * Click inside thumbnail list
+     * Select inside thumbnail list
      */
-    async clickThumbnailsMenu() {
-        await this.tester.click(PDFThumbnails.SELECTORS.THUMB_MENU.MENU.THUNB_LIST);
+    async selectThumbnailsMenu() {
+        await this.openMenu();
+        await this.executeAction(Button, PDFThumbnails.SELECTORS.THUMB_MENU.MENU.THUNB_LIST, "click", "selectThumbnailsMenu");
     }
 
     /**
      * Sets thumbnails options
-     * @param {{size: number | undefined, highlight: boolean | undefined}} options
+     * @param {PDFThumbnailsOptions} options
      * @returns {Promise<void>}
      */
     async setThumbnailsOption(options) {
         const { SIZE, HIGHLIGHT, THUMB_BUTTON_SETTINGS, SETTINGS_MENU } = PDFThumbnails.SELECTORS.THUMB_MENU.OPTIONS;
+        try {
+            await this.openMenu();
+            const methodName = "setThumbnailsOption";
+            const dropdownSelectors = {
+                selector: THUMB_BUTTON_SETTINGS,
+                menuSelector: SETTINGS_MENU,
+            };
 
-        const dropdown = new Dropdown(this.tester, {
-            selector: THUMB_BUTTON_SETTINGS,
-            menuSelector: SETTINGS_MENU,
-        });
+            const hasSize = options.size !== undefined;
+            const hasHighlight = options.highlight !== undefined;
 
-        const actions = {
-            size: async () => await this.tester.mouseClickInsideElement(SIZE, options.size, 0),
-            highlight: async () => {
-                const checkbox = new Checkbox(this.tester, HIGHLIGHT);
-                await checkbox.set(options.highlight);
-            },
-        };
+            if (!hasSize && !hasHighlight) return;
 
-        for (const key of Object.keys(options)) {
-            if (options[key] && actions[key]) {
-                await dropdown.selectDropdown();
-                await actions[key]();
+            await this.executeAction(Dropdown, dropdownSelectors, "selectDropdown", methodName);
+
+            if (hasSize) {
+                await this.tester.mouseClickInsideElement(SIZE, options.size, 0);
             }
+
+            if (hasHighlight) {
+                await this.executeAction(Checkbox, HIGHLIGHT, "set", methodName, [options.highlight]);
+            }
+        } catch (error) {
+            this.handleError("setThumbnailsOption", error);
         }
     }
 }

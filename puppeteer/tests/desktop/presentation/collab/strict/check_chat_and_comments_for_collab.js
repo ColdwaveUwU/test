@@ -72,7 +72,6 @@ user1.doSync(async function () {
 });
 
 user2.doSync(async function () {
-    ToolMenuChats.clickChat();
     const firstMessage = ToolMenuChats.getLastMessage();
     if (firstMessage !== TestData.LOREM_IPSUM()) {
         throw new Error(`The chat messages don't match`);
@@ -81,7 +80,6 @@ user2.doSync(async function () {
 });
 
 user1.doSync(async function () {
-    ToolMenuChats.clickChat();
     const lastMessage = ToolMenuChats.getLastMessage();
     if (lastMessage !== TestData.ONE_WORD_TEXT()) {
         throw new Error(`The chat messages don't match`);

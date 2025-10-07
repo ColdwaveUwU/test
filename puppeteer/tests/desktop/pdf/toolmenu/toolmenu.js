@@ -2,8 +2,8 @@ const { ToolMenuSearch, ToolMenuComments, ToolMenuChats, ToolMenuHeadings, ToolM
 const { ViewToolbarComment } = require("lib");
 Tester.openFile("pdf/headings.pdf");
 
-ToolMenuComments.sortComments("az");
-ToolMenuComments.sortComments("oldest");
+ToolMenuComments.sortComments("Author A to Z");
+ToolMenuComments.sortComments("Oldest");
 ToolMenuSearch.findText("test", { sensitive: true, words: true });
 
 ViewToolbarComment.addComment("testtesttesttest");

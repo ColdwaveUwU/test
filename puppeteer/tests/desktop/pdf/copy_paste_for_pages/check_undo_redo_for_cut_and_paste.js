@@ -3,8 +3,8 @@ const { EditPdf, ToolMenuThumbnails, ViewToolbarHome, FileMenu, AppTitle } = req
 Tester.openFile("pdf/test.pdf");
 
 EditPdf.clickEditPdf();
-ToolMenuThumbnails.clickThumbnailsMenu();
-ToolMenuThumbnails.clickThumbnailsMenu();
+ToolMenuThumbnails.selectThumbnailsMenu();
+
 Tester.keyDown("ControlLeft");
 Tester.keyPress("X");
 Tester.keyUp("ControlLeft");

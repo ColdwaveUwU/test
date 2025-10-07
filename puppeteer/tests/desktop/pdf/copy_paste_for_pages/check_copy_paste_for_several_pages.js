@@ -4,7 +4,7 @@ Tester.openFile("pdf/demo.pdf");
 
 EditPdf.clickEditPdf();
 ToolMenuThumbnails.setThumbnailsOption({ highlight: true, size: 7 });
-ToolMenuThumbnails.clickThumbnailsMenu();
+ToolMenuThumbnails.selectThumbnailsMenu();
 Tester.keyDown("ControlLeft");
 Tester.keyPress("A");
 Tester.keyPress("C");

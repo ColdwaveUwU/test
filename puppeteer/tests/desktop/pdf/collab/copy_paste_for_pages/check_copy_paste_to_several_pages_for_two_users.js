@@ -34,7 +34,7 @@ user2.doSync(async function () {
 user1.doSync(async function () {
     EditPdf.clickEditPdf();
     ToolMenuThumbnails.setThumbnailsOption({ highlight: true, size: 7 });
-    ToolMenuThumbnails.clickThumbnailsMenu();
+    ToolMenuThumbnails.selectThumbnailsMenu();
     Tester.keyDown("ControlLeft");
     Tester.keyPress("A");
     Tester.keyPress("C");

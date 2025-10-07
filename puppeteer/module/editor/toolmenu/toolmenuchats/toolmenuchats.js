@@ -1,42 +1,31 @@
+const ToolMenu = require("../toolmenu");
+const { createExecuteAction, createErrorHandler } = require("../../../../engine/script/js");
+const { Button, Input } = require("../../../elements");
+const selectors = require("./selectors.json");
+
 /**
  * @typedef {Object} MessageInfo
  * @property {string} userName
  * @property {string} userMessage
  */
 
-const ToolMenu = require("../toolmenu");
-
 class ToolMenuChats extends ToolMenu {
-    constructor(tester) {
-        super("#left-btn-chat", tester);
-    }
     /**
-     * Parses messages from the chat
-     * @returns {Promise<Array<MessageInfo>>}
+     * @enum
      */
-    async #parseChats() {
-        /**
-         * @type {Array<MessageInfo>}
-         */
-        const messages = await this.tester.frame.evaluate(() => {
-            const usersMessages = "#chat-messages .user-content";
-            const messagesInfo = Array.from(document.querySelectorAll(usersMessages)).map((message) => {
-                const userName = message.querySelector(".user-name").textContent.trim();
-                const userMessage = message.querySelector(".message").textContent.trim();
-                return { userName: userName, userMessage: userMessage };
-            });
-            return messagesInfo;
-        });
-        return messages;
+    static SELECTORS = selectors;
+
+    constructor(tester) {
+        super(ToolMenuChats.SELECTORS.CHAT_SELECTOR, tester);
+        this.handleError = createErrorHandler(this.constructor.name);
+        this.executeAction = createExecuteAction(this.tester, this.handleError);
     }
+
     /**
      * Gets the first message in the chat
      * @returns {Promise<MessageInfo>}
      */
     async getFirstMessage() {
-        /**
-         * @type {Array<MessageInfo>}
-         */
         const messages = await this.#parseChats();
         return messages[0].userMessage;
     }
@@ -46,9 +35,6 @@ class ToolMenuChats extends ToolMenu {
      * @returns {Promise<MessageInfo>}
      */
     async getLastMessage() {
-        /**
-         * @type {Array<MessageInfo>}
-         */
         const messages = await this.#parseChats();
         return messages.at(-1).userMessage;
     }
@@ -59,9 +45,6 @@ class ToolMenuChats extends ToolMenu {
      * @returns {Promise<Array<string>>}
      */
     async getUserMessages(userName) {
-        /**
-         * @type {Array<MessageInfo>}
-         */
         const messages = await this.#parseChats();
         const results = messages
             .filter((message) => message.userName === userName)
@@ -74,11 +57,7 @@ class ToolMenuChats extends ToolMenu {
      * @returns {Promise<Array<MessageInfo>>}
      */
     async getMessages() {
-        /**
-         * @type {Array<MessageInfo>}
-         */
-        const messages = await this.#parseChats();
-        return messages;
+        return await this.#parseChats();
     }
 
     /**
@@ -86,16 +65,11 @@ class ToolMenuChats extends ToolMenu {
      * @returns {Promise<Array<string>>}
      */
     async getUsers() {
-        /**
-         * @type {Array<MessageInfo>}
-         */
         const messages = await this.#parseChats();
-
         const userNames = new Set();
         messages.forEach((message) => {
             userNames.add(message.userName);
         });
-
         return Array.from(userNames);
     }
 
@@ -104,31 +78,58 @@ class ToolMenuChats extends ToolMenu {
      * @param {string} text
      */
     async sendMessage(text) {
-        const inputFormSelector = "#chat-msg-text";
-        const sendSelector = "#chat-msg-btn-add";
-        if (!(await this.checkActive())) {
-            await this.tester.click(this.selector);
-        }
+        const methodName = "sendMessage";
+        const selectors = ToolMenuChats.SELECTORS;
         const messages = await this.#parseChats();
-        const messagesCount = messages.length;
 
-        await this.tester.click(inputFormSelector);
-        await this.tester.inputToForm(text, inputFormSelector);
-        await this.tester.click(sendSelector);
-
-        await this.tester.frame.waitForFunction(
-            (initialMessageCount) => {
-                const usersMessages = "#chat-messages .user-content";
-                const currentMessageCount = document.querySelectorAll(usersMessages).length;
-                return currentMessageCount > initialMessageCount;
-            },
-            {},
-            messagesCount
-        );
+        await this.executeAction(Input, selectors.CHAT_INPUT_SELECTOR, "set", methodName, [text], [false, ""]);
+        await this.executeAction(Button, selectors.CHAT_SEND_BUTTON_SELECTOR, "click", methodName);
+        await this.#waitForNewMessage(messages.length);
     }
 
-    async clickChat() {
-        await this.tester.click("#left-btn-chat");
+    /**
+     * Parses messages from the chat
+     * @returns {Promise<Array<MessageInfo>>}
+     */
+    async #parseChats() {
+        await this.openMenu();
+        const selectors = ToolMenuChats.SELECTORS;
+        const messages = await this.tester.frame.evaluate(
+            (chatMessagesSelector, userNameSelector, userMessageSelector) => {
+                const messagesInfo = Array.from(document.querySelectorAll(chatMessagesSelector)).map((message) => {
+                    const userName = message.querySelector(userNameSelector).textContent.trim();
+                    const userMessage = message.querySelector(userMessageSelector).textContent.trim();
+                    return { userName: userName, userMessage: userMessage };
+                });
+                return messagesInfo;
+            },
+            selectors.CHAT_MESSAGES_SELECTOR,
+            selectors.CHAT_USER_NAME_SELECTOR,
+            selectors.CHAT_USER_MESSAGE_SELECTOR
+        );
+        return messages;
+    }
+
+    /**
+     * Wait for new message to appear in chat
+     * @param {number} initialMessageCount - Initial count of messages before new message
+     */
+    async #waitForNewMessage(initialMessageCount, timeout = 5000) {
+        const selectors = ToolMenuChats.SELECTORS;
+        try {
+            await this.tester.frame.waitForFunction(
+                (initialMessageCount, selector) => {
+                    const usersMessages = selector;
+                    const currentMessageCount = document.querySelectorAll(usersMessages).length;
+                    return currentMessageCount > initialMessageCount;
+                },
+                { polling: 100, timeout: timeout },
+                initialMessageCount,
+                selectors.CHAT_MESSAGES_SELECTOR
+            );
+        } catch (error) {
+            this.handleError("waitForNewMessage", error);
+        }
     }
 }
 

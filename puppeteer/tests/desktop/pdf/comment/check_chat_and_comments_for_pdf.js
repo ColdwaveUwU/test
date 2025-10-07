@@ -3,7 +3,6 @@ Tester.openFile("pdf/headings.pdf");
 
 ToolMenuChats.sendMessage(TestData.LOREM_IPSUM());
 
-ToolMenuChats.clickChat();
 const lastMessage = ToolMenuChats.getLastMessage();
 if (lastMessage !== TestData.LOREM_IPSUM()) {
     throw new Error(`The chat messages don't match`);

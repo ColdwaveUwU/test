@@ -1,90 +1,119 @@
 # ToolMenuThumbnails
 
-This library is designed to automate operations with thumbnails.
+This library implements interaction with the Thumbnails menu.
 
-## How to Include
+## Table of Contents
 
-You can include this module in your project as follows:
+-   [**Methods**](#methods)
+    -   [`ToolMenuThumbnails.openMenu()`](#toolmenuthumbnailsopenmenu)
+    -   [`ToolMenuThumbnails.closeMenu()`](#toolmenuthumbnailsclosemenu)
+    -   [`ToolMenuThumbnails.selectThumbnailsMenu()`](#toolmenuthumbnailsselectthumbnailsmenu)
+    -   [`ToolMenuThumbnails.setThumbnailsOption(options)`](#toolmenuthumbnailssetthumbnailsoptionoptions)
+    -   [`ToolMenuThumbnails.goToThumbnail(thumbNumber)`](#toolmenuthumbnailsgotothumbnailthumbNumber)
+    -   [`ToolMenuThumbnails.getCurrentThumbnailNumber()`](#toolmenuthumbnailsgetcurrentthumbnailnumber)
+    -   [`ToolMenuThumbnails.getCountThumbnails()`](#toolmenuthumbnailsgetcountthumbnails)
+-   [**Example**](#example)
+
+## Methods
+
+### ToolMenuThumbnails.openMenu()
 
 ```javascript
-const { ToolMenuThumbnails } = require("lib");
+/**
+ * Opens the menu
+ */
+ToolMenuThumbnails.openMenu();
 ```
 
-## Functionality
-
-For more detailed functionality, refer to the [**ToolMenuComments Functionality documentation**](/puppeteer/module/toolmenu/toolmenuthumbnails/FUNCTIONALITY.md).
-
-## Example Usage
-
-Here's an example of how to use the functions provided by this module:
-
-### PDF
+### ToolMenuThumbnails.closeMenu()
 
 ```javascript
-// import ToolMenuThumbnails lib
+/**
+ * Closes the menu
+ */
+ToolMenuThumbnails.closeMenu();
+```
+
+### ToolMenuThumbnails.selectThumbnailsMenu()
+
+```javascript
+/**
+ * Select thumbnail list area
+ */
+ToolMenuThumbnails.selectThumbnailsMenu();
+```
+
+### ToolMenuThumbnails.setThumbnailsOption(options)
+
+```javascript
+/**
+ * Sets thumbnails options
+ * This method is not supported for the slide editor.
+ * @param {{size: number | undefined, highlight: boolean | undefined}} options
+ */
+ToolMenuThumbnails.setThumbnailsOption(options);
+```
+
+### ToolMenuThumbnails.goToThumbnail(thumbNumber)
+
+```javascript
+/**
+ * Go to thumbnail by number
+ * @param {number} thumbNumber
+ */
+ToolMenuThumbnails.goToThumbnail(thumbNumber);
+```
+
+### ToolMenuThumbnails.getCurrentThumbnailNumber()
+
+```javascript
+/**
+ * Get current thumbnail number
+ * @returns {Promise<number>}
+ */
+ToolMenuThumbnails.getCurrentThumbnailNumber();
+```
+
+### ToolMenuThumbnails.getCountThumbnails()
+
+```javascript
+/**
+ * Get count thumbnails
+ * @returns {Promise<number>}
+ */
+ToolMenuThumbnails.getCountThumbnails();
+```
+
+## Example
+
+```javascript
+// Include the ToolMenuThumbnails library
 const { ToolMenuThumbnails } = require("lib");
-// open test pdf file
-Tester.openFile("pdf/demo.pdf");
-// set thumbnails options Thumbnails Settings
-ToolMenuThumbnails.setThumbnailsOption({ highlight: true, size: 6 });
-// click in Thumbnails list
-ToolMenuThumbnails.clickThumbnailsMenu();
 
-// get current thumbnail number
-let currentThumbnailNumber = ToolMenuThumbnails.getCurrentThumbnailNumber();
-console.log(`currentThumbnailNumber before goto: ${currentThumbnailNumber}`);
-if (currentThumbnailNumber !== 1) {
-    throw new Error("Incorrect currentThumbnailNumber");
-}
+// Open the file new.pdf
+Tester.createFile("pdf");
 
-// goto 3 thumbnail
+// Open thumbnails menu
+ToolMenuThumbnails.openMenu();
+
+// Select thumbnail list area
+ToolMenuThumbnails.selectThumbnailsMenu();
+
+// Set thumbnails options
+ToolMenuThumbnails.setThumbnailsOption({ size: 150, highlight: true });
+
+// Get count of thumbnails
+const countThumbnails = ToolMenuThumbnails.getCountThumbnails();
+
+// Get current thumbnail number
+const currentThumbnail = ToolMenuThumbnails.getCurrentThumbnailNumber();
+
+// Go to thumbnail by number
 ToolMenuThumbnails.goToThumbnail(3);
 
-currentThumbnailNumber = ToolMenuThumbnails.getCurrentThumbnailNumber();
-console.log(`currentThumbnailNumber after goto: ${currentThumbnailNumber}`);
-if (currentThumbnailNumber !== 3) {
-    throw new Error("Incorrect currentThumbnailNumber");
-}
+// Close thumbnails menu
+ToolMenuThumbnails.closeMenu();
 
-const countThumbnails = ToolMenuThumbnails.getCountThumbnails();
-console.log(`countThumbnails: ${countThumbnails}`);
+// Close the test example
 Tester.close();
 ```
-
-### SLIDE
-
-```javascript
-// import ToolMenuThumbnails lib
-const { ToolMenuThumbnails } = require("lib");
-// open test pdf file
-Tester.openFile("pptx/PPTCompatTest.pptx");
-// click in Thumbnails list
-ToolMenuThumbnails.clickThumbnailsMenu();
-ToolMenuThumbnails.goToThumbnail(1);
-// get current thumbnail number
-let currentThumbnailNumber = ToolMenuThumbnails.getCurrentThumbnailNumber();
-console.log(`currentThumbnailNumber before goto: ${currentThumbnailNumber}`);
-if (currentThumbnailNumber !== 1) {
-    throw new Error("Incorrect currentThumbnailNumber");
-}
-
-// goto 3 thumbnail
-ToolMenuThumbnails.goToThumbnail(3);
-
-currentThumbnailNumber = ToolMenuThumbnails.getCurrentThumbnailNumber();
-console.log(`currentThumbnailNumber after goto: ${currentThumbnailNumber}`);
-if (currentThumbnailNumber !== 3) {
-    throw new Error("Incorrect currentThumbnailNumber");
-}
-
-const countThumbnails = ToolMenuThumbnails.getCountThumbnails();
-console.log(`countThumbnails: ${countThumbnails}`);
-Tester.close();
-```
-
-## Options
-
-### `Option`
-
--   `highlight` (boolean): Specifies whether to set the highlight setting.
--   `size` (number): size thumbnails.

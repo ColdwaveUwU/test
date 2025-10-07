@@ -1,0 +1,39 @@
+{
+    "COMMENTS_MENU": "#left-btn-comments",
+    "COMMENTS_CLOSE_BUTTON": "#comments-btn-close",
+    "EMPTY_COMMENTS": "#left-btn-comments .empty-text",
+    "TOOLMENU_COMMENTS": {
+        "NEW_COMMENT_INPUT": "#comment-msg-new",
+        "ADD_COMMENT_BUTTON": "#comments-btn-add",
+        "ADD_COMMENT_TO_DOCUMENT_BUTTON": "#comments-box .new-comment-ct .btn.add.primary",
+        "COMMENTS_CHANGE_BUTTON": "#id-comments-change",
+        "SORT_DROPDOWN": {
+            "selector": "#comments-btn-sort",
+            "dropdownToggleSelector": "#comments-btn-sort button.dropdown-toggle",
+            "elementsSelector": "#comments-btn-sort ul li",
+            "idSelector": "a",
+            "descriptionSelector": "a",
+            "elementsValue": []
+        }
+    },
+    "COMMENT_WINDOW": {
+        "COMMENT_INPUT": "#id-comments-popover .msg-reply",
+        "ADD_COMMENT_BUTTON": "#id-comments-change-popover"
+    },
+    "COMENTS_LIST": {
+        "selector": "#comments-box",
+        "elementsSelector": "#comments-box .user-comment-item",
+        "descriptionSelector": ".user-message.user-select",
+        "replySelector": ".reply-item-ct",
+        "userNameSelector": ".user-name",
+        "dateSelector": ".user-date"
+    },
+    "COMMENT_ITEM_BASE": {
+        "mainCommentSelector": ".edit-ct",
+        "addReplyButton": "${userCommentId} .user-reply",
+        "areaText": "${userCommentId} .user-select.textarea-control",
+        "editButton": "${userCommentId} ${mainCommentSelector} .btn-edit-common",
+        "deleteButton": "${userCommentId} ${mainCommentSelector} .btn-delete",
+        "resolveButton": "${userCommentId} ${mainCommentSelector} .btn-resolve"
+    }
+}

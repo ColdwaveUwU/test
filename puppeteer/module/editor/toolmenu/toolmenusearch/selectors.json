@@ -1,0 +1,41 @@
+{
+    "SEARCH_MENU": "#left-btn-searchbar",
+    "FIND_INPUT_FIELD": "#search-adv-text",
+    "REPLACE": {
+        "INPUT_FIELD": "#search-adv-replace-text",
+        "BUTTON": "#search-adv-replace",
+        "ALL_BUTTON": "#search-adv-replace-all"
+    },
+    "SEARCH_RESULTS_LIST": {
+        "selector": "#search-results",
+        "elementsSelector": "#search-results .item",
+        "selectedElementSelector": ".selected",
+        "idSelector": "",
+        "descriptionSelector": "",
+        "elementsValue": []
+    },
+    "OPTIONS": {
+        "TABLE_SEARCH_OPTIONS_TOGGLE": "#open-search-options",
+        "TABLE_SEARCH_OPTIONS_TOGGLE_CLOSED": "#search-adv-settings .search-options-block.no-expand",
+        "SENSITIVE_CHECKBOX": "#search-adv-case-sensitive",
+        "WORDS_CHECKBOX": "#search-adv-match-word",
+        "WITHIN_DROPDOWN": {
+            "selector": "#search-adv-cmb-within",
+            "elementsSelector": "#search-adv-cmb-within ul li",
+            "descriptionSelector": "a",
+            "elementsValue": []
+        },
+        "SEARCH_DROPDOWN": {
+            "selector": "#search-adv-cmb-search",
+            "elementsSelector": "#search-adv-cmb-search ul li",
+            "descriptionSelector": "a",
+            "elementsValue": []
+        },
+        "LOOK_IN_DROPDOWN": {
+            "selector": "#search-adv-cmb-look-in",
+            "elementsSelector": "#search-adv-cmb-look-in ul li",
+            "descriptionSelector": "a",
+            "elementsValue": []
+        }
+    }
+}
