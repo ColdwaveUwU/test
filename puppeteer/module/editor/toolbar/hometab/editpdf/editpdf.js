@@ -1,5 +1,5 @@
 const HomeTab = require("../hometab");
-const { Button, OptionsButton } = require("../../../../elements");
+const { Button, OptionsButton, StateButton } = require("../../../../elements");
 const selectors = require("./selectors.json");
 
 class EditPdf extends HomeTab {
@@ -26,13 +26,8 @@ class EditPdf extends HomeTab {
      */
     async clickEditPdf(condition = true) {
         try {
-            const isActive = await this.#isEditPdfButtonActive();
-            if ((condition && !isActive) || (!condition && isActive)) {
-                await this.#getButton(EditPdf.EDIT_PDF_SELECTORS.EDIT_PDF.BUTTON).click();
-                if (condition && !isActive) {
-                    await this.#waitForEditPdfButtonActivation();
-                }
-            }
+            const editPdfButton = new StateButton(this.tester, EditPdf.EDIT_PDF_SELECTORS.EDIT_PDF.BUTTON);
+            await editPdfButton.setState(condition);
         } catch (error) {
             this.#handleError("clickEditPdf", error);
         }
@@ -137,14 +132,6 @@ class EditPdf extends HomeTab {
         } catch (error) {
             throw new Error(`Edit PDF button failed to activate within ${timeout}ms: ${error.message}`);
         }
-    }
-
-    /**
-     * Check if edit pdf button is currently active
-     * @return {Promise<boolean>} True if button is active, false otherwise
-     */
-    async #isEditPdfButtonActive() {
-        return await this.#getButton(EditPdf.EDIT_PDF_SELECTORS.EDIT_PDF.ACTIVE_BUTTON).waitSelector();
     }
 
     /**
