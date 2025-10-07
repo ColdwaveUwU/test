@@ -16,11 +16,10 @@ class Input extends UIElement {
      * @param {boolean} [pressEnter=true] - Whether to press Enter after setting the value.
      * @param {string} [targetElement="input"] - The tag or selector of the actual input element inside the container.
      */
-    constructor(tester, selector, pressEnter = true, targetElement = "input", context = null) {
+    constructor(tester, selector, pressEnter = true, targetElement = "input") {
         super(tester, selector);
         this.pressEnter = pressEnter;
         this.targetElement = targetElement;
-        this.context = context || this.tester.frame;
     }
 
     /**

@@ -18,6 +18,16 @@ class UIElement {
         return this.target === "page" ? this.tester?.page : this.tester?.frame;
     }
 
+    set context(value) {
+        if (value === this.tester?.page) {
+            this.target = "page";
+        } else if (value === this.tester?.frame) {
+            this.target = "frame";
+        } else {
+            throw new Error("Invalid context: must be tester.page or tester.frame");
+        }
+    }
+
     /**
      * Checks if the UI element is present on the page or frame.
      * @returns {Promise<boolean>} - Returns `true` if the element is found, `false` otherwise.
