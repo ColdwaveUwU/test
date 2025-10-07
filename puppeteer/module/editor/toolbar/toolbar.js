@@ -68,6 +68,9 @@ class Toolbar {
      */
     async openTargetTab() {
         const stateButton = this.#getToolbarStateButton();
+        if (this.tabTarget === "File") {
+            await this.tester.sleep(1000); // todo fix open FIleTab after mask
+        }
         await stateButton.setState(true);
     }
 
