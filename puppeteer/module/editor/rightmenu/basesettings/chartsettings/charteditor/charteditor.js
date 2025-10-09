@@ -109,6 +109,10 @@ class ChartEditor extends BaseSettings {
         await this.initializeFrame();
     }
 
+    /**
+     * Checks if the chart editor modal window is open
+     * @returns {Promise<boolean>} True if the chart editor modal window is open, false otherwise
+     */
     async isEditorOpen() {
         return await this.#executeModalAction(this.chartEditorModal, "isModalOpen", "isEditorOpen");
     }

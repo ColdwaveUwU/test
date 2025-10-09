@@ -73,7 +73,9 @@ class Toolbar {
         }
 
         if (this.tester.frame.name() === "frameEditor") {
-            await stateButton.setState(true);
+            if (await stateButton.checkSelector()) {
+                await stateButton.setState(true);
+            }
         }
     }
 

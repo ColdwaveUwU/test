@@ -6,7 +6,7 @@
     },
     "MODAL_WINDOWS": {
         "CHART_EDITOR": {
-            "WINDOW": "#id-external-diagram-editor.notransform",
+            "WINDOW": "#id-external-diagram-editor",
             "CLOSE_BUTTON": "#id-external-diagram-editor .header .tool.close",
             "POSITION": {
                 "LEFT": 0,

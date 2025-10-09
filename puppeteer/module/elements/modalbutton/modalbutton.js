@@ -33,7 +33,6 @@ class ModalButton extends UIElement {
 
     /**
      * Waiting for modal windows to close
-     * @param {number} [modalCounter]
      * @returns {Promise<import("puppeteer").HandleFor<ReturnType<Func>>>}
      */
     async waitModalWindowClosed() {
@@ -43,17 +42,17 @@ class ModalButton extends UIElement {
 
         const modalId = this.#modalId;
         await this.context.waitForFunction(
-            async (id) => {
-                const el = document.getElementById(id);
+            (id) => {
                 const modalsMask = document.querySelector(".modals-mask");
-
-                const counter = modalsMask.getAttribute("counter");
-                if (counter === "0") {
-                    const isMaskHidden = window.getComputedStyle(modalsMask).display === "none";
-                    return !el && isMaskHidden;
-                } else {
-                    return !el;
+                if (!modalsMask) {
+                    return false;
                 }
+                const counter = Number(modalsMask.getAttribute("counter"));
+                const isMaskHidden = window.getComputedStyle(modalsMask).display === "none";
+                if (counter === 0 && isMaskHidden) {
+                    return true;
+                }
+                return !isMaskHidden && counter > 0 && !document.querySelector(id);
             },
             { polling: "raf", timeout: 10000 },
             modalId

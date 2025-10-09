@@ -38,7 +38,7 @@
             }
         },
         "EDIT_SERIES": {
-            "WINDOW": ".asc-window.modal.notransform",
+            "WINDOW": ".asc-window.modal",
             "NAME_INPUT": "#id-dlg-chart-range-range1",
             "VALUES_INPUT": "#id-dlg-chart-range-range2",
             "SELECT_NAME_RANGE_BUTTON": "#id-dlg-chart-range-range1 .select-button button",
@@ -46,13 +46,13 @@
             "OK_BUTTON": ".footer.center button[result='ok']"
         },
         "AXIS_LABELS": {
-            "WINDOW": ".asc-window.modal.notransform",
+            "WINDOW": ".asc-window.modal",
             "LABEL_RANGE": "#id-dlg-chart-range-range1",
             "SELECT_LABEL_RANGE_BUTTON": "#id-dlg-chart-range-range1 .select-button button",
             "OK_BUTTON": ".asc-window.modal.notransform .footer.center button[result='ok']"
         },
         "SELECT_DATA": {
-            "WINDOW": ".asc-window.modal.notransform",
+            "WINDOW": ".asc-window.modal",
             "INPUT": "#id-dlg-cell-range",
             "OK_BUTTON": ".asc-window.modal.notransform .footer.center button[result='ok']"
         }

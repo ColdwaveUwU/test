@@ -1,4 +1,5 @@
 const { StateButton } = require("../../../elements");
+const { createErrorHandler, createExecuteAction } = require("../../../../engine/script/js/utils");
 /**
  * Base class for handling settings interactions.
  */
@@ -10,6 +11,8 @@ class BaseSettings {
     constructor(tester = RegularTester, selector) {
         this.tester = tester;
         this.selector = selector;
+        this.handleError = createErrorHandler(this.constructor.name);
+        this.executeAction = createExecuteAction(this.tester, this.handleError);
     }
 
     /**
@@ -71,8 +74,7 @@ class BaseSettings {
      * Opens the settings by clicking on the specified selector.
      */
     async open() {
-        const openRightMenuOption = new StateButton(this.tester, this.selector);
-        await openRightMenuOption.setState(true);
+        await this.executeAction(StateButton, this.selector, "setState", "open", [true]);
     }
 }
 

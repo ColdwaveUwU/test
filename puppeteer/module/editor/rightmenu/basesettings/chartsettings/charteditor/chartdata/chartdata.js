@@ -260,7 +260,7 @@ class ChartData extends BaseSettings {
         const selectors = ChartData.SELECTORS.MODAL_WINDOWS.AXIS_LABELS;
         const { labelRange, selectData } = axisLabels;
         await this.executeAction(Button, buttonSelector, "click", methodName);
-        await this.executeModalAction(this.axisLabelsModal, "isModalOpen", methodName);
+        await this.executeModalAction(this.axisLabelsModal, "waitModalLoaded", methodName);
         if (labelRange) {
             await this.executeAction(Input, selectors.LABEL_RANGE, "set", methodName, [labelRange], [false]);
         }
@@ -280,7 +280,7 @@ class ChartData extends BaseSettings {
         const selectors = ChartData.SELECTORS.MODAL_WINDOWS;
         const { name, values, nameSelectData, valuesSelectData } = series;
         await this.executeAction(Button, buttonSelector, "click", methodName);
-        await this.executeModalAction(this.editSeriesModal, "isModalOpen", methodName);
+        await this.executeModalAction(this.editSeriesModal, "waitModalLoaded", methodName);
         if (name) {
             await this.executeAction(Input, selectors.EDIT_SERIES.NAME_INPUT, "set", methodName, [name], [false]);
         }
@@ -294,7 +294,8 @@ class ChartData extends BaseSettings {
             await this.#selectData(selectors.EDIT_SERIES.SELECT_VALUES_RANGE_BUTTON, valuesSelectData, methodName);
         }
         await this.#pressEnter(methodName);
-        await this.executeModalAction(this.chartDataModal, "isModalOpen", methodName);
+        await this.executeModalAction(this.editSeriesModal, "waitModalWindowClosed", methodName);
+        await this.executeModalAction(this.chartDataModal, "waitModalLoaded", methodName);
     }
 
     /**
@@ -320,7 +321,7 @@ class ChartData extends BaseSettings {
         }
         const selectors = ChartData.SELECTORS.MODAL_WINDOWS.SELECT_DATA;
         await this.executeAction(Button, buttonSelector, "click", methodName);
-        await this.executeModalAction(this.selectDataModal, "isModalOpen", methodName);
+        await this.executeModalAction(this.selectDataModal, "waitModalLoaded", methodName);
         await this.executeAction(Input, selectors.INPUT, "set", methodName, [data], [false]);
         await this.executeAction(Button, selectors.OK_BUTTON, "click", methodName);
     }
