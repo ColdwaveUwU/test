@@ -42,17 +42,22 @@ class ModalButton extends UIElement {
 
         const modalId = this.#modalId;
         await this.context.waitForFunction(
-            (id) => {
-                const modalsMask = document.querySelector(".modals-mask");
-                if (!modalsMask) {
+            (selector) => {
+                const modal = document.querySelector(selector);
+                const mask = document.querySelector(".modals-mask");
+                if (!mask) {
                     return false;
                 }
-                const counter = Number(modalsMask.getAttribute("counter"));
-                const isMaskHidden = window.getComputedStyle(modalsMask).display === "none";
-                if (counter === 0 && isMaskHidden) {
-                    return true;
+
+                const counter = Number(mask.getAttribute("counter"));
+                const maskHidden = window.getComputedStyle(mask).display === "none";
+                const modalHidden = !modal || window.getComputedStyle(modal).display === "none";
+
+                if (counter === 0) {
+                    return modalHidden && maskHidden;
                 }
-                return !isMaskHidden && counter > 0 && !document.querySelector(id);
+
+                return counter > 0 && modalHidden;
             },
             { polling: "raf", timeout: 10000 },
             modalId

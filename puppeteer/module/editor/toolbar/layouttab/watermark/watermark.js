@@ -236,6 +236,8 @@ class Watermark extends LayoutTab {
         const colorLib = new Color(this.tester);
 
         try {
+            const fontColorDropdown = new Dropdown(this.tester, { selector: fontColorSelector });
+            await fontColorDropdown.selectDropdown();
             await colorLib.selectColor(fontColorSelector, fontColor);
         } catch (error) {
             throw new Error(`setFontColor: Failed to set font color "${fontColor}". ${error.message}`, {
