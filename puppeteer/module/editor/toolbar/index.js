@@ -10,6 +10,7 @@ const FileMenu = require("./filetab");
 const DrawTab = require("./drawtab");
 const ViewToolbar = require("./viewtoolbar");
 const Plugins = require("./pluginstab");
+const Review = require("./review");
 
 const Toolbar = {
     ...HomeTab,
@@ -24,6 +25,7 @@ const Toolbar = {
     ...DrawTab,
     ...ViewToolbar,
     ...Plugins,
+    ...Review,
 };
 
 module.exports = Toolbar;

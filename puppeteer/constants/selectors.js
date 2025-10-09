@@ -215,28 +215,12 @@ const ChartSelectors = {
     },
 };
 
-/**
- * @enum
- */
-const ViewToolbarDocumentModeSelectors = {
-    EDITING_BUTTON: "#slot-btn-edit-mode",
-    EDITING_MODE: {
-        MODE_LIST: "#slot-btn-edit-mode ul li a",
-        ITEM: "div",
-        MODE_DESCRIPTION: "b",
-    },
-    REVIEW_MODE: {
-        REVIEW_ITEM: "#id-review-popover .item",
-    },
-};
-
 module.exports = {
     ImageSettingButtonID,
     ColorSettingID,
     OwnCloudSelectors,
     DocSpaceSelectors,
     ChartSelectors,
-    ViewToolbarDocumentModeSelectors,
     ModalDialogSelectors,
     ColorMenuType,
 };

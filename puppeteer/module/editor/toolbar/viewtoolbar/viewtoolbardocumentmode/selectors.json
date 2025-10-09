@@ -1,0 +1,5 @@
+{
+    "SELECTOR": "#slot-btn-edit-mode",
+    "ELEMENTS": "#slot-btn-edit-mode ul li a",
+    "DESCRIPTION": "b"
+}

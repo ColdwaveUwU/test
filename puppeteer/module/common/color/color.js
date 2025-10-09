@@ -37,6 +37,8 @@ const { ModalButton, Input, Dropdown } = require("../../elements");
  */
 
 class Color {
+    #colorDropdown = null;
+
     constructor(tester) {
         this.tester = tester || RegularTester;
 
@@ -60,12 +62,22 @@ class Color {
 
         return moreColorsModal;
     }
+
+    #getColorDropdown(selector) {
+        if (!this.#colorDropdown) {
+            this.#colorDropdown = new Dropdown(this.tester, { selector: selector });
+        }
+        return this.#colorDropdown;
+    }
+
     /**
      * Selects a color based on the provided color settings.
      * @param {string} selector - The CSS selector to locate the color picker element.
      * @param {ColorSettingsObject} color - The color properties used to select the color.
      */
     async selectColor(selector, color) {
+        const colorDropdown = this.#getColorDropdown(selector);
+        await colorDropdown.selectDropdown();
         switch (color.type) {
             case this.Type.Auto:
                 await this.#selectAutoColor(selector);
@@ -130,9 +142,6 @@ class Color {
      */
     async #selectThemeColor(selector, color) {
         const subIndexRow = 10;
-        await new Dropdown(this.tester, {
-            selector: selector,
-        }).selectDropdown();
         const index = color.index + subIndexRow * color.subIndex;
         await this.tester.click(`${selector} a[idx="${index}"]`);
     }
@@ -143,9 +152,6 @@ class Color {
      * @param {BaseColorProp} color - The color properties with index.
      */
     async #selectStandardColor(selector, color) {
-        await new Dropdown(this.tester, {
-            selector: selector,
-        }).selectDropdown();
         const standardColorOffset = 60;
         const index = color.index + standardColorOffset;
         await this.tester.click(`${selector} a[idx="${index}"]`);

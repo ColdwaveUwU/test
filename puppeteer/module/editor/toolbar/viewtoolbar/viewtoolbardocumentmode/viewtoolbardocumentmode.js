@@ -1,73 +1,38 @@
-const { ViewToolbarDocumentModeSelectors } = require("../../../../../constants");
-
+const selectors = require("./selectors.json");
+const { Dropdown } = require("../../../../elements");
 class ViewToolbarDocumentMode {
-    static Modes = {
+    constructor(tester = RegularTester) {
+        this.tester = tester;
+    }
+
+    static SELECTORS = selectors;
+
+    #dropdown = null;
+    #modes = {
         EDIT: "Editing",
         VIEWING: "Viewing",
         REVIEWING: "Reviewing",
     };
-
-    constructor(tester = RegularTester) {
-        this.tester = tester;
-        this.editingModes = null;
-    }
-
-    /**
-     * Retrieves available editing modes.
-     * @returns {Promise<Array<{ description: string, count: number, index: number, id: string }>>}
-     */
-    async #getEditingModes() {
-        const { MODE_LIST, ITEM, MODE_DESCRIPTION } = ViewToolbarDocumentModeSelectors.EDITING_MODE;
-        return await this.tester.parseItems(MODE_LIST, ITEM, MODE_DESCRIPTION);
-    }
-
-    /**
-     * Checks if the editing button is active and retrieves editing modes if not cached.
-     * @returns {Promise<boolean>} element activity status
-     */
-    async #isActive() {
-        const isActive = await this.tester.checkSelector(
-            `${ViewToolbarDocumentModeSelectors.EDITING_BUTTON} > div.active`
-        );
-
-        if (isActive && this.editingModes === null) {
-            this.editingModes = await this.#getEditingModes();
+    #getDocumentModeDropdown() {
+        if (!this.#dropdown) {
+            const { SELECTOR, ELEMENTS, DESCRIPTION } = ViewToolbarDocumentMode.SELECTORS;
+            this.#dropdown = new Dropdown(this.tester, {
+                selector: SELECTOR,
+                elementsSelector: ELEMENTS,
+                descriptionSelector: DESCRIPTION,
+            });
         }
-
-        return isActive;
+        return this.#dropdown;
     }
-
-    /**
-     * Finds the ID of the specified editing mode.
-     * @param {string} mode - The mode to find
-     * @returns {string | undefined} The ID of the mode, or undefined if not found
-     */
-    #findModeId(mode) {
-        const modeEntry = this.editingModes.find((editMode) => editMode.description === mode);
-        return modeEntry ? modeEntry.id : undefined;
-    }
-
     /**
      * Toggles the view mode.
-     * @param {string} mode - editing mode
+     * @param {Editing | Reviewing | Viewing} mode - editing mode
      * @returns {Promise<void>}
      * @throws {Error} If the specified mode is not found.
      */
     async #toggleViewMode(mode) {
-        const [isOpen] = await Promise.all([
-            this.#isActive(),
-            this.tester.click(ViewToolbarDocumentModeSelectors.EDITING_BUTTON),
-        ]);
-
-        if (isOpen) {
-            const elementId = this.#findModeId(mode);
-
-            if (elementId) {
-                await this.tester.click(elementId);
-            } else {
-                throw new Error(`Mode "${mode}" not found.`);
-            }
-        }
+        const docModeDropdown = this.#getDocumentModeDropdown();
+        await docModeDropdown.selectDropdownItem(mode);
     }
 
     /**
@@ -75,7 +40,7 @@ class ViewToolbarDocumentMode {
      * @return {Promise<void>}
      */
     async toggleReviewingMode() {
-        await this.#toggleViewMode(ViewToolbarDocumentMode.Modes.REVIEWING);
+        await this.#toggleViewMode(this.#modes.REVIEWING);
     }
 
     /**
@@ -83,7 +48,7 @@ class ViewToolbarDocumentMode {
      * @return {Promise<void>}
      */
     async toggleViewingMode() {
-        await this.#toggleViewMode(ViewToolbarDocumentMode.Modes.VIEWING);
+        await this.#toggleViewMode(this.#modes.VIEWING);
     }
 
     /**
@@ -91,7 +56,7 @@ class ViewToolbarDocumentMode {
      * @return {Promise<void>}
      */
     async toggleEditMode() {
-        await this.#toggleViewMode(ViewToolbarDocumentMode.Modes.EDIT);
+        await this.#toggleViewMode(this.#modes.EDIT);
     }
 }
 

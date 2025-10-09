@@ -1,4 +1,4 @@
-const { ViewToolbarDocumentModeSelectors } = require("../../constants");
+const selectors = require("./selectors.json");
 class Review {
     constructor(selector, tester) {
         this.selector = selector;
@@ -9,12 +9,14 @@ class Review {
         }
     }
 
+    static SELECTORS = selectors;
+
     /**
      * Checks if review mode is active
      * @returns {boolean}
      */
     async isReviewActive() {
-        return await this.tester.checkSelector(ViewToolbarDocumentModeSelectors.REVIEW_MODE.REVIEW_ITEM);
+        return await this.tester.waitSelector(Review.SELECTORS.REVIEW_ITEM);
     }
 }
 

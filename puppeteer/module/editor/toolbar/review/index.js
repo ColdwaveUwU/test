@@ -1,3 +1,4 @@
+const Review = require("./Review");
 module.exports = {
-    Review: require('./Review'),
+    Review,
 };
