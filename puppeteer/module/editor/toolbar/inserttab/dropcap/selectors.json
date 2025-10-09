@@ -6,18 +6,15 @@
         },
         "ADVANCED_SETTINGS_DIALOG": ".advanced-settings-dlg",
         "SECTION": {
-            "DROPCAP": "#slot-category-id-adv-dropcap-dropcap",
-            "DROPCAP_ACTIVE": "#slot-category-id-adv-dropcap-dropcap > button.active",
-            "BORDERS": "#slot-category-id-adv-dropcap-borders",
-            "BORDERS_ACTIVE": "#slot-category-id-adv-dropcap-borders > button.active",
-            "MARGINS": "#slot-category-id-adv-dropcap-margins",
-            "MARGINS_ACTIVE": "#slot-category-id-adv-dropcap-margins > button.active"
+            "DROPCAP": "#slot-category-id-adv-dropcap-dropcap > button",
+            "BORDERS": "#slot-category-id-adv-dropcap-borders > button",
+            "MARGINS": "#slot-category-id-adv-dropcap-margins > button"
         },
         "DROPCAP": {
             "POSITIONS": {
                 "NONE": "#drop-advanced-button-none > button",
-                "IN_TEXT": "#drop-advanced-button-intext > button",
-                "IN_MARGIN": "#drop-advanced-button-inmargin > button"
+                "IN TEXT": "#drop-advanced-button-intext > button",
+                "IN MARGIN": "#drop-advanced-button-inmargin > button"
             },
             "FONT": {
                 "INPUT": "#drop-advanced-input-fonts",
@@ -36,14 +33,14 @@
             "COLOR_ACTIVE": "#drop-advanced-button-bordercolor > div.open",
             "MENU_COLORS": "#drop-advanced-button-bordercolor ul",
             "LINES": {
-                "UPPER": "#drop-advanced-button-borderline-00",
-                "CENTER": "#drop-advanced-button-borderline-01",
-                "DOWN": "#drop-advanced-button-borderline-10",
-                "OUT": "#drop-advanced-button-borderline-11",
-                "LEFT": "#drop-advanced-button-borderline-20",
-                "FULL": "#drop-advanced-button-borderline-21",
-                "RIGHT": "#drop-advanced-button-borderline-30",
-                "NONE": "#drop-advanced-button-borderline-31"
+                "UPPER": "#drop-advanced-button-borderline-00 > button",
+                "CENTER": "#drop-advanced-button-borderline-01 > button",
+                "DOWN": "#drop-advanced-button-borderline-10 > button",
+                "OUT": "#drop-advanced-button-borderline-11 > button",
+                "LEFT": "#drop-advanced-button-borderline-20 > button",
+                "FULL": "#drop-advanced-button-borderline-21 > button",
+                "RIGHT": "#drop-advanced-button-borderline-30 > button",
+                "NONE": "#drop-advanced-button-borderline-31 > button"
             },
             "BACKGROUND_COLOR": "#drop-advanced-button-color",
             "BACKGROUND_COLOR_ACTIVE": "#drop-advanced-button-color > div.open",

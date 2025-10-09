@@ -34,11 +34,6 @@ const ModalDialogSelectors = {
     CANCEL_BUTTON: ".extended-color-dlg [result='0']",
 };
 
-const ColorMenuType = {
-    DEFAULT: ["Automatic", "Eyedropper", "More colors"],
-    FILL: ["Eyedropper", "More colors", "Format cell fill"],
-};
-
 /**
  * @enum {string}
  */
@@ -222,5 +217,4 @@ module.exports = {
     DocSpaceSelectors,
     ChartSelectors,
     ModalDialogSelectors,
-    ColorMenuType,
 };

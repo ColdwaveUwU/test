@@ -20,7 +20,7 @@ const dropCap = {
 
 // Border settings configuration
 const borders = {
-    size: 4.5, // Border size
+    size: "4.5 pt", // Border size
     borderColor: { type: 2, index: 3 }, // Border color type and index
     borderLine: "Full", // Border line style (Full)
     backgroundColor: { type: 2, index: 7 }, // Background color type and index

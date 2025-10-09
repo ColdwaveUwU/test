@@ -1,24 +1,35 @@
 const InsertTab = require("../inserttab");
 const { Color } = require("../../../../common");
 const { DROPCAP } = require("./selectors.json");
-const { Dropdown, Input } = require("../../../../elements");
+const { Dropdown, Input, ModalButton, StateButton, Button } = require("../../../../elements");
+
 class DropCap extends InsertTab {
     static DROPCAP_SELECTORS = DROPCAP;
+    #dropCapDropdown = null;
 
     constructor(tester) {
         super(tester, DROPCAP.BUTTON);
         this.color = new Color(this.tester);
     }
 
+    #getDropcapDropdown() {
+        if (!this.#dropCapDropdown) {
+            const dropCapSelectors = DropCap.DROPCAP_SELECTORS;
+            this.#dropCapDropdown = new Dropdown(this.tester, {
+                selector: dropCapSelectors.BUTTON.SELECTOR,
+                elementsSelector: dropCapSelectors.BUTTON.ELEMENTS_SELECTOR,
+            });
+        }
+        return this.#dropCapDropdown;
+    }
     /**
      * Activates a section if it is not already active.
      * @param {string} isActiveSelector - Selector to check if the section is active.
      * @param {string} sectionSelector - Selector for the section to activate.
      */
-    async #activateSection(isActiveSelector, sectionSelector) {
-        if (!(await this.tester.checkSelector(isActiveSelector))) {
-            await this.tester.click(sectionSelector);
-        }
+    async #activateSection(sectionSelector) {
+        const sectionButton = new StateButton(this.tester, sectionSelector);
+        await sectionButton.setState(true);
     }
 
     /**
@@ -47,11 +58,10 @@ class DropCap extends InsertTab {
      * @param {string} selector - The selector for the border property.
      * @param {string} menuSelector - The selector for the menu.
      */
-    async #setBorderColor(property, selector, menuSelector) {
-        if (!(await this.tester.checkSelector(menuSelector))) {
-            await this.tester.click(selector);
-        }
-        await this.color.selectColor(menuSelector, property);
+    async #setBorderColor(property, selector) {
+        const borderColorDropdown = new Dropdown(this.tester, { selector: selector });
+        await borderColorDropdown.selectDropdown();
+        await this.color.selectColor(selector, property);
     }
 
     /**
@@ -59,11 +69,7 @@ class DropCap extends InsertTab {
      * @param {"None" | "In text" | "In margin" | "Drop Cap Settings"} dropCapType - The Drop Cap type to select.
      */
     async setDropCap(dropCapType) {
-        const dropCapSelectors = DropCap.DROPCAP_SELECTORS;
-        const dropDownButton = new Dropdown(this.tester, {
-            selector: dropCapSelectors.BUTTON.SELECTOR,
-            elementsSelector: dropCapSelectors.BUTTON.ELEMENTS_SELECTOR,
-        });
+        const dropDownButton = this.#getDropcapDropdown();
         await dropDownButton.selectDropdownItem(dropCapType);
     }
 
@@ -77,16 +83,24 @@ class DropCap extends InsertTab {
      * @returns {Promise<void>}
      */
     async setDropCapSettings({ dropCap, borders, margins }) {
-        await this.setDropCap("Drop Cap Settings");
+        const dropDownButton = this.#getDropcapDropdown();
+        const { id } = await dropDownButton.getDropdownItem("description", "Drop Cap Settings");
+
+        const dropCapModalWindow = new ModalButton(
+            this.tester,
+            id,
+            ".modal.advanced-settings-dlg",
+            ".modal.advanced-settings-dlg button[result=ok]"
+        );
+        await dropCapModalWindow.openModal();
 
         if (dropCap) {
             const { pos, font, rowHeight, distance } = dropCap;
-            await this.#activateSection(DROPCAP.SECTION.DROPCAP_ACTIVE, DROPCAP.SECTION.DROPCAP);
+            await this.#activateSection(DROPCAP.SECTION.DROPCAP);
             if (pos) {
                 const positionSelector = DROPCAP.DROPCAP.POSITIONS[pos.toUpperCase()];
-                if (positionSelector) {
-                    await this.tester.click(positionSelector);
-                }
+                const positionButton = new StateButton(this.tester, positionSelector);
+                await positionButton.setState(true);
             }
             if (font) {
                 await this.#setFont(font);
@@ -101,31 +115,31 @@ class DropCap extends InsertTab {
 
         if (borders) {
             const { size, borderColor, borderLine, backgroundColor } = borders;
-            await this.#activateSection(DROPCAP.SECTION.BORDERS_ACTIVE, DROPCAP.SECTION.BORDERS);
+            await this.#activateSection(DROPCAP.SECTION.BORDERS);
+            debugger;
             if (size) {
-                await this.tester.click(DROPCAP.BORDER.SIZE);
-                await this.tester.click(`${DROPCAP.BORDER.SIZE_VAL}[data-value="${size}"]`);
+                const sizeDropdown = new Dropdown(this.tester, {
+                    selector: DROPCAP.BORDER.SIZE,
+                    elementsSelector: DROPCAP.BORDER.SIZE_VAL,
+                    descriptionSelector: "span",
+                });
+                await sizeDropdown.selectDropdownItem(size);
             }
             if (borderColor) {
-                await this.#setBorderColor(borderColor, DROPCAP.BORDER.COLOR, DROPCAP.BORDER.COLOR_ACTIVE);
+                await this.#setBorderColor(borderColor, DROPCAP.BORDER.COLOR);
             }
             if (borderLine) {
                 const borderLineType = DROPCAP.BORDER.LINES[borderLine.toUpperCase()];
-                if (borderLineType) {
-                    await this.tester.click(borderLineType);
-                }
+                const borderLineButton = new Button(this.tester, borderLineType);
+                await borderLineButton.click();
             }
             if (backgroundColor) {
-                await this.#setBorderColor(
-                    backgroundColor,
-                    DROPCAP.BORDER.BACKGROUND_COLOR,
-                    DROPCAP.BORDER.BACKGROUND_COLOR_ACTIVE
-                );
+                await this.#setBorderColor(backgroundColor, DROPCAP.BORDER.BACKGROUND_COLOR);
             }
         }
 
         if (margins) {
-            await this.#activateSection(DROPCAP.SECTION.MARGINS_ACTIVE, DROPCAP.SECTION.MARGINS);
+            await this.#activateSection(DROPCAP.SECTION.MARGINS);
             for (const [side, value] of Object.entries(margins)) {
                 if (value) {
                     const inputMarginSettingsElement = new Input(
@@ -138,7 +152,7 @@ class DropCap extends InsertTab {
             }
         }
 
-        await this.tester.click(DROPCAP.OK_BUTTON);
+        await dropCapModalWindow.closeModal();
     }
 }
 
