@@ -344,7 +344,10 @@ def run_test_with_retries(test_map, params_dict):
 def create_dir_map(tests_directory_root_path):
     dir_map = {}
 
-    for root, _, files in os.walk(tests_directory_root_path):
+    for root, dirs, files in os.walk(tests_directory_root_path, topdown=False):
+        dirs.sort()
+        files.sort()
+
         current_dir = os.path.relpath(root, tests_directory_root_path)
         if current_dir == ".":
             current_dir = tests_directory_root_path
@@ -370,9 +373,11 @@ def create_dir_map(tests_directory_root_path):
         if scripts:
             dir_map[current_dir] = scripts
 
-    all_scripts = [script for script_list in dir_map.values() for script in script_list]
-    dir_map[tests_directory_root_path] = all_scripts
+    all_scripts = []
+    for key in sorted(dir_map.keys(), reverse=True):  # reverse=True чтобы корень был последним
+        all_scripts.extend(sorted(dir_map[key], key=lambda s: s["script"]))
 
+    dir_map[tests_directory_root_path] = all_scripts
     return dir_map
 
 def get_matching_paths(test_path):
