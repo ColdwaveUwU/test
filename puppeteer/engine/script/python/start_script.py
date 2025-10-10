@@ -61,7 +61,6 @@ class TestRunner:
             ["node", server_script_path, str(port), directory],
             stdout=stdout,
             stderr=stderr,
-            stdin=subprocess.DEVNULL,
         )
         return process
 

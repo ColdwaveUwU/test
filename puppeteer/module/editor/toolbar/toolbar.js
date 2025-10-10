@@ -72,8 +72,10 @@ class Toolbar {
             await this.tester.sleep(5000); // todo fix open FIleTab after mask
         }
 
-        if (this.tester.frame.name() === "frameEditor" && (await stateButton.checkSelector())) {
-            await stateButton.setState(true);
+        if (this.tester.frame.name() === "frameEditor") {
+            if (await stateButton.checkSelector()) {
+                await stateButton.setState(true);
+            }
         }
     }
 
