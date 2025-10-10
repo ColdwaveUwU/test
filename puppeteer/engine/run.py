@@ -16,7 +16,7 @@ from script.python.description_parser import DescriptionParser
 from script.python.loading_spinner import LoadingSpinner
 from script.python.config_manager import ConfigManager
 from script.python.install import check_dependencies
-
+from script.python.report_worker import ReportWorkerManager
 from urllib.parse import urlparse, urljoin
 from urllib.request import urlopen, Request
 from urllib.error import URLError, HTTPError
@@ -45,6 +45,8 @@ work_directory = os.path.normpath(os.path.join(engine_directory, ".."))
 resource_server_path = os.path.join(engine_directory, "script", "js", "scripts", "resourceServer.js")
 report_portal_manager = None
 report_generator = None
+report_worker_manager = None
+create_connection = False
 
 def is_file(file_path):
     return os.path.isfile(file_path)
@@ -318,23 +320,8 @@ def run_test(test_map, params_dict, cache_dir, server_port):
         'start_test_time': start_test_time,
         'return_code': return_code
     }
-    test_report_info = report_generator.generate_test_report(report_object=report_object, run_mode=params_dict['run_mode'])
-    action_content = test_report_info['time_log_content']
 
-    for line in action_content.split("\n"):
-        if "[command]" in line or "[test]" in line:
-            report_portal_test.send_log(line.strip(), level="TRACE")
-
-    test_report_path = test_report_info['report_file_path']
-    with open(test_report_path, "rb") as file:
-        report_portal_test.send_log(message=f"{file_name} report attached.", attachment={"name": os.path.basename(test_report_path),
-                                                                                 "data": file.read(),
-                                                                                 "mime": "text/html"})
-    
-    report_portal_manager.finish_test(test_path, 
-                                      0 if return_code == 5 else return_code)
-    
-    report_object['test_report_path'] = test_report_path
+    report_worker_manager.submit_report(report_object, report_portal_test, params_dict['run_mode'])
     return report_object
 
 def run_test_with_retries(test_map, params_dict):
@@ -583,10 +570,10 @@ if __name__ == "__main__":
                 report_portal_launcher.send_log(f"Error: Test files not found.", level="ERROR")
                 sys.exit(1)
             
+            module_dir_map = create_dir_map(os.path.join(work_directory, "module"))
             module_paths = {
-                dir_key: [file_path for file_name, file_path in file_data.items() if file_name == "script"]
-                for dir_key, file_data in create_dir_map(os.path.join(work_directory, "module")).items()
-                if "script" in file_data
+                dir_key: [entry["script"] for entry in file_data if "script" in entry]
+                for dir_key, file_data in module_dir_map.items()
             }
 
             tester_path = {engine_directory: [os.path.join(engine_directory, "tester.js")]}
@@ -614,9 +601,18 @@ if __name__ == "__main__":
             
             if num_threads == -1:
                 num_threads = int(min(32, (os.cpu_count() or 1) + 4) * 1/3)
-            if not prcache:
                 num_threads = min(num_threads, len(test_file_config_map))
-                for i in range(num_threads):
+
+            report_worker_manager = ReportWorkerManager(
+                report_generator,
+                report_portal_manager,
+                num_workers=num_threads,
+                enable_portal=create_connection
+            )
+            report_worker_manager.start_workers()
+
+            if not prcache:
+                for i in range(num_threads * 2):
                     cache_dir = os.path.join(browser_cache_dir, f"cache{i}")
                     server_port = config["resourceServer"]["port"] + i
                     server_queue.put(server_port)
@@ -630,7 +626,6 @@ if __name__ == "__main__":
                     execution_time = end_time - start_time
                     
                     report_generator.generate_launch_html_report(execution_time, run_mode)
-
             else:
                 init_cache_script = os.path.join(engine_directory, "script", "js", "scripts", "prepareCache.js")
                 command = f"node {init_cache_script} {config_path} {num_threads}"
@@ -638,6 +633,7 @@ if __name__ == "__main__":
         finally:
             if isinstance(report_portal_launcher, ReportPortalLauncher) and report_portal_launcher.launch_is_started is not False:
                 try:
+                    report_worker_manager.finish_workers()
                     report_portal_launcher.finish_launch(
                         status="FAILED" if sys.exc_info()[0] is not None else "PASSED"
                     )
