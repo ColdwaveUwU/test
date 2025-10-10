@@ -2,7 +2,11 @@ const BaseSettings = require("../../basesettings");
 const selectors = require("./selectors.json");
 const { Input, Dropdown, Button, ModalButton, Checkbox } = require("../../../../../elements");
 const { Color } = require("../../../../../common");
-const { createErrorHandler } = require("../../../../../../engine/script/js");
+const {
+    createErrorHandler,
+    createExecuteAction,
+    createExecuteObjectAction,
+} = require("../../../../../../engine/script/js");
 
 /**
  * @typedef {
@@ -294,7 +298,9 @@ class TableBaseSettings extends BaseSettings {
     constructor(tester) {
         super(tester, TableBaseSettings.SELECTORS.RIGHT_MENU_TABLE_BASE_SETTINGS);
         this.color = new Color(this.tester);
-        this.handleError = createErrorHandler("TableBaseSettings");
+        this.handleError = createErrorHandler(this.constructor.name);
+        this.executeObjectAction = createExecuteObjectAction(this.handleError);
+        this.executeAction = createExecuteAction(this.tester, this.handleError);
     }
 
     static SELECTORS = selectors;
@@ -453,7 +459,7 @@ class TableBaseSettings extends BaseSettings {
      */
     async selectTemplate(template) {
         const selectors = TableBaseSettings.SELECTORS.TAMPLATE_DROPDOWN;
-        await this.#executeAction(Dropdown, selectors, "selectDropdownItem", "selectTemplate", [template]);
+        await this.executeAction(Dropdown, selectors, "selectDropdownItem", "selectTemplate", [template]);
     }
 
     /**
@@ -462,7 +468,7 @@ class TableBaseSettings extends BaseSettings {
      */
     async selectBordersStyle(borderStyle) {
         const selectors = TableBaseSettings.SELECTORS.BORDERS_STYLE_DROPDOWN;
-        await this.#executeAction(Dropdown, selectors, "selectDropdownItem", "selectBordersStyle", [borderStyle]);
+        await this.executeAction(Dropdown, selectors, "selectDropdownItem", "selectBordersStyle", [borderStyle]);
     }
 
     /**
@@ -492,7 +498,7 @@ class TableBaseSettings extends BaseSettings {
             if (!selector) {
                 throw new Error(`TableBaseSettings.selectBorders: Invalid border type "${type}"`);
             }
-            await this.#executeAction(Button, selector, "click", "selectBorders");
+            await this.executeAction(Button, selector, "click", "selectBorders");
         }
     }
 
@@ -504,9 +510,7 @@ class TableBaseSettings extends BaseSettings {
         const selectors = TableBaseSettings.SELECTORS.ROWS_AND_COLUMNS_DROPDOWN;
         const normalizedRowsAndColumns = Array.isArray(rowsAndColumns) ? rowsAndColumns : [rowsAndColumns];
         for (const rowAndColumn of normalizedRowsAndColumns) {
-            await this.#executeAction(Dropdown, selectors, "selectDropdownItem", "selectRowsAndColumns", [
-                rowAndColumn,
-            ]);
+            await this.executeAction(Dropdown, selectors, "selectDropdownItem", "selectRowsAndColumns", [rowAndColumn]);
         }
     }
 
@@ -534,7 +538,7 @@ class TableBaseSettings extends BaseSettings {
      */
     async splitCellNumberOfColumns(numberOfColumns) {
         const selector = TableBaseSettings.SELECTORS.MODAL_WINDOWS.SPLIT_CELL.NUMBER_OF_COLUMNS_INPUT;
-        await this.#executeAction(Input, selector, "set", "splitCellNumberOfColumns", [numberOfColumns, 100], [false]);
+        await this.executeAction(Input, selector, "set", "splitCellNumberOfColumns", [numberOfColumns], [false]);
     }
 
     /**
@@ -543,14 +547,14 @@ class TableBaseSettings extends BaseSettings {
      */
     async splitCellNumberOfRows(numberOfRows) {
         const selector = TableBaseSettings.SELECTORS.MODAL_WINDOWS.SPLIT_CELL.NUMBER_OF_ROWS_INPUT;
-        await this.#executeAction(Input, selector, "set", "splitCellNumberOfRows", [numberOfRows, 100], [false]);
+        await this.executeAction(Input, selector, "set", "splitCellNumberOfRows", [numberOfRows], [false]);
     }
 
     /**
      * Applies the split cell.
      */
     async applySplitCell() {
-        await this.#closeModal(this.splitCellModalWindow, "applySplitCell");
+        await this.executeObjectAction(this.splitCellModalWindow, "closeModal", "applySplitCell");
     }
 
     /**
@@ -559,7 +563,7 @@ class TableBaseSettings extends BaseSettings {
      */
     async setTableHeight(height) {
         const selector = TableBaseSettings.SELECTORS.ROWS_AND_COLUMNS_SIZE.HEIGHT_INPUT;
-        await this.#executeAction(Input, selector, "set", "setTableHeight", [height, 100], [true]);
+        await this.executeAction(Input, selector, "set", "setTableHeight", [height], [true]);
     }
 
     /**
@@ -568,7 +572,7 @@ class TableBaseSettings extends BaseSettings {
      */
     async setTableWidth(width) {
         const selector = TableBaseSettings.SELECTORS.ROWS_AND_COLUMNS_SIZE.WIDTH_INPUT;
-        await this.#executeAction(Input, selector, "set", "setTableWidth", [width, 100], [true]);
+        await this.executeAction(Input, selector, "set", "setTableWidth", [width], [true]);
     }
 
     /**
@@ -576,7 +580,7 @@ class TableBaseSettings extends BaseSettings {
      */
     async distributeTableRows() {
         const selector = TableBaseSettings.SELECTORS.ROWS_AND_COLUMNS_SIZE.DISTRIBUTE_ROWS_BUTTON;
-        await this.#executeAction(Button, selector, "click", "distributeTableRows");
+        await this.executeAction(Button, selector, "click", "distributeTableRows");
     }
 
     /**
@@ -584,7 +588,7 @@ class TableBaseSettings extends BaseSettings {
      */
     async distributeTableColumns() {
         const selector = TableBaseSettings.SELECTORS.ROWS_AND_COLUMNS_SIZE.DISTRIBUTE_COLUMNS_BUTTON;
-        await this.#executeAction(Button, selector, "click", "distributeTableColumns");
+        await this.executeAction(Button, selector, "click", "distributeTableColumns");
     }
 
     /**
@@ -593,8 +597,7 @@ class TableBaseSettings extends BaseSettings {
      */
     async setAutoFit(condition) {
         const selector = TableBaseSettings.SELECTORS.ROWS_AND_COLUMNS_SIZE.AUTO_FIT_CHECKBOX;
-
-        await this.#clickCheckbox(selector, condition, "setAutoFit");
+        await this.executeAction(Checkbox, selector, "set", "setAutoFit", [condition]);
     }
 
     /**
@@ -611,7 +614,7 @@ class TableBaseSettings extends BaseSettings {
      */
     async clickRepeatAsHeader(condition) {
         const selector = TableBaseSettings.SELECTORS.REPEAT_AS_HEADER_CHECKBOX;
-        await this.#clickCheckbox(selector, condition, "clickRepeatAsHeader");
+        await this.executeAction(Checkbox, selector, "set", "clickRepeatAsHeader", [condition]);
     }
 
     /**
@@ -629,7 +632,7 @@ class TableBaseSettings extends BaseSettings {
      */
     async openAddFormula() {
         const buttonSelector = TableBaseSettings.SELECTORS.ADD_FORMULA_BUTTON;
-        const triggerAction = () => this.#executeAction(Button, buttonSelector, "click", "openAddFormula");
+        const triggerAction = () => this.executeAction(Button, buttonSelector, "click", "openAddFormula");
         await this.#openModalWithAction(this.addFormulaModalWindow, triggerAction, "openAddFormula");
     }
 
@@ -639,7 +642,7 @@ class TableBaseSettings extends BaseSettings {
      */
     async setFormula(formula) {
         const selector = TableBaseSettings.SELECTORS.MODAL_WINDOWS.ADD_FORMULA.FORMULA_INPUT;
-        await this.#executeAction(Input, selector, "set", "setFormula", [formula, 100], [false]);
+        await this.executeAction(Input, selector, "set", "setFormula", [formula], [false]);
     }
 
     /**
@@ -648,7 +651,7 @@ class TableBaseSettings extends BaseSettings {
      */
     async selectNumberFormat(numberFormat) {
         const selector = TableBaseSettings.SELECTORS.MODAL_WINDOWS.ADD_FORMULA.NUMBER_FORMAT_DROPDOWN;
-        await this.#executeAction(Dropdown, selector, "selectDropdownItem", "selectNumberFormat", [numberFormat]);
+        await this.executeAction(Dropdown, selector, "selectDropdownItem", "selectNumberFormat", [numberFormat]);
     }
 
     /**
@@ -659,7 +662,7 @@ class TableBaseSettings extends BaseSettings {
         const selector = TableBaseSettings.SELECTORS.MODAL_WINDOWS.ADD_FORMULA.PASTE_FUNCTION_DROPDOWN;
         const functionNames = Array.isArray(functionName) ? functionName : [functionName];
         for (const name of functionNames) {
-            await this.#executeAction(Dropdown, selector, "selectDropdownItem", "selectFunction", [name]);
+            await this.executeAction(Dropdown, selector, "selectDropdownItem", "selectFunction", [name]);
         }
     }
 
@@ -669,14 +672,14 @@ class TableBaseSettings extends BaseSettings {
      */
     async selectBookmark(bookmarkName) {
         const selector = TableBaseSettings.SELECTORS.MODAL_WINDOWS.ADD_FORMULA.BOOKMARK_DROPDOWN;
-        await this.#executeAction(Dropdown, selector, "selectDropdownItem", "selectBookmark", [bookmarkName]);
+        await this.executeAction(Dropdown, selector, "selectDropdownItem", "selectBookmark", [bookmarkName]);
     }
 
     /**
      * Applies the add formula.
      */
     async applyAddFormula() {
-        await this.#closeModal(this.addFormulaModalWindow, "applyAddFormula");
+        await this.executeObjectAction(this.addFormulaModalWindow, "closeModal", "applyAddFormula");
     }
 
     /**
@@ -693,7 +696,7 @@ class TableBaseSettings extends BaseSettings {
      * Opens the convert table to text modal window.
      */
     async openConvertTableToText() {
-        await this.convertTableToTextModalWindow.openModal();
+        await this.executeObjectAction(this.convertTableToTextModalWindow, "openModal", "openConvertTableToText");
     }
 
     /**
@@ -703,10 +706,10 @@ class TableBaseSettings extends BaseSettings {
     async separateTextWith(options) {
         const { type, value } = options;
         const selector = TableBaseSettings.SEPARATE_TYPES[type.toLowerCase()];
-        await this.#executeAction(Button, selector, "click", "separateTextWith");
+        await this.executeAction(Button, selector, "click", "separateTextWith");
         if (value) {
             const inputSelector = TableBaseSettings.SELECTORS.MODAL_WINDOWS.CONVERT_TABLE_TO_TEXT.INPUT_OTHER;
-            await this.#executeAction(Input, inputSelector, "set", "separateTextWith", [value]);
+            await this.executeAction(Input, inputSelector, "set", "separateTextWith", [value]);
         }
     }
 
@@ -716,14 +719,14 @@ class TableBaseSettings extends BaseSettings {
      */
     async setConvertNestedTablesCheckbox(condition) {
         const selector = TableBaseSettings.SELECTORS.MODAL_WINDOWS.CONVERT_TABLE_TO_TEXT.CHECKBOX_NESTED;
-        await this.#clickCheckbox(selector, condition, "setConvertNestedTablesCheckbox");
+        await this.executeAction(Checkbox, selector, "set", "setConvertNestedTablesCheckbox", [condition]);
     }
 
     /**
      * Applies the convert table to text.
      */
     async applyConvertTableToText() {
-        await this.#closeModal(this.convertTableToTextModalWindow, "applyConvertTableToText");
+        await this.executeObjectAction(this.convertTableToTextModalWindow, "closeModal", "applyConvertTableToText");
     }
 
     /**
@@ -758,7 +761,7 @@ class TableBaseSettings extends BaseSettings {
         const settingsMap = TableBaseSettings.SELECTORS_MAP[selectorMapType];
         for (const [property, selector] of Object.entries(settingsMap)) {
             if (settings[property] !== undefined) {
-                await this.#clickCheckbox(selector, settings[property], methodName);
+                await this.executeAction(Checkbox, selector, "set", methodName, [settings[property]]);
             }
         }
     }
@@ -771,42 +774,8 @@ class TableBaseSettings extends BaseSettings {
      * @return {Promise<void>}
      */
     async #selectColor(selector, color, methodName) {
-        try {
-            await this.color.selectColor(selector, color);
-        } catch (error) {
-            this.handleError(methodName, error);
-        }
-    }
-
-    /**
-     * Clicks a checkbox based on the specified selector and condition.
-     * @param {string} selector - The selector of the checkbox to click.
-     * @param {boolean} condition - The condition of the checkbox to click.
-     */
-    async #clickCheckbox(selector, condition, methodName) {
-        try {
-            const checkbox = new Checkbox(this.tester, selector);
-            await checkbox.set(condition);
-        } catch (error) {
-            this.handleError(methodName, error);
-        }
-    }
-
-    /**
-     * Universal method for executing actions on elements with error handling
-     * @param {string} elementClass Element class to instantiate (Button, DropdownInput, etc.)
-     * @param {string} selector Selector for the element
-     * @param {string} action Action method to call on the element
-     * @param {string} methodName Name of the calling method for error handling
-     * @param {string} actionParams Parameters to pass to the action method
-     */
-    async #executeAction(elementClass, selector, action, methodName, actionParams = [], constructorParams = []) {
-        const element = new elementClass(this.tester, selector, ...constructorParams);
-        try {
-            await element[action](...actionParams);
-        } catch (error) {
-            this.handleError(methodName, error);
-        }
+        await this.executeAction(Dropdown, { selector }, "selectDropdown", methodName);
+        await this.executeObjectAction(this.color, "selectColor", methodName, [selector, color]);
     }
 
     /**
@@ -816,25 +785,8 @@ class TableBaseSettings extends BaseSettings {
      * @param {string} methodName - Name of the calling method for error handling
      */
     async #openModalWithAction(modalInstance, triggerAction, methodName) {
-        try {
-            await triggerAction();
-            await modalInstance.isModalOpen();
-        } catch (error) {
-            this.handleError(methodName, error);
-        }
-    }
-
-    /**
-     * Common method for closing modal windows
-     * @param {ModalButton} modalInstance - Modal window instance
-     * @param {string} methodName - Name of the calling method for error handling
-     */
-    async #closeModal(modalInstance, methodName) {
-        try {
-            await modalInstance.closeModal();
-        } catch (error) {
-            this.handleError(methodName, error);
-        }
+        await triggerAction();
+        await this.executeObjectAction(modalInstance, "waitModalLoaded", methodName);
     }
 }
 

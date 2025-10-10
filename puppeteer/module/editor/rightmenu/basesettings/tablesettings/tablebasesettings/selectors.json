@@ -61,8 +61,8 @@
       "NUMBER_OF_ROWS_INPUT": "#window-insert-table .input-row .rows-val"
     },
     "ADD_FORMULA": {
-      "WINDOW": ".asc-window.modal.notransform",
-      "OK_BUTTON": ".asc-window.modal.notransform .footer.center button[result='ok']",
+      "WINDOW": ".asc-window.modal",
+      "OK_BUTTON": ".asc-window.modal .footer.center button[result='ok']",
       "FORMULA_INPUT": "#id-dlg-formula-formula",
       "NUMBER_FORMAT_DROPDOWN": {
         "selector": "#id-dlg-formula-format",
