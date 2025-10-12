@@ -630,6 +630,7 @@ if __name__ == "__main__":
                     end_time = int(time.time() * 1000)
                     execution_time = end_time - start_time
                     
+                    report_worker_manager.finish_workers()
                     report_generator.generate_launch_html_report(execution_time, run_mode)
             else:
                 init_cache_script = os.path.join(engine_directory, "script", "js", "scripts", "prepareCache.js")
@@ -638,7 +639,6 @@ if __name__ == "__main__":
         finally:
             if isinstance(report_portal_launcher, ReportPortalLauncher) and report_portal_launcher.launch_is_started is not False:
                 try:
-                    report_worker_manager.finish_workers()
                     report_portal_launcher.finish_launch(
                         status="FAILED" if sys.exc_info()[0] is not None else "PASSED"
                     )
