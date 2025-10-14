@@ -1,21 +1,11 @@
 {
-    "TOOLBAR": {
-        "PAGE_SIZE_BUTTON": "#tlbtn-pagesize > button",
-        "PAGE_SIZE_DROPDOWN": {
-            "LIST_SELECTOR": "#tlbtn-pagesize ul.dropdown-menu li a",
-            "ITEM_SELECTOR": "a",
-            "DESC_SELECTOR": "div > b"
-        }
+    "PAGE_SIZE_DROPDOWN": {
+        "MENU_SELECTOR": "#tlbtn-pagesize",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#tlbtn-pagesize ul li a",
+        "DESCRIPTION_SELECTOR": "div > b"
     },
     "MODAL_WINDOW": {
-        "PAGE_SIZE_WINDOW": "#window-page-size",
-        "PRESET_DROPDOWN": {
-            "BUTTON": "#page-size-combo-preset",
-            "LIST_SELECTOR": "#page-size-combo-preset li",
-            "ITEM_SELECTOR": "a"
-        },
-        "WIDTH_INPUT": "#page-size-spin-width input",
-        "HEIGHT_INPUT": "#page-size-spin-height input",
-        "APPLY_BUTTON": "#window-page-size button[result=\"ok\"]"
+        "WINDOW": "#window-page-size",
+        "OK_BUTTON": "#window-page-size button[result=ok]"
     }
 }

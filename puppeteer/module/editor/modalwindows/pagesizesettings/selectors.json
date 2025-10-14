@@ -1,0 +1,11 @@
+{
+    "WINDOW": "#window-page-size",
+    "PRESET_DROPDOWN": {
+        "MENU_SELECTOR": "#page-size-combo-preset",
+        "DROPDOWN_ELEMENTS_SELECTOR": "#page-size-combo-preset ul li",
+        "DESCRIPTION_SELECTOR": "a"
+    },
+    "WIDTH_INPUT": "#page-size-spin-width",
+    "HEIGHT_INPUT": "#page-size-spin-height",
+    "OK_BUTTON": "#window-page-size button[result=ok]"
+}

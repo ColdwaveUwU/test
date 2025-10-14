@@ -3,6 +3,7 @@ const AutoCorrect = require("./autocorrect");
 const CustomQuick = require("./customquick");
 const NotesSettings = require("./notessettings/notessettings");
 const DeleteNotes = require("./deletenotes");
+const PageSizeSettings = require("./pagesizesettings/pagesizesettings");
 
 module.exports = {
     NumberFormat,
@@ -10,4 +11,5 @@ module.exports = {
     CustomQuick,
     NotesSettings,
     DeleteNotes,
+    PageSizeSettings,
 };
