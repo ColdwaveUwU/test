@@ -1,12 +1,12 @@
 const { HighlightCodePlugin } = require("lib");
 Tester.createFile("docx");
-const hightLightCodeOption = {
+const highlightCodeOption = {
     language: "apache",
     style: "GitHub",
     tab: "2",
     fontName: "Courier New",
     fontSize: 43,
 };
-HighlightCodePlugin.inputHightLightCode("testtest", hightLightCodeOption);
+HighlightCodePlugin.inputHighlightCode("testtest", highlightCodeOption);
 Tester.waitAutosave();
 Tester.close();

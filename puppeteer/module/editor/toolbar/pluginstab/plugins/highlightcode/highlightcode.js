@@ -89,7 +89,7 @@ class HighlightCodePlugin extends Plugin {
      * @param {string} inputText - input text
      * @param {Option} option - object options (language, style, tab, fontName, fontSize)
      */
-    async inputHightLightCode(inputText, option) {
+    async inputHighlightCode(inputText, option) {
         try {
             const textContainerSelector = "#conteiner_id1";
 
@@ -105,7 +105,7 @@ class HighlightCodePlugin extends Plugin {
             await this.tester.inputToForm(inputText, textContainerSelector);
             await this.closeButton();
         } catch (error) {
-            throw new Error(`inputHightLightCode: Failed to input and configure highlighted code. ${error.message}`, {
+            throw new Error(`inputHighlightCode: Failed to input and configure highlighted code. ${error.message}`, {
                 cause: error,
             });
         }
