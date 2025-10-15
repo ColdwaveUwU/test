@@ -4,5 +4,5 @@
     "PLUGIN_LOADER": "#loader-container.hidden",
     "SEARCH_PLUGIN_INPUT": "#toolbar_tools",
     "INSTALL_BUTTON": ".btn-text-default.btn_item.btn_install",
-    "CLOSE_BUTTON": ".tool.close"
+    "CLOSE_BUTTON": ".asc-window:has(#id-plugin-container) .tool.close"
 }

@@ -24,7 +24,7 @@ function wrapToolbarClass(Toolbar) {
 
         wrapMethods(originalMethod) {
             return async (...args) => {
-                const moreButton = new MoreButton();
+                const moreButton = new MoreButton(this.tester);
                 await this.openTargetTab();
                 await moreButton.open();
                 return originalMethod.apply(this, args);

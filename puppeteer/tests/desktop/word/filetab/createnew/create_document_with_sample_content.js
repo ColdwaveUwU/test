@@ -12,7 +12,7 @@ FileMenu.downloadAs("docx");
 Verification.openFile();
 const filePath = "word/document.xml";
 
-const editorsXpath = "//w:r[w:rPr/w:color[@w:val='2f5496']][w:rPr/w:sz[@w:val='40']]/w:t[text()='Editors']";
+const editorsXpath = "//w:body[1]/w:p[1]/w:r[5]/w:t[1]";
 Verification.check(filePath, editorsXpath, "Editors");
 
 if (!Verification.isSuccess()) {

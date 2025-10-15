@@ -4,8 +4,12 @@
     },
     "MACROS_DIALOG": {
         "MACROS_WINDOW": "#macros-dialog",
+        "ELEMENT": ".monaco-mouse-cursor-text",
         "MACROS_AI_DIALOG": "#macros-ai-dialog.notransform",
-        "MACROS_SCRIPT_INPUT": ".inputarea.monaco-mouse-cursor-text",
+        "MACROS_SCRIPT_INPUT": {
+            "SELECTOR": ".overflow-guard",
+            "TARGET": "textarea"
+        },
         "MACROS_SCRIPT_INPUT_VBA": ".view-lines.monaco-mouse-cursor-text",
         "AI_CREATE_FROM_DESCRIPTION_DIALOG_INPUT": "#macros-ai-dialog-textarea .textarea-field textarea",
         "ADD_MACRO_BUTTON": "#btn-macros-add",

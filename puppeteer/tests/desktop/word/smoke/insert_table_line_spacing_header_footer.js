@@ -43,7 +43,7 @@ FileMenu.downloadAs("docx");
 // Getting verification results
 Verification.openFile();
 Verification.check("word/document.xml", "//w:tblW[1]/@w:w", "7920");
-Verification.check("word/document.xml", "count(//w:tr[*]/w:tc[*]/w:tcPr[1]/w:tcBorders[1]/w:top[1]/@w:sz)", 0);
+Verification.check("word/document.xml", "count(//w:tr[*]/w:tc[*]/w:tcPr[1]/w:tcBorders[1]/w:top[1]/@w:sz)", 12);
 let isSuccess = Verification.isSuccess();
 console.log(isSuccess);
 

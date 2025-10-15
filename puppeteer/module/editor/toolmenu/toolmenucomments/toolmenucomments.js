@@ -207,6 +207,12 @@ class ToolMenuComments extends ToolMenu {
         await this.openMenu();
         const selectors = ToolMenuComments.SELECTORS.TOOLMENU_COMMENTS.SORT_DROPDOWN;
         await this.executeAction(Dropdown, selectors, "selectDropdownItem", "sortComments", [sortMethod]);
+
+        // TODO: A mechanism for waiting for comments to be sorted is required.
+        const noWaitOptions = ["Show comments", "Add comment to document", "Open", "Resolved", "All"];
+        if (!noWaitOptions.includes(sortMethod)) {
+            await this.tester.sleep(1000);
+        }
     }
 
     /**

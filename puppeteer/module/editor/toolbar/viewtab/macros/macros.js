@@ -85,16 +85,38 @@ class Macros extends ViewTab {
     }
 
     /**
-     * Attaches a listener for the "frameattached" event to handle frame plugin attachment.
+     * Waits for a frame that contains the target editor element.
+     * Checks existing frames first, then listens for new attachments.
      */
     waitFramePlugin() {
         return new Promise((resolve) => {
-            this.tester.page.once("frameattached", async (frame) => {
-                await frame.waitForNavigation({ waitUntil: "networkidle0" });
-                this.frames.frameEditorPlugin = frame;
-                this.tester.changeCurrentFrame(this.frames.frameEditorPlugin);
-                this.pluginStarted = true;
-                resolve();
+            const selector = Macros.SELECTORS.MACROS_DIALOG.ELEMENT;
+
+            const handleFrame = async (frame) => {
+                try {
+                    const element = await frame.$(selector);
+                    if (!element) return false;
+
+                    this.frames.frameEditorPlugin = frame;
+                    this.tester.changeCurrentFrame(frame);
+                    this.pluginStarted = true;
+                    this.tester.page.off("frameattached", onFrameAttached);
+                    resolve();
+                    return true;
+                } catch {
+                    return false;
+                }
+            };
+
+            const onFrameAttached = (frame) => handleFrame(frame);
+
+            (async () => {
+                for (const frame of this.tester.page.frames()) {
+                    if (await handleFrame(frame)) return;
+                }
+                this.tester.page.on("frameattached", onFrameAttached);
+            })().catch(() => {
+                this.tester.page.off("frameattached", onFrameAttached);
             });
         });
     }
@@ -119,9 +141,8 @@ class Macros extends ViewTab {
      * @param {boolean} condition The condition to set the autostart to.
      */
     async setMacrosAutostart(condition) {
-        this.#changeFrameToEditor();
         const selector = Macros.SELECTORS.MACROS_DIALOG.MACROS_AUTOSTART_CHECKBOX;
-
+        this.#changeFrameToEditor();
         try {
             const checkbox = new Checkbox(this.tester, selector);
             await checkbox.set(condition);
@@ -134,8 +155,8 @@ class Macros extends ViewTab {
      * Undoes the last action.
      */
     async undo() {
-        this.#changeFrameToEditor();
         try {
+            this.#changeFrameToEditor();
             await this.tester.click(Macros.SELECTORS.MACROS_DIALOG.UNDO_BUTTON);
         } catch (error) {
             this.#handleError("undo", error);
@@ -146,8 +167,8 @@ class Macros extends ViewTab {
      * Redoes the last action.
      */
     async redo() {
-        this.#changeFrameToEditor();
         try {
+            this.#changeFrameToEditor();
             await this.tester.click(Macros.SELECTORS.MACROS_DIALOG.REDO_BUTTON);
         } catch (error) {
             this.#handleError("redo", error);
@@ -158,8 +179,8 @@ class Macros extends ViewTab {
      * Debugs the current macro.
      */
     async debug() {
-        this.#changeFrameToEditor();
         try {
+            this.#changeFrameToEditor();
             await this.tester.click(Macros.SELECTORS.MACROS_DIALOG.DEBUG_BUTTON);
         } catch (error) {
             this.#handleError("debug", error);
@@ -343,10 +364,25 @@ class Macros extends ViewTab {
      * @param {boolean} clearInput - clear input before entering text (default: true)
      */
     async inputScript(script, clearInput = true) {
-        this.#changeFrameToEditorPlugin();
         try {
-            const input = new Input(this.tester, Macros.SELECTORS.MACROS_DIALOG.MACROS_SCRIPT_INPUT, false, "");
-            await input.set(script.trim(), 100, clearInput);
+            this.#changeFrameToEditorPlugin();
+
+            const selector = Macros.SELECTORS.MACROS_DIALOG.MACROS_SCRIPT_INPUT_VBA;
+            const inputField = new Input(
+                this.tester,
+                Macros.SELECTORS.MACROS_DIALOG.MACROS_SCRIPT_INPUT.SELECTOR,
+                false,
+                Macros.SELECTORS.MACROS_DIALOG.MACROS_SCRIPT_INPUT.TARGET
+            );
+
+            if (clearInput) {
+                await this.tester.keyDown("ControlLeft", selector);
+                await this.tester.keyPress("A", selector);
+                await this.tester.keyUp("ControlLeft", selector);
+                await this.tester.keyPress("Backspace", selector);
+            }
+
+            await inputField.set(script.trim());
         } catch (error) {
             this.#handleError("inputScript", error);
         }

@@ -1198,7 +1198,7 @@ class TesterImp {
      */
     async focusElement(selector) {
         try {
-            await Promise.all([this.frame.focus(selector), this.waitForElementFocus(selector)]);
+            await this.frame.focus(selector);
         } catch (error) {
             throw new Error(`Failed to focus element with selector "${selector}": ${error.message}`);
         }

@@ -116,7 +116,6 @@ class DropCap extends InsertTab {
         if (borders) {
             const { size, borderColor, borderLine, backgroundColor } = borders;
             await this.#activateSection(DROPCAP.SECTION.BORDERS);
-            debugger;
             if (size) {
                 const sizeDropdown = new Dropdown(this.tester, {
                     selector: DROPCAP.BORDER.SIZE,
