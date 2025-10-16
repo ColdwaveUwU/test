@@ -87,37 +87,46 @@ class Macros extends ViewTab {
     /**
      * Waits for a frame that contains the target editor element.
      * Checks existing frames first, then listens for new attachments.
+     * Times out after a specified duration to avoid infinite waiting.
      */
-    waitFramePlugin() {
-        return new Promise((resolve) => {
-            const selector = Macros.SELECTORS.MACROS_DIALOG.ELEMENT;
+    async waitFramePlugin(timeoutMs = 5000) {
+        const selector = Macros.SELECTORS.MACROS_DIALOG.ELEMENT;
 
-            const handleFrame = async (frame) => {
-                try {
-                    const element = await frame.$(selector);
-                    if (!element) return false;
+        const handleFrame = async (frame) => {
+            try {
+                const element = await frame.$(selector);
+                if (!element) {
+                    return false;
+                }
 
-                    this.frames.frameEditorPlugin = frame;
-                    this.tester.changeCurrentFrame(frame);
-                    this.pluginStarted = true;
+                this.frames.frameEditorPlugin = frame;
+                this.tester.changeCurrentFrame(frame);
+                this.pluginStarted = true;
+                return true;
+            } catch {
+                return false;
+            }
+        };
+
+        for (const frame of this.tester.page.frames()) {
+            if (await handleFrame(frame)) return;
+        }
+
+        await new Promise((resolve, reject) => {
+            const timeout = setTimeout(() => {
+                this.tester.page.off("frameattached", onFrameAttached);
+                reject(new Error("Frame with editor element not found within timeout"));
+            }, timeoutMs);
+
+            const onFrameAttached = async (frame) => {
+                if (await handleFrame(frame)) {
+                    clearTimeout(timeout);
                     this.tester.page.off("frameattached", onFrameAttached);
                     resolve();
-                    return true;
-                } catch {
-                    return false;
                 }
             };
 
-            const onFrameAttached = (frame) => handleFrame(frame);
-
-            (async () => {
-                for (const frame of this.tester.page.frames()) {
-                    if (await handleFrame(frame)) return;
-                }
-                this.tester.page.on("frameattached", onFrameAttached);
-            })().catch(() => {
-                this.tester.page.off("frameattached", onFrameAttached);
-            });
+            this.tester.page.on("frameattached", onFrameAttached);
         });
     }
 
@@ -376,10 +385,7 @@ class Macros extends ViewTab {
             );
 
             if (clearInput) {
-                await this.tester.keyDown("ControlLeft", selector);
-                await this.tester.keyPress("A", selector);
-                await this.tester.keyUp("ControlLeft", selector);
-                await this.tester.keyPress("Backspace", selector);
+                await this.tester.deleteText(selector);
             }
 
             await inputField.set(script.trim());

@@ -471,9 +471,17 @@ class TesterImp {
                 }
             });
 
+            await page.exposeFunction("resetEditorLongActionsCount", () => {
+                this.#editorLongActionsCount = 0;
+            });
+
             await page.evaluateOnNewDocument(() => {
                 window.AscUserTest = window.AscUserTest || {};
                 window.AscUserTest.logEvents = window.AscUserTest.logEvents ?? true;
+
+                window.addEventListener("beforeunload", () => {
+                    window.resetEditorLongActionsCount();
+                });
             });
 
             const ascEventListener = new AscEventListener();
@@ -1936,13 +1944,14 @@ class TesterImp {
 
     /**
      * Selects and deletes text.
+     * @param {string} [selector]
      * @returns {Promise<void>}
      */
-    async deleteText() {
-        await this.keyDown("Control");
-        await this.keyPress("A");
-        await this.keyUp("Control");
-        await this.keyPress("Backspace");
+    async deleteText(selector = "") {
+        await this.keyDown("Control", selector);
+        await this.keyPress("A", selector);
+        await this.keyUp("Control", selector);
+        await this.keyPress("Backspace", selector);
     }
 
     /**
