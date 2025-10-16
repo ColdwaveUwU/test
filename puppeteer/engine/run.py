@@ -551,16 +551,16 @@ if __name__ == "__main__":
         test_file_config_map.extend(get_matching_paths(target_path))
 
     for run_mode in run_modes:
-        version, build = get_editor_version(config["testOptions"]["url"])
-        launch_attributes = [{"key": "platform", "value": system_name}, 
-                        {"key": "browser", "value": config["puppeteerOptions"]["browser"]}, 
-                        {"key": "provider", "value": run_mode},
-                        {"key": "version", "value": version},
-                        {"key": "build", "value": build} ]
         try: 
             report_portal_launcher = ReportPortalLauncher()
             create_connection = connect_portal or report_portal_launcher.need_connection
             if create_connection:
+                version, build = get_editor_version(config["testOptions"]["url"])
+                launch_attributes = [{"key": "platform", "value": system_name}, 
+                                {"key": "browser", "value": config["puppeteerOptions"]["browser"]}, 
+                                {"key": "provider", "value": run_mode},
+                                {"key": "version", "value": version},
+                                {"key": "build", "value": build} ]
                 report_portal_launcher.start_launch(attributes = launch_attributes)
                 report_portal_launcher.send_log(f"Starting tests in {target_path}...")
 
